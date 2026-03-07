@@ -1,0 +1,203 @@
+.main {
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+}
+
+.pageHeader {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    font-size: 3rem;
+  }
+}
+
+.pageSubtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: var(--space-2xl);
+  padding: var(--space-xl);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-md);
+  color: var(--accent-orange-light);
+}
+
+.text {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-md);
+}
+
+.contactBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .contactBox {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.contactIcon {
+  font-size: 2rem;
+  color: var(--accent-orange-light);
+  flex-shrink: 0;
+}
+
+.contactLabel {
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: var(--space-xs);
+}
+
+.contactValue {
+  font-size: 1.125rem;
+  color: var(--accent-orange-light);
+  font-weight: 500;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.contactValue a {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+  max-width: 100%;
+}
+
+/* Quick Actions */
+.quickActions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+@media (min-width: 480px) {
+  .quickActions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .quickActions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.actionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.actionCard:hover {
+  border-color: var(--accent-orange-light);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.actionIcon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-sm);
+  color: var(--accent-orange-light);
+}
+
+.actionIcon svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.actionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: var(--space-xs);
+}
+
+.actionDesc {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Tip Section */
+.tipSection {
+  padding: var(--space-xl);
+  background: rgba(255, 163, 104, 0.15);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--accent-orange-light);
+}
+
+.tipTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-orange-light);
+  margin-bottom: var(--space-md);
+}
+
+.tipList {
+  margin-left: var(--space-lg);
+  margin-bottom: var(--space-md);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tipList li {
+  margin-bottom: var(--space-xs);
+  line-height: 1.7;
+}
+
+.tipNote {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}

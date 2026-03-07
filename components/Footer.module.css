@@ -1,0 +1,84 @@
+.footer {
+  background: var(--primary-blue-dark);
+  color: var(--text-white);
+  padding: var(--space-2xl) 0 var(--space-lg);
+  margin-top: var(--space-2xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .footerContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.footerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.footerBrand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.footerCopy {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+}
+
+.footerContact {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.footerContact a {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.footerContact a:hover {
+  color: var(--text-white);
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .footerLinks {
+    flex-direction: row;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+}
+
+.footerLinks a {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.footerLinks a:hover {
+  color: var(--accent-orange-light);
+}

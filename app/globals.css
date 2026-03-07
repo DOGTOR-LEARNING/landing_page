@@ -1,0 +1,296 @@
+/* 全域重置與基礎樣式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* === 品牌主色調 - 對齊 Flutter App === */
+  --primary-blue: #1E3875;        /* 品牌主色 */
+  --primary-blue-dark: #102031;    /* 深色背景 */
+  --primary-blue-light: #319CB6;   /* 海洋藍 */
+  --background-base: #1e374b;      /* 網站背景色 */
+  
+  /* === 強調色 === */
+  --accent-orange: #F59B03;        /* 主要強調色 */
+  --accent-orange-light: #FFA368;  /* 淺橙色 */
+  --accent-orange-dark: #E6722B;   /* 深橙色 */
+  
+  /* === 語義顏色 === */
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --error: #F44336;
+  --info: #2196F3;
+  
+  /* === 表面顏色 === */
+  --bg-white: #ffffff;
+  --bg-light: #F5F5F5;
+  --bg-surface: #ECF6F9;           /* 卡片藍 */
+  --bg-gray: #E0E0E0;
+  
+  /* === 文字顏色 === */
+  --text-dark: #102031;            /* 主要文字 - onBackground */
+  --text-primary: #1E3875;         /* 品牌藍文字 */
+  --text-gray: #757575;            /* 次要文字 - textMuted */
+  --text-light: #9E9E9E;          /* 淺色文字 */
+  --text-white: #ffffff;
+  
+  /* === 邊框顏色 === */
+  --border: #E0E0E0;
+  --border-light: #F0F0F0;
+  
+  /* === 漸層（深藍色系 / 橘色系） === */
+  --gradient-ocean: linear-gradient(180deg, rgba(16, 32, 49, 0.6) 0%, rgba(16, 32, 49, 0.95) 100%);
+  --gradient-sky: linear-gradient(180deg, #FFE8C4 0%, #FFF4D8 50%, #FAEDA4 100%);
+  --gradient-button: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-dark) 100%);
+  
+  /* === 間距 === */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  
+  /* === 圓角 - 對齊 App === */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;            /* 8px - 次要按鈕 */
+  --radius-lg: 1rem;                /* 12px - 主要按鈕 */
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  
+  /* === 陰影（深藍色系） === */
+  --shadow-sm: 0 1px 2px rgba(16, 32, 49, 0.05);
+  --shadow-md: 0 4px 6px rgba(16, 32, 49, 0.1);
+  --shadow-lg: 0 10px 15px rgba(16, 32, 49, 0.15);
+  --shadow-xl: 0 20px 25px rgba(16, 32, 49, 0.2);
+  
+  /* === 動畫 === */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-white);
+  background-color: var(--background-base);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* 容器 */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--space-xl);
+  }
+}
+
+/* 標題樣式 */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+  }
+}
+
+/* 連結 */
+a {
+  color: var(--primary-blue-light);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-orange-light);
+}
+
+/* 按鈕基礎樣式 */
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0.75rem 1.5rem;        /* 12px 24px - 對齊 App */
+  font-weight: 600;
+  font-size: 1rem;
+  min-height: 44px;
+  transition: all var(--transition-base);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--gradient-button);
+  color: var(--text-white);
+  border-radius: var(--radius-lg);  /* 12px - 主要按鈕 */
+  box-shadow: 0 2px 4px rgba(16, 32, 49, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(16, 32, 49, 0.3);
+  background: linear-gradient(135deg, #e08605 0%, #c86012 100%);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-white);
+  border: 2px solid var(--text-white);
+  border-radius: var(--radius-md);  /* 8px - 次要按鈕 */
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-orange-light);
+  color: var(--accent-orange-light);
+}
+
+/* 卡片 */
+.card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-base);
+  border: 1px solid var(--border-light);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+  border-color: var(--primary-blue-light);
+}
+
+/* 區段間距 */
+section {
+  padding: var(--space-2xl) 0;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 5rem 0;
+  }
+}
+
+/* 漸層文字 */
+.gradient-text {
+  background: linear-gradient(135deg, #FFE8C4 0%, var(--accent-orange-light) 50%, var(--accent-orange-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* App Store CTA Button */
+.appStoreButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  background: var(--primary-blue-dark);
+  color: #ffffff;
+  border: 1px solid var(--primary-blue-dark);
+  min-height: 40px;
+  box-shadow: 0 2px 4px rgba(16, 32, 49, 0.4);
+  transition: background var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.appStoreButton:hover {
+  background: var(--primary-blue-dark);
+  box-shadow: 0 4px 8px rgba(16, 32, 49, 0.6);
+  transform: translateY(-1px);
+}
+
+.appStoreIcon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.appStoreText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+.appStoreLabelPrimary {
+  font-size: 0.7rem;
+}
+
+.appStoreLabelSecondary {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* 圖片優化 */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 載入動畫 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
