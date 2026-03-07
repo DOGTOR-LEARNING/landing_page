@@ -1,49 +1,57 @@
-/* ─── 基礎佈局 ─────────────────────────────────────────────────────────── */
+/* ─── 基礎 ──────────────────────────────────────────────────────────────── */
 .main {
   padding-top: 70px;
   min-height: 100vh;
 }
 
-/* ─── 登入畫面 ─────────────────────────────────────────────────────────── */
+/* ─── 登入畫面 ────────────────────────────────────────────────────────────── */
 .loginWrap {
   min-height: calc(100vh - 70px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-lg);
-  background: radial-gradient(ellipse at 50% 0%, rgba(49, 156, 182, 0.12) 0%, transparent 70%);
 }
 
 .loginCard {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: var(--radius-2xl);
   padding: var(--space-2xl);
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   text-align: center;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
 }
 
-.loginIcon {
-  font-size: 3.5rem;
-  margin-bottom: var(--space-md);
-  display: block;
+.loginIconWrap {
+  width: 64px;
+  height: 64px;
+  background: rgba(49, 156, 182, 0.12);
+  border: 1px solid rgba(49, 156, 182, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-lg);
+}
+
+.loginIconSvg {
+  color: var(--primary-blue-light) !important;
+  font-size: 28px !important;
 }
 
 .loginTitle {
-  font-size: 1.75rem;
+  font-size: 1.625rem;
   font-weight: 800;
   color: var(--text-white);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 0.375rem;
 }
 
 .loginSubtitle {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.55);
-  margin-bottom: var(--space-xl);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.45);
   line-height: 1.6;
+  margin-bottom: var(--space-xl);
 }
 
 .loginForm {
@@ -54,8 +62,8 @@
 }
 
 .loginError {
-  font-size: 0.875rem;
-  color: #FF6B6B;
+  font-size: 0.8rem;
+  color: #F87171;
   margin-top: 0.375rem;
   font-weight: 500;
   animation: shake 0.35s ease-in-out;
@@ -63,16 +71,16 @@
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
 }
 
-/* ─── 管理區橫幅 ───────────────────────────────────────────────────────── */
+/* ─── 管理區橫幅 ──────────────────────────────────────────────────────────── */
 .adminBanner {
-  background: linear-gradient(135deg, var(--primary-blue-dark) 0%, rgba(30, 56, 117, 0.9) 100%);
-  border-bottom: 1px solid rgba(49, 156, 182, 0.2);
+  background: var(--primary-blue-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   padding: var(--space-lg) 0;
 }
 
@@ -89,29 +97,34 @@
   gap: var(--space-md);
 }
 
-.bannerIcon {
-  font-size: 2.5rem;
+.bannerIconSvg {
+  color: var(--primary-blue-light) !important;
+  font-size: 2rem !important;
+  flex-shrink: 0;
 }
 
 .bannerTitle {
-  font-size: 1.375rem;
-  font-weight: 800;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--text-white);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
 
 .bannerSub {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .logoutBtn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.4rem 0.875rem;
   border-radius: var(--radius-md);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-family: inherit;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -119,12 +132,12 @@
 }
 
 .logoutBtn:hover {
-  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
   color: var(--text-white);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* ─── 管理區內容 ───────────────────────────────────────────────────────── */
+/* ─── 管理區主體 ──────────────────────────────────────────────────────────── */
 .adminContent {
   padding: var(--space-2xl) 0;
 }
@@ -132,7 +145,7 @@
 .moduleGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-xl);
+  gap: var(--space-md);
 }
 
 @media (min-width: 1024px) {
@@ -142,26 +155,37 @@
   }
 }
 
-/* ─── 功能模組卡片 ─────────────────────────────────────────────────────── */
+/* ─── 可折疊模組卡片 ──────────────────────────────────────────────────────── */
 .moduleCard {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-xl);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
   transition: border-color var(--transition-base);
 }
 
-.moduleCard:hover {
+.moduleOpen {
   border-color: rgba(49, 156, 182, 0.3);
 }
 
+/* 卡片 Header — 點擊觸發展開/縮合 */
 .moduleHeader {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  margin-bottom: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
+  width: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background var(--transition-fast);
+}
+
+.moduleHeader:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .moduleTitleRow {
@@ -170,54 +194,103 @@
   gap: var(--space-md);
 }
 
-.moduleEmoji {
-  font-size: 2rem;
+.moduleIconWrap {
+  width: 44px;
+  height: 44px;
+  background: rgba(49, 156, 182, 0.1);
+  border: 1px solid rgba(49, 156, 182, 0.2);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+
+.moduleOpen .moduleIconWrap {
+  background: rgba(49, 156, 182, 0.18);
+}
+
+.moduleIconSvg {
+  color: var(--primary-blue-light) !important;
+  font-size: 22px !important;
 }
 
 .moduleTitle {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-white);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
 
 .moduleSub {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.5;
+  font-size: 0.775rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.4;
+}
+
+.moduleRight {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-shrink: 0;
 }
 
 .moduleBadge {
   display: inline-block;
-  padding: 0.3rem 0.75rem;
-  background: linear-gradient(135deg, rgba(49, 156, 182, 0.2), rgba(30, 56, 117, 0.3));
-  border: 1px solid rgba(49, 156, 182, 0.35);
+  padding: 0.2rem 0.625rem;
+  background: rgba(49, 156, 182, 0.1);
+  border: 1px solid rgba(49, 156, 182, 0.25);
   color: var(--primary-blue-light);
   border-radius: 2rem;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   white-space: nowrap;
-  flex-shrink: 0;
+}
+
+.chevron {
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 22px !important;
+  transition: transform var(--transition-base), color var(--transition-fast);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+  color: var(--primary-blue-light) !important;
+}
+
+/* 折疊區域 — max-height transition */
+.moduleBody {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease-in-out;
+}
+
+.moduleBodyOpen {
+  max-height: 2400px;
+}
+
+.moduleBodyInner {
+  padding: 0 var(--space-xl) var(--space-xl);
 }
 
 .divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
   margin-bottom: var(--space-xl);
 }
 
-/* ─── 表單 ─────────────────────────────────────────────────────────────── */
+/* ─── 表單 ────────────────────────────────────────────────────────────────── */
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
 }
 
 .fieldGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .labelRow {
@@ -227,52 +300,51 @@
 }
 
 .label {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .required {
-  color: #FF6B6B;
+  color: #F87171;
 }
 
 .hint {
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.32);
   line-height: 1.5;
-  margin-top: 0.25rem;
 }
 
 .charCount {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.3);
   font-variant-numeric: tabular-nums;
 }
 
 .charOver {
-  color: #FF6B6B;
+  color: #F87171;
 }
 
 .emailCount {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--primary-blue-light);
-  background: rgba(49, 156, 182, 0.15);
-  padding: 0.15rem 0.5rem;
+  background: rgba(49, 156, 182, 0.12);
+  padding: 0.1rem 0.45rem;
   border-radius: 1rem;
 }
 
-/* ─── 輸入控件 ─────────────────────────────────────────────────────────── */
+/* ─── 輸入控件 ────────────────────────────────────────────────────────────── */
 .input,
 .textarea {
   width: 100%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
-  padding: 0.75rem 1rem;
+  padding: 0.7rem 0.875rem;
   color: var(--text-white);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   transition: border-color var(--transition-fast), background var(--transition-fast);
   resize: vertical;
@@ -280,27 +352,26 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
   border-color: var(--primary-blue-light);
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .inputError {
-  border-color: #FF6B6B !important;
+  border-color: #F87171 !important;
 }
 
 .errorMsg {
-  font-size: 0.8rem;
-  color: #FF6B6B;
-  margin-top: 0.25rem;
+  font-size: 0.775rem;
+  color: #F87171;
 }
 
-/* ─── 通知類型選擇器 ───────────────────────────────────────────────────── */
+/* ─── 通知類型選擇器 ──────────────────────────────────────────────────────── */
 .typeGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -311,10 +382,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.2rem;
-  padding: 0.65rem 0.875rem;
+  gap: 0.15rem;
+  padding: 0.625rem 0.75rem;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -323,62 +394,72 @@
 }
 
 .typeOption:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .typeSelected {
-  background: rgba(49, 156, 182, 0.15) !important;
+  background: rgba(49, 156, 182, 0.1) !important;
   border-color: var(--primary-blue-light) !important;
 }
 
+.typeIcon {
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-size: 16px !important;
+  margin-bottom: 0.15rem;
+}
+
+.typeSelected .typeIcon {
+  color: var(--primary-blue-light) !important;
+}
+
 .typeLabel {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text-white);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .typeDesc {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.38);
   line-height: 1.4;
 }
 
-/* ─── Toggle 開關 ──────────────────────────────────────────────────────── */
+/* ─── Toggle 開關 ─────────────────────────────────────────────────────────── */
 .toggleRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  padding: 0.875rem 1rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 0.875rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-md);
 }
 
 .toggleInfo {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
 .toggleLabel {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .toggleDesc {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.35);
   line-height: 1.4;
 }
 
 .toggle {
   position: relative;
-  width: 48px;
-  height: 26px;
-  background: rgba(255, 255, 255, 0.15);
+  width: 44px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   border: none;
   cursor: pointer;
@@ -395,108 +476,120 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   background: white;
   border-radius: 50%;
   transition: transform var(--transition-base);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 .toggleOn .toggleThumb {
-  transform: translateX(22px);
+  transform: translateX(20px);
 }
 
-/* ─── 預覽卡片 ─────────────────────────────────────────────────────────── */
+/* ─── 推播預覽 ────────────────────────────────────────────────────────────── */
 .preview {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+.previewLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 .previewLabel {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 .previewCard {
-  background: #f2f2f7;
+  background: #f0f0f5;
   border-radius: var(--radius-md);
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 0.875rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
 .previewAppRow {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 0.15rem;
+  gap: 0.375rem;
+  margin-bottom: 0.1rem;
 }
 
-.previewAppIcon {
-  font-size: 0.85rem;
+.previewAppDot {
+  width: 14px;
+  height: 14px;
+  background: var(--primary-blue);
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .previewAppName {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: #666;
+  color: #555;
   flex: 1;
 }
 
 .previewTime {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: #aaa;
 }
 
 .previewTitle {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #111;
   line-height: 1.3;
 }
 
 .previewContent {
-  font-size: 0.8rem;
+  font-size: 0.77rem;
   color: #444;
   line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
 }
 
-/* ─── 按鈕 ─────────────────────────────────────────────────────────────── */
+/* ─── 按鈕 ────────────────────────────────────────────────────────────────── */
 .btnPrimary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
-  background: var(--gradient-button);
+  padding: 0.8rem 1.5rem;
+  background: var(--accent-orange);
   color: white;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   border: none;
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all var(--transition-base);
-  min-height: 48px;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-height: 46px;
 }
 
 .btnPrimary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(245, 155, 3, 0.35);
+  background: var(--accent-orange-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(245, 155, 3, 0.28);
 }
 
 .btnPrimary:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .sendBtn {
@@ -507,23 +600,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.25rem;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.8);
+  padding: 0.7rem 1.125rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
   flex: 1;
-  min-height: 44px;
+  min-height: 42px;
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.07);
   color: white;
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .btnSecondary:disabled {
@@ -535,90 +629,159 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.25rem;
-  background: linear-gradient(135deg, #FF6B35, #E53935);
+  gap: 0.4rem;
+  padding: 0.7rem 1.125rem;
+  background: #DC2626;
   color: white;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast), transform var(--transition-fast);
   flex: 1;
-  min-height: 44px;
+  min-height: 42px;
 }
 
 .btnDanger:hover:not(:disabled) {
+  background: #B91C1C;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
 }
 
 .btnDanger:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
   transform: none;
 }
 
-/* ─── Modal 彈窗 ───────────────────────────────────────────────────────── */
+/* ─── Spinner ─────────────────────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Modal ───────────────────────────────────────────────────────────────── */
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-md);
   z-index: 1000;
   backdrop-filter: blur(4px);
-  animation: fadeOverlay 0.2s ease-out;
+  animation: fadeIn 0.2s ease-out;
 }
 
-@keyframes fadeOverlay {
+@keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 .modal {
-  background: #1a2f44;
-  border: 1px solid rgba(49, 156, 182, 0.3);
+  position: relative;
+  background: #162637;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-2xl);
   padding: var(--space-xl);
   width: 100%;
-  max-width: 440px;
-  animation: slideUp 0.25s ease-out;
+  max-width: 420px;
+  animation: slideUp 0.22s ease-out;
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.modalIcon {
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: var(--space-md);
-  display: block;
+.modalClose {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: rgba(255, 255, 255, 0.07);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.45);
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.modalClose:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+.modalIconWrap {
+  width: 56px;
+  height: 56px;
+  background: rgba(49, 156, 182, 0.1);
+  border: 1px solid rgba(49, 156, 182, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-md);
+}
+
+.iconSuccess {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.iconError {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+.modalIconSvg {
+  color: var(--primary-blue-light) !important;
+  font-size: 26px !important;
+}
+
+.iconSuccess .modalIconSvg {
+  color: #4ADE80 !important;
+}
+
+.iconError .modalIconSvg {
+  color: #F87171 !important;
 }
 
 .modalTitle {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--text-white);
   text-align: center;
-  margin-bottom: var(--space-sm);
+  margin-bottom: 0.5rem;
 }
 
 .modalDesc {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
   text-align: center;
   line-height: 1.6;
   margin-bottom: var(--space-lg);
 }
 
 .modalDesc strong {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .modalForm {
@@ -629,19 +792,20 @@
 
 .modalActions {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.625rem;
 }
 
-/* ─── 統計格子 ─────────────────────────────────────────────────────────── */
+/* ─── 統計格子 ────────────────────────────────────────────────────────────── */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-  margin-bottom: var(--space-sm);
+  margin-bottom: 0.25rem;
 }
 
 .statCard {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-md);
   padding: 0.75rem;
   text-align: center;
@@ -650,14 +814,14 @@
   gap: 0.2rem;
 }
 
-.statSuccess {
-  background: rgba(76, 175, 80, 0.12);
-  border: 1px solid rgba(76, 175, 80, 0.25);
+.stat_success {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.2);
 }
 
-.statWarn {
-  background: rgba(255, 152, 0, 0.12);
-  border: 1px solid rgba(255, 152, 0, 0.25);
+.stat_warn {
+  background: rgba(251, 146, 60, 0.08);
+  border-color: rgba(251, 146, 60, 0.2);
 }
 
 .statNum {
@@ -668,6 +832,7 @@
 }
 
 .statLabel {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.03em;
 }
