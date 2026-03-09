@@ -28,6 +28,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# APK (超過 GitHub 100MB 限制，請用 GitHub Releases 託管)
+*.apk
+/public/app-release.apk
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

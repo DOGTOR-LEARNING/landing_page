@@ -1,0 +1,64 @@
+.main {
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+}
+
+.pageHeader {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    font-size: 3rem;
+  }
+}
+
+.pageSubtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.downloadBox {
+  padding: var(--space-2xl);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.downloadText {
+  font-size: 1.125rem;
+  color: var(--text-white);
+  margin-bottom: var(--space-lg);
+  font-weight: 500;
+}
+
+.ctaBox {
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.ctaText {
+  font-size: 1.125rem;
+  color: var(--text-white);
+  margin-bottom: var(--space-md);
+  font-weight: 500;
+}
