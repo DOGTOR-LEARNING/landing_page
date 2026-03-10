@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import styles from './admin.module.css'
@@ -22,6 +22,12 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import SmartphoneOutlinedIcon from '@mui/icons-material/SmartphoneOutlined'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined'
+import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded'
+import AddRoundedIcon from '@mui/icons-material/AddRounded'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
 
 // ─── 通知類型選項 ────────────────────────────────────────────────────────────
 const NOTIFICATION_TYPES = [
@@ -33,6 +39,22 @@ const NOTIFICATION_TYPES = [
 
 const INIT_BROADCAST = { title: '', content: '', notification_type: 'system', save_to_db: true }
 const INIT_EMAIL     = { emails: '', title: '', content: '', notification_type: 'system', save_to_db: true }
+
+// ─── 布告欄管理 ───────────────────────────────────────────────────────────────
+const ANN_BASE = '/api/admin/announcements'
+
+const ANN_TYPES = [
+  { value: 'info',        label: '資訊', color: '#38BDF8', bg: 'rgba(56,189,248,0.1)',  border: 'rgba(56,189,248,0.25)' },
+  { value: 'warning',     label: '警告', color: '#FBBF24', bg: 'rgba(251,191,36,0.1)',  border: 'rgba(251,191,36,0.25)' },
+  { value: 'update',      label: '更新', color: '#4ADE80', bg: 'rgba(74,222,128,0.1)',  border: 'rgba(74,222,128,0.25)' },
+  { value: 'maintenance', label: '維護', color: '#C084FC', bg: 'rgba(192,132,252,0.1)', border: 'rgba(192,132,252,0.25)' },
+]
+
+const ANN_INIT = {
+  title: '', content: '', type: 'info',
+  is_active: true, force_update: false,
+  expires_at: '', min_app_version: '', update_url: '',
+}
 
 // ─── Toggle 開關 ─────────────────────────────────────────────────────────────
 function Toggle({ checked, onChange, label, desc }) {
@@ -257,6 +279,515 @@ function ModuleCard({ icon: Icon, title, sub, badge, children }) {
         </div>
       </div>
     </section>
+  )
+}
+
+// ─── 公告類型標籤 ─────────────────────────────────────────────────────────────
+function AnnTypeBadge({ type, small }) {
+  const cfg = ANN_TYPES.find(t => t.value === type) ?? ANN_TYPES[0]
+  return (
+    <span
+      className={`${styles.annTypeBadge}${small ? ' ' + styles.annTypeBadgeSm : ''}`}
+      style={{ color: cfg.color, background: cfg.bg, borderColor: cfg.border }}
+    >
+      {cfg.label}
+    </span>
+  )
+}
+
+// ─── 公告卡片（用戶視角預覽）─────────────────────────────────────────────────
+function AnnCard({ ann }) {
+  const cfg = ANN_TYPES.find(t => t.value === ann.type) ?? ANN_TYPES[0]
+  return (
+    <div className={styles.annCard} style={{ borderLeftColor: cfg.color }}>
+      <div className={styles.annCardHeader}>
+        <AnnTypeBadge type={ann.type} small />
+        <span className={styles.annCardTime}>
+          {ann.created_at ? new Date(ann.created_at).toLocaleDateString('zh-TW') : ''}
+        </span>
+      </div>
+      <p className={styles.annCardTitle}>{ann.title}</p>
+      {ann.content && <p className={styles.annCardContent}>{ann.content}</p>}
+    </div>
+  )
+}
+
+// ─── 公告表單（新增 / 編輯）─────────────────────────────────────────────────
+function AnnForm({ initial, onSave, onCancel, loading, isEdit }) {
+  const [form, setForm] = useState({ ...ANN_INIT, ...initial })
+  const originalExpiresAt = initial?.expires_at ?? ''
+  const upd   = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const valid = form.title.trim() && form.content.trim()
+
+  const handleSave = () => {
+    const body = { ...form }
+    if (isEdit) {
+      body.expires_at = body.expires_at || (originalExpiresAt ? 'null' : undefined)
+      if (body.expires_at === undefined) delete body.expires_at
+    } else {
+      if (!body.expires_at) delete body.expires_at
+    }
+    if (!body.min_app_version) delete body.min_app_version
+    if (!body.update_url) delete body.update_url
+    onSave(body)
+  }
+
+  return (
+    <div className={styles.annForm}>
+      {/* 公告類型 */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>公告類型</label>
+        <div className={styles.annTypeGrid}>
+          {ANN_TYPES.map(t => (
+            <button
+              key={t.value} type="button"
+              className={`${styles.annTypeBtn}${form.type === t.value ? ' ' + styles.annTypeBtnActive : ''}`}
+              style={form.type === t.value ? { borderColor: t.color, background: t.bg, color: t.color } : {}}
+              onClick={() => upd('type', t.value)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 標題 */}
+      <div className={styles.fieldGroup}>
+        <div className={styles.labelRow}>
+          <label className={styles.label}>標題 <span className={styles.required}>*</span></label>
+          <CharCount value={form.title} max={100} />
+        </div>
+        <input
+          type="text" className={styles.input} placeholder="公告標題"
+          maxLength={100} value={form.title}
+          onChange={e => upd('title', e.target.value)}
+        />
+      </div>
+
+      {/* 內容 */}
+      <div className={styles.fieldGroup}>
+        <div className={styles.labelRow}>
+          <label className={styles.label}>內容 <span className={styles.required}>*</span></label>
+          <CharCount value={form.content} max={500} />
+        </div>
+        <textarea
+          className={styles.textarea} placeholder="公告內容" rows={4}
+          maxLength={500} value={form.content}
+          onChange={e => upd('content', e.target.value)}
+        />
+      </div>
+
+      {/* 啟用 / 強制更新 */}
+      <div className={styles.annToggleRow}>
+        <Toggle
+          checked={form.is_active}
+          onChange={v => upd('is_active', v)}
+          label="啟用公告"
+          desc="關閉後用戶不會看到此公告"
+        />
+        <Toggle
+          checked={form.force_update}
+          onChange={v => upd('force_update', v)}
+          label="強制更新"
+          desc="開啟後提示用戶必須更新 App"
+        />
+      </div>
+
+      {/* 到期時間 */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>到期時間（選填）</label>
+        <input
+          type="datetime-local" className={styles.input}
+          value={form.expires_at}
+          onChange={e => upd('expires_at', e.target.value)}
+        />
+        <p className={styles.hint}>
+          {isEdit ? '清空此欄位將清除到期設定（永不過期）' : '不填表示永不到期'}
+        </p>
+      </div>
+
+      {/* 強制更新附加欄位 */}
+      {form.force_update && (
+        <>
+          <div className={styles.fieldGroup}>
+            <label className={styles.label}>最低支援版本</label>
+            <input
+              type="text" className={styles.input} placeholder="例：1.0.2"
+              value={form.min_app_version}
+              onChange={e => upd('min_app_version', e.target.value)}
+            />
+            <p className={styles.hint}>低於此版本的 App 將顯示強制更新提示</p>
+          </div>
+          <div className={styles.fieldGroup}>
+            <label className={styles.label}>商店更新連結</label>
+            <input
+              type="text" className={styles.input}
+              placeholder="例：https://apps.apple.com/..."
+              value={form.update_url}
+              onChange={e => upd('update_url', e.target.value)}
+            />
+          </div>
+        </>
+      )}
+
+      {/* 操作按鈕 */}
+      <div className={styles.modalActions}>
+        <button type="button" className={styles.btnSecondary} onClick={onCancel} disabled={loading}>
+          取消
+        </button>
+        <button
+          type="button" className={styles.btnPrimary}
+          style={{ flex: 1 }} disabled={!valid || loading}
+          onClick={handleSave}
+        >
+          {loading
+            ? <><span className={styles.spinner} />{isEdit ? '儲存中…' : '新增中…'}</>
+            : isEdit ? '儲存變更' : '新增公告'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ─── 布告欄管理面板 ───────────────────────────────────────────────────────────
+function AnnouncementsPanel() {
+  const [publicAnns, setPublicAnns]       = useState(null)
+  const [publicLoading, setPublicLoading] = useState(false)
+  const [annKeyInput, setAnnKeyInput]     = useState('')
+  const [annKey, setAnnKey]               = useState('')
+  const [annKeyErr, setAnnKeyErr]         = useState('')
+  const [adminAnns, setAdminAnns]         = useState(null)
+  const [adminLoading, setAdminLoading]   = useState(false)
+  const [formMode, setFormMode]           = useState(null)
+  const [submitting, setSubmitting]       = useState(false)
+  const [deleteId, setDeleteId]           = useState(null)
+  const [annMsg, setAnnMsg]               = useState(null)
+
+  const fetchPublicAnns = useCallback(async () => {
+    setPublicLoading(true)
+    try {
+      const res  = await fetch(ANN_BASE)
+      const data = await res.json()
+      setPublicAnns(data.success ? (data.data?.announcements ?? []) : [])
+    } catch {
+      setPublicAnns([])
+    } finally {
+      setPublicLoading(false)
+    }
+  }, [])
+
+  const fetchAdminAnns = useCallback(async (key) => {
+    setAdminLoading(true)
+    try {
+      const res  = await fetch(`${ANN_BASE}/admin/all`, {
+        headers: { 'X-Announcements-Key': key },
+      })
+      const data = await res.json()
+      if (data.success) {
+        const list = data.data?.announcements ?? (Array.isArray(data.data) ? data.data : [])
+        setAdminAnns(list)
+        return true
+      }
+      setAnnKeyErr(data.message || '權限密語錯誤，請重新輸入')
+      return false
+    } catch {
+      setAnnKeyErr('連線失敗，請稍後再試')
+      return false
+    } finally {
+      setAdminLoading(false)
+    }
+  }, [])
+
+  useEffect(() => { fetchPublicAnns() }, [fetchPublicAnns])
+
+  const handleKeySubmit = async (e) => {
+    e.preventDefault()
+    if (!annKeyInput.trim()) { setAnnKeyErr('請輸入公佈欄權限密語'); return }
+    setAnnKeyErr('')
+    const ok = await fetchAdminAnns(annKeyInput.trim())
+    if (ok) setAnnKey(annKeyInput.trim())
+  }
+
+  const handleSave = async (processedBody) => {
+    setSubmitting(true)
+    setAnnMsg(null)
+    const isEdit = formMode?.mode === 'edit'
+    const id     = formMode?.id
+    try {
+      const url = isEdit
+        ? `${ANN_BASE}/${id}`
+        : ANN_BASE
+      const res  = await fetch(url, {
+        method: isEdit ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Announcements-Key': annKey },
+        body: JSON.stringify(processedBody),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setAnnMsg({ ok: true, text: isEdit ? '公告已更新！' : '公告已新增！' })
+        setFormMode(null)
+        fetchAdminAnns(annKey)
+        fetchPublicAnns()
+      } else {
+        setAnnMsg({ ok: false, text: data.message || '操作失敗' })
+      }
+    } catch (err) {
+      setAnnMsg({ ok: false, text: `連線失敗: ${err.message}` })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleToggleActive = async (ann) => {
+    try {
+      await fetch(`${ANN_BASE}/${ann.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Announcements-Key': annKey },
+        body: JSON.stringify({ is_active: !ann.is_active }),
+      })
+      fetchAdminAnns(annKey)
+      fetchPublicAnns()
+    } catch {}
+  }
+
+  const handleDelete = async (id) => {
+    setAdminLoading(true)
+    try {
+      const res  = await fetch(`${ANN_BASE}/${id}`, {
+        method: 'DELETE',
+        headers: { 'X-Announcements-Key': annKey },
+      })
+      const data = await res.json()
+      if (data.success) {
+        setAnnMsg({ ok: true, text: '公告已刪除' })
+        setDeleteId(null)
+        fetchAdminAnns(annKey)
+        fetchPublicAnns()
+      } else {
+        setAnnMsg({ ok: false, text: data.message || '刪除失敗' })
+      }
+    } catch (err) {
+      setAnnMsg({ ok: false, text: `連線失敗: ${err.message}` })
+    } finally {
+      setAdminLoading(false)
+    }
+  }
+
+  const clearKey = () => {
+    setAnnKey(''); setAnnKeyInput(''); setAdminAnns(null)
+    setFormMode(null); setDeleteId(null); setAnnMsg(null)
+  }
+
+  return (
+    <div className={styles.annPanel}>
+
+      {/* ── 用戶視角 ── */}
+      <div className={styles.annSection}>
+        <div className={styles.annSectionHeader}>
+          <span className={styles.annSectionLabel}>用戶看到的公告</span>
+          <button
+            type="button" className={styles.annRefreshBtn}
+            onClick={fetchPublicAnns} disabled={publicLoading}
+          >
+            <RefreshRoundedIcon
+              style={{ fontSize: 15 }}
+              className={publicLoading ? styles.spinning : ''}
+            />
+            重新載入
+          </button>
+        </div>
+
+        {publicLoading && !publicAnns ? (
+          <div className={styles.annLoading}><span className={styles.spinner} />載入中…</div>
+        ) : publicAnns?.length === 0 ? (
+          <div className={styles.annEmpty}>目前沒有啟用中的公告</div>
+        ) : (
+          <div className={styles.annPublicList}>
+            {publicAnns?.map(ann => <AnnCard key={ann.id} ann={ann} />)}
+          </div>
+        )}
+      </div>
+
+      <div className={styles.annDivider} />
+
+      {/* ── 管理員工具 ── */}
+      <div className={styles.annSection}>
+        <div className={styles.annSectionHeader}>
+          <span className={styles.annSectionLabel}>管理員工具</span>
+          {annKey && (
+            <div className={styles.annAdminHeaderRight}>
+              <span className={styles.annKeyBadge}>
+                <CheckCircleOutlineRoundedIcon style={{ fontSize: 13 }} />已驗證
+              </span>
+              <button type="button" className={styles.annClearKeyBtn} onClick={clearKey}>
+                清除權限密語
+              </button>
+            </div>
+          )}
+        </div>
+
+        {!annKey ? (
+          /* ─ 權限密語輸入 ─ */
+          <form onSubmit={handleKeySubmit} className={styles.annKeyForm}>
+            <p className={styles.hint}>輸入 X-Announcements-Key 以解鎖新增、編輯、刪除功能</p>
+            <div className={styles.fieldGroup}>
+              <input
+                type="password"
+                className={`${styles.input}${annKeyErr ? ' ' + styles.inputError : ''}`}
+                placeholder="X-Announcements-Key"
+                value={annKeyInput}
+                onChange={e => { setAnnKeyInput(e.target.value); setAnnKeyErr('') }}
+                autoComplete="off"
+              />
+              {annKeyErr && <p className={styles.errorMsg}>{annKeyErr}</p>}
+            </div>
+            <button
+              type="submit" className={styles.btnPrimary}
+              disabled={adminLoading} style={{ width: '100%' }}
+            >
+              {adminLoading
+                ? <><span className={styles.spinner} />驗證中…</>
+                : <><VpnKeyOutlinedIcon style={{ fontSize: 16 }} />解鎖管理功能</>}
+            </button>
+          </form>
+        ) : (
+          /* ─ 管理面板 ─ */
+          <>
+            {/* 操作結果提示 */}
+            {annMsg && (
+              <div className={`${styles.annMsg} ${annMsg.ok ? styles.annMsgOk : styles.annMsgErr}`}>
+                {annMsg.ok
+                  ? <CheckCircleOutlineRoundedIcon style={{ fontSize: 15 }} />
+                  : <ErrorOutlineRoundedIcon style={{ fontSize: 15 }} />}
+                <span>{annMsg.text}</span>
+                <button type="button" className={styles.annMsgClose} onClick={() => setAnnMsg(null)}>
+                  <CloseRoundedIcon style={{ fontSize: 13 }} />
+                </button>
+              </div>
+            )}
+
+            {/* 新增按鈕 / 新增表單 */}
+            {formMode?.mode === 'new' ? (
+              <div className={styles.annFormWrap}>
+                <p className={styles.annFormTitle}>新增公告</p>
+                <AnnForm
+                  onSave={handleSave}
+                  onCancel={() => setFormMode(null)}
+                  loading={submitting}
+                  isEdit={false}
+                />
+              </div>
+            ) : (
+              <button
+                type="button" className={styles.annAddBtn}
+                onClick={() => { setFormMode({ mode: 'new' }); setAnnMsg(null); setDeleteId(null) }}
+              >
+                <AddRoundedIcon style={{ fontSize: 18 }} />新增公告
+              </button>
+            )}
+
+            {/* 所有公告列表 */}
+            {adminLoading && !adminAnns ? (
+              <div className={styles.annLoading}><span className={styles.spinner} />載入中…</div>
+            ) : adminAnns?.length === 0 ? (
+              <div className={styles.annEmpty}>資料庫中沒有任何公告</div>
+            ) : (
+              <div className={styles.adminAnnList}>
+                {adminAnns?.map(ann => (
+                  <div
+                    key={ann.id}
+                    className={`${styles.adminAnnRow}${!ann.is_active ? ' ' + styles.adminAnnRowDimmed : ''}`}
+                  >
+                    {formMode?.mode === 'edit' && formMode.id === ann.id ? (
+                      /* 編輯表單 */
+                      <div className={styles.annFormWrap} style={{ margin: 0, border: 'none', borderRadius: 0 }}>
+                        <p className={styles.annFormTitle}>編輯公告 #{ann.id}</p>
+                        <AnnForm
+                          initial={{
+                            title: ann.title, content: ann.content, type: ann.type,
+                            is_active: ann.is_active, force_update: ann.force_update,
+                            expires_at: ann.expires_at ? ann.expires_at.slice(0, 16) : '',
+                            min_app_version: ann.min_app_version || '',
+                            update_url: ann.update_url || '',
+                          }}
+                          onSave={handleSave}
+                          onCancel={() => setFormMode(null)}
+                          loading={submitting}
+                          isEdit
+                        />
+                      </div>
+                    ) : deleteId === ann.id ? (
+                      /* 刪除確認 */
+                      <div className={styles.deleteConfirm}>
+                        <p className={styles.deleteConfirmText}>
+                          確定刪除「{ann.title}」？此操作無法還原。
+                        </p>
+                        <div className={styles.modalActions}>
+                          <button
+                            type="button" className={styles.btnSecondary}
+                            onClick={() => setDeleteId(null)} disabled={adminLoading}
+                          >
+                            取消
+                          </button>
+                          <button
+                            type="button" className={styles.btnDanger}
+                            onClick={() => handleDelete(ann.id)} disabled={adminLoading}
+                          >
+                            {adminLoading
+                              ? <><span className={styles.spinner} />刪除中…</>
+                              : '確認刪除'}
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* 一般列表行 */
+                      <div className={styles.adminAnnRowInner}>
+                        <AnnTypeBadge type={ann.type} small />
+                        <div className={styles.adminAnnInfo}>
+                          <span className={styles.adminAnnTitle}>{ann.title}</span>
+                          <span className={styles.adminAnnMeta}>
+                            #{ann.id}
+                            {ann.expires_at
+                              ? ` · 到期：${new Date(ann.expires_at).toLocaleDateString('zh-TW')}`
+                              : ' · 永不到期'}
+                            {ann.force_update && ' · 強制更新'}
+                          </span>
+                        </div>
+                        <div className={styles.adminAnnRowRight}>
+                          <button
+                            type="button"
+                            className={`${styles.annStatusBtn} ${ann.is_active ? styles.annStatusActive : styles.annStatusInactive}`}
+                            onClick={() => handleToggleActive(ann)}
+                            title={ann.is_active ? '點擊停用' : '點擊啟用'}
+                          >
+                            {ann.is_active ? '啟用' : '停用'}
+                          </button>
+                          <button
+                            type="button" className={styles.annIconBtn}
+                            onClick={() => { setFormMode({ mode: 'edit', id: ann.id }); setAnnMsg(null); setDeleteId(null) }}
+                            title="編輯"
+                          >
+                            <EditOutlinedIcon style={{ fontSize: 16 }} />
+                          </button>
+                          <button
+                            type="button"
+                            className={`${styles.annIconBtn} ${styles.annIconBtnDanger}`}
+                            onClick={() => { setDeleteId(ann.id); setFormMode(null) }}
+                            title="刪除"
+                          >
+                            <DeleteOutlineIcon style={{ fontSize: 16 }} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -617,6 +1148,18 @@ export default function AdminPage() {
                   </button>
                 </form>
               </ModuleCard>
+
+              {/* 布告欄管理 */}
+              <div style={{ gridColumn: '1 / -1' }}>
+                <ModuleCard
+                  icon={AnnouncementOutlinedIcon}
+                  title="布告欄管理"
+                  sub="管理 App 內公告：展開可預覽用戶視角，輸入權限密語後可新增、編輯、刪除"
+                  badge="公告系統"
+                >
+                  <AnnouncementsPanel />
+                </ModuleCard>
+              </div>
 
             </div>
           </div>
