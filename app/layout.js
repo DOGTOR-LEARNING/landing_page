@@ -98,6 +98,7 @@ export default function RootLayout({ children }) {
           name="google-site-verification"
           content="I_Hcgwx2ddbvZetJlUgo0sOhZ86r3qc8J4scuXRY-tE"
         />
+        <link rel="llms-txt" type="text/plain" href="/llms.txt" />
         {jsonLd.map((schema, i) => (
           <script
             key={i}
