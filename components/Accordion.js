@@ -17,17 +17,23 @@ export default function Accordion({ items }) {
           key={index}
           className={`${styles.accordionItem} ${openIndex === index ? styles.open : ''}`}
         >
-          <button
-            className={styles.accordionHeader}
-            onClick={() => toggleItem(index)}
-            aria-expanded={openIndex === index}
+          <h3 className={styles.accordionHeading}>
+            <button
+              className={styles.accordionHeader}
+              onClick={() => toggleItem(index)}
+              aria-expanded={openIndex === index}
+            >
+              <span className={styles.accordionQuestion}>{item.question}</span>
+              <span className={styles.accordionIcon} aria-hidden="true">
+                {openIndex === index ? '−' : '+'}
+              </span>
+            </button>
+          </h3>
+          <div
+            className={styles.accordionBody}
+            role="region"
+            aria-hidden={openIndex !== index}
           >
-            <span className={styles.accordionQuestion}>{item.question}</span>
-            <span className={styles.accordionIcon}>
-              {openIndex === index ? '−' : '+'}
-            </span>
-          </button>
-          <div className={styles.accordionBody}>
             <div className={styles.accordionContent}>
               {item.answer}
             </div>
