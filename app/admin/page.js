@@ -629,7 +629,7 @@ function AnnouncementsPanel() {
         {!annKey ? (
           /* ─ 權限密語輸入 ─ */
           <form onSubmit={handleKeySubmit} className={styles.annKeyForm}>
-            <p className={styles.hint}>輸入 X-Announcements-Key 以解鎖新增、編輯、刪除功能</p>
+            <p className={styles.hint}>輸入 公佈欄權限密語 以解鎖新增、編輯、刪除功能</p>
             <div className={styles.fieldGroup}>
               <input
                 type="password"
