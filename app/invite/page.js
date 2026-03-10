@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
@@ -8,45 +8,16 @@ import Footer from '@/components/Footer'
 import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
-const APP_OPEN_TIMEOUT_MS = 1800
 
 function buildAppInviteUrl(inviter) {
   const q = inviter != null && inviter !== '' ? `?inviter=${encodeURIComponent(inviter)}` : ''
   return `dogtor://invite${q}`
 }
 
-function isMobileDevice() {
-  if (typeof window === 'undefined') return false
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-    (typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches)
-}
-
 function InviteContent() {
   const searchParams = useSearchParams()
   const inviter = searchParams.get('inviter')
-  const [isMobile, setIsMobile] = useState(null)
-  const [showLanding, setShowLanding] = useState(false)
-
-  useEffect(() => {
-    const mobile = isMobileDevice()
-    setIsMobile(mobile)
-
-    if (!mobile) {
-      setShowLanding(true)
-      return
-    }
-
-    const schemeUrl = buildAppInviteUrl(inviter)
-    window.location = schemeUrl
-
-    const t = setTimeout(() => {
-      setShowLanding(true)
-    }, APP_OPEN_TIMEOUT_MS)
-    return () => clearTimeout(t)
-  }, [inviter])
-
   const appInviteUrl = buildAppInviteUrl(inviter)
-  const showOpeningHint = isMobile === true && !showLanding
 
   return (
     <>
@@ -64,12 +35,7 @@ function InviteContent() {
             </p>
           </div>
 
-          {showOpeningHint ? (
-            <section className={styles.ctaSection}>
-              <p className={styles.ctaText}>正在開啟 App…</p>
-            </section>
-          ) : (
-            <section className={styles.ctaSection}>
+          <section className={styles.ctaSection}>
               <p className={styles.ctaText}>
                 立即下載 App，開始你的學習冒險
               </p>
@@ -101,7 +67,6 @@ function InviteContent() {
                 </Link>
               </div>
             </section>
-          )}
         </div>
       </main>
       <Footer />
