@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import styles from './Accordion.module.css'
 
 export default function Accordion({ items }) {
@@ -35,7 +36,14 @@ export default function Accordion({ items }) {
             aria-hidden={openIndex !== index}
           >
             <div className={styles.accordionContent}>
-              {item.answer}
+              {item.answer.split('\n\n').map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+              {item.guideLink && (
+                <p className={styles.guideLink}>
+                  詳細攻略：<Link href={item.guideLink}>{item.guideTitle || '學習指南'}</Link>
+                </p>
+              )}
             </div>
           </div>
         </div>

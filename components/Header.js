@@ -36,7 +36,7 @@ export default function Header() {
             <div className={styles.logoMarks}>
               <Image
                 src="/dogtor_eng_logo.svg"
-                alt="Dogtor logo"
+                alt="Dogtor 逗課 logo"
                 width={120}
                 height={28}
                 className={styles.logoImgEn}
@@ -44,7 +44,7 @@ export default function Header() {
               />
               <Image
                 src="/dogtor_logo.svg"
-                alt="逗課 中文標誌"
+                alt="Dogtor 逗課 國高中題庫學習 App 中文標誌"
                 width={110}
                 height={28}
                 className={styles.logoImgCn}
@@ -54,6 +54,7 @@ export default function Header() {
           </Link>
 
           <nav className={styles.desktopNav}>
+            <Link href="/guide" className={styles.navLink}>學習指南</Link>
             <Link href="/faq" className={styles.navLink}>常見問題</Link>
             <Link href="/about" className={styles.navLink}>關於我們</Link>
             <Link href="/support" className={styles.navLink}>支援中心</Link>
@@ -77,6 +78,9 @@ export default function Header() {
           </button>
 
           <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
+            <Link href="/guide" className={styles.mobileNavLink} onClick={closeMenu}>
+              學習指南
+            </Link>
             <Link href="/faq" className={styles.mobileNavLink} onClick={closeMenu}>
               常見問題
             </Link>

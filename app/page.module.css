@@ -403,6 +403,77 @@
   line-height: 1.7;
 }
 
+/* Guide Section */
+.guideSection {
+  padding: 5rem 0;
+  background: rgba(16, 32, 49, 0.5);
+}
+
+.guideGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .guideGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .guideGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.guideCard {
+  display: block;
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.guideCard:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent-orange-light);
+  transform: translateY(-2px);
+}
+
+.guideCategory {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--accent-orange-light);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.guideTitle {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-sm);
+  text-decoration: none;
+  color: var(--text-white);
+}
+
+.guideExcerpt {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.guideCta {
+  text-align: center;
+}
+
 /* CTA Section */
 .ctaSection {
   padding: 5rem 0 2rem 0;

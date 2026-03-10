@@ -80,3 +80,26 @@
   overflow-wrap: break-word;
   max-width: 100%;
 }
+
+.accordionContent p {
+  margin-bottom: var(--space-sm);
+}
+
+.accordionContent p:last-child {
+  margin-bottom: 0;
+}
+
+.guideLink {
+  margin-top: var(--space-md) !important;
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.guideLink a {
+  color: var(--accent-orange-light);
+  font-weight: 600;
+}
+
+.guideLink a:hover {
+  color: var(--accent-orange);
+}

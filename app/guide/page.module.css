@@ -1,0 +1,122 @@
+.main {
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+}
+
+.pageHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    font-size: 3rem;
+  }
+}
+
+.pageSubtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+.categoryTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.categoryTab {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  color: var(--text-white);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.categoryTab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--accent-orange-light);
+  color: var(--accent-orange-light);
+}
+
+.articleGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .articleGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.articleCard {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.articleCard:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--accent-orange-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.articleLink {
+  display: block;
+  padding: var(--space-lg);
+  color: inherit;
+  text-decoration: none;
+}
+
+.articleCategory {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--accent-orange-light);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.articleTitle {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-bottom: var(--space-sm);
+  color: var(--text-white);
+}
+
+.articleExcerpt {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.articleMeta {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}

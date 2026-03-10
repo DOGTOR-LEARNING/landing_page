@@ -88,11 +88,15 @@ const faqData = [
     question: 'Dogtor 逗課適合幾年級的學生？',
     answer:
       'Dogtor 逗課主要針對國中生（七至九年級）和高中生（十至十二年級）設計。國中生可以使用數學、自然等科目，以及會考考古題備戰會考；高中生則可透過化學題庫強化學測準備。',
+    guideLink: '/guide/xue-ce-dao-shu-yi-ge-yue-ke-yi-zuo-shen-me',
+    guideTitle: '學測倒數一個月可以做什麼？',
   },
   {
     question: '如何開始使用 Dogtor 逗課？',
     answer:
       '只需在 App Store 搜尋「Dogtor 逗課」或點擊下載連結，免費安裝後以 Google 帳號登入，填寫暱稱與感興趣的科目，即可立刻開始練習題庫或挑戰好友對戰。',
+    guideLink: '/guide/gong-che-shang-guo-zhong-ying-wen-dan-zi-app',
+    guideTitle: '通勤時間怎麼善用學習？',
   },
   {
     question: 'AI 解題功能是什麼？如何使用？',
@@ -103,6 +107,8 @@ const faqData = [
     question: '錯題本功能怎麼運作？',
     answer:
       '每次你答錯的題目都會自動收進錯題本，你可以隨時開啟錯題本複習這些弱點題目。系統會追蹤你對每道錯題的掌握程度，幫助你有效率地把弱點變強項。',
+    guideLink: '/guide/guo-zhong-sheng-zen-me-zheng-li-cuo-ti-ben',
+    guideTitle: '國中生如何整理錯題本？',
   },
   {
     question: '好友對戰是怎麼進行的？',

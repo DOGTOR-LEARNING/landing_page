@@ -4,11 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { getFeaturedArticles } from '@/lib/articles'
 import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 export default function Home() {
+  const featuredArticles = getFeaturedArticles(4)
+
   return (
     <>
       <Header />
@@ -99,7 +102,7 @@ export default function Home() {
                 <div className={styles.featureImageContainer}>
                   <Image
                     src="/feature_1.png"
-                    alt="Dogtor 逗課好友對戰功能 — 與朋友互相挑戰練習題"
+                    alt="Dogtor 逗課好友對戰功能 — 國高中生會考學測複習與朋友互相挑戰練習題"
                     fill
                     className={styles.featureImage}
                   />
@@ -117,7 +120,7 @@ export default function Home() {
                 <div className={styles.featureImageContainer}>
                   <Image
                     src="/feature_2.png"
-                    alt="Dogtor 逗課遊戲化成就系統 — 蒐集星星解鎖成就"
+                    alt="Dogtor 逗課遊戲化成就系統 — 會考學測刷題蒐集星星解鎖成就"
                     fill
                     className={styles.featureImage}
                   />
@@ -135,7 +138,7 @@ export default function Home() {
                 <div className={styles.featureImageContainer}>
                   <Image
                     src="/home-background-sky.png"
-                    alt="Dogtor 逗課 AI 個人化學習計畫"
+                    alt="Dogtor 逗課 AI 個人化學習計畫 — 錯題本與歷屆試題推薦"
                     fill
                     className={styles.featureImage}
                   />
@@ -151,6 +154,38 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* 精選學習攻略 */}
+        {featuredArticles.length > 0 && (
+          <section className={styles.guideSection}>
+            <div className="container">
+              <div className={styles.sectionHeader}>
+                <h2 className={styles.sectionTitle}>精選學習攻略</h2>
+                <p className={styles.sectionSubtitle}>
+                  會考學測準備、讀書方法、通勤學習，一次掌握。
+                </p>
+              </div>
+              <div className={styles.guideGrid}>
+                {featuredArticles.map((article) => (
+                  <Link
+                    key={article.slug}
+                    href={`/guide/${article.slug}`}
+                    className={styles.guideCard}
+                  >
+                    <span className={styles.guideCategory}>{article.category}</span>
+                    <h3 className={styles.guideTitle}>{article.title}</h3>
+                    <p className={styles.guideExcerpt}>{article.excerpt}</p>
+                  </Link>
+                ))}
+              </div>
+              <div className={styles.guideCta}>
+                <Link href="/guide" className="btn btn-secondary">
+                  查看全部學習指南
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* CTA Section */}
         <section className={styles.ctaSection}>
