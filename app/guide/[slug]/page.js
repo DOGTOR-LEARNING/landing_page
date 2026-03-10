@@ -10,6 +10,7 @@ import {
   getRelatedArticles,
   getArticleUrl,
 } from '@/lib/articles'
+import MarkdownContent from '@/components/MarkdownContent'
 import styles from './page.module.css'
 
 const BASE_URL = 'https://dogtor.superb-tutor.com'
@@ -162,12 +163,14 @@ export default async function GuideArticlePage({ params }) {
             </header>
 
             <div className={styles.articleBody}>
-              <p className={styles.articleIntro}>{article.content.intro}</p>
+              <div className={styles.articleIntro}>
+                <MarkdownContent>{article.content.intro}</MarkdownContent>
+              </div>
 
               {article.content.sections?.map((section, i) => (
                 <section key={i} className={styles.articleSection}>
                   <h2>{section.h2}</h2>
-                  <p>{section.body}</p>
+                  <MarkdownContent>{section.body}</MarkdownContent>
                 </section>
               ))}
 
@@ -185,7 +188,9 @@ export default async function GuideArticlePage({ params }) {
                     {article.faq.map((item, i) => (
                       <div key={i} className={styles.faqItem}>
                         <dt>{item.question}</dt>
-                        <dd>{item.answer}</dd>
+                        <dd>
+                          <MarkdownContent>{item.answer}</MarkdownContent>
+                        </dd>
                       </div>
                     ))}
                   </dl>

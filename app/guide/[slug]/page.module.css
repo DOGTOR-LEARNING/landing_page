@@ -104,6 +104,109 @@
   margin-bottom: var(--space-md);
 }
 
+/* ── Markdown 通用樣式 ─────────────────────────────── */
+.articleIntro p,
+.articleSection p,
+.faqItem dd p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-md);
+  line-height: 1.8;
+}
+
+.articleIntro p:last-child,
+.articleSection p:last-child,
+.faqItem dd p:last-child {
+  margin-bottom: 0;
+}
+
+.articleSection :global(ul),
+.articleSection :global(ol) {
+  padding-left: 1.5rem;
+  margin-bottom: var(--space-md);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.articleSection :global(li) {
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+}
+
+.articleSection :global(strong) {
+  color: var(--text-white);
+  font-weight: 600;
+}
+
+.articleSection :global(em) {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.articleSection :global(a) {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+}
+
+.articleSection :global(a:hover) {
+  color: var(--accent-orange);
+}
+
+.articleSection :global(code) {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.articleSection :global(pre) {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin-bottom: var(--space-md);
+}
+
+.articleSection :global(pre code) {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.articleSection :global(blockquote) {
+  border-left: 3px solid var(--accent-orange-light);
+  padding-left: var(--space-md);
+  margin: var(--space-md) 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-style: italic;
+}
+
+.articleSection :global(hr) {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin: var(--space-xl) 0;
+}
+
+.articleSection :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-md);
+  font-size: 0.95rem;
+}
+
+.articleSection :global(th),
+.articleSection :global(td) {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: left;
+}
+
+.articleSection :global(th) {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  color: var(--text-white);
+}
+
 .ctaBlock {
   margin: var(--space-2xl) 0;
   padding: var(--space-xl);
