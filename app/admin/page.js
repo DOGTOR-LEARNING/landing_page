@@ -40,7 +40,7 @@ const NOTIFICATION_TYPES = [
 const INIT_BROADCAST = { title: '', content: '', notification_type: 'system', save_to_db: true }
 const INIT_EMAIL     = { emails: '', title: '', content: '', notification_type: 'system', save_to_db: true }
 
-// ─── 布告欄管理 ───────────────────────────────────────────────────────────────
+// ─── 公佈欄管理 ───────────────────────────────────────────────────────────────
 const ANN_BASE = '/api/admin/announcements'
 
 const ANN_TYPES = [
@@ -449,7 +449,7 @@ function AnnForm({ initial, onSave, onCancel, loading, isEdit }) {
   )
 }
 
-// ─── 布告欄管理面板 ───────────────────────────────────────────────────────────
+// ─── 公佈欄管理面板 ───────────────────────────────────────────────────────────
 function AnnouncementsPanel() {
   const [publicAnns, setPublicAnns]       = useState(null)
   const [publicLoading, setPublicLoading] = useState(false)
@@ -1149,11 +1149,11 @@ export default function AdminPage() {
                 </form>
               </ModuleCard>
 
-              {/* 布告欄管理 */}
+              {/* 公佈欄管理 */}
               <div style={{ gridColumn: '1 / -1' }}>
                 <ModuleCard
                   icon={AnnouncementOutlinedIcon}
-                  title="布告欄管理"
+                  title="公佈欄管理"
                   sub="管理 App 內公告：展開可預覽用戶視角，輸入權限密語後可新增、編輯、刪除"
                   badge="公告系統"
                 >
