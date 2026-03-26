@@ -3,6 +3,11 @@ export default function robots() {
 
   return {
     rules: [
+      // AdMob app-ads.txt 驗證：明確允許 Google-adstxt 爬蟲（見 Google 說明）
+      {
+        userAgent: 'Google-adstxt',
+        disallow: [''],
+      },
       {
         userAgent: '*',
         allow: '/',
