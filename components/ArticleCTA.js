@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp'
 
 export default function ArticleCTA({ painPoint, scene }) {
   return (
@@ -30,9 +31,22 @@ export default function ArticleCTA({ painPoint, scene }) {
             <span className="appStoreLabelSecondary">App Store</span>
           </span>
         </a>
-        <Link href="/apk" className="btn btn-secondary">
-          Android APK 下載
-        </Link>
+        <a
+          href={PLAY_STORE_URL}
+          className="appStoreButton"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="appStoreIcon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
+              <path d="M3.18 23.76c.35.2.76.22 1.12.03l12.72-7.27-2.8-2.8-11.04 10.04zM.5 1.18C.19 1.55 0 2.1 0 2.82v18.36c0 .72.19 1.27.5 1.64l.09.08 10.28-10.28v-.24L.59 1.1l-.09.08zM20.33 10.42l-2.82-1.61-3.13 3.13 3.13 3.14 2.84-1.63c.81-.46.81-1.21-.02-1.03zM4.3.21L17.02 7.5l-2.8 2.8L3.18.26C3.54.07 3.95.09 4.3.21z" />
+            </svg>
+          </span>
+          <span className="appStoreText">
+            <span className="appStoreLabelPrimary">Get it on</span>
+            <span className="appStoreLabelSecondary">Google Play</span>
+          </span>
+        </a>
       </div>
     </div>
   )

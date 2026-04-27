@@ -7,7 +7,7 @@ import styles from './page.module.css'
 export const metadata = {
   title: '常見問題 - Dogtor 逗課 | 國高中題庫學習 App FAQ',
   description:
-    'Dogtor 逗課常見問題：App 是否免費？支援哪些科目（國中數學、理化、自然、高中化學）？Android 版何時推出？題目來源？好友對戰怎麼玩？帳號問題如何處理？全部在這裡找到解答。',
+    'Dogtor 逗課是台灣國高中生學習 App（非獸醫服務）。常見問題解答：App 是否免費？支援哪些科目（國中數學、理化、自然、高中化學）？Android Google Play 如何下載？好友對戰怎麼玩？AI 解題怎麼用？',
   alternates: {
     canonical: 'https://dogtor.superb-tutor.com/faq',
   },
@@ -24,6 +24,11 @@ export const metadata = {
 }
 
 const faqData = [
+  {
+    question: 'Dogtor 逗課是什麼？跟狗醫生或獸醫有關嗎？',
+    answer:
+      'Dogtor 逗課是一款專為台灣國高中生設計的學習 App，與獸醫、狗醫生或寵物醫療服務完全無關。品牌名稱「Dogtor」來自學霸小狗博士的形象，象徵認真學習、知識淵博的精神；中文名「逗課」意指逗趣上課，讓學習充滿樂趣。Dogtor 逗課提供國中會考、高中學測的題庫練習、好友對戰和 AI 解題功能，與精湛教育師資團隊合作，確保題目品質符合 108 課綱。',
+  },
   {
     question: 'App 是免費的嗎？',
     answer:
@@ -67,7 +72,7 @@ const faqData = [
   {
     question: '可以在 Android 上使用嗎？',
     answer:
-      '目前我們專注於 iOS 版本，但 Android 版本也在規劃中。請關注我們的更新！如果你有 Android 裝置，可以先嘗試下載我們提供的 APK 安裝檔，並追蹤官方公告以取得最新資訊。',
+      '可以！Dogtor 逗課現已登上 Google Play，Android 用戶可直接在 Play 商店搜尋「Dogtor 逗課」免費下載，或點擊頁面上的 Google Play 按鈕前往下載。',
   },
   {
     question: '如何回報問題或建議新功能？',

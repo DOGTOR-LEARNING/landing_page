@@ -20,7 +20,7 @@ export default function Footer() {
           
           <div className={styles.footerLinks}>
             <Link href="/guide">學習指南</Link>
-            <Link href="/apk">下載 Android APK</Link>
+            <a href="https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp" target="_blank" rel="noreferrer">Android Google Play</a>
             <Link href="/terms">服務條款</Link>
             <Link href="/privacy">隱私權政策</Link>
             <Link href="/support">支援中心</Link>
