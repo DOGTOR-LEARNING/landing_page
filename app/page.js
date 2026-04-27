@@ -67,9 +67,6 @@ export default function Home() {
                     <span className="appStoreLabelSecondary">Google Play</span>
                   </span>
                   </a>
-                  <Link href="#features" className="btn btn-secondary">
-                    查看特色
-                  </Link>
                 </div>
               </div>
 
