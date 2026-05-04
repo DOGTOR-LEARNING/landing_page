@@ -1,0 +1,374 @@
+.page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 16px;
+}
+
+.shell {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(16, 32, 49, 0.14);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--primary-blue);
+  overflow: hidden;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0b2f3a;
+  background: rgba(49, 156, 182, 0.18);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--text-gray);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.langToggle {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.langLabel {
+  font-size: 12px;
+  color: var(--text-gray);
+  white-space: nowrap;
+}
+
+.langButtons {
+  display: inline-flex;
+  background: #ffffff;
+  border: 1px solid rgba(16, 32, 49, 0.08);
+  border-radius: 9999px;
+  padding: 3px;
+  box-shadow: 0 6px 18px rgba(16, 32, 49, 0.08);
+  flex-shrink: 0;
+}
+
+.langButton {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 9999px;
+  color: var(--text-dark);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 48px;
+}
+
+.langButtonActive {
+  background: var(--primary-blue-dark);
+  color: #ffffff;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(16, 32, 49, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(16, 32, 49, 0.08);
+  overflow: hidden;
+}
+
+.cardHeader {
+  background: #2f8dcf;
+  color: #ffffff;
+  padding: 18px 18px 16px;
+}
+
+.cardHeaderTitle {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.cardHeaderSub {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  opacity: 0.95;
+  font-size: 14px;
+}
+
+.section {
+  padding: 18px;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+.divider {
+  height: 1px;
+  background: rgba(16, 32, 49, 0.08);
+  margin: 14px 0 0;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.metric {
+  text-align: center;
+  padding: 10px 8px;
+  border-radius: 14px;
+  background: rgba(16, 32, 49, 0.03);
+}
+
+.metricValue {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
+.metricValueGreen {
+  color: #1b9b58;
+}
+
+.metricValueOrange {
+  color: #d57b00;
+}
+
+.metricLabel {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-gray);
+}
+
+.threeCol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.mistakesList {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.mistakeCard {
+  border: 1px solid rgba(16, 32, 49, 0.08);
+  background: rgba(16, 32, 49, 0.02);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.mistakeQ {
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.choiceGrid {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.choice {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(16, 32, 49, 0.08);
+}
+
+.choiceKey {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  background: rgba(16, 32, 49, 0.06);
+  color: rgba(16, 32, 49, 0.9);
+}
+
+.choiceText {
+  color: var(--text-dark);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.choicePicked {
+  border-color: rgba(213, 123, 0, 0.45);
+  box-shadow: 0 0 0 3px rgba(213, 123, 0, 0.10);
+}
+
+.choiceCorrect {
+  border-color: rgba(27, 155, 88, 0.45);
+  box-shadow: 0 0 0 3px rgba(27, 155, 88, 0.10);
+}
+
+.answerRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.answerItem {
+  background: #ffffff;
+  border: 1px solid rgba(16, 32, 49, 0.08);
+  border-radius: 14px;
+  padding: 10px;
+}
+
+.answerLabel {
+  font-size: 12px;
+  color: var(--text-gray);
+}
+
+.answerValueBad {
+  margin-top: 4px;
+  font-weight: 900;
+  color: #b85a00;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.answerValueGood {
+  margin-top: 4px;
+  font-weight: 900;
+  color: #1b9b58;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.mistakeExplain {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(16, 32, 49, 0.78);
+}
+
+.bulletIntro {
+  margin-top: 12px;
+  color: var(--text-gray);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.bullets {
+  margin-top: 10px;
+  padding-left: 18px;
+  color: var(--text-dark);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.bullets li + li {
+  margin-top: 8px;
+}
+
+.unitBlock {
+  margin-top: 14px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 32, 49, 0.08);
+  background: rgba(49, 156, 182, 0.08);
+}
+
+.unitTitle {
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: 14px;
+}
+
+.unitBody {
+  margin-top: 6px;
+  color: rgba(16, 32, 49, 0.78);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+@media (max-width: 360px) {
+  .metricGrid,
+  .threeCol {
+    grid-template-columns: 1fr;
+  }
+  .answerRow {
+    grid-template-columns: 1fr;
+  }
+  .title {
+    font-size: 15px;
+  }
+}
+

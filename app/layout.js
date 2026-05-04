@@ -1,4 +1,5 @@
 import './globals.css'
+import { headers } from 'next/headers'
 
 export const metadata = {
   metadataBase: new URL('https://dogtor.superb-tutor.com'),
@@ -187,9 +188,11 @@ const jsonLd = [
   },
 ]
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const h = await headers()
+  const locale = h.get('x-locale') || 'zh-TW'
   return (
-    <html lang="zh-TW">
+    <html lang={locale}>
       <head>
         <meta
           name="google-site-verification"
