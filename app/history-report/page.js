@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import { headers } from 'next/headers'
-import styles from './page.module.css'
-import { getReportMessages } from '@/lib/i18n/reportMessages'
-import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
+import styles from '../report/page.module.css'
+import { getHistoryReportMessages } from '@/lib/i18n/historyReportMessages'
 
 async function pickLocaleFromRequest() {
   const h = await headers()
@@ -11,71 +10,57 @@ async function pickLocaleFromRequest() {
 }
 
 function localeHref(nextLocale) {
-  return nextLocale === 'en' ? '/report?lang=en' : '/report?lang=zh-TW'
+  return nextLocale === 'en' ? '/history-report?lang=en' : '/history-report?lang=zh-TW'
 }
 
 export async function generateMetadata() {
   const locale = await pickLocaleFromRequest()
-  const m = getSiteMessages(locale)
+  const t = getHistoryReportMessages(locale)
   return {
-    title: m.reportPage.metaTitle,
-    description: m.reportPage.metaDescription,
+    title: t.pageTitle,
+    description: locale === 'en' ? 'Daily history learning report for parents.' : '家長版歷史科每日學習報告。',
   }
 }
 
-export default async function ReportPage() {
+export default async function HistoryReportPage() {
   const locale = await pickLocaleFromRequest()
-  const t = getReportMessages(locale)
+  const t = getHistoryReportMessages(locale)
 
   // Static mock data (later can be fed by backend/app link params)
-  const studentName = locale === 'en' ? 'Pierre Chen' : 'Pierre Chen'
+  const studentName = 'Pierre Chen'
   const date = '2026/05/04'
 
   const today = {
-    cardsCompleted: 12,
-    accuracy: 78,
+    cardsCompleted: 8,
+    accuracy: 75,
     streakDays: 7,
   }
 
   const mistakeBook = {
-    newToday: 6,
-    reviewed: 14,
-    mastered: 9,
+    newToday: 3,
+    reviewed: 10,
+    mastered: 6,
   }
 
   const mistakesMade = [
     {
-      id: 'mitosis-spindle-fibers',
-      questionEn: 'What is the role of the spindle fibers during mitosis?',
-      questionZh: '紡錘絲（spindle fibers）在有絲分裂（mitosis）中的主要功能是什麼？',
-      choices: [
-        { key: 'A', textEn: 'To replicate chromosomes', textZh: '複製染色體' },
-        { key: 'B', textEn: 'To hold organelles in place', textZh: '固定細胞器位置' },
-        { key: 'C', textEn: 'To separate sister chromatids', textZh: '分開姐妹染色分體' },
-        { key: 'D', textEn: 'To dissolve the nuclear envelope', textZh: '溶解核膜' },
-      ],
-      picked: 'A',
-      correct: 'C',
-      explainEn:
-        'Spindle fibers attach to chromosomes and pull sister chromatids apart so each daughter cell gets one copy.',
-      explainZh:
-        '紡錘絲會連接染色體並把姐妹染色分體拉開，讓兩個新細胞各分到一份。',
-    },
-    {
-      id: 'signaling-paracrine',
+      id: 'tw-history-kogakko',
       questionEn:
-        'Which type of signaling involves a cell releasing a signal that affects nearby cells?',
-      questionZh: '哪一種細胞訊號傳遞，是細胞釋放訊號後主要影響「附近」的細胞？',
+        'In early Japanese rule, which school did the Japanese government set up across Taiwan as primary schools for Taiwanese children to promote Japanese-language education and basic knowledge?',
+      questionZh:
+        '日治初期，日本政府為了普及日語教育與基礎知識，在各地設立了「＿＿＿」作為臺籍學童的初等教育場所。',
       choices: [
-        { key: 'A', textEn: 'Endocrine', textZh: '內分泌（endocrine）' },
-        { key: 'B', textEn: 'Autocrine', textZh: '自分泌（autocrine）' },
-        { key: 'C', textEn: 'Paracrine', textZh: '旁分泌（paracrine）' },
-        { key: 'D', textEn: 'Synaptic', textZh: '突觸（synaptic）' },
+        { key: 'A', textEn: 'Primary school (shōgakkō)', textZh: '小學校' },
+        { key: 'B', textEn: 'Common school (kōgakkō)', textZh: '公學校' },
+        { key: 'C', textEn: 'University', textZh: '大學校' },
+        { key: 'D', textEn: 'Academy (shūin)', textZh: '書院' },
       ],
       picked: 'A',
-      correct: 'C',
-      explainEn: 'Paracrine signaling is local—signals act on nearby target cells.',
-      explainZh: '旁分泌是「局部」訊號，主要影響附近的細胞。',
+      correct: 'B',
+      explainEn:
+        'During early Japanese rule, “kōgakkō” (common schools) were established widely as primary education institutions mainly for Taiwanese children, aiming to promote Japanese-language education and basic knowledge.',
+      explainZh:
+        '日治初期「公學校」是日本政府在臺灣各地設立、以臺籍學童為主要對象的初等教育機構，目的在推廣日語教育與基礎知識（相對地，「小學校」多以日本人子弟為主）。',
     },
   ]
 
@@ -208,9 +193,7 @@ export default async function ReportPage() {
                             <span className={styles.choiceKey} aria-hidden="true">
                               {c.key}
                             </span>
-                            <span className={styles.choiceText}>
-                              {locale === 'en' ? c.textEn : c.textZh}
-                            </span>
+                            <span className={styles.choiceText}>{locale === 'en' ? c.textEn : c.textZh}</span>
                           </div>
                         )
                       })}
