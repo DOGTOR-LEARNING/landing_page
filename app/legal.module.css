@@ -138,3 +138,51 @@
   display: inline-block;
   max-width: 100%;
 }
+
+/* Markdown-rendered legal pages (English) */
+.contentMarkdown :global(h2) {
+  font-size: 1.5rem;
+  color: var(--accent-orange-light);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.contentMarkdown :global(h2:first-child) {
+  margin-top: 0;
+}
+
+.contentMarkdown :global(h3) {
+  font-size: 1.25rem;
+  color: var(--text-white);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.contentMarkdown :global(p) {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-md);
+}
+
+.contentMarkdown :global(ul) {
+  margin-left: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.contentMarkdown :global(li) {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-sm);
+}
+
+.contentMarkdown :global(a) {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+}
+
+.contentMarkdown :global(strong) {
+  color: var(--text-white);
+  font-weight: 600;
+}

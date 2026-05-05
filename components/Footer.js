@@ -1,7 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useLocaleContext } from '@/components/LocaleProvider'
 import styles from './Footer.module.css'
 
 export default function Footer() {
+  const { messages: m } = useLocaleContext()
   const currentYear = new Date().getFullYear()
 
   return (
@@ -9,22 +13,29 @@ export default function Footer() {
       <div className="container">
         <div className={styles.footerContainer}>
           <div className={styles.footerLeft}>
-            <p className={styles.footerBrand}>Dogtor 逗課</p>
+            <p className={styles.footerBrand}>{m.brand}</p>
             <p className={styles.footerCopy}>
-              © {currentYear} Dogtor 逗課. 版權所有。
+              © {currentYear} {m.brand}. {m.footer.copyright}
             </p>
             <p className={styles.footerContact}>
-              聯絡信箱：<a href="mailto:dogtor.love.learning@gmail.com">dogtor.love.learning@gmail.com</a>
+              {m.footer.contactLabel}{' '}
+              <a href="mailto:dogtor.love.learning@gmail.com">dogtor.love.learning@gmail.com</a>
             </p>
           </div>
-          
+
           <div className={styles.footerLinks}>
-            <Link href="/guide">學習指南</Link>
-            <a href="https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp" target="_blank" rel="noreferrer">Android Google Play</a>
-            <Link href="/terms">服務條款</Link>
-            <Link href="/privacy">隱私權政策</Link>
-            <Link href="/support">支援中心</Link>
-            <Link href="/faq">常見問題</Link>
+            <Link href="/guide">{m.footer.guide}</Link>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {m.footer.androidPlay}
+            </a>
+            <Link href="/terms">{m.footer.terms}</Link>
+            <Link href="/privacy">{m.footer.privacy}</Link>
+            <Link href="/support">{m.footer.support}</Link>
+            <Link href="/faq">{m.footer.faq}</Link>
           </div>
         </div>
       </div>

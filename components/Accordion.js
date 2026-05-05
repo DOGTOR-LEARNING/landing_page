@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import styles from './Accordion.module.css'
 
-export default function Accordion({ items }) {
+export default function Accordion({ items, guidePrefix = '詳細攻略：', guideFallback = '學習指南' }) {
   const [openIndex, setOpenIndex] = useState(0)
 
   const toggleItem = (index) => {
@@ -41,7 +41,8 @@ export default function Accordion({ items }) {
               ))}
               {item.guideLink && (
                 <p className={styles.guideLink}>
-                  詳細攻略：<Link href={item.guideLink}>{item.guideTitle || '學習指南'}</Link>
+                  {guidePrefix}
+                  <Link href={item.guideLink}>{item.guideTitle || guideFallback}</Link>
                 </p>
               )}
             </div>

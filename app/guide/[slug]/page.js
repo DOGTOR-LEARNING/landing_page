@@ -11,6 +11,9 @@ import {
   getArticleUrl,
 } from '@/lib/articles'
 import MarkdownContent from '@/components/MarkdownContent'
+import { getLocale } from '@/lib/i18n/getLocale'
+import { formatGuideReadingTime } from '@/lib/i18n/formatReadingTime'
+import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
 import styles from './page.module.css'
 
 const BASE_URL = 'https://dogtor.superb-tutor.com'
@@ -21,23 +24,16 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
   const { slug } = await params
   const article = getArticleBySlug(slug)
-  if (!article) return { title: '文章不存在' }
+  if (!article) return { title: m.guide.articleNotFoundTitle }
 
   return {
-    title: `${article.title} - Dogtor 逗課 學習指南`,
+    title: `${article.title} - Dogtor ${m.guide.articleMetaSuffix}`,
     description: article.description,
-    keywords: [
-      ...(article.tags || []),
-      '會考',
-      '學測',
-      '108課綱',
-      '歷屆試題',
-      '錯題本',
-      '讀書計畫',
-      'Dogtor 逗課',
-    ],
+    keywords: [...(article.tags || []), ...m.guide.articleKeywordsSuffix],
     alternates: {
       canonical: getArticleUrl(article.slug),
     },
@@ -47,8 +43,8 @@ export async function generateMetadata({ params }) {
       url: getArticleUrl(article.slug),
       type: 'article',
       publishedTime: article.publishDate,
-      locale: 'zh_TW',
-      siteName: 'Dogtor 逗課',
+      locale: m.openGraphLocale,
+      siteName: m.brand,
       images: ['/dogtor_cover.png'],
     },
     twitter: {
@@ -60,6 +56,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function GuideArticlePage({ params }) {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
   const { slug } = await params
   const article = getArticleBySlug(slug)
   if (!article) notFound()
@@ -74,12 +72,12 @@ export default async function GuideArticlePage({ params }) {
     datePublished: article.publishDate,
     author: {
       '@type': 'Organization',
-      name: 'Dogtor 逗課',
+      name: m.brand,
       url: BASE_URL,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Dogtor 逗課',
+      name: m.brand,
       logo: {
         '@type': 'ImageObject',
         url: `${BASE_URL}/dogtor_logo.svg`,
@@ -110,38 +108,42 @@ export default async function GuideArticlePage({ params }) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: '首頁', item: BASE_URL },
-      { '@type': 'ListItem', position: 2, name: '學習指南', item: `${BASE_URL}/guide` },
-      { '@type': 'ListItem', position: 3, name: article.title, item: getArticleUrl(article.slug) },
+      { '@type': 'ListItem', position: 1, name: m.guide.breadcrumbHome, item: BASE_URL },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: m.guide.breadcrumbGuide,
+        item: `${BASE_URL}/guide`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.title,
+        item: getArticleUrl(article.slug),
+      },
     ],
   }
 
-  const readingTime = Math.max(3, Math.ceil((article.content?.intro?.length || 0) / 200 + (article.content?.sections?.length || 0) * 2))
+  const readingTime = Math.max(
+    3,
+    Math.ceil((article.content?.intro?.length || 0) / 200 + (article.content?.sections?.length || 0) * 2)
+  )
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Header />
       <main className={styles.main}>
         <article className={styles.article}>
           <div className="container">
-            <nav className={styles.breadcrumb} aria-label="麵包屑">
-              <Link href="/">首頁</Link>
+            <nav className={styles.breadcrumb} aria-label={m.guide.breadcrumbLabel}>
+              <Link href="/">{m.guide.breadcrumbHome}</Link>
               <span className={styles.breadcrumbSep}>/</span>
-              <Link href="/guide">學習指南</Link>
+              <Link href="/guide">{m.guide.breadcrumbGuide}</Link>
               <span className={styles.breadcrumbSep}>/</span>
               <span className={styles.breadcrumbCurrent}>{article.title}</span>
             </nav>
@@ -151,14 +153,14 @@ export default async function GuideArticlePage({ params }) {
               <h1 className={styles.articleTitle}>{article.title}</h1>
               <div className={styles.articleMeta}>
                 <time dateTime={article.publishDate}>
-                  {new Date(article.publishDate).toLocaleDateString('zh-TW', {
+                  {new Date(article.publishDate).toLocaleDateString(m.dateLocale, {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
                   })}
                 </time>
                 <span>·</span>
-                <span>約 {readingTime} 分鐘閱讀</span>
+                <span>{formatGuideReadingTime(locale, readingTime)}</span>
               </div>
             </header>
 
@@ -175,15 +177,12 @@ export default async function GuideArticlePage({ params }) {
               ))}
 
               <article className={styles.ctaBlock}>
-                <ArticleCTA
-                  painPoint={article.ctaPainPoint}
-                  scene={article.ctaScene}
-                />
+                <ArticleCTA painPoint={article.ctaPainPoint} scene={article.ctaScene} />
               </article>
 
               {article.faq?.length > 0 && (
                 <section className={styles.faqSection}>
-                  <h2>常見問題</h2>
+                  <h2>{m.guide.articleFaqHeading}</h2>
                   <dl className={styles.faqList}>
                     {article.faq.map((item, i) => (
                       <div key={i} className={styles.faqItem}>
@@ -199,7 +198,7 @@ export default async function GuideArticlePage({ params }) {
 
               {related.length > 0 && (
                 <section className={styles.relatedSection}>
-                  <RelatedArticles articles={related} />
+                  <RelatedArticles articles={related} heading={m.relatedArticles.heading} />
                 </section>
               )}
             </div>

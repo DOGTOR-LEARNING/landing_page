@@ -1,13 +1,21 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import MarkdownContent from '@/components/MarkdownContent'
+import { getLocale } from '@/lib/i18n/getLocale'
+import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
+import { privacyEnMarkdown } from '@/lib/i18n/legal/privacyEn'
 import styles from '../legal.module.css'
 
-export const metadata = {
-  title: '隱私權政策 - Dogtor 逗課',
-  description: '了解 Dogtor 逗課 App 如何收集、使用和保護你的個人資料。',
+export async function generateMetadata() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+  return {
+    title: m.legal.privacyMetaTitle,
+    description: m.legal.privacyMetaDescription,
+  }
 }
 
-export default function Privacy() {
+function PrivacyZh() {
   return (
     <>
       <Header />
@@ -335,4 +343,31 @@ export default function Privacy() {
       <Footer />
     </>
   )
+}
+
+export default async function Privacy() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+
+  if (locale === 'en') {
+    return (
+      <>
+        <Header />
+        <main className={styles.main}>
+          <div className="container">
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>{m.legal.privacyTitle}</h1>
+              <p className={styles.updateDate}>{m.legal.lastUpdated}</p>
+            </div>
+            <div className={styles.content}>
+              <MarkdownContent className={styles.contentMarkdown}>{privacyEnMarkdown}</MarkdownContent>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
+  return <PrivacyZh />
 }

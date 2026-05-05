@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { headers } from 'next/headers'
 import styles from './page.module.css'
 import { getReportMessages } from '@/lib/i18n/reportMessages'
+import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
 
 async function pickLocaleFromRequest() {
   const h = await headers()
@@ -14,9 +14,13 @@ function localeHref(nextLocale) {
   return nextLocale === 'en' ? '/report?lang=en' : '/report?lang=zh-TW'
 }
 
-export const metadata = {
-  title: 'Dogtor | Report',
-  description: 'Daily learning report for parents.',
+export async function generateMetadata() {
+  const locale = await pickLocaleFromRequest()
+  const m = getSiteMessages(locale)
+  return {
+    title: m.reportPage.metaTitle,
+    description: m.reportPage.metaDescription,
+  }
 }
 
 export default async function ReportPage() {
@@ -100,20 +104,20 @@ export default async function ReportPage() {
           <div className={styles.langToggle}>
             <span className={styles.langLabel}>{t.localeSwitchLabel}</span>
             <div className={styles.langButtons} role="group" aria-label={t.localeSwitchLabel}>
-              <Link
+              <a
                 href={localeHref('zh-TW')}
                 className={`${styles.langButton} ${locale === 'zh-TW' ? styles.langButtonActive : ''}`}
                 aria-current={locale === 'zh-TW' ? 'page' : undefined}
               >
                 {t.zh}
-              </Link>
-              <Link
+              </a>
+              <a
                 href={localeHref('en')}
                 className={`${styles.langButton} ${locale === 'en' ? styles.langButtonActive : ''}`}
                 aria-current={locale === 'en' ? 'page' : undefined}
               >
                 {t.en}
-              </Link>
+              </a>
             </div>
           </div>
         </div>

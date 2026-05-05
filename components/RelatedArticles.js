@@ -1,11 +1,11 @@
 import Link from 'next/link'
 
-export default function RelatedArticles({ articles }) {
+export default function RelatedArticles({ articles, heading = '延伸閱讀' }) {
   if (!articles.length) return null
 
   return (
     <aside className="related-articles">
-      <h3>延伸閱讀</h3>
+      <h3>{heading}</h3>
       <ul>
         {articles.map((article) => (
           <li key={article.slug}>

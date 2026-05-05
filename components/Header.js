@@ -1,13 +1,24 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useLocaleContext } from '@/components/LocaleProvider'
 import styles from './Header.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
-export default function Header() {
+function buildLangHref(pathname, searchParams, lang) {
+  const p = new URLSearchParams(searchParams?.toString?.() || '')
+  p.set('lang', lang === 'en' ? 'en' : 'zh-TW')
+  const qs = p.toString()
+  return qs ? `${pathname}?${qs}` : `${pathname}`
+}
+
+function HeaderChrome({ hrefZh, hrefEn }) {
+  const { locale, messages: m } = useLocaleContext()
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -36,7 +47,7 @@ export default function Header() {
             <div className={styles.logoMarks}>
               <Image
                 src="/dogtor_eng_logo.svg"
-                alt="Dogtor 逗課 logo"
+                alt={m.logos.altEn}
                 width={120}
                 height={28}
                 className={styles.logoImgEn}
@@ -44,7 +55,7 @@ export default function Header() {
               />
               <Image
                 src="/dogtor_logo.svg"
-                alt="Dogtor 逗課 國高中題庫學習 App 中文標誌"
+                alt={m.logos.altZh}
                 width={110}
                 height={28}
                 className={styles.logoImgCn}
@@ -54,24 +65,44 @@ export default function Header() {
           </Link>
 
           <nav className={styles.desktopNav}>
-            <Link href="/guide" className={styles.navLink}>學習指南</Link>
-            <Link href="/faq" className={styles.navLink}>常見問題</Link>
-            <Link href="/about" className={styles.navLink}>關於我們</Link>
-            <Link href="/support" className={styles.navLink}>支援中心</Link>
-            <a 
-              href={APP_STORE_URL}
-              className={styles.downloadBtn}
-              target="_blank"
-              rel="noreferrer"
-            >
-              下載 App
+            <Link href="/guide" className={styles.navLink}>
+              {m.nav.guide}
+            </Link>
+            <Link href="/faq" className={styles.navLink}>
+              {m.nav.faq}
+            </Link>
+            <Link href="/about" className={styles.navLink}>
+              {m.nav.about}
+            </Link>
+            <Link href="/support" className={styles.navLink}>
+              {m.nav.support}
+            </Link>
+            <div className={styles.langSwitch} role="group" aria-label={m.lang.switch}>
+              {/* Use <a> so each switch is a full navigation; <Link> soft-nav can reuse stale RSC/cache. */}
+              <a
+                href={hrefZh}
+                className={`${styles.langLink} ${locale === 'zh-TW' ? styles.langLinkActive : ''}`}
+                aria-current={locale === 'zh-TW' ? 'true' : undefined}
+              >
+                {m.lang.zh}
+              </a>
+              <a
+                href={hrefEn}
+                className={`${styles.langLink} ${locale === 'en' ? styles.langLinkActive : ''}`}
+                aria-current={locale === 'en' ? 'true' : undefined}
+              >
+                {m.lang.en}
+              </a>
+            </div>
+            <a href={APP_STORE_URL} className={styles.downloadBtn} target="_blank" rel="noreferrer">
+              {m.nav.downloadApp}
             </a>
           </nav>
 
           <button
             className={`${styles.mobileMenuToggle} ${isMenuOpen ? styles.open : ''}`}
             onClick={toggleMenu}
-            aria-label="選單"
+            aria-label={m.nav.menu}
             aria-expanded={isMenuOpen}
           >
             <span className={styles.menuIcon}></span>
@@ -79,17 +110,33 @@ export default function Header() {
 
           <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
             <Link href="/guide" className={styles.mobileNavLink} onClick={closeMenu}>
-              學習指南
+              {m.nav.guide}
             </Link>
             <Link href="/faq" className={styles.mobileNavLink} onClick={closeMenu}>
-              常見問題
+              {m.nav.faq}
             </Link>
             <Link href="/about" className={styles.mobileNavLink} onClick={closeMenu}>
-              關於我們
+              {m.nav.about}
             </Link>
             <Link href="/support" className={styles.mobileNavLink} onClick={closeMenu}>
-              支援中心
+              {m.nav.support}
             </Link>
+            <div className={styles.mobileLangRow}>
+              <a
+                href={hrefZh}
+                className={`${styles.mobileLangBtn} ${locale === 'zh-TW' ? styles.mobileLangBtnActive : ''}`}
+                onClick={closeMenu}
+              >
+                {m.lang.zh}
+              </a>
+              <a
+                href={hrefEn}
+                className={`${styles.mobileLangBtn} ${locale === 'en' ? styles.mobileLangBtnActive : ''}`}
+                onClick={closeMenu}
+              >
+                {m.lang.en}
+              </a>
+            </div>
             <a
               href={APP_STORE_URL}
               className={styles.mobileDownloadBtn}
@@ -97,11 +144,34 @@ export default function Header() {
               target="_blank"
               rel="noreferrer"
             >
-              下載 App
+              {m.nav.downloadApp}
             </a>
           </div>
         </div>
       </div>
     </header>
+  )
+}
+
+function HeaderWithSearchParams() {
+  const pathname = usePathname() || '/'
+  const searchParams = useSearchParams()
+  const hrefZh = buildLangHref(pathname, searchParams, 'zh-TW')
+  const hrefEn = buildLangHref(pathname, searchParams, 'en')
+  return <HeaderChrome hrefZh={hrefZh} hrefEn={hrefEn} />
+}
+
+function HeaderFallback() {
+  const pathname = usePathname() || '/'
+  const hrefZh = `${pathname}?lang=zh-TW`
+  const hrefEn = `${pathname}?lang=en`
+  return <HeaderChrome hrefZh={hrefZh} hrefEn={hrefEn} />
+}
+
+export default function Header() {
+  return (
+    <Suspense fallback={<HeaderFallback />}>
+      <HeaderWithSearchParams />
+    </Suspense>
   )
 }

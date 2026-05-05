@@ -113,6 +113,55 @@
   color: #ffffff;
 }
 
+.langSwitch {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.langLink {
+  padding: 0.35rem 0.55rem;
+  border-radius: calc(var(--radius-lg) - 2px);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1;
+}
+
+.langLink:hover {
+  color: var(--accent-orange-light);
+}
+
+.langLinkActive {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.mobileLangRow {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+.mobileLangBtn {
+  flex: 1;
+  text-align: center;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.mobileLangBtnActive {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* Mobile Menu Toggle */
 .mobileMenuToggle {
   display: flex;

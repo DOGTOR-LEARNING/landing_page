@@ -9,39 +9,49 @@ import {
   Lock,
   CreditCard,
   Delete,
-  Lightbulb
+  Lightbulb,
 } from '@mui/icons-material'
+import { getLocale } from '@/lib/i18n/getLocale'
+import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
 import styles from './page.module.css'
 
-export const metadata = {
-  title: '支援中心 - Dogtor 逗課',
-  description: '需要協助嗎？在這裡找到聯絡方式和常見問題的快速解決方案。',
+export async function generateMetadata() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+  return {
+    title: m.supportPage.metaTitle,
+    description: m.supportPage.metaDescription,
+  }
 }
 
-export default function Support() {
+export default async function Support() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+  const s = m.supportPage
+
   return (
     <>
       <Header />
       <main className={styles.main}>
         <div className="container">
           <div className={styles.pageHeader}>
-            <h1 className={styles.pageTitle}>支援中心</h1>
-            <p className={styles.pageSubtitle}>
-              我們隨時準備協助你回到學習的正軌。
-            </p>
+            <h1 className={styles.pageTitle}>{s.title}</h1>
+            <p className={styles.pageSubtitle}>{s.subtitle}</p>
           </div>
 
           <div className={styles.content}>
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>聯絡我們</h2>
+              <h2 className={styles.sectionTitle}>{s.contactTitle}</h2>
               <p className={styles.text}>
-                如有任何問題、反饋或建議，請直接透過電子郵件聯絡我們。我們會在 <strong>1-3 個工作天內</strong>回覆。
+                {s.contactIntroPrefix}
+                <strong>{s.contactIntroBold}</strong>
+                {s.contactIntroSuffix}
               </p>
               <div className={styles.contactBox}>
                 <div className={styles.contactItem}>
                   <Email className={styles.contactIcon} />
                   <div>
-                    <p className={styles.contactLabel}>電子郵件</p>
+                    <p className={styles.contactLabel}>{s.emailLabel}</p>
                     <a href="mailto:dogtor.love.learning@gmail.com" className={styles.contactValue}>
                       dogtor.love.learning@gmail.com
                     </a>
@@ -50,66 +60,61 @@ export default function Support() {
                 <div className={styles.contactItem}>
                   <AccessTime className={styles.contactIcon} />
                   <div>
-                    <p className={styles.contactLabel}>回覆時間</p>
-                    <p className={styles.contactValue}>1-3 個工作天</p>
+                    <p className={styles.contactLabel}>{s.replyTimeLabel}</p>
+                    <p className={styles.contactValue}>{s.replyTimeValue}</p>
                   </div>
                 </div>
               </div>
             </section>
 
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>快速操作</h2>
-              <p className={styles.text}>
-                以下是一些常見的支援項目，點擊即可快速處理：
-              </p>
+              <h2 className={styles.sectionTitle}>{s.quickTitle}</h2>
+              <p className={styles.text}>{s.quickIntro}</p>
               <div className={styles.quickActions}>
-                <a
-                  href="/faq"
-                  className={styles.actionCard}
-                >
+                <Link href="/faq" className={styles.actionCard}>
                   <HelpOutline className={styles.actionIcon} />
-                  <h3 className={styles.actionTitle}>常見問題</h3>
-                  <p className={styles.actionDesc}>查看常見問題解答</p>
-                </a>
+                  <h3 className={styles.actionTitle}>{s.actionFaqTitle}</h3>
+                  <p className={styles.actionDesc}>{s.actionFaqDesc}</p>
+                </Link>
                 <a
-                  href="mailto:dogtor.love.learning@gmail.com?subject=錯誤回報"
+                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.mailSubjectBug)}`}
                   className={styles.actionCard}
                 >
                   <BugReport className={styles.actionIcon} />
-                  <h3 className={styles.actionTitle}>回報錯誤</h3>
-                  <p className={styles.actionDesc}>告訴我們遇到的問題</p>
+                  <h3 className={styles.actionTitle}>{s.actionBugTitle}</h3>
+                  <p className={styles.actionDesc}>{s.actionBugDesc}</p>
                 </a>
                 <a
-                  href="mailto:dogtor.love.learning@gmail.com?subject=帳號登入問題"
+                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.mailSubjectLogin)}`}
                   className={styles.actionCard}
                 >
                   <Lock className={styles.actionIcon} />
-                  <h3 className={styles.actionTitle}>帳號登入</h3>
-                  <p className={styles.actionDesc}>無法登入或忘記密碼</p>
+                  <h3 className={styles.actionTitle}>{s.actionLoginTitle}</h3>
+                  <p className={styles.actionDesc}>{s.actionLoginDesc}</p>
                 </a>
                 <a
-                  href="mailto:dogtor.love.learning@gmail.com?subject=訂閱與退款"
+                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.mailSubjectBilling)}`}
                   className={styles.actionCard}
                 >
                   <CreditCard className={styles.actionIcon} />
-                  <h3 className={styles.actionTitle}>訂閱退款</h3>
-                  <p className={styles.actionDesc}>關於訂閱和退款問題</p>
+                  <h3 className={styles.actionTitle}>{s.actionBillingTitle}</h3>
+                  <p className={styles.actionDesc}>{s.actionBillingDesc}</p>
                 </a>
                 <a
-                  href="mailto:dogtor.love.learning@gmail.com?subject=資料刪除請求"
+                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.mailSubjectDelete)}`}
                   className={styles.actionCard}
                 >
                   <Delete className={styles.actionIcon} />
-                  <h3 className={styles.actionTitle}>刪除資料</h3>
-                  <p className={styles.actionDesc}>請求刪除帳號或資料</p>
+                  <h3 className={styles.actionTitle}>{s.actionDeleteTitle}</h3>
+                  <p className={styles.actionDesc}>{s.actionDeleteDesc}</p>
                 </a>
                 <a
-                  href="mailto:dogtor.love.learning@gmail.com?subject=功能建議"
+                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.mailSubjectIdea)}`}
                   className={styles.actionCard}
                 >
                   <Lightbulb className={styles.actionIcon} />
-                  <h3 className={styles.actionTitle}>功能建議</h3>
-                  <p className={styles.actionDesc}>分享你的想法</p>
+                  <h3 className={styles.actionTitle}>{s.actionIdeaTitle}</h3>
+                  <p className={styles.actionDesc}>{s.actionIdeaDesc}</p>
                 </a>
               </div>
             </section>
@@ -117,17 +122,14 @@ export default function Support() {
             <section className={styles.tipSection}>
               <h3 className={styles.tipTitle}>
                 <Lightbulb sx={{ fontSize: '1.25rem', verticalAlign: 'middle', marginRight: '0.5rem' }} />
-                寄信時請提供
+                {s.tipHeading}
               </h3>
               <ul className={styles.tipList}>
-                <li>問題的詳細描述</li>
-                <li>發生問題的時間</li>
-                <li>你的裝置型號和 iOS 版本</li>
-                <li>相關的螢幕截圖（如果可以的話）</li>
+                {s.tipItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
-              <p className={styles.tipNote}>
-                提供越詳細的資訊，我們就能越快幫你解決問題！
-              </p>
+              <p className={styles.tipNote}>{s.tipNote}</p>
             </section>
           </div>
         </div>

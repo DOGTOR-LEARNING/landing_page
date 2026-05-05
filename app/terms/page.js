@@ -1,13 +1,21 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import MarkdownContent from '@/components/MarkdownContent'
+import { getLocale } from '@/lib/i18n/getLocale'
+import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
+import { termsEnMarkdown } from '@/lib/i18n/legal/termsEn'
 import styles from '../legal.module.css'
 
-export const metadata = {
-  title: '服務條款 - Dogtor 逗課',
-  description: 'Dogtor 逗課 App 的使用條款和服務協議。',
+export async function generateMetadata() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+  return {
+    title: m.legal.termsMetaTitle,
+    description: m.legal.termsMetaDescription,
+  }
 }
 
-export default function Terms() {
+function TermsZh() {
   return (
     <>
       <Header />
@@ -130,4 +138,31 @@ export default function Terms() {
       <Footer />
     </>
   )
+}
+
+export default async function Terms() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+
+  if (locale === 'en') {
+    return (
+      <>
+        <Header />
+        <main className={styles.main}>
+          <div className="container">
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>{m.legal.termsTitle}</h1>
+              <p className={styles.updateDate}>{m.legal.lastUpdated}</p>
+            </div>
+            <div className={styles.content}>
+              <MarkdownContent className={styles.contentMarkdown}>{termsEnMarkdown}</MarkdownContent>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
+  return <TermsZh />
 }

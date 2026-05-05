@@ -1,7 +1,13 @@
-export const metadata = {
-  title: '加入 Dogtor 逗課 | 和朋友一起學習對戰',
-  description:
-    '接受好友邀請，加入 Dogtor 逗課！一起進行題庫練習、好友對戰，讓國中會考和高中學測複習更有趣。',
+import { getLocale } from '@/lib/i18n/getLocale'
+import { getSiteMessages } from '@/lib/i18n/getSiteMessages'
+
+export async function generateMetadata() {
+  const locale = await getLocale()
+  const m = getSiteMessages(locale)
+  return {
+    title: m.invitePage.metaTitle,
+    description: m.invitePage.metaDescription,
+  }
 }
 
 export default function InviteLayout({ children }) {
