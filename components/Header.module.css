@@ -236,3 +236,36 @@
   background: var(--primary-blue-dark);
   color: #ffffff;
 }
+
+/* Language Switcher */
+.langSwitch {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.7rem;
+  transition: all var(--transition-fast);
+  letter-spacing: 0.01em;
+}
+
+.langSwitch:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+
+.mobileLangSwitch {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--space-sm) 0;
+  text-align: left;
+  transition: color var(--transition-fast);
+  width: fit-content;
+}

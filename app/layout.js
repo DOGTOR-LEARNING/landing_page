@@ -1,5 +1,6 @@
 import './globals.css'
 import { headers } from 'next/headers'
+import { LocaleProvider } from '@/components/LocaleProvider'
 
 export const metadata = {
   metadataBase: new URL('https://dogtor.superb-tutor.com'),
@@ -45,6 +46,19 @@ export const metadata = {
     '闖關學習',
     '學習成就',
     '每日挑戰',
+    'Autonomous AI Agent',
+    'Agentic Learning',
+    'Competitive Mastery',
+    'K-12 EdTech',
+    'Knowledge Graph',
+    'PvP Learning',
+    'Pedagogical Intelligence',
+    'Mastery-Based Learning',
+    'Educational AI Agent',
+    'Cognitive Diagnostics',
+    '自主AI學習',
+    '知識圖譜',
+    '精熟學習',
   ],
   authors: [{ name: 'Dogtor 逗課 Team' }],
   openGraph: {
@@ -207,7 +221,9 @@ export default async function RootLayout({ children }) {
           />
         ))}
       </head>
-      <body>{children}</body>
+      <body>
+        <LocaleProvider locale={locale}>{children}</LocaleProvider>
+      </body>
     </html>
   )
 }

@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { getAllArticles } from '@/lib/articles'
+import { getMessages } from '@/lib/i18n/messages'
 import styles from './page.module.css'
 
 export const metadata = {
@@ -23,16 +25,13 @@ export const metadata = {
   },
 }
 
-const CATEGORIES = [
-  { id: 'all', label: '全部' },
-  { id: '會考準備', label: '會考準備' },
-  { id: '學測攻略', label: '學測攻略' },
-  { id: '讀書方法', label: '讀書方法' },
-  { id: '家長指南', label: '家長指南' },
-  { id: 'App 推薦', label: 'App 推薦' },
-]
+const CATEGORY_KEYS = ['all', '會考準備', '學測攻略', '讀書方法', '家長指南', 'App 推薦']
 
 export default async function GuideIndexPage({ searchParams }) {
+  const h = await headers()
+  const locale = h.get('x-locale') || 'zh-TW'
+  const m = getMessages(locale)
+
   const resolved = searchParams ? await searchParams : {}
   const category = resolved?.category
   const allArticles = getAllArticles()
@@ -40,26 +39,26 @@ export default async function GuideIndexPage({ searchParams }) {
     ? allArticles.filter((a) => a.category === category)
     : allArticles
 
+  const dateLocale = locale === 'en' ? 'en-US' : 'zh-TW'
+
   return (
     <>
       <Header />
       <main className={styles.main}>
         <div className="container">
           <div className={styles.pageHeader}>
-            <h1 className={styles.pageTitle}>國高中學習指南</h1>
-            <p className={styles.pageSubtitle}>
-              會考學測必備攻略、讀書方法、家長指南、App 推薦。解決學習過程中的焦慮與效率問題。
-            </p>
+            <h1 className={styles.pageTitle}>{m.guide.pageTitle}</h1>
+            <p className={styles.pageSubtitle}>{m.guide.pageSubtitle}</p>
           </div>
 
           <div className={styles.categoryTabs}>
-            {CATEGORIES.map((cat) => (
+            {CATEGORY_KEYS.map((key) => (
               <Link
-                key={cat.id}
-                href={cat.id === 'all' ? '/guide' : `/guide?category=${encodeURIComponent(cat.id)}`}
+                key={key}
+                href={key === 'all' ? '/guide' : `/guide?category=${encodeURIComponent(key)}`}
                 className={styles.categoryTab}
               >
-                {cat.label}
+                {m.guide.categories[key] || key}
               </Link>
             ))}
           </div>
@@ -73,7 +72,7 @@ export default async function GuideIndexPage({ searchParams }) {
                   <p className={styles.articleExcerpt}>{article.excerpt}</p>
                   <div className={styles.articleMeta}>
                     <time dateTime={article.publishDate}>
-                      {new Date(article.publishDate).toLocaleDateString('zh-TW', {
+                      {new Date(article.publishDate).toLocaleDateString(dateLocale, {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',

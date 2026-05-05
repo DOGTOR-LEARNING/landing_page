@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useLocale, useMessages } from './LocaleProvider'
 import styles from './Header.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
@@ -10,6 +11,8 @@ const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/i
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const locale = useLocale()
+  const m = useMessages()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +29,13 @@ export default function Header() {
 
   const closeMenu = () => {
     setIsMenuOpen(false)
+  }
+
+  const switchLocale = () => {
+    const newLocale = locale === 'zh-TW' ? 'en' : 'zh-TW'
+    const url = new URL(window.location.href)
+    url.searchParams.set('lang', newLocale)
+    window.location.href = url.toString()
   }
 
   return (
@@ -54,24 +64,31 @@ export default function Header() {
           </Link>
 
           <nav className={styles.desktopNav}>
-            <Link href="/guide" className={styles.navLink}>學習指南</Link>
-            <Link href="/faq" className={styles.navLink}>常見問題</Link>
-            <Link href="/about" className={styles.navLink}>關於我們</Link>
-            <Link href="/support" className={styles.navLink}>支援中心</Link>
-            <a 
+            <Link href="/guide" className={styles.navLink}>{m.header.guide}</Link>
+            <Link href="/faq" className={styles.navLink}>{m.header.faq}</Link>
+            <Link href="/about" className={styles.navLink}>{m.header.about}</Link>
+            <Link href="/support" className={styles.navLink}>{m.header.support}</Link>
+            <button
+              className={styles.langSwitch}
+              onClick={switchLocale}
+              aria-label={m.common.langSwitch}
+            >
+              {m.common.langSwitch}
+            </button>
+            <a
               href={APP_STORE_URL}
               className={styles.downloadBtn}
               target="_blank"
               rel="noreferrer"
             >
-              下載 App
+              {m.common.downloadApp}
             </a>
           </nav>
 
           <button
             className={`${styles.mobileMenuToggle} ${isMenuOpen ? styles.open : ''}`}
             onClick={toggleMenu}
-            aria-label="選單"
+            aria-label={m.header.menuLabel}
             aria-expanded={isMenuOpen}
           >
             <span className={styles.menuIcon}></span>
@@ -79,17 +96,23 @@ export default function Header() {
 
           <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
             <Link href="/guide" className={styles.mobileNavLink} onClick={closeMenu}>
-              學習指南
+              {m.header.guide}
             </Link>
             <Link href="/faq" className={styles.mobileNavLink} onClick={closeMenu}>
-              常見問題
+              {m.header.faq}
             </Link>
             <Link href="/about" className={styles.mobileNavLink} onClick={closeMenu}>
-              關於我們
+              {m.header.about}
             </Link>
             <Link href="/support" className={styles.mobileNavLink} onClick={closeMenu}>
-              支援中心
+              {m.header.support}
             </Link>
+            <button
+              className={styles.mobileLangSwitch}
+              onClick={() => { closeMenu(); switchLocale() }}
+            >
+              {m.common.langSwitch}
+            </button>
             <a
               href={APP_STORE_URL}
               className={styles.mobileDownloadBtn}
@@ -97,7 +120,7 @@ export default function Header() {
               target="_blank"
               rel="noreferrer"
             >
-              下載 App
+              {m.common.downloadApp}
             </a>
           </div>
         </div>
