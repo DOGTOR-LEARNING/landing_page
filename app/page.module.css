@@ -474,6 +474,54 @@
   text-align: center;
 }
 
+/* Parent Pro Section */
+.parentProSection {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, rgba(16, 32, 49, 0.3) 0%, rgba(30, 55, 75, 0.6) 100%);
+}
+
+.parentProContainer {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.parentProContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.parentProBadge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+  color: var(--text-white);
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(16, 32, 49, 0.2);
+}
+
+.parentProTitle {
+  font-size: 2rem;
+  color: var(--text-white);
+}
+
+@media (min-width: 768px) {
+  .parentProTitle {
+    font-size: 2.5rem;
+  }
+}
+
+.parentProDesc {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
 /* CTA Section */
 .ctaSection {
   padding: 5rem 0 2rem 0;

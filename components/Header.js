@@ -68,6 +68,7 @@ export default function Header() {
             <Link href="/faq" className={styles.navLink}>{m.header.faq}</Link>
             <Link href="/about" className={styles.navLink}>{m.header.about}</Link>
             <Link href="/support" className={styles.navLink}>{m.header.support}</Link>
+            <Link href="/parent-pro" className={styles.navLink}>{m.header.parentPro}</Link>
             <button
               className={styles.langSwitch}
               onClick={switchLocale}
@@ -106,6 +107,9 @@ export default function Header() {
             </Link>
             <Link href="/support" className={styles.mobileNavLink} onClick={closeMenu}>
               {m.header.support}
+            </Link>
+            <Link href="/parent-pro" className={styles.mobileNavLink} onClick={closeMenu}>
+              {m.header.parentPro}
             </Link>
             <button
               className={styles.mobileLangSwitch}

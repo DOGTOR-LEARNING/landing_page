@@ -189,6 +189,22 @@ export default function Home() {
           </section>
         )}
 
+        {/* Parent Pro Section */}
+        <section className={styles.parentProSection}>
+          <div className="container">
+            <div className={styles.parentProContainer}>
+              <div className={styles.parentProContent}>
+                <div className={styles.parentProBadge}>{m.parentPro.homeSection}</div>
+                <h2 className={styles.parentProTitle}>{m.parentPro.homeSectionTitle}</h2>
+                <p className={styles.parentProDesc}>{m.parentPro.homeSectionDesc}</p>
+                <Link href="/parent-pro" className="btn btn-primary">
+                  {m.parentPro.homeSectionButton}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className={styles.ctaSection}>
           <div className="container">
