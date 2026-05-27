@@ -32,6 +32,7 @@ export default function Footer() {
             </a>
             <Link href="/terms">{m.footer.links.terms}</Link>
             <Link href="/privacy">{m.footer.links.privacy}</Link>
+            <Link href="/refund">{m.footer.links.refund}</Link>
             <Link href="/support">{m.footer.links.support}</Link>
             <Link href="/faq">{m.footer.links.faq}</Link>
           </div>

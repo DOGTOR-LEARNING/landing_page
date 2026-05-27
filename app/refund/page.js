@@ -6,15 +6,15 @@ import { getLegalMessages } from '@/lib/i18n/legalMessages'
 import styles from '../legal.module.css'
 
 export const metadata = {
-  title: '隱私權政策 - Dogtor 逗課',
-  description: '了解 Dogtor 逗課 App 如何收集、使用和保護你的個人資料。',
+  title: '退款政策 - Dogtor 逗課',
+  description: 'Dogtor 逗課的退款政策，了解訂閱退款條件與流程。',
 }
 
-export default async function Privacy() {
+export default async function Refund() {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
   const legal = getLegalMessages(locale)
-  const page = legal.privacy
+  const page = legal.refund
 
   return (
     <>
