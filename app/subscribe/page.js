@@ -2,10 +2,15 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Script from 'next/script'
 import { useMessages } from '@/components/LocaleProvider'
 import styles from './page.module.css'
 
 const LIFF_ID = process.env.NEXT_PUBLIC_LIFF_ID
+const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
+const PADDLE_SANDBOX = process.env.NEXT_PUBLIC_PADDLE_SANDBOX === 'true'
+const PADDLE_PRICE_MONTHLY = process.env.NEXT_PUBLIC_PADDLE_PRICE_MONTHLY
+const PADDLE_PRICE_YEARLY = process.env.NEXT_PUBLIC_PADDLE_PRICE_YEARLY
 
 export default function Subscribe() {
   const searchParams = useSearchParams()
@@ -17,7 +22,8 @@ export default function Subscribe() {
   const [liffReady, setLiffReady] = useState(false)
   const [lineUserId, setLineUserId] = useState(null)
   const [plan, setPlan] = useState(searchParams.get('plan') || 'monthly')
-  const [paymentMethod, setPaymentMethod] = useState('ecpay')
+  const [paymentMethod, setPaymentMethod] = useState('paddle')
+  const [paddleReady, setPaddleReady] = useState(false)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
@@ -41,9 +47,8 @@ export default function Subscribe() {
       } catch (err) {
         console.error('LIFF init error:', err)
         setError('liff')
-      } finally {
-        setLoading(false)
       }
+      setLoading(false)
     }
 
     if (LIFF_ID) {
@@ -54,6 +59,23 @@ export default function Subscribe() {
     }
   }, [])
 
+  const initPaddle = useCallback(() => {
+    if (window.Paddle) {
+      if (PADDLE_SANDBOX) {
+        window.Paddle.Environment.set('sandbox')
+      }
+      window.Paddle.Initialize({
+        token: PADDLE_CLIENT_TOKEN,
+        eventCallback: function (event) {
+          if (event.name === 'checkout.completed') {
+            window.location.href = '/subscribe/success'
+          }
+        },
+      })
+      setPaddleReady(true)
+    }
+  }, [])
+
   const handleSubscribe = useCallback(async () => {
     if (!lineUserId || submitting) return
 
@@ -61,7 +83,18 @@ export default function Subscribe() {
     localStorage.setItem('dogtor_parent_id', lineUserId)
 
     try {
-      if (paymentMethod === 'ecpay') {
+      if (paymentMethod === 'paddle') {
+        const priceId = plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
+        window.Paddle.Checkout.open({
+          items: [{ priceId, quantity: 1 }],
+          customData: {
+            parent_identifier: lineUserId,
+            parent_type: 'line',
+            plan_type: plan,
+          },
+        })
+        setSubmitting(false)
+      } else if (paymentMethod === 'ecpay') {
         const res = await fetch('/api/subscribe/ecpay-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -138,6 +171,11 @@ export default function Subscribe() {
   }
 
   return (
+    <>
+    <Script
+      src="https://cdn.paddle.com/paddle/v2/paddle.js"
+      onLoad={initPaddle}
+    />
     <main className={styles.main}>
       <div className={styles.container}>
         <h1 className={styles.title}>{sub.choosePlan}</h1>
@@ -178,6 +216,13 @@ export default function Subscribe() {
           <p className={styles.paymentMethodLabel}>{sub.paymentMethod}</p>
           <div className={styles.paymentMethods}>
             <button
+              className={`${styles.paymentMethodOption} ${paymentMethod === 'paddle' ? styles.paymentMethodActive : ''}`}
+              onClick={() => setPaymentMethod('paddle')}
+            >
+              <span className={styles.paymentMethodName}>{sub.paddle}</span>
+              <span className={styles.paymentMethodDesc}>{sub.paddleDesc}</span>
+            </button>
+            <button
               className={`${styles.paymentMethodOption} ${paymentMethod === 'ecpay' ? styles.paymentMethodActive : ''}`}
               onClick={() => setPaymentMethod('ecpay')}
             >
@@ -198,7 +243,7 @@ export default function Subscribe() {
         <button
           className={styles.subscribeBtn}
           onClick={handleSubscribe}
-          disabled={submitting}
+          disabled={submitting || (paymentMethod === 'paddle' && !paddleReady)}
         >
           {submitting ? sub.subscribing : sub.subscribe}
         </button>
@@ -207,5 +252,6 @@ export default function Subscribe() {
         <form ref={formRef} method="POST" style={{ display: 'none' }} />
       </div>
     </main>
+    </>
   )
 }
