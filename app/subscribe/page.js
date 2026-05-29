@@ -22,7 +22,7 @@ export default function Subscribe() {
   const [liffReady, setLiffReady] = useState(false)
   const [lineUserId, setLineUserId] = useState(null)
   const [plan, setPlan] = useState(searchParams.get('plan') || 'monthly')
-  const [paymentMethod, setPaymentMethod] = useState('paddle')
+  const [paymentMethod, setPaymentMethod] = useState(PADDLE_CLIENT_TOKEN ? 'paddle' : 'ecpay')
   const [paddleReady, setPaddleReady] = useState(false)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
@@ -43,6 +43,15 @@ export default function Subscribe() {
 
         const profile = await liff.getProfile()
         setLineUserId(profile.userId)
+
+        const pendingRedirect = localStorage.getItem('liff_redirect')
+        if (pendingRedirect && pendingRedirect !== window.location.pathname) {
+          localStorage.removeItem('liff_redirect')
+          window.location.href = pendingRedirect
+          return
+        }
+        localStorage.removeItem('liff_redirect')
+
         setLiffReady(true)
       } catch (err) {
         console.error('LIFF init error:', err)
@@ -178,6 +187,9 @@ export default function Subscribe() {
     />
     <main className={styles.main}>
       <div className={styles.container}>
+        <button className={styles.backBtn} onClick={() => window.history.back()}>
+          ← {sub.back}
+        </button>
         <h1 className={styles.title}>{sub.choosePlan}</h1>
 
         {/* Plan Toggle */}

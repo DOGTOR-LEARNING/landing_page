@@ -104,6 +104,10 @@ export default function ParentPro() {
                 </Link>
               </div>
             </div>
+            <p className={styles.manageLink}>
+              {pp.alreadySubscribed}{' '}
+              <Link href="/subscribe/manage">{pp.manageLink}</Link>
+            </p>
           </section>
         </div>
       </main>

@@ -268,3 +268,15 @@
   box-shadow: 0 4px 12px rgba(245, 155, 3, 0.3);
   color: white;
 }
+
+.manageLink {
+  text-align: center;
+  margin-top: var(--space-lg);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+}
+
+.manageLink a {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+}

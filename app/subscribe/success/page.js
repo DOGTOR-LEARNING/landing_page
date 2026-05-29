@@ -6,7 +6,7 @@ import { useMessages } from '@/components/LocaleProvider'
 import styles from '../page.module.css'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
-const MAX_RETRIES = 5
+const MAX_RETRIES = 15
 const RETRY_INTERVAL = 2000
 
 export default function SubscribeSuccess() {
