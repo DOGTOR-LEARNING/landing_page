@@ -86,6 +86,7 @@ body {
   background-color: var(--background-base);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* 容器 */
@@ -93,7 +94,13 @@ body {
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 var(--space-md);
+  padding: 0 var(--space-sm);
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
 }
 
 @media (min-width: 768px) {

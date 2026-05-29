@@ -22,14 +22,6 @@ export default function Footer() {
           </div>
 
           <div className={styles.footerLinks}>
-            <Link href="/guide">{m.footer.links.guide}</Link>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Android Google Play
-            </a>
             <Link href="/terms">{m.footer.links.terms}</Link>
             <Link href="/privacy">{m.footer.links.privacy}</Link>
             <Link href="/refund">{m.footer.links.refund}</Link>

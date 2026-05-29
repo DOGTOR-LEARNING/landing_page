@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
+import AnimatedIcon from '@/components/AnimatedIcons'
 import styles from './page.module.css'
 
 const LINE_BOT_URL = process.env.NEXT_PUBLIC_LINE_BOT_URL
@@ -28,44 +29,118 @@ export default function ParentPro() {
             <p className={styles.heroDesc}>{pp.heroDesc}</p>
           </section>
 
-          {/* Features */}
-          <section className={styles.featuresSection}>
-            <div className={styles.featuresGrid}>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}>📊</div>
-                <h3 className={styles.featureTitle}>{pp.feature1Title}</h3>
-                <p className={styles.featureDesc}>{pp.feature1Desc}</p>
+          {/* Section 1: Core Feature (LINE Reports) */}
+          <section className={styles.splitSection}>
+            <div className={styles.splitText}>
+              <div className={`${styles.sectionBadge} ${styles.badgeGreen}`}>
+                {pp.coreFeatureBadge}
               </div>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}>🎯</div>
-                <h3 className={styles.featureTitle}>{pp.feature2Title}</h3>
-                <p className={styles.featureDesc}>{pp.feature2Desc}</p>
-              </div>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}>🤖</div>
-                <h3 className={styles.featureTitle}>{pp.feature3Title}</h3>
-                <p className={styles.featureDesc}>{pp.feature3Desc}</p>
-              </div>
-              <div className={styles.featureCard}>
-                <div className={styles.featureIcon}>💬</div>
-                <h3 className={styles.featureTitle}>{pp.feature4Title}</h3>
-                <p className={styles.featureDesc}>{pp.feature4Desc}</p>
+              <h2 className={styles.splitTitle}>{pp.coreFeatureTitle}</h2>
+              <p className={styles.splitDesc}>{pp.coreFeatureDesc}</p>
+            </div>
+            <div className={styles.splitImage}>
+              <div className={styles.imagePlaceholder}>
+                <AnimatedIcon name="LineChart" size={64} color="#06C755" strokeWidth={1.5} variant="float" />
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>Image Placeholder (e.g., LINE Bot Screenshot)</span>
               </div>
             </div>
           </section>
 
-          {/* LINE Section */}
-          <section className={styles.lineSection}>
-            <h2 className={styles.lineTitle}>{pp.lineTitle}</h2>
-            <p className={styles.lineDesc}>{pp.lineDesc}</p>
-            <a
-              href={LINE_BOT_URL}
-              className={styles.lineButton}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {pp.lineButton}
-            </a>
+          {/* Section 2: Supercharged Learning (Zig-Zag Reverse) */}
+          <section className={`${styles.splitSection} ${styles.splitSectionReverse}`}>
+            <div className={styles.splitText}>
+              <div className={`${styles.sectionBadge} ${styles.badgeOrange}`}>
+                Power Up
+              </div>
+              <h2 className={styles.splitTitle}>{m.locale === 'en' ? 'Supercharged Learning' : '全面升級學習動力'}</h2>
+              <p className={styles.splitDesc}>
+                {m.locale === 'en' 
+                  ? 'Equip your child with unlimited resources to keep the momentum going without any interruptions.'
+                  : '提供孩子無限的學習資源，讓探索知識的動能持續不中斷。'}
+              </p>
+              
+              <div className={styles.featureList}>
+                <div className={styles.featureItem}>
+                  <div className={styles.featureItemIcon}>
+                    <AnimatedIcon name="BatteryCharging" size={24} color="#FFD166" strokeWidth={2} variant="float" />
+                  </div>
+                  <div className={styles.featureItemText}>
+                    <h3 className={styles.featureItemTitle}>{pp.featureEnergyTitle}</h3>
+                    <p className={styles.featureItemDesc}>{pp.featureEnergyDesc}</p>
+                  </div>
+                </div>
+                
+                <div className={styles.featureItem}>
+                  <div className={styles.featureItemIcon}>
+                    <AnimatedIcon name="Database" size={24} color="#06D6A0" strokeWidth={2} variant="float" />
+                  </div>
+                  <div className={styles.featureItemText}>
+                    <h3 className={styles.featureItemTitle}>{pp.featureBankTitle}</h3>
+                    <p className={styles.featureItemDesc}>{pp.featureBankDesc}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className={styles.splitImage}>
+              <div className={styles.imagePlaceholder}>
+                <AnimatedIcon name="BatteryCharging" size={64} color="#FFD166" strokeWidth={1.5} variant="float" />
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>Image Placeholder (e.g., App Island/Energy UI)</span>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 3: Personalized & Focused */}
+          <section className={styles.splitSection}>
+            <div className={styles.splitText}>
+              <div className={`${styles.sectionBadge} ${styles.badgeBlue}`}>
+                Focused
+              </div>
+              <h2 className={styles.splitTitle}>{m.locale === 'en' ? 'Personalized AI Guidance' : 'AI 精準客製化學習'}</h2>
+              <p className={styles.splitDesc}>
+                {m.locale === 'en' 
+                  ? 'Leverage advanced AI to tailor every exam and answer every question instantly, turning weaknesses into strengths.'
+                  : '運用先進 AI 技術為孩子量身打造專屬試卷，並即時解答疑惑，將弱點徹底轉化為強項。'}
+              </p>
+              
+              <div className={styles.featureList}>
+                <div className={styles.featureItem}>
+                  <div className={styles.featureItemIcon}>
+                    <AnimatedIcon name="FileEdit" size={24} color="#118AB2" strokeWidth={2} variant="float" />
+                  </div>
+                  <div className={styles.featureItemText}>
+                    <h3 className={styles.featureItemTitle}>{pp.featureCustomTitle}</h3>
+                    <p className={styles.featureItemDesc}>{pp.featureCustomDesc}</p>
+                  </div>
+                </div>
+                
+                <div className={styles.featureItem}>
+                  <div className={styles.featureItemIcon}>
+                    <AnimatedIcon name="Sparkles" size={24} color="#EF476F" strokeWidth={2} variant="float" />
+                  </div>
+                  <div className={styles.featureItemText}>
+                    <h3 className={styles.featureItemTitle}>{pp.featureNotebookTitle}</h3>
+                    <p className={styles.featureItemDesc}>{pp.featureNotebookDesc}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className={styles.splitImage}>
+              <div className={styles.imagePlaceholder}>
+                <AnimatedIcon name="Sparkles" size={64} color="#118AB2" strokeWidth={1.5} variant="float" />
+                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>Image Placeholder (e.g., Custom Exam / Mistake UI)</span>
+              </div>
+            </div>
+          </section>
+
+          {/* Ad-Free Banner */}
+          <section className={styles.adFreeBanner}>
+            <div className={styles.adFreeBannerContent}>
+              <AnimatedIcon name="ShieldCheck" size={48} color="#EF476F" strokeWidth={1.5} variant="bounce" />
+              <h2 className={styles.adFreeTitle}>{pp.featureAdFreeTitle}</h2>
+              <p className={styles.adFreeDesc}>{pp.featureAdFreeDesc}</p>
+            </div>
           </section>
 
           {/* Pricing */}
@@ -79,6 +154,7 @@ export default function ParentPro() {
               <div className={styles.pricingCard}>
                 <h3 className={styles.planName}>{pp.monthlyPlan}</h3>
                 <p className={styles.planPrice}>{pp.monthlyPrice}</p>
+                <div className={styles.planSave}>&nbsp;</div>
                 <ul className={styles.planFeatures}>
                   {pp.planFeatures.map((f, i) => (
                     <li key={i}>{f}</li>

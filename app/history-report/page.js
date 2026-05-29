@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { headers } from 'next/headers'
 import styles from '../report/page.module.css'
 import { getHistoryReportMessages } from '@/lib/i18n/historyReportMessages'
+import AnimatedIcon from '@/components/AnimatedIcons'
 
 async function pickLocaleFromRequest() {
   const h = await headers()
@@ -125,7 +126,7 @@ export default async function HistoryReportPage() {
           </div>
 
           <div className={styles.section}>
-            <div className={styles.sectionTitle}>📊 {t.todaySummary}</div>
+            <div className={styles.sectionTitle}><AnimatedIcon name="BarChart3" size={20} color="#4A90D9" />{t.todaySummary}</div>
             <div className={styles.divider} />
             <div className={styles.metricGrid}>
               <div className={styles.metric}>
@@ -146,7 +147,7 @@ export default async function HistoryReportPage() {
           </div>
 
           <div className={styles.section}>
-            <div className={styles.sectionTitle}>📝 {t.mistakeBook}</div>
+            <div className={styles.sectionTitle}><AnimatedIcon name="BookOpen" size={20} color="#f59b03" />{t.mistakeBook}</div>
             <div className={styles.divider} />
             <div className={styles.threeCol}>
               <div className={styles.metric}>
@@ -165,7 +166,7 @@ export default async function HistoryReportPage() {
           </div>
 
           <div className={styles.section}>
-            <div className={styles.sectionTitle}>❌ {t.mistakesMade}</div>
+            <div className={styles.sectionTitle}><AnimatedIcon name="XCircle" size={20} color="#E84855" />{t.mistakesMade}</div>
             <div className={styles.divider} />
             <div className={styles.mistakesList}>
               {mistakesMade.map((m) => {
@@ -222,7 +223,7 @@ export default async function HistoryReportPage() {
           </div>
 
           <div className={styles.section}>
-            <div className={styles.sectionTitle}>💡 {t.learningAdvice}</div>
+            <div className={styles.sectionTitle}><AnimatedIcon name="Lightbulb" size={20} color="#f59b03" />{t.learningAdvice}</div>
             <div className={styles.divider} />
             <p className={styles.bulletIntro}>{t.adviceIntro}</p>
             <ul className={styles.bullets}>

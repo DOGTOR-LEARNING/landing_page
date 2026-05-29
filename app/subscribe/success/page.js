@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useMessages } from '@/components/LocaleProvider'
+import AnimatedIcon from '@/components/AnimatedIcons'
 import styles from '../page.module.css'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -110,7 +111,9 @@ export default function SubscribeSuccess() {
   return (
     <main className={styles.main}>
       <div className={styles.successContainer}>
-        <div className={styles.successIcon}>🎉</div>
+        <div className={styles.successIcon}>
+          <AnimatedIcon name="PartyPopper" size={72} color="#f59b03" strokeWidth={1.4} variant="bounce" />
+        </div>
         <h1 className={styles.successTitle}>{sub.successTitle}</h1>
         <p className={styles.successDesc}>{sub.successDesc}</p>
 

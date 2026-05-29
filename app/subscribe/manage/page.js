@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useMessages } from '@/components/LocaleProvider'
+import AnimatedIcon from '@/components/AnimatedIcons'
 import styles from '../page.module.css'
 
 const LIFF_ID = process.env.NEXT_PUBLIC_LIFF_ID
@@ -92,7 +93,9 @@ export default function ManageSubscription() {
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.notInLine}>
-            <div className={styles.notInLineIcon}>📱</div>
+            <div className={styles.notInLineIcon}>
+              <AnimatedIcon name="Smartphone" size={52} color="#74b9ff" strokeWidth={1.4} variant="shake" />
+            </div>
             <h1 className={styles.notInLineTitle}>{sub.notInLine}</h1>
             <p className={styles.notInLineDesc}>{sub.notInLineDesc}</p>
           </div>

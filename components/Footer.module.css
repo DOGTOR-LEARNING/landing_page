@@ -60,16 +60,20 @@
 }
 
 .footerLinks {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-sm);
 }
 
 @media (min-width: 768px) {
   .footerLinks {
+    display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
-    gap: var(--space-lg);
+    gap: var(--space-sm) var(--space-lg);
     align-items: center;
+    justify-content: flex-end;
+    max-width: 600px;
   }
 }
 
@@ -77,6 +81,7 @@
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   transition: color var(--transition-fast);
+  white-space: nowrap;
 }
 
 .footerLinks a:hover {
