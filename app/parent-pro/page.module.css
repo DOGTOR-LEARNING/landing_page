@@ -253,30 +253,53 @@
   max-width: 600px;
 }
 
-/* LINE Section */
-.lineSection {
-  margin-bottom: var(--space-2xl);
-  padding: var(--space-2xl) var(--space-xl);
+/* LINE Banner */
+.lineBanner {
+  margin: 6rem auto;
+  padding: 3rem 2rem;
   background: linear-gradient(135deg, rgba(6, 199, 85, 0.1) 0%, rgba(6, 199, 85, 0.02) 100%);
   border: 1px solid rgba(6, 199, 85, 0.2);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   text-align: center;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  max-width: 900px;
+}
+
+.lineBanner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(6, 199, 85, 0.12) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.lineBannerContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .lineTitle {
-  font-size: 1.75rem;
-  margin-bottom: var(--space-md);
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--text-white);
+  margin-top: var(--space-sm);
 }
 
 .lineDesc {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.7;
-  margin-bottom: var(--space-lg);
+  max-width: 600px;
+  margin-bottom: var(--space-sm);
 }
 
 .lineButton {

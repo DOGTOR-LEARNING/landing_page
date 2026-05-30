@@ -143,6 +143,23 @@ export default function ParentPro() {
             </div>
           </section>
 
+          {/* LINE Section */}
+          <section className={styles.lineBanner}>
+            <div className={styles.lineBannerContent}>
+              <AnimatedIcon name="MessageCircle" size={48} color="#06C755" strokeWidth={1.5} variant="bounce" />
+              <h2 className={styles.lineTitle}>{pp.lineTitle}</h2>
+              <p className={styles.lineDesc}>{pp.lineDesc}</p>
+              <a
+                href={LINE_BOT_URL}
+                className={styles.lineButton}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {pp.lineButton}
+              </a>
+            </div>
+          </section>
+
           {/* Pricing */}
           <section className={styles.pricingSection}>
             <div className={styles.sectionHeader}>
