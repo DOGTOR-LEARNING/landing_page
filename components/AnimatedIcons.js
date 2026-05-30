@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   LineChart,
   Sparkles,
+  Camera,
 } from 'lucide-react'
 
 const iconMap = {
@@ -35,6 +36,7 @@ const iconMap = {
   ShieldCheck,
   LineChart,
   Sparkles,
+  Camera,
 }
 
 /**

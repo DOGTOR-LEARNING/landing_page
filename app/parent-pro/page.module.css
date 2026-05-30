@@ -348,21 +348,77 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.pricingGrid {
+.pricingFeatures {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0 auto 2rem auto;
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .pricingFeatures {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    padding: 2rem;
+  }
+}
+
+.featureItemRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  padding: 0;
+  text-align: left;
+}
+
+.featureItemImportant {
+  color: var(--text-white);
+  font-weight: 700;
+  font-size: 1.05rem;
+  grid-column: 1 / -1;
+  background: rgba(6, 199, 85, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(6, 199, 85, 0.2);
+  margin-bottom: 0.25rem;
+}
+
+.pricingGrid {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
   gap: var(--space-lg);
   margin-bottom: var(--space-xl);
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.pricingGrid::-webkit-scrollbar {
+  display: none;
 }
 
 @media (min-width: 768px) {
   .pricingGrid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    overflow-x: visible;
   }
 }
 
 .pricingCard {
-  padding: var(--space-xl);
+  flex: 0 0 85%;
+  scroll-snap-align: center;
+  padding: 1.5rem 1rem;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -372,6 +428,23 @@
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .pricingCard {
+    flex: auto;
+    padding: var(--space-xl);
+  }
+}
+
+.planDailyPrice {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: var(--space-md);
+}
+
+.pricingCardPopular .planDailyPrice {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .pricingCard:hover {
@@ -412,43 +485,28 @@
 }
 
 .planPrice {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--text-white);
   margin-bottom: var(--space-xs);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .planPrice {
+    font-size: 2.5rem;
+  }
 }
 
 .planSave {
   font-size: 0.95rem;
   color: var(--accent-orange-light);
   font-weight: 600;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   min-height: 1.5em;
 }
 
-.planFeatures {
-  list-style: none;
-  padding: 0;
-  text-align: left;
-  margin-bottom: var(--space-xl);
-  flex-grow: 1;
-}
 
-.planFeatures li {
-  padding: 0.6rem 0;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.planFeatures li::before {
-  content: '\2713';
-  color: var(--accent-orange-light);
-  font-weight: 800;
-  flex-shrink: 0;
-}
 
 .subscribeBtn {
   display: inline-block;

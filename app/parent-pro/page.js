@@ -69,16 +69,7 @@ export default function ParentPro() {
                     <p className={styles.featureItemDesc}>{pp.featureEnergyDesc}</p>
                   </div>
                 </div>
-                
-                <div className={styles.featureItem}>
-                  <div className={styles.featureItemIcon}>
-                    <AnimatedIcon name="Database" size={24} color="#06D6A0" strokeWidth={2} variant="float" />
-                  </div>
-                  <div className={styles.featureItemText}>
-                    <h3 className={styles.featureItemTitle}>{pp.featureBankTitle}</h3>
-                    <p className={styles.featureItemDesc}>{pp.featureBankDesc}</p>
-                  </div>
-                </div>
+
               </div>
             </div>
             
@@ -106,7 +97,7 @@ export default function ParentPro() {
               <div className={styles.featureList}>
                 <div className={styles.featureItem}>
                   <div className={styles.featureItemIcon}>
-                    <AnimatedIcon name="FileEdit" size={24} color="#118AB2" strokeWidth={2} variant="float" />
+                    <AnimatedIcon name="Camera" size={24} color="#118AB2" strokeWidth={2} variant="float" />
                   </div>
                   <div className={styles.featureItemText}>
                     <h3 className={styles.featureItemTitle}>{pp.featureCustomTitle}</h3>
@@ -167,16 +158,21 @@ export default function ParentPro() {
               <p className={styles.sectionSubtitle}>{pp.pricingSubtitle}</p>
             </div>
 
+            <div className={styles.pricingFeatures}>
+              {pp.planFeatures.map((f, i) => (
+                <div key={i} className={`${styles.featureItemRow} ${f.important ? styles.featureItemImportant : ''}`}>
+                  <AnimatedIcon name={f.icon} size={f.important ? 28 : 24} color={f.color} />
+                  <span>{f.text}</span>
+                </div>
+              ))}
+            </div>
+
             <div className={styles.pricingGrid}>
               <div className={styles.pricingCard}>
                 <h3 className={styles.planName}>{pp.monthlyPlan}</h3>
                 <p className={styles.planPrice}>{pp.monthlyPrice}</p>
-                <div className={styles.planSave}>&nbsp;</div>
-                <ul className={styles.planFeatures}>
-                  {pp.planFeatures.map((f, i) => (
-                    <li key={i}>{f}</li>
-                  ))}
-                </ul>
+                <p className={styles.planDailyPrice}>{pp.monthlyDailyPrice}</p>
+                <div style={{ flexGrow: 1 }} />
                 <Link href="/subscribe?plan=monthly" className={styles.subscribeBtn}>
                   {pp.subscribeButton}
                 </Link>
@@ -186,12 +182,8 @@ export default function ParentPro() {
                 <div className={styles.popularBadge}>{pp.yearlySave}</div>
                 <h3 className={styles.planName}>{pp.yearlyPlan}</h3>
                 <p className={styles.planPrice}>{pp.yearlyPrice}</p>
-                <p className={styles.planSave}>{pp.yearlySave}</p>
-                <ul className={styles.planFeatures}>
-                  {pp.planFeatures.map((f, i) => (
-                    <li key={i}>{f}</li>
-                  ))}
-                </ul>
+                <p className={styles.planDailyPrice}>{pp.yearlyDailyPrice}</p>
+                <div style={{ flexGrow: 1 }} />
                 <Link href="/subscribe?plan=yearly" className={styles.subscribeBtn}>
                   {pp.subscribeButton}
                 </Link>
