@@ -4,9 +4,9 @@ import { LocaleProvider } from '@/components/LocaleProvider'
 
 export const metadata = {
   metadataBase: new URL('https://dogtor.superb-tutor.com'),
-  title: 'Dogtor 逗課 | 國高中題庫練習・會考學測複習・AI 學習小狗',
+  title: 'Dogtor 逗課 | 國高中生 AI 學習 App・會考學測題庫練習｜台大學生與補習班聯手開發',
   description:
-    'Dogtor 逗課（逗課 App）是專為台灣國中生、高中生打造的 AI 學習 App，非獸醫服務。提供國中會考、高中學測題庫與練習題，涵蓋數學、理化、化學等科目。支援好友對戰、AI 解題、錯題本複習，遊戲化學習讓備考更有趣！',
+    'Dogtor 逗課是專為台灣國中生、高中生設計的 AI 學習 App，提供國中會考、高中學測、分科測驗題庫練習、好友對戰、AI 解題與錯題本複習。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導，讓備考更有效率、更有趣！',
   keywords: [
     'Dogtor',
     '逗課',
@@ -22,6 +22,12 @@ export const metadata = {
     '數學',
     '理化',
     '化學',
+    '社會',
+    '地理',
+    '歷史',
+    '公民',
+    '分科測驗',
+    '分科',
     'AI學習',
     '遊戲化學習',
     '學習App',
@@ -62,9 +68,9 @@ export const metadata = {
   ],
   authors: [{ name: 'Dogtor 逗課 Team' }],
   openGraph: {
-    title: 'Dogtor 逗課 | 國高中題庫練習・會考學測複習・AI 學習小狗',
+    title: 'Dogtor 逗課 | 國高中生 AI 學習 App・會考學測題庫練習',
     description:
-      '專為國高中生打造的遊戲化學習 App。題庫練習、好友對戰、AI 解題，讓會考學測複習變有趣！',
+      '專為國高中生打造的 AI 學習 App，提供題庫練習、好友對戰、AI 解題、錯題本，讓會考學測複習變有趣！由台大學生與補習班老師聯手開發，並由多位台大教授顧問指導。',
     images: ['/dogtor_cover.png'],
     type: 'website',
     locale: 'zh_TW',
@@ -72,9 +78,9 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dogtor 逗課 | 國高中題庫練習・會考學測複習',
+    title: 'Dogtor 逗課 | 國高中生 AI 學習 App・會考學測題庫練習',
     description:
-      '專為國高中生打造的遊戲化學習 App。題庫練習、好友對戰、AI 解題，讓備考更有趣！',
+      '國高中生 AI 學習 App。題庫練習、好友對戰、AI 解題，讓備考更有效率！由台大學生與補習班老師聯手開發，並由多位台大教授顧問指導。',
     images: ['/dogtor_cover.png'],
   },
   icons: {
@@ -99,7 +105,7 @@ const jsonLd = [
     logo: 'https://dogtor.superb-tutor.com/dogtor_logo.svg',
     email: 'dogtor.love.learning@gmail.com',
     description:
-      'Dogtor 逗課是專為台灣國高中生打造的 AI 遊戲化學習 App，提供會考學測題庫練習、好友對戰與 AI 解題功能。',
+      'Dogtor 逗課是專為台灣國高中生打造的 AI 遊戲化學習 App，提供會考學測題庫練習、好友對戰與 AI 解題功能。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導。',
     disambiguatingDescription:
       'Dogtor 逗課（逗課）是一款台灣教育學習 App，品牌形象為學霸小狗博士，服務對象為備考會考和學測的國高中生，與獸醫、動物診所或寵物醫療服務無關。',
     sameAs: [
@@ -107,7 +113,46 @@ const jsonLd = [
       'https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp',
     ],
     foundingDate: '2024',
-    knowsAbout: ['台灣國高中教育', '國中會考', '高中學測', '題庫練習', 'AI 學習', '遊戲化學習'],
+    founder: {
+      '@type': 'Organization',
+      name: '台大學生團隊',
+      description: '由國立台灣大學在學學生組成，與補習班老師聯手開發 Dogtor 逗課，負責 AI 技術研發與產品開發。',
+      affiliation: {
+        '@type': 'CollegeOrUniversity',
+        name: '國立台灣大學',
+        alternateName: ['台大', 'National Taiwan University', 'NTU'],
+        url: 'https://www.ntu.edu.tw',
+      },
+    },
+    member: [
+      {
+        '@type': 'Organization',
+        name: '精湛教育補習班老師',
+        description: '與台大學生聯手開發 Dogtor 逗課，將多年備考輔導的第一線經驗融入產品設計。',
+      },
+      {
+        '@type': 'Organization',
+        name: '台大教授顧問群',
+        description: '由多位國立台灣大學教授擔任顧問，在 AI、軟體、HCI（人機互動）、學習互動等方面提供專業指導。',
+        affiliation: {
+          '@type': 'CollegeOrUniversity',
+          name: '國立台灣大學',
+          alternateName: ['台大', 'National Taiwan University', 'NTU'],
+          url: 'https://www.ntu.edu.tw',
+        },
+      },
+    ],
+    knowsAbout: [
+      '台灣國高中教育',
+      '國中會考',
+      '高中學測',
+      '題庫練習',
+      'AI 學習',
+      '遊戲化學習',
+      '108 課綱',
+      '台大教授指導',
+      '台大學生與補習班聯手開發',
+    ],
   },
   {
     '@context': 'https://schema.org',
@@ -130,7 +175,7 @@ const jsonLd = [
     name: 'Dogtor 逗課',
     alternateName: '逗課',
     description:
-      'Dogtor 逗課是台灣專為國高中生設計的免費 AI 遊戲化學習 App，提供會考學測題庫練習、好友對戰、AI 解題功能。品牌形象為學霸小狗博士，與獸醫或動物醫療服務無關。',
+      'Dogtor 逗課是台灣專為國高中生設計的免費 AI 遊戲化學習 App，提供會考學測題庫練習、好友對戰、AI 解題功能。由台大學生與補習班老師聯手開發，並有多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導。品牌形象為學霸小狗博士，與獸醫或動物醫療服務無關。',
     inDefinedTermSet: {
       '@type': 'DefinedTermSet',
       name: '台灣教育科技 App',
@@ -189,7 +234,7 @@ const jsonLd = [
     installUrl: 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627',
     screenshot: 'https://dogtor.superb-tutor.com/dogtor_cover.png',
     description:
-      'Dogtor 逗課是專為台灣國高中生打造的免費 AI 遊戲化學習 App，提供會考學測題庫練習、好友對戰、AI 解題與錯題本功能。涵蓋國中數學、理化、自然與高中化學。',
+      'Dogtor 逗課是台灣國高中 AI 遊戲化學習 App，免費下載，提供會考學測題庫練習、好友對戰、AI 解題與錯題本功能，涵蓋國中數學、理化、自然與高中化學。由台大學生與補習班老師聯手開發，多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導。',
     disambiguatingDescription:
       'Dogtor 逗課（逗課）是一款教育學習 App，品牌形象為學霸小狗博士（非狗醫生），幫助台灣國高中生準備會考與學測，與獸醫或寵物醫療服務無關。',
     featureList: ['題庫練習', '好友對戰', 'AI 解題', '錯題本', '遊戲化學習', '離線下載'],

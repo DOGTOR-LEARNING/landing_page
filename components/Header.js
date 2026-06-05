@@ -64,11 +64,10 @@ export default function Header() {
           </Link>
 
           <nav className={styles.desktopNav}>
-            <Link href="/guide" className={styles.navLink}>{m.header.guide}</Link>
-            <Link href="/faq" className={styles.navLink}>{m.header.faq}</Link>
             <Link href="/about" className={styles.navLink}>{m.header.about}</Link>
+            <Link href="/faq" className={styles.navLink}>{m.header.faq}</Link>
+            <Link href="/guide" className={styles.navLink}>{m.header.guide}</Link>
             <Link href="/support" className={styles.navLink}>{m.header.support}</Link>
-            <Link href="/parent-pro" className={styles.navLink}>{m.header.parentPro}</Link>
             <button
               className={styles.langSwitch}
               onClick={switchLocale}
@@ -84,6 +83,9 @@ export default function Header() {
             >
               {m.common.downloadApp}
             </a>
+            <Link href="/parent-pro" className={styles.parentProBtn}>
+              {m.header.parentPro}
+            </Link>
           </nav>
 
           <button
@@ -96,20 +98,17 @@ export default function Header() {
           </button>
 
           <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
-            <Link href="/guide" className={styles.mobileNavLink} onClick={closeMenu}>
-              {m.header.guide}
+            <Link href="/about" className={styles.mobileNavLink} onClick={closeMenu}>
+              {m.header.about}
             </Link>
             <Link href="/faq" className={styles.mobileNavLink} onClick={closeMenu}>
               {m.header.faq}
             </Link>
-            <Link href="/about" className={styles.mobileNavLink} onClick={closeMenu}>
-              {m.header.about}
+            <Link href="/guide" className={styles.mobileNavLink} onClick={closeMenu}>
+              {m.header.guide}
             </Link>
             <Link href="/support" className={styles.mobileNavLink} onClick={closeMenu}>
               {m.header.support}
-            </Link>
-            <Link href="/parent-pro" className={styles.mobileNavLink} onClick={closeMenu}>
-              {m.header.parentPro}
             </Link>
             <button
               className={styles.mobileLangSwitch}
@@ -126,6 +125,13 @@ export default function Header() {
             >
               {m.common.downloadApp}
             </a>
+            <Link
+              href="/parent-pro"
+              className={styles.mobileParentProBtn}
+              onClick={closeMenu}
+            >
+              {m.header.parentPro}
+            </Link>
           </div>
         </div>
       </div>

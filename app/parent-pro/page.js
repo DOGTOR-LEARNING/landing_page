@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
@@ -21,16 +22,55 @@ export default function ParentPro() {
         <div className="container">
           {/* Hero */}
           <section className={styles.hero}>
-            <h1 className={styles.heroTitle}>
-              {pp.heroTitle}
-              <br />
-              <span className="gradient-text">{pp.heroTitleHighlight}</span>
-            </h1>
+            <div className={styles.heroBadge}>{pp.heroBadge}</div>
+
+            <div className={styles.heroTitleRow}>
+              <h1 className={styles.heroTitle}>
+                {pp.heroTitle}
+                <br />
+                <span className="gradient-text">{pp.heroTitleHighlight}</span>
+              </h1>
+              <div className={styles.heroCorgi} aria-hidden="true">
+                <div className={styles.heroCorgiAura} />
+                <div className={styles.heroCorgiSparkle} data-sparkle="1" />
+                <div className={styles.heroCorgiSparkle} data-sparkle="2" />
+                <div className={styles.heroCorgiSparkle} data-sparkle="3" />
+                <Image
+                  src="/question-corgi.png"
+                  alt=""
+                  width={320}
+                  height={285}
+                  className={styles.heroCorgiImg}
+                  priority
+                />
+              </div>
+            </div>
+
             <p className={styles.heroDesc}>{pp.heroDesc}</p>
+
+            <div className={styles.heroBenefits}>
+              {pp.planFeatures.slice(0, 4).map((f, i) => (
+                <div key={i} className={styles.heroBenefit}>
+                  <AnimatedIcon name={f.icon} size={18} color={f.color} strokeWidth={2.5} />
+                  <span>{f.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.heroCtas}>
+              <a href="#pricing" className={styles.heroCtaPrimary}>
+                {pp.subscribeButton}
+              </a>
+              <a href="#features" className={styles.heroCtaSecondary}>
+                {pp.viewPlansButton}
+              </a>
+            </div>
+
+            <p className={styles.heroPriceHint}>{pp.heroPriceHint}</p>
           </section>
 
           {/* Section 1: Core Feature (LINE Reports) */}
-          <section className={styles.splitSection}>
+          <section id="features" className={styles.splitSection}>
             <div className={styles.splitText}>
               <div className={`${styles.sectionBadge} ${styles.badgeGreen}`}>
                 {pp.coreFeatureBadge}
@@ -152,7 +192,7 @@ export default function ParentPro() {
           </section>
 
           {/* Pricing */}
-          <section className={styles.pricingSection}>
+          <section id="pricing" className={styles.pricingSection}>
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>{pp.pricingTitle}</h2>
               <p className={styles.sectionSubtitle}>{pp.pricingSubtitle}</p>

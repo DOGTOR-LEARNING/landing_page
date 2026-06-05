@@ -8,9 +8,9 @@ import styles from './page.module.css'
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 export const metadata = {
-  title: '關於我們 - Dogtor 逗課 | 國高中 AI 學習平台',
+  title: '關於我們 - Dogtor 逗課 | 國高中生 AI 學習 App｜團隊介紹',
   description:
-    'Dogtor 逗課由台大資管系學生創業團隊打造，與精湛教育師資團隊合作，結合遊戲化學習與 AI 技術，讓國高中生的會考學測複習變有趣。',
+    'Dogtor 逗課是專為國高中生打造的 AI 學習 App。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導，讓會考學測複習變有趣又有效率。',
 }
 
 export default async function About() {

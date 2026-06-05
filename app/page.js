@@ -112,6 +112,22 @@ export default function Home() {
                 <div className={styles.featureImageContainer}>
                   <Image
                     src="/feature_1.png"
+                    alt={m.home.featureTeamImgAlt}
+                    fill
+                    className={styles.featureImage}
+                  />
+                </div>
+                <div className={styles.featureOverlay}></div>
+                <div className={styles.featureContent}>
+                  <h3 className={styles.featureTitle}>{m.home.featureTeamTitle}</h3>
+                  <p className={styles.featureDesc}>{m.home.featureTeamDesc}</p>
+                </div>
+              </article>
+
+              <article className={`${styles.featureCard} card`}>
+                <div className={styles.featureImageContainer}>
+                  <Image
+                    src="/feature_2.png"
                     alt={m.home.feature1ImgAlt}
                     fill
                     className={styles.featureImage}
@@ -121,22 +137,6 @@ export default function Home() {
                 <div className={styles.featureContent}>
                   <h3 className={styles.featureTitle}>{m.home.feature1Title}</h3>
                   <p className={styles.featureDesc}>{m.home.feature1Desc}</p>
-                </div>
-              </article>
-
-              <article className={`${styles.featureCard} card`}>
-                <div className={styles.featureImageContainer}>
-                  <Image
-                    src="/feature_2.png"
-                    alt={m.home.feature2ImgAlt}
-                    fill
-                    className={styles.featureImage}
-                  />
-                </div>
-                <div className={styles.featureOverlay}></div>
-                <div className={styles.featureContent}>
-                  <h3 className={styles.featureTitle}>{m.home.feature2Title}</h3>
-                  <p className={styles.featureDesc}>{m.home.feature2Desc}</p>
                 </div>
               </article>
 
