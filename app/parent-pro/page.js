@@ -35,14 +35,16 @@ export default function ParentPro() {
                 <div className={styles.heroCorgiSparkle} data-sparkle="1" />
                 <div className={styles.heroCorgiSparkle} data-sparkle="2" />
                 <div className={styles.heroCorgiSparkle} data-sparkle="3" />
-                <Image
-                  src="/question-corgi.png"
-                  alt=""
-                  width={320}
-                  height={285}
-                  className={styles.heroCorgiImg}
-                  priority
-                />
+                <div className={styles.heroCorgiImgWrap}>
+                  <Image
+                    src="/question-corgi.png"
+                    alt=""
+                    width={320}
+                    height={285}
+                    className={styles.heroCorgiImg}
+                    priority
+                  />
+                </div>
               </div>
             </div>
 

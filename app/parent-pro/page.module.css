@@ -51,18 +51,30 @@
 @media (min-width: 768px) {
   .heroCorgi {
     position: absolute;
-    bottom: -1.5rem;
-    right: -3rem;
-    width: 240px;
+    bottom: 0rem;
+    right: -6rem;
+    width: 200px;
     align-self: auto;
   }
 }
 
 @media (min-width: 1024px) {
   .heroCorgi {
-    width: 300px;
-    bottom: -2rem;
-    right: -5rem;
+    width: 250px;
+    bottom: 0rem;
+    right: -9rem;
+  }
+}
+
+.heroCorgiImgWrap {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .heroCorgiImgWrap {
+    animation: heroCorgiFloat 4.5s ease-in-out infinite;
   }
 }
 
@@ -70,12 +82,11 @@
   position: relative;
   width: 100%;
   height: auto;
-  transform: scaleX(-1);
+  display: block;
   filter:
     drop-shadow(0 0 10px rgba(245, 155, 3, 0.55))
     drop-shadow(0 0 20px rgba(255, 209, 102, 0.4))
     drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
-  z-index: 2;
 }
 
 @media (min-width: 768px) {
@@ -84,7 +95,6 @@
       drop-shadow(0 0 18px rgba(245, 155, 3, 0.55))
       drop-shadow(0 0 36px rgba(255, 209, 102, 0.4))
       drop-shadow(0 10px 18px rgba(0, 0, 0, 0.3));
-    animation: heroCorgiFloat 4.5s ease-in-out infinite;
   }
 }
 
@@ -167,10 +177,10 @@
 
 @keyframes heroCorgiFloat {
   0%, 100% {
-    transform: scaleX(-1) translateY(0);
+    transform: translateY(0);
   }
   50% {
-    transform: scaleX(-1) translateY(-10px);
+    transform: translateY(-10px);
   }
 }
 
