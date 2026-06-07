@@ -1,0 +1,19 @@
+/* components/animated-icons.css */
+@media (hover: none) and (pointer: coarse) {
+  .icon-auto-float {
+    animation: iconAutoFloat 3s ease-in-out infinite;
+  }
+  .icon-auto-bounce {
+    animation: iconAutoBounce 3s ease-in-out infinite;
+  }
+  
+  @keyframes iconAutoFloat {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+    50% { transform: translateY(-8px) scale(1.15) rotate(6deg); }
+  }
+  
+  @keyframes iconAutoBounce {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(-8deg); }
+  }
+}

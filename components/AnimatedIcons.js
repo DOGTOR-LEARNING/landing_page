@@ -48,6 +48,8 @@ const iconMap = {
  *   "bounce"    — spring drop-in with overshoot (for success screens)
  *   "shake"     — looping phone-ring shake (for error/warning screens)
  */
+import './animated-icons.css'
+
 export default function AnimatedIcon({
   name,
   size = 20,
@@ -55,6 +57,7 @@ export default function AnimatedIcon({
   strokeWidth = 1.8,
   variant = 'entrance',
   delay = 0,
+  className = '',
 }) {
   const Icon = iconMap[name]
   if (!Icon) return null
@@ -62,6 +65,7 @@ export default function AnimatedIcon({
   if (variant === 'entrance') {
     return (
       <motion.span
+        className={className}
         initial={{ opacity: 0, scale: 0.4 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: 'spring', stiffness: 420, damping: 18, delay }}
@@ -75,6 +79,7 @@ export default function AnimatedIcon({
   if (variant === 'float') {
     return (
       <motion.div
+        className={`icon-auto-float ${className}`.trim()}
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 260, damping: 22, delay }}
@@ -93,6 +98,7 @@ export default function AnimatedIcon({
   if (variant === 'bounce') {
     return (
       <motion.div
+        className={`icon-auto-bounce ${className}`.trim()}
         initial={{ scale: 0, rotate: -25 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: 'spring', stiffness: 260, damping: 11, delay }}
@@ -106,6 +112,7 @@ export default function AnimatedIcon({
   if (variant === 'shake') {
     return (
       <motion.div
+        className={className}
         animate={{ rotate: [0, -12, 12, -12, 12, 0] }}
         transition={{
           duration: 1.4,
@@ -121,7 +128,7 @@ export default function AnimatedIcon({
   }
 
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+    <span className={className} style={{ display: 'inline-flex', alignItems: 'center' }}>
       <Icon size={size} color={color} strokeWidth={strokeWidth} />
     </span>
   )
