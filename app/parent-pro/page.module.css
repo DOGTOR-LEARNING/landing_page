@@ -495,7 +495,7 @@
 /* Daily Reports — scroll-driven sticky section */
 .dailyReportsSection {
   position: relative;
-  height: 180vh;
+  height: 250vh;
   margin-top: var(--space-xl);
   margin-bottom: var(--space-lg);
   z-index: 2;
@@ -565,7 +565,7 @@
 
 @media (max-width: 991px) {
   .dailyReportsSection {
-    height: 150vh;
+    height: 250vh;
     margin-bottom: var(--space-lg);
   }
   .dailyReportsSticky {
