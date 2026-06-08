@@ -1,0 +1,243 @@
+.main {
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+  background: var(--background-base);
+}
+
+.contract {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 768px) {
+  .contract {
+    padding: var(--space-2xl) 3rem;
+  }
+}
+
+.contractHeader {
+  text-align: center;
+  padding-bottom: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--accent-orange-light);
+  font-weight: 600;
+}
+
+.section {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section h2 {
+  font-size: 1.375rem;
+  color: var(--accent-orange-light);
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+}
+
+.section p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-md);
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+.partyBlock {
+  margin-bottom: var(--space-md);
+}
+
+.partyLabel {
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.preamble {
+  font-size: 1rem;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: justify;
+}
+
+.clauseList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clauseItem {
+  margin-bottom: var(--space-lg);
+}
+
+.clauseItem:last-child {
+  margin-bottom: 0;
+}
+
+.clauseItemTitle {
+  font-weight: 700;
+  color: var(--text-white);
+  font-size: 1.05rem;
+  margin-bottom: var(--space-xs);
+}
+
+.clauseItemBody {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.orderedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: item;
+}
+
+.orderedList > li {
+  counter-increment: item;
+  margin-bottom: var(--space-md);
+  padding-left: 1.5em;
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.orderedList > li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.orderedList > li:last-child {
+  margin-bottom: 0;
+}
+
+.highlight {
+  color: var(--text-white);
+  font-weight: 700;
+}
+
+.signatureArea {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.signatureArea h2 {
+  font-size: 1.375rem;
+  color: var(--accent-orange-light);
+  margin-top: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.signatureGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .signatureGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.signatureCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.signatureCard h3 {
+  font-size: 1.125rem;
+  color: var(--text-white);
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: var(--space-sm);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.infoRow:last-child {
+  margin-bottom: 0;
+}
+
+.infoLabel {
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 5em;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.signatureLine {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px dashed rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.signatureLine span {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.signatureLine .line {
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  min-width: 80px;
+}
+
+.dateRow {
+  text-align: center;
+  margin-top: var(--space-xl);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
