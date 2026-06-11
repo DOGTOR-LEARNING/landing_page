@@ -221,7 +221,7 @@ export default function Subscribe() {
           )}
           <ul className={styles.planFeatures}>
             {pp.planFeatures.map((f, i) => (
-              <li key={i}>{f}</li>
+              <li key={i}>{typeof f === 'string' ? f : f.text}</li>
             ))}
           </ul>
         </div>
