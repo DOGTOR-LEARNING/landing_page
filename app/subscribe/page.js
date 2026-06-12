@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import { useMessages } from '@/components/LocaleProvider'
@@ -18,12 +18,10 @@ export default function Subscribe() {
   const m = useMessages()
   const sub = m.subscribe
   const pp = m.parentPro
-  const formRef = useRef(null)
 
   const [liffReady, setLiffReady] = useState(false)
   const [lineUserId, setLineUserId] = useState(null)
   const [plan, setPlan] = useState(searchParams.get('plan') || 'monthly')
-  const [paymentMethod, setPaymentMethod] = useState(PADDLE_CLIENT_TOKEN ? 'paddle' : 'ecpay')
   const [paddleReady, setPaddleReady] = useState(false)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
@@ -93,53 +91,20 @@ export default function Subscribe() {
     localStorage.setItem('dogtor_parent_id', lineUserId)
 
     try {
-      if (paymentMethod === 'paddle') {
-        const priceId = plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
-        window.Paddle.Checkout.open({
-          items: [{ priceId, quantity: 1 }],
-          customData: {
-            parent_identifier: lineUserId,
-            parent_type: 'line',
-            plan_type: plan,
-          },
-        })
-        setSubmitting(false)
-      } else if (paymentMethod === 'ecpay') {
-        const res = await fetch('/api/subscribe/ecpay-checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ lineUserId, planType: plan }),
-        })
-        const data = await res.json()
-        if (!res.ok) throw new Error(data.error)
-
-        const form = formRef.current
-        form.action = data.url
-        form.innerHTML = ''
-        for (const [key, value] of Object.entries(data.params)) {
-          const input = document.createElement('input')
-          input.type = 'hidden'
-          input.name = key
-          input.value = value
-          form.appendChild(input)
-        }
-        form.submit()
-      } else {
-        const res = await fetch('/api/subscribe/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ lineUserId, planType: plan }),
-        })
-        const data = await res.json()
-        if (!res.ok) throw new Error(data.error)
-
-        window.location.href = data.url
-      }
+      const priceId = plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
+      window.Paddle.Checkout.open({
+        items: [{ priceId, quantity: 1 }],
+        customData: {
+          parent_identifier: lineUserId,
+          parent_type: 'line',
+          plan_type: plan,
+        },
+      })
     } catch (err) {
       console.error('Subscribe error:', err)
-      setSubmitting(false)
     }
-  }, [lineUserId, plan, paymentMethod, submitting])
+    setSubmitting(false)
+  }, [lineUserId, plan, submitting])
 
   if (loading) {
     return (
@@ -226,45 +191,15 @@ export default function Subscribe() {
           </ul>
         </div>
 
-        {/* Payment Method */}
-        <div className={styles.paymentMethodSection}>
-          <p className={styles.paymentMethodLabel}>{sub.paymentMethod}</p>
-          <div className={styles.paymentMethods}>
-            <button
-              className={`${styles.paymentMethodOption} ${paymentMethod === 'paddle' ? styles.paymentMethodActive : ''}`}
-              onClick={() => setPaymentMethod('paddle')}
-            >
-              <span className={styles.paymentMethodName}>{sub.paddle}</span>
-              <span className={styles.paymentMethodDesc}>{sub.paddleDesc}</span>
-            </button>
-            <button
-              className={`${styles.paymentMethodOption} ${paymentMethod === 'ecpay' ? styles.paymentMethodActive : ''}`}
-              onClick={() => setPaymentMethod('ecpay')}
-            >
-              <span className={styles.paymentMethodName}>{sub.ecpay}</span>
-              <span className={styles.paymentMethodDesc}>{sub.ecpayDesc}</span>
-            </button>
-            <button
-              className={`${styles.paymentMethodOption} ${paymentMethod === 'stripe' ? styles.paymentMethodActive : ''}`}
-              onClick={() => setPaymentMethod('stripe')}
-            >
-              <span className={styles.paymentMethodName}>{sub.stripe}</span>
-              <span className={styles.paymentMethodDesc}>{sub.stripeDesc}</span>
-            </button>
-          </div>
-        </div>
-
         {/* Submit */}
         <button
           className={styles.subscribeBtn}
           onClick={handleSubscribe}
-          disabled={submitting || (paymentMethod === 'paddle' && !paddleReady)}
+          disabled={submitting || !paddleReady}
         >
           {submitting ? sub.subscribing : sub.subscribe}
         </button>
 
-        {/* Hidden form for ECPay POST submission */}
-        <form ref={formRef} method="POST" style={{ display: 'none' }} />
       </div>
     </main>
     </>

@@ -119,59 +119,6 @@
   font-weight: 700;
 }
 
-/* Payment Method */
-.paymentMethodSection {
-  margin-bottom: var(--space-lg);
-}
-
-.paymentMethodLabel {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: var(--space-sm);
-  text-align: left;
-}
-
-.paymentMethods {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.paymentMethodOption {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all var(--transition-base);
-  text-align: left;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.paymentMethodOption:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.paymentMethodActive {
-  border-color: var(--accent-orange);
-  background: rgba(245, 155, 3, 0.08);
-  color: var(--text-white);
-}
-
-.paymentMethodName {
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-.paymentMethodDesc {
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-
 /* Subscribe Button */
 .subscribeBtn {
   display: block;
