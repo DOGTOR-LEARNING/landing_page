@@ -249,6 +249,18 @@ export default function ParentPro() {
                 </div>
               </div>
             </div>
+            
+            <div className={styles.splitImage}>
+              <div className={styles.imagePlaceholder}>
+                <Image
+                  src="/question-corgi.png"
+                  alt=""
+                  width={600}
+                  height={400}
+                  className={styles.splitFeatureImg}
+                />
+              </div>
+            </div>
           </section>
 
           {/* Bottom Banners */}
