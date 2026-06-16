@@ -249,13 +249,6 @@ export default function ParentPro() {
                 </div>
               </div>
             </div>
-            
-            <div className={styles.splitImage}>
-              <div className={styles.imagePlaceholder}>
-                <AnimatedIcon name="Sparkles" size={64} color="#118AB2" strokeWidth={1.5} variant="float" />
-                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>Image Placeholder (e.g., Custom Exam / Mistake UI)</span>
-              </div>
-            </div>
           </section>
 
           {/* Bottom Banners */}
