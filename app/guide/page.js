@@ -7,16 +7,30 @@ import { getMessages } from '@/lib/i18n/messages'
 import styles from './page.module.css'
 
 export const metadata = {
-  title: '國高中學習指南｜會考學測必備攻略 - Dogtor 逗課',
+  title: '國高中學習指南｜會考題庫練習・學測 AI 解題・分科測驗攻略 - Dogtor 逗課',
   description:
-    'Dogtor 逗課學習指南：會考怎麼準備、學測倒數衝刺、國中生讀書方法、家長如何幫孩子、通勤學習 App 推薦。涵蓋錯題本、歷屆試題、番茄鐘、108課綱等實用攻略。',
+    'Dogtor 逗課學習指南：國中會考怎麼準備最有效率、會考題庫練習 App 推薦、學測 AI 解題 App、分科測驗題庫練習平台、家長如何幫孩子。涵蓋錯題本、歷屆試題、番茄鐘、108課綱等實用攻略。',
+  keywords: [
+    '會考題庫練習 app 推薦',
+    '學測 ai 解題 app',
+    '分科測驗題庫練習平台',
+    '國中會考怎麼準備最有效率',
+    '會考準備',
+    '學測攻略',
+    '分科測驗',
+    '題庫練習',
+    'AI解題',
+    '錯題本',
+    '歷屆試題',
+    'Dogtor 逗課',
+  ],
   alternates: {
     canonical: 'https://dogtor.superb-tutor.com/guide',
   },
   openGraph: {
-    title: '國高中學習指南｜會考學測必備攻略 - Dogtor 逗課',
+    title: '國高中學習指南｜會考題庫練習・學測 AI 解題・分科測驗攻略 - Dogtor 逗課',
     description:
-      '會考學測準備、讀書方法、家長指南、App 推薦。錯題本、歷屆試題、番茄鐘、通勤學習完整攻略。',
+      '國中會考怎麼準備、會考題庫練習 App 推薦、學測 AI 解題、分科測驗題庫平台、家長指南。錯題本、歷屆試題、番茄鐘完整攻略。',
     url: 'https://dogtor.superb-tutor.com/guide',
     type: 'website',
     locale: 'zh_TW',
