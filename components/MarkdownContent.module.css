@@ -1,0 +1,190 @@
+/**
+ * MarkdownContent 自帶樣式
+ * 讓 react-markdown 渲染出的所有元素，不論放在哪個容器都能正確顯示。
+ * 採用設計系統的 CSS 變數，維持深色主題一致性。
+ */
+.markdown {
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.markdown > :first-child {
+  margin-top: 0;
+}
+
+.markdown > :last-child {
+  margin-bottom: 0;
+}
+
+/* ── 段落 ───────────────────────────────────────── */
+.markdown p {
+  margin-bottom: var(--space-md);
+  line-height: 1.8;
+}
+
+/* ── 標題 ───────────────────────────────────────── */
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  color: var(--text-white);
+  font-weight: 700;
+  line-height: 1.4;
+  margin: var(--space-lg) 0 var(--space-sm);
+}
+
+.markdown h1 {
+  font-size: 1.75rem;
+}
+
+.markdown h2 {
+  font-size: 1.5rem;
+}
+
+.markdown h3 {
+  font-size: 1.25rem;
+}
+
+.markdown h4 {
+  font-size: 1.1rem;
+}
+
+.markdown h5,
+.markdown h6 {
+  font-size: 1rem;
+}
+
+/* ── 清單 ───────────────────────────────────────── */
+.markdown ul,
+.markdown ol {
+  padding-left: 1.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: decimal;
+}
+
+.markdown li {
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+}
+
+.markdown li > ul,
+.markdown li > ol {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+/* GFM 任務清單 */
+.markdown li input[type='checkbox'] {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* ── 行內樣式 ───────────────────────────────────── */
+.markdown strong {
+  color: var(--text-white);
+  font-weight: 600;
+}
+
+.markdown em {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.markdown del {
+  opacity: 0.7;
+}
+
+.markdown a {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+}
+
+.markdown a:hover {
+  color: var(--accent-orange);
+}
+
+/* ── 程式碼 ─────────────────────────────────────── */
+.markdown code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.markdown pre {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  overflow-x: auto;
+  margin-bottom: var(--space-md);
+}
+
+.markdown pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+/* ── 引用 ───────────────────────────────────────── */
+.markdown blockquote {
+  border-left: 3px solid var(--accent-orange-light);
+  padding-left: var(--space-md);
+  margin: var(--space-md) 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-style: italic;
+}
+
+.markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── 分隔線 ─────────────────────────────────────── */
+.markdown hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin: var(--space-xl) 0;
+}
+
+/* ── 表格 ───────────────────────────────────────── */
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-md);
+  font-size: 0.95rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.markdown th,
+.markdown td {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: left;
+}
+
+.markdown th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+/* ── 圖片 ───────────────────────────────────────── */
+.markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: var(--space-md) 0;
+}

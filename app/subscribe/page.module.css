@@ -337,6 +337,15 @@
   flex-shrink: 0;
 }
 
+.tutorialImage {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  margin: var(--space-lg) auto 0;
+  border-radius: var(--radius-lg);
+}
+
 /* Error */
 .error {
   padding: var(--space-xl);

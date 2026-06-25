@@ -137,6 +137,11 @@ export default function SubscribeSuccess() {
             <li>{sub.step2}</li>
             <li>{sub.step3}</li>
           </ol>
+          <img
+            className={styles.tutorialImage}
+            src="https://storage.googleapis.com/dogtor_asset/linebot/%E6%8E%88%E6%AC%8A%E7%A2%BC%E7%B6%81%E5%AE%9A%E6%95%99%E5%AD%B8.png"
+            alt={sub.bindTutorialAlt}
+          />
         </div>
       </div>
     </main>
