@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
+import { trackSubscribeClick, trackEvent } from '@/lib/analytics'
 import styles from './page.module.css'
 
 const LIFF_ID = process.env.NEXT_PUBLIC_LIFF_ID
@@ -76,6 +77,7 @@ export default function Subscribe() {
         token: PADDLE_CLIENT_TOKEN,
         eventCallback: function (event) {
           if (event.name === 'checkout.completed') {
+            trackEvent('subscribe_checkout_completed', { plan })
             window.location.href = '/subscribe/success'
           }
         },
@@ -89,6 +91,7 @@ export default function Subscribe() {
 
     setSubmitting(true)
     localStorage.setItem('dogtor_parent_id', lineUserId)
+    trackSubscribeClick(plan)
 
     try {
       const priceId = plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
@@ -164,13 +167,13 @@ export default function Subscribe() {
         <div className={styles.planToggle}>
           <button
             className={`${styles.planOption} ${plan === 'monthly' ? styles.planOptionActive : ''}`}
-            onClick={() => setPlan('monthly')}
+            onClick={() => { setPlan('monthly'); trackEvent('subscribe_plan_toggle', { plan: 'monthly' }) }}
           >
             {sub.monthly}
           </button>
           <button
             className={`${styles.planOption} ${plan === 'yearly' ? styles.planOptionActive : ''}`}
-            onClick={() => setPlan('yearly')}
+            onClick={() => { setPlan('yearly'); trackEvent('subscribe_plan_toggle', { plan: 'yearly' }) }}
           >
             {sub.yearly}
           </button>

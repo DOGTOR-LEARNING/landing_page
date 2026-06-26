@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale, useMessages } from './LocaleProvider'
+import { trackDownloadClick, trackNavClick } from '@/lib/analytics'
 import styles from './Header.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
@@ -64,10 +65,10 @@ export default function Header() {
           </Link>
 
           <nav className={styles.desktopNav}>
-            <Link href="/about" className={styles.navLink}>{m.header.about}</Link>
-            <Link href="/faq" className={styles.navLink}>{m.header.faq}</Link>
-            <Link href="/guide" className={styles.navLink}>{m.header.guide}</Link>
-            <Link href="/support" className={styles.navLink}>{m.header.support}</Link>
+            <Link href="/about" className={styles.navLink} onClick={() => trackNavClick('about')}>{m.header.about}</Link>
+            <Link href="/faq" className={styles.navLink} onClick={() => trackNavClick('faq')}>{m.header.faq}</Link>
+            <Link href="/guide" className={styles.navLink} onClick={() => trackNavClick('guide')}>{m.header.guide}</Link>
+            <Link href="/support" className={styles.navLink} onClick={() => trackNavClick('support')}>{m.header.support}</Link>
             <button
               className={styles.langSwitch}
               onClick={switchLocale}
@@ -80,10 +81,11 @@ export default function Header() {
               className={styles.downloadBtn}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackDownloadClick('app_store', 'header')}
             >
               {m.common.downloadApp}
             </a>
-            <Link href="/parent-pro" className={styles.parentProBtn}>
+            <Link href="/parent-pro" className={styles.parentProBtn} onClick={() => trackNavClick('parent_pro')}>
               {m.header.parentPro}
             </Link>
           </nav>
@@ -119,7 +121,7 @@ export default function Header() {
             <a
               href={APP_STORE_URL}
               className={styles.mobileDownloadBtn}
-              onClick={closeMenu}
+              onClick={() => { closeMenu(); trackDownloadClick('app_store', 'mobile_nav') }}
               target="_blank"
               rel="noreferrer"
             >

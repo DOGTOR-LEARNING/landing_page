@@ -7,6 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
+import { trackCTAClick, trackPricingPlanClick, trackExternalLinkClick } from '@/lib/analytics'
 import styles from './page.module.css'
 
 const LINE_BOT_URL = process.env.NEXT_PUBLIC_LINE_BOT_URL
@@ -285,6 +286,7 @@ export default function ParentPro() {
                   className={styles.lineButton}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackExternalLinkClick(LINE_BOT_URL, 'parent_pro_line')}
                 >
                   {pp.lineButton}
                 </a>
@@ -314,7 +316,7 @@ export default function ParentPro() {
                 <p className={styles.planPrice}>{pp.monthlyPrice}</p>
                 <p className={styles.planDailyPrice}>{pp.monthlyDailyPrice}</p>
                 <div style={{ flexGrow: 1 }} />
-                <Link href="/subscribe?plan=monthly" className={styles.subscribeBtn}>
+                <Link href="/subscribe?plan=monthly" className={styles.subscribeBtn} onClick={() => trackPricingPlanClick('monthly')}>
                   {pp.subscribeButton}
                 </Link>
               </div>
@@ -325,7 +327,7 @@ export default function ParentPro() {
                 <p className={styles.planPrice}>{pp.yearlyPrice}</p>
                 <p className={styles.planDailyPrice}>{pp.yearlyDailyPrice}</p>
                 <div style={{ flexGrow: 1 }} />
-                <Link href="/subscribe?plan=yearly" className={styles.subscribeBtn}>
+                <Link href="/subscribe?plan=yearly" className={styles.subscribeBtn} onClick={() => trackPricingPlanClick('yearly')}>
                   {pp.subscribeButton}
                 </Link>
               </div>

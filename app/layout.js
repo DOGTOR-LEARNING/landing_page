@@ -1,6 +1,7 @@
 import './globals.css'
 import { headers } from 'next/headers'
 import { LocaleProvider } from '@/components/LocaleProvider'
+import PostHogProvider from '@/components/PostHogProvider'
 
 export const metadata = {
   metadataBase: new URL('https://dogtor.superb-tutor.com'),
@@ -267,7 +268,9 @@ export default async function RootLayout({ children }) {
         ))}
       </head>
       <body>
-        <LocaleProvider locale={locale}>{children}</LocaleProvider>
+        <PostHogProvider>
+          <LocaleProvider locale={locale}>{children}</LocaleProvider>
+        </PostHogProvider>
       </body>
     </html>
   )

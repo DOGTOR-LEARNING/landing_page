@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
+import { trackEvent } from '@/lib/analytics'
 import styles from '../page.module.css'
 
 const LIFF_ID = process.env.NEXT_PUBLIC_LIFF_ID
@@ -54,6 +55,7 @@ export default function ManageSubscription() {
 
     setPortalLoading(true)
     setPortalError(null)
+    trackEvent('manage_subscription_click')
 
     try {
       const res = await fetch(`${API_BASE}/paddle/portal`, {

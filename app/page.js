@@ -6,6 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
 import { getFeaturedArticles } from '@/lib/articles'
+import { trackDownloadClick, trackCTAClick, trackGuideArticleClick } from '@/lib/analytics'
 import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
@@ -38,6 +39,7 @@ export default function Home() {
                     className="appStoreButton"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackDownloadClick('app_store', 'hero')}
                   >
                     <span className="appStoreIcon" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
@@ -54,6 +56,7 @@ export default function Home() {
                     className="appStoreButton"
                     target="_blank"
                     rel="noreferrer"
+                    onClick={() => trackDownloadClick('google_play', 'hero')}
                   >
                     <span className="appStoreIcon" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
@@ -167,7 +170,7 @@ export default function Home() {
                 <div className={styles.parentProBadge}>{m.parentPro.homeSection}</div>
                 <h2 className={styles.parentProTitle}>{m.parentPro.homeSectionTitle}</h2>
                 <p className={styles.parentProDesc}>{m.parentPro.homeSectionDesc}</p>
-                <Link href="/parent-pro" className="btn btn-primary">
+                <Link href="/parent-pro" className="btn btn-primary" onClick={() => trackCTAClick('parent_pro', 'home_section')}>
                   {m.parentPro.homeSectionButton}
                 </Link>
               </div>
@@ -189,6 +192,7 @@ export default function Home() {
                     key={article.slug}
                     href={`/guide/${article.slug}`}
                     className={styles.guideCard}
+                    onClick={() => trackGuideArticleClick(article.slug, article.category)}
                   >
                     <span className={styles.guideCategory}>{article.category}</span>
                     <h3 className={styles.guideTitle}>{article.title}</h3>
@@ -197,7 +201,7 @@ export default function Home() {
                 ))}
               </div>
               <div className={styles.guideCta}>
-                <Link href="/guide" className="btn btn-secondary">
+                <Link href="/guide" className="btn btn-secondary" onClick={() => trackCTAClick('view_all_guides', 'home_guides')}>
                   {m.home.viewAllGuides}
                 </Link>
               </div>
@@ -216,6 +220,7 @@ export default function Home() {
                 className="appStoreButton"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackDownloadClick('app_store', 'bottom_cta')}
               >
                 <span className="appStoreIcon" aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
@@ -232,6 +237,7 @@ export default function Home() {
                 className="appStoreButton"
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackDownloadClick('google_play', 'bottom_cta')}
               >
                 <span className="appStoreIcon" aria-hidden="true">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">

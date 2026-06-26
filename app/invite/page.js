@@ -1,10 +1,11 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { trackInvitePageVisit, trackDownloadClick, trackEvent } from '@/lib/analytics'
 import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
@@ -18,6 +19,10 @@ function InviteContent() {
   const searchParams = useSearchParams()
   const inviter = searchParams.get('inviter')
   const appInviteUrl = buildAppInviteUrl(inviter)
+
+  useEffect(() => {
+    trackInvitePageVisit(inviter)
+  }, [inviter])
 
   return (
     <>
@@ -45,6 +50,7 @@ function InviteContent() {
                   className="appStoreButton"
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackDownloadClick('app_store', 'invite')}
                 >
                   <span className="appStoreIcon" aria-hidden="true">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
@@ -59,6 +65,7 @@ function InviteContent() {
                 <a
                   href={appInviteUrl}
                   className="btn btn-secondary"
+                  onClick={() => trackEvent('invite_join_friend_click', { inviter: inviter || 'direct' })}
                 >
                   加入好友
                 </a>

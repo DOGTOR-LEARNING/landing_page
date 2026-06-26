@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
+import { trackPricingPlanClick } from '@/lib/analytics'
 import styles from './page.module.css'
 
 export default function Pricing() {
@@ -32,7 +33,7 @@ export default function Pricing() {
                   <li key={i}>{f}</li>
                 ))}
               </ul>
-              <Link href="/" className={`${styles.planBtn} ${styles.planBtnSecondary}`}>
+              <Link href="/" className={`${styles.planBtn} ${styles.planBtnSecondary}`} onClick={() => trackPricingPlanClick('free')}>
                 {pr.freePlanButton}
               </Link>
             </div>
@@ -47,7 +48,7 @@ export default function Pricing() {
                   <li key={i}>{f}</li>
                 ))}
               </ul>
-              <Link href="/subscribe?plan=monthly" className={styles.planBtn}>
+              <Link href="/subscribe?plan=monthly" className={styles.planBtn} onClick={() => trackPricingPlanClick('monthly')}>
                 {pp.subscribeButton}
               </Link>
             </div>
@@ -64,7 +65,7 @@ export default function Pricing() {
                   <li key={i}>{f}</li>
                 ))}
               </ul>
-              <Link href="/subscribe?plan=yearly" className={styles.planBtn}>
+              <Link href="/subscribe?plan=yearly" className={styles.planBtn} onClick={() => trackPricingPlanClick('yearly')}>
                 {pp.subscribeButton}
               </Link>
             </div>

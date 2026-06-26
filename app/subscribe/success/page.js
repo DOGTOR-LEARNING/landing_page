@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
+import { trackEvent } from '@/lib/analytics'
 import styles from '../page.module.css'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -42,6 +43,7 @@ export default function SubscribeSuccess() {
               setAuthCode(data.data.auth_code)
               setExpiresAt(data.data.expires_at)
               setLoading(false)
+              trackEvent('subscribe_success', { has_auth_code: true })
               return
             }
           }
@@ -67,6 +69,7 @@ export default function SubscribeSuccess() {
 
   const handleCopy = async () => {
     if (!authCode) return
+    trackEvent('auth_code_copy')
     try {
       await navigator.clipboard.writeText(authCode)
       setCopied(true)

@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { trackDownloadClick } from '@/lib/analytics'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp'
@@ -20,6 +23,7 @@ export default function ArticleCTA({ painPoint, scene }) {
           className="appStoreButton"
           target="_blank"
           rel="noreferrer"
+          onClick={() => trackDownloadClick('app_store', 'article_cta')}
         >
           <span className="appStoreIcon" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
@@ -36,6 +40,7 @@ export default function ArticleCTA({ painPoint, scene }) {
           className="appStoreButton"
           target="_blank"
           rel="noreferrer"
+          onClick={() => trackDownloadClick('google_play', 'article_cta')}
         >
           <span className="appStoreIcon" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="1.25em" height="1.25em">
