@@ -7,16 +7,16 @@ import { getMessages } from '@/lib/i18n/messages'
 import styles from './page.module.css'
 
 export const metadata = {
-  title: '常見問題 - Dogtor 逗課 | 國高中題庫學習 App FAQ',
+  title: '常見問題 - Dogtor 逗課 | 國高中題庫學習 App・家長訂閱 FAQ',
   description:
-    'Dogtor 逗課是台灣國高中生學習 App（非獸醫服務）。常見問題解答：App 是否免費？支援哪些科目（國中數學、理化、自然、高中化學）？Android Google Play 如何下載？好友對戰怎麼玩？AI 解題怎麼用？',
+    'Dogtor 逗課常見問題解答：App 是否免費？支援哪些科目？好友對戰怎麼玩？AI 解題怎麼用？以及 Dogtor Pro 家長訂閱方案、授權碼綁定、學習報告等完整 FAQ。',
   alternates: {
     canonical: 'https://dogtor.superb-tutor.com/faq',
   },
   openGraph: {
     title: '常見問題 FAQ - Dogtor 逗課',
     description:
-      'Dogtor 逗課常見問題解答：免費下載、支援科目、好友對戰、AI 解題、帳號管理等問題一次說清楚。',
+      'Dogtor 逗課常見問題解答：免費下載、支援科目、好友對戰、AI 解題、帳號管理，以及 Dogtor Pro 家長訂閱方案完整 FAQ。',
     url: 'https://dogtor.superb-tutor.com/faq',
     type: 'website',
     locale: 'zh_TW',
@@ -30,11 +30,17 @@ export default async function FAQ() {
   const locale = h.get('x-locale') || 'zh-TW'
   const m = getMessages(locale)
   const faqData = m.faq.items
+  const parentSections = m.faq.parentSections || []
+
+  const allFaqItems = [
+    ...faqData,
+    ...parentSections.flatMap((s) => s.items),
+  ]
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqData.map((item) => ({
+    mainEntity: allFaqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
@@ -59,7 +65,21 @@ export default async function FAQ() {
           </div>
 
           <div className={styles.content}>
+            <h2 className={styles.sectionTitle}>{m.faq.studentSectionTitle}</h2>
             <Accordion items={faqData} />
+
+            {parentSections.length > 0 && (
+              <div className={styles.parentSection}>
+                <h2 className={styles.sectionTitle}>{m.faq.parentSectionTitle}</h2>
+                <p className={styles.sectionSubtitle}>{m.faq.parentSectionSubtitle}</p>
+                {parentSections.map((section, i) => (
+                  <div key={i} className={styles.subsection}>
+                    <h3 className={styles.subsectionTitle}>{section.title}</h3>
+                    <Accordion items={section.items} defaultOpen={-1} />
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className={styles.ctaBox}>
               <p className={styles.ctaText}>{m.faq.ctaText}</p>

@@ -32,6 +32,38 @@
   margin: 0 auto;
 }
 
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: var(--space-lg);
+}
+
+.parentSection {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sectionSubtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: calc(-1 * var(--space-sm));
+  margin-bottom: var(--space-xl);
+}
+
+.subsection {
+  margin-bottom: var(--space-xl);
+}
+
+.subsectionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-xs);
+}
+
 .ctaBox {
   margin-top: var(--space-2xl);
   padding: var(--space-xl);

@@ -4,8 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import styles from './Accordion.module.css'
 
-export default function Accordion({ items }) {
-  const [openIndex, setOpenIndex] = useState(0)
+export default function Accordion({ items, defaultOpen = 0 }) {
+  const [openIndex, setOpenIndex] = useState(defaultOpen)
 
   const toggleItem = (index) => {
     setOpenIndex(openIndex === index ? -1 : index)
