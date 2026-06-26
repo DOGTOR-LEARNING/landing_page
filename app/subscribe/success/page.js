@@ -11,16 +11,17 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
 const MAX_RETRIES = 15
 const RETRY_INTERVAL = 2000
 
+const PLAN_LABELS = { monthly: '月訂閱', yearly: '年訂閱' }
+
 export default function SubscribeSuccess() {
   const searchParams = useSearchParams()
   const m = useMessages()
   const sub = m.subscribe
 
-  const [authCode, setAuthCode] = useState(null)
-  const [expiresAt, setExpiresAt] = useState(null)
+  const [codes, setCodes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [copiedIndex, setCopiedIndex] = useState(-1)
 
   useEffect(() => {
     const parentId = localStorage.getItem('dogtor_parent_id')
@@ -39,11 +40,10 @@ export default function SubscribeSuccess() {
           const res = await fetch(`${API_BASE}/parent/pending_code/${parentId}`)
           if (res.ok) {
             const data = await res.json()
-            if (data.success && data.data?.auth_code) {
-              setAuthCode(data.data.auth_code)
-              setExpiresAt(data.data.expires_at)
+            if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+              setCodes(data.data)
               setLoading(false)
-              trackEvent('subscribe_success', { has_auth_code: true })
+              trackEvent('subscribe_success', { code_count: data.data.length })
               return
             }
           }
@@ -67,23 +67,20 @@ export default function SubscribeSuccess() {
     return () => { cancelled = true }
   }, [])
 
-  const handleCopy = async () => {
-    if (!authCode) return
-    trackEvent('auth_code_copy')
+  const handleCopy = async (code, index) => {
+    trackEvent('auth_code_copy', { plan_type: code.plan_type })
     try {
-      await navigator.clipboard.writeText(authCode)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      await navigator.clipboard.writeText(code.auth_code)
     } catch {
       const textarea = document.createElement('textarea')
-      textarea.value = authCode
+      textarea.value = code.auth_code
       document.body.appendChild(textarea)
       textarea.select()
       document.execCommand('copy')
       document.body.removeChild(textarea)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
     }
+    setCopiedIndex(index)
+    setTimeout(() => setCopiedIndex(-1), 2000)
   }
 
   if (loading) {
@@ -120,16 +117,25 @@ export default function SubscribeSuccess() {
         <h1 className={styles.successTitle}>{sub.successTitle}</h1>
         <p className={styles.successDesc}>{sub.successDesc}</p>
 
-        <div className={styles.codeBox}>
-          <p className={styles.codeLabel}>{sub.authCode}</p>
-          <p className={styles.codeValue}>{authCode}</p>
-          <button
-            className={`${styles.copyBtn} ${copied ? styles.copiedBtn : ''}`}
-            onClick={handleCopy}
-          >
-            {copied ? sub.copied : sub.copyCode}
-          </button>
-        </div>
+        {codes.map((code, i) => (
+          <div key={i} className={styles.codeBox}>
+            <p className={styles.codeLabel}>
+              {sub.authCode}{codes.length > 1 ? ` ${i + 1}` : ''}
+              {code.plan_type && (
+                <span className={styles.codePlanBadge}>
+                  {PLAN_LABELS[code.plan_type] || code.plan_type}
+                </span>
+              )}
+            </p>
+            <p className={styles.codeValue}>{code.auth_code}</p>
+            <button
+              className={`${styles.copyBtn} ${copiedIndex === i ? styles.copiedBtn : ''}`}
+              onClick={() => handleCopy(code, i)}
+            >
+              {copiedIndex === i ? sub.copied : sub.copyCode}
+            </button>
+          </div>
+        ))}
 
         <p className={styles.codeExpiry}>{sub.codeExpiry}</p>
 
