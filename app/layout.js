@@ -2,6 +2,7 @@ import './globals.css'
 import { headers } from 'next/headers'
 import { LocaleProvider } from '@/components/LocaleProvider'
 import PostHogProvider from '@/components/PostHogProvider'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata = {
   metadataBase: new URL('https://dogtor.superb-tutor.com'),
@@ -271,6 +272,7 @@ export default async function RootLayout({ children }) {
         <PostHogProvider>
           <LocaleProvider locale={locale}>{children}</LocaleProvider>
         </PostHogProvider>
+        <Analytics />
       </body>
     </html>
   )
