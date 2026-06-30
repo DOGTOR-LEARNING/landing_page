@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { getAllArticles } from '@/lib/articles'
+import { getAllArticles, getFeaturedArticles } from '@/lib/articles'
 import { getMessages } from '@/lib/i18n/messages'
 import styles from './page.module.css'
 
@@ -49,11 +49,13 @@ export default async function GuideIndexPage({ searchParams }) {
   const resolved = searchParams ? await searchParams : {}
   const category = resolved?.category
   const allArticles = getAllArticles()
+  const featured = getFeaturedArticles(4)
   const articles = category
     ? allArticles.filter((a) => a.category === category)
     : allArticles
 
   const dateLocale = locale === 'en' ? 'en-US' : 'zh-TW'
+  const showFeatured = !category && featured.length > 0
 
   return (
     <>
@@ -64,6 +66,23 @@ export default async function GuideIndexPage({ searchParams }) {
             <h1 className={styles.pageTitle}>{m.guide.pageTitle}</h1>
             <p className={styles.pageSubtitle}>{m.guide.pageSubtitle}</p>
           </div>
+
+          {showFeatured && (
+            <section className={styles.featuredSection}>
+              <h2 className={styles.featuredHeading}>{m.guide.featured || '精選文章'}</h2>
+              <div className={styles.featuredGrid}>
+                {featured.map((article, i) => (
+                  <article key={article.slug} className={`${styles.featuredCard} ${i === 0 ? styles.featuredCardMain : ''}`}>
+                    <Link href={`/guide/${article.slug}`} className={styles.featuredLink}>
+                      <span className={styles.articleCategory}>{article.category}</span>
+                      <h3 className={styles.featuredTitle}>{article.title}</h3>
+                      <p className={styles.featuredExcerpt}>{article.excerpt}</p>
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
 
           <div className={styles.categoryTabs}>
             {CATEGORY_KEYS.map((key) => (
