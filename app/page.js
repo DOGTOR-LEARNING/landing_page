@@ -162,6 +162,21 @@ export default function Home() {
           </div>
         </section>
 
+        {/* YouTube Short Section */}
+        <section className={styles.youtubeSection}>
+          <div className="container">
+            <div className={styles.youtubeWrapper}>
+              <iframe
+                src="https://www.youtube.com/embed/97PbV861JYs"
+                title="Dogtor 逗課 App 介紹"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className={styles.youtubeEmbed}
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Parent Pro Section */}
         <section className={styles.parentProSection}>
           <div className="container">

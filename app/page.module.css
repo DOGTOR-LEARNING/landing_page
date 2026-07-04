@@ -520,6 +520,38 @@
   text-align: center;
 }
 
+/* YouTube Short Section */
+.youtubeSection {
+  padding: 3rem 0;
+  background: var(--primary-blue-dark);
+}
+
+@media (min-width: 768px) {
+  .youtubeSection {
+    padding: 5rem 0;
+  }
+}
+
+.youtubeWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.youtubeEmbed {
+  width: 315px;
+  height: 560px;
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 480px) {
+  .youtubeEmbed {
+    width: 270px;
+    height: 480px;
+  }
+}
+
 /* Parent Pro Section */
 .parentProSection {
   padding: 3rem 0;
