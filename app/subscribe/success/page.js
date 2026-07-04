@@ -7,6 +7,8 @@ import AnimatedIcon from '@/components/AnimatedIcons'
 import { trackEvent } from '@/lib/analytics'
 import styles from '../page.module.css'
 
+const LINE_BOT_URL = process.env.NEXT_PUBLIC_LINE_BOT_URL
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
 const MAX_RETRIES = 15
 const RETRY_INTERVAL = 2000
@@ -138,6 +140,20 @@ export default function SubscribeSuccess() {
         ))}
 
         <p className={styles.codeExpiry}>{sub.codeExpiry}</p>
+
+        <div className={styles.lineCta}>
+          <p className={styles.lineCtaTitle}>{sub.lineTitle}</p>
+          <p className={styles.lineCtaDesc}>{sub.lineDesc}</p>
+          <a
+            href={LINE_BOT_URL}
+            className={styles.lineCtaButton}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackEvent('line_add_friend_click', { source: 'subscribe_success' })}
+          >
+            {sub.lineButton}
+          </a>
+        </div>
 
         <div className={styles.steps}>
           <h3 className={styles.stepsTitle}>{sub.stepTitle}</h3>
