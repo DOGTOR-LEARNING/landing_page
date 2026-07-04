@@ -523,7 +523,7 @@
 /* YouTube Short Section */
 .youtubeSection {
   padding: 3rem 0;
-  background: var(--primary-blue-dark);
+  background: rgba(16, 32, 49, 0.5);
 }
 
 @media (min-width: 768px) {
