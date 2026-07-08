@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useMessages } from './LocaleProvider'
 import styles from './Footer.module.css'
 
@@ -13,7 +14,22 @@ export default function Footer() {
       <div className="container">
         <div className={styles.footerContainer}>
           <div className={styles.footerLeft}>
-            <p className={styles.footerBrand}>Dogtor 逗課</p>
+            <Link href="/" className={styles.footerLogo}>
+              <Image
+                src="/dogtor_eng_logo.svg"
+                alt="Dogtor logo"
+                width={120}
+                height={28}
+                className={styles.footerLogoImg}
+              />
+              <Image
+                src="/dogtor_logo.svg"
+                alt="逗課 logo"
+                width={110}
+                height={28}
+                className={styles.footerLogoImg}
+              />
+            </Link>
             <p className={styles.footerCopy}>{m.footer.copyright(currentYear)}</p>
             <p className={styles.footerContact}>
               {m.footer.contact}{' '}

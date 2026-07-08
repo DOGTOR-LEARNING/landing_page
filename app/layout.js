@@ -97,8 +97,13 @@ export const metadata = {
     '自主AI學習',
     '知識圖譜',
     '精熟學習',
+    '超棒軟體科技',
+    '超棒軟體',
+    'SuperB Software Technology',
+    'SuperB Software',
+    '超棒軟體科技有限公司',
   ],
-  authors: [{ name: 'Dogtor 逗課 Team' }],
+  authors: [{ name: 'Dogtor 逗課 Team' }, { name: '超棒軟體科技有限公司' }],
   openGraph: {
     title: 'Dogtor 逗課 | 國高中生 AI 學習 App・會考學測題庫練習',
     description:
@@ -136,6 +141,11 @@ const jsonLd = [
     url: 'https://dogtor.superb-tutor.com',
     logo: 'https://dogtor.superb-tutor.com/dogtor_logo.svg',
     email: 'dogtor.love.learning@gmail.com',
+    parentOrganization: {
+      '@type': 'Organization',
+      name: '超棒軟體科技有限公司',
+      alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體'],
+    },
     description:
       'Dogtor 逗課是台灣首款遊戲化答題、線上競技場對戰、內建 AI 數位錯題本的國高中行動學習 App，擺脫枯燥的傳統 PDF 題本與考古題下載，提供會考學測題庫練習、好友對戰與 AI 解題功能。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導。',
     disambiguatingDescription:
@@ -196,6 +206,27 @@ const jsonLd = [
       '台大教授指導',
       '台大學生與補習班聯手開發',
     ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: '超棒軟體科技有限公司',
+    alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體', '超棒軟體科技'],
+    url: 'https://dogtor.superb-tutor.com',
+    email: 'dogtor.love.learning@gmail.com',
+    description: '超棒軟體科技有限公司（SuperB Software Technology Co., Ltd.）是一家台灣軟體科技公司，致力於開發創新的教育科技產品。旗下產品 Dogtor 逗課是專為台灣國高中生打造的 AI 遊戲化學習 App，提供題庫練習、好友對戰、AI 解題與錯題本功能。',
+    foundingDate: '2024',
+    knowsAbout: ['教育科技', 'EdTech', 'AI 學習', '遊戲化學習', '台灣國高中教育'],
+    makesOffer: {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'MobileApplication',
+        name: 'Dogtor 逗課',
+        url: 'https://dogtor.superb-tutor.com',
+        applicationCategory: 'EducationApplication',
+        operatingSystem: 'iOS, Android',
+      },
+    },
   },
   {
     '@context': 'https://schema.org',
@@ -273,6 +304,11 @@ const jsonLd = [
       priceCurrency: 'TWD',
     },
     url: 'https://dogtor.superb-tutor.com',
+    publisher: {
+      '@type': 'Organization',
+      name: '超棒軟體科技有限公司',
+      alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體'],
+    },
     downloadUrl: 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627',
     installUrl: 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627',
     screenshot: 'https://dogtor.superb-tutor.com/dogtor_cover.png',
