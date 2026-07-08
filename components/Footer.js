@@ -29,6 +29,9 @@ export default function Footer() {
             <Link href="/faq">{m.footer.links.faq}</Link>
           </div>
         </div>
+        <p className={styles.footerCompany}>
+          超棒軟體科技有限公司 SuperB Software Technology Co., Ltd.
+        </p>
       </div>
     </footer>
   )

@@ -87,3 +87,12 @@
 .footerLinks a:hover {
   color: var(--accent-orange-light);
 }
+
+.footerCompany {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+}

@@ -7,6 +7,13 @@ import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
+const TEAM_MEMBERS = [
+  { nickname: 'Pierre', name: '陳冠宇', role: 'CEO', emoji: '🐕', website: 'https://www.pierre-chen.com/' },
+  { nickname: 'Bowen', name: '陳泊華', role: 'CTO', emoji: '🐱' },
+  { nickname: 'Dino', name: '丁崇耘', role: 'CPO', emoji: '🦕' },
+  { nickname: null, name: '李宜嘉', role: '行銷長', emoji: '🌸' },
+]
+
 export const metadata = {
   title: '關於我們 - Dogtor 逗課 | 國高中生 AI 學習 App｜團隊介紹',
   description:
@@ -30,15 +37,9 @@ export default async function About() {
 
           <div className={styles.content}>
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>{m.about.missionTitle}</h2>
-              <p className={styles.text}>{m.about.missionP1}</p>
-              <p className={styles.text}>{m.about.missionP2}</p>
-            </section>
-
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>{m.about.problemTitle}</h2>
-              <p className={styles.text}>{m.about.problemP1}</p>
-              <p className={styles.text}>{m.about.problemP2}</p>
+              <h2 className={styles.sectionTitle}>{m.about.whyTitle}</h2>
+              <p className={styles.text}>{m.about.whyP1}</p>
+              <p className={styles.text}>{m.about.whyP2}</p>
             </section>
 
             <section className={styles.section}>
@@ -50,6 +51,33 @@ export default async function About() {
                 <a href="mailto:dogtor.love.learning@gmail.com" className={styles.contactEmail}>
                   dogtor.love.learning@gmail.com
                 </a>
+              </div>
+            </section>
+
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>{m.about.teamMembersTitle}</h2>
+              <div className={styles.teamGrid}>
+                {TEAM_MEMBERS.map((member) => (
+                  <div key={member.name} className={styles.memberCard}>
+                    <div className={styles.memberAvatar}>{member.emoji}</div>
+                    <div className={styles.memberInfo}>
+                      <p className={styles.memberName}>
+                        {member.nickname ? `${member.nickname} ${member.name}` : member.name}
+                      </p>
+                      <p className={styles.memberRole}>{member.role}</p>
+                      {member.website && (
+                        <a
+                          href={member.website}
+                          className={styles.memberLink}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          個人網站 →
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </section>
 
