@@ -8,10 +8,10 @@ import styles from './page.module.css'
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 const TEAM_MEMBERS = [
-  { nickname: 'Pierre', name: '陳冠宇', role: 'CEO', emoji: '🐕', website: 'https://www.pierre-chen.com/' },
-  { nickname: 'Bowen', name: '陳泊華', role: 'CTO', emoji: '🐱' },
-  { nickname: 'Dino', name: '丁崇耘', role: 'CPO', emoji: '🦕' },
-  { nickname: null, name: '李宜嘉', role: '行銷長', emoji: '🌸' },
+  { nickname: 'Pierre', name: '陳冠宇', roleZh: '執行長', roleEn: 'CEO', emoji: '🐕', website: 'https://www.pierre-chen.com/' },
+  { nickname: 'Bowen', name: '陳泊華', roleZh: '技術長', roleEn: 'CTO', emoji: '🐱' },
+  { nickname: 'Dino', name: '丁崇耘', roleZh: '產品長', roleEn: 'CPO', emoji: '🦕' },
+  { nickname: null, name: '李宜嘉', roleZh: '行銷長', roleEn: 'CMO', emoji: '🌸' },
 ]
 
 export const metadata = {
@@ -62,19 +62,18 @@ export default async function About() {
                     <div className={styles.memberAvatar}>{member.emoji}</div>
                     <div className={styles.memberInfo}>
                       <p className={styles.memberName}>
-                        {member.nickname ? `${member.nickname} ${member.name}` : member.name}
+                        {member.website ? (
+                          <a href={member.website} className={styles.memberNameLink} target="_blank" rel="noreferrer">
+                            {member.nickname ? `${member.nickname} ${member.name}` : member.name}
+                          </a>
+                        ) : (
+                          member.nickname ? `${member.nickname} ${member.name}` : member.name
+                        )}
                       </p>
-                      <p className={styles.memberRole}>{member.role}</p>
-                      {member.website && (
-                        <a
-                          href={member.website}
-                          className={styles.memberLink}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          個人網站 →
-                        </a>
-                      )}
+                      <p className={styles.memberRole}>
+                        <span>{member.roleZh}</span>
+                        <span className={styles.memberRoleEn}>{member.roleEn}</span>
+                      </p>
                     </div>
                   </div>
                 ))}
