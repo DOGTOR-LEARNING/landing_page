@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -8,10 +9,10 @@ import styles from './page.module.css'
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 const TEAM_MEMBERS = [
-  { nickname: 'Pierre', name: '陳冠宇', roleZh: '執行長', roleEn: 'CEO', emoji: '🐕', website: 'https://www.pierre-chen.com/' },
-  { nickname: 'Bowen', name: '陳泊華', roleZh: '技術長', roleEn: 'CTO', emoji: '🐱' },
-  { nickname: 'Dino', name: '丁崇耘', roleZh: '產品長', roleEn: 'CPO', emoji: '🦕' },
-  { nickname: null, name: '李宜嘉', roleZh: '行銷長', roleEn: 'CMO', emoji: '🌸' },
+  { nickname: 'Pierre', name: '陳冠宇', roleZh: '執行長', roleEn: 'CEO', avatar: '/pierre_ava.png', website: 'https://www.pierre-chen.com/' },
+  { nickname: 'Bowen', name: '陳泊華', roleZh: '技術長', roleEn: 'CTO', avatar: '/bowen_ava.png' },
+  { nickname: 'Dino', name: '丁崇耘', roleZh: '產品長', roleEn: 'CPO', avatar: '/dino_ava.png' },
+  { nickname: null, name: '李宜嘉', roleZh: '行銷長', roleEn: 'CMO', avatar: '/yichia_ava.png' },
 ]
 
 export const metadata = {
@@ -59,7 +60,15 @@ export default async function About() {
               <div className={styles.teamGrid}>
                 {TEAM_MEMBERS.map((member) => (
                   <div key={member.name} className={styles.memberCard}>
-                    <div className={styles.memberAvatar}>{member.emoji}</div>
+                    <div className={styles.memberAvatar}>
+                      <Image
+                        src={member.avatar}
+                        alt={member.nickname ? `${member.nickname} ${member.name}` : member.name}
+                        width={80}
+                        height={80}
+                        className={styles.memberAvatarImg}
+                      />
+                    </div>
                     <div className={styles.memberInfo}>
                       <p className={styles.memberName}>
                         {member.website ? (
