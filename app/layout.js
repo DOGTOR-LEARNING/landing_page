@@ -1,4 +1,5 @@
 import './globals.css'
+import Script from 'next/script'
 import { headers } from 'next/headers'
 import { LocaleProvider } from '@/components/LocaleProvider'
 import PostHogProvider from '@/components/PostHogProvider'
@@ -332,6 +333,19 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={locale}>
       <head>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-G8DS1J0250"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-G8DS1J0250');
+          `}
+        </Script>
         <meta
           name="google-site-verification"
           content="I_Hcgwx2ddbvZetJlUgo0sOhZ86r3qc8J4scuXRY-tE"
