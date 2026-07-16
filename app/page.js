@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { Heart, GraduationCap, Smile } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
@@ -11,6 +12,8 @@ import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp'
+
+const testimonialIcons = { Heart, GraduationCap, Smile }
 
 export default function Home() {
   const featuredArticles = getFeaturedArticles(4)
@@ -189,18 +192,26 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.parentProTestimonials}>
-              {m.parentPro.homeTestimonials.map((t, i) => (
+              {m.parentPro.homeTestimonials.map((t, i) => {
+                const Icon = testimonialIcons[t.icon] || Smile
+                return (
                 <div key={i} className={styles.parentProCard}>
                   <p className={styles.parentProQuote}>{t.quote}</p>
                   <div className={styles.parentProAuthor}>
-                    <span className={styles.parentProAvatar}>{t.emoji}</span>
+                    <span
+                      className={styles.parentProAvatar}
+                      style={{ backgroundColor: `${t.color}22`, color: t.color }}
+                    >
+                      <Icon size={22} strokeWidth={2.25} aria-hidden="true" />
+                    </span>
                     <span className={styles.parentProAuthorInfo}>
                       <span className={styles.parentProAuthorName}>{t.name}</span>
                       <span className={styles.parentProAuthorRole}>{t.role}</span>
                     </span>
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
             <div className={styles.parentProCta}>
               <Link href="/parent-pro" className="btn btn-primary" onClick={() => trackCTAClick('parent_pro', 'home_section')}>
