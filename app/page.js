@@ -185,10 +185,27 @@ export default function Home() {
                 <div className={styles.parentProBadge}>{m.parentPro.homeSection}</div>
                 <h2 className={styles.parentProTitle}>{m.parentPro.homeSectionTitle}</h2>
                 <p className={styles.parentProDesc}>{m.parentPro.homeSectionDesc}</p>
-                <Link href="/parent-pro" className="btn btn-primary" onClick={() => trackCTAClick('parent_pro', 'home_section')}>
-                  {m.parentPro.homeSectionButton}
-                </Link>
+                <p className={styles.parentProTrust}>{m.parentPro.homeSectionTrust}</p>
               </div>
+            </div>
+            <div className={styles.parentProTestimonials}>
+              {m.parentPro.homeTestimonials.map((t, i) => (
+                <div key={i} className={styles.parentProCard}>
+                  <p className={styles.parentProQuote}>{t.quote}</p>
+                  <div className={styles.parentProAuthor}>
+                    <span className={styles.parentProAvatar}>{t.emoji}</span>
+                    <span className={styles.parentProAuthorInfo}>
+                      <span className={styles.parentProAuthorName}>{t.name}</span>
+                      <span className={styles.parentProAuthorRole}>{t.role}</span>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={styles.parentProCta}>
+              <Link href="/parent-pro" className="btn btn-primary" onClick={() => trackCTAClick('parent_pro', 'home_section')}>
+                {m.parentPro.homeSectionButton}
+              </Link>
             </div>
           </div>
         </section>
