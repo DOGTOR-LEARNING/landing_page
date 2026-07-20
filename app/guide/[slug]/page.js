@@ -47,6 +47,10 @@ export async function generateMetadata({ params }) {
       url: getArticleUrl(article.slug),
       type: 'article',
       publishedTime: article.publishDate,
+      modifiedTime: article.updateDate || article.publishDate,
+      authors: ['Dogtor 逗課'],
+      section: article.category,
+      tags: article.tags,
       locale: 'zh_TW',
       siteName: 'Dogtor 逗課',
       images: ['/dogtor_cover.png'],
@@ -66,12 +70,23 @@ export default async function GuideArticlePage({ params }) {
 
   const related = getRelatedArticles(article.slug, 3)
 
+  const fullText = [
+    article.content?.intro || '',
+    ...(article.content?.sections?.map((s) => s.body) || []),
+  ].join(' ')
+
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: article.title,
     description: article.description,
     datePublished: article.publishDate,
+    dateModified: article.updateDate || article.publishDate,
+    image: [`${BASE_URL}/dogtor_cover.png`],
+    inLanguage: 'zh-TW',
+    articleSection: article.category,
+    keywords: (article.tags || []).join(', '),
+    wordCount: fullText.length,
     author: {
       '@type': 'Organization',
       name: 'Dogtor 逗課',
@@ -90,6 +105,31 @@ export default async function GuideArticlePage({ params }) {
       '@id': getArticleUrl(article.slug),
     },
   }
+
+  const itemListJsonLd = article.itemList?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: article.title,
+        description: article.description,
+        itemListOrder: 'https://schema.org/ItemListOrderAscending',
+        numberOfItems: article.itemList.length,
+        itemListElement: article.itemList.map((app, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'SoftwareApplication',
+            name: app.name,
+            applicationCategory: app.applicationCategory || 'EducationApplication',
+            operatingSystem: app.operatingSystem || 'iOS, Android',
+            description: app.description,
+            ...(app.free
+              ? { offers: { '@type': 'Offer', price: '0', priceCurrency: 'TWD' } }
+              : {}),
+          },
+        })),
+      }
+    : null
 
   const faqJsonLd = article.faq?.length
     ? {
@@ -128,6 +168,12 @@ export default async function GuideArticlePage({ params }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
+      {itemListJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
         />
       )}
       <script

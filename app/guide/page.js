@@ -57,8 +57,34 @@ export default async function GuideIndexPage({ searchParams }) {
   const dateLocale = locale === 'en' ? 'en-US' : 'zh-TW'
   const showFeatured = !category && featured.length > 0
 
+  const BASE_URL = 'https://dogtor.superb-tutor.com'
+  const collectionJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: '國高中學習指南 - Dogtor 逗課',
+    description:
+      'Dogtor 逗課學習指南：國中會考、高中學測、分科測驗攻略，涵蓋題庫練習、AI 解題、錯題本、讀書計畫、讀書 App 推薦與家長指南。',
+    url: `${BASE_URL}/guide`,
+    inLanguage: 'zh-TW',
+    isPartOf: { '@type': 'WebSite', name: 'Dogtor 逗課', url: BASE_URL },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: allArticles.length,
+      itemListElement: allArticles.map((a, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${BASE_URL}/guide/${a.slug}`,
+        name: a.title,
+      })),
+    },
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
       <Header />
       <main className={styles.main}>
         <div className="container">
