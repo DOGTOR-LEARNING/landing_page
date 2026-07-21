@@ -41,6 +41,7 @@ export default async function About() {
               <h2 className={styles.sectionTitle}>{m.about.whyTitle}</h2>
               <p className={styles.text}>{m.about.whyP1}</p>
               <p className={styles.text}>{m.about.whyP2}</p>
+              <p className={styles.text}>{m.about.whyP3}</p>
             </section>
 
             <section className={styles.section}>
