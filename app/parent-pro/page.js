@@ -299,6 +299,9 @@ export default function ParentPro() {
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>{pp.pricingTitle}</h2>
               <p className={styles.sectionSubtitle}>{pp.pricingSubtitle}</p>
+              {pp.promoNotice && (
+                <p className={styles.promoNotice}>{pp.promoNotice}</p>
+              )}
             </div>
 
             <div className={styles.pricingFeatures}>
@@ -312,7 +315,11 @@ export default function ParentPro() {
 
             <div className={styles.pricingGrid}>
               <div className={styles.pricingCard}>
+                {pp.promoBadge && <div className={styles.promoBadge}>{pp.promoBadge}</div>}
                 <h3 className={styles.planName}>{pp.monthlyPlan}</h3>
+                {pp.monthlyOriginalPrice && (
+                  <p className={styles.planOriginalPrice}>{pp.monthlyOriginalPrice}</p>
+                )}
                 <p className={styles.planPrice}>{pp.monthlyPrice}</p>
                 <p className={styles.planDailyPrice}>{pp.monthlyDailyPrice}</p>
                 <div style={{ flexGrow: 1 }} />
@@ -324,6 +331,9 @@ export default function ParentPro() {
               <div className={`${styles.pricingCard} ${styles.pricingCardPopular}`}>
                 <div className={styles.popularBadge}>{pp.yearlySave}</div>
                 <h3 className={styles.planName}>{pp.yearlyPlan}</h3>
+                {pp.yearlyOriginalPrice && (
+                  <p className={styles.planOriginalPrice}>{pp.yearlyOriginalPrice}</p>
+                )}
                 <p className={styles.planPrice}>{pp.yearlyPrice}</p>
                 <p className={styles.planDailyPrice}>{pp.yearlyDailyPrice}</p>
                 <div style={{ flexGrow: 1 }} />

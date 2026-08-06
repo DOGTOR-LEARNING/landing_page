@@ -805,6 +805,19 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+.promoNotice {
+  display: inline-block;
+  margin-top: var(--space-md);
+  padding: 0.5rem 1.2rem;
+  background: rgba(245, 155, 3, 0.12);
+  border: 1px solid rgba(245, 155, 3, 0.4);
+  border-radius: 2rem;
+  color: var(--accent-orange-light);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .pricingFeatures {
   display: grid;
   grid-template-columns: 1fr;
@@ -921,11 +934,34 @@
   box-shadow: 0 4px 10px rgba(245, 155, 3, 0.3);
 }
 
+.promoBadge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(6, 199, 85, 0.9);
+  color: white;
+  padding: 0.35rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(6, 199, 85, 0.25);
+}
+
 .planName {
   font-size: 1.35rem;
   color: var(--text-white);
   margin-bottom: var(--space-sm);
   font-weight: 600;
+}
+
+.planOriginalPrice {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  margin-bottom: 2px;
 }
 
 .planPrice {
