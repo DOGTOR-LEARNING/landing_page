@@ -8,6 +8,22 @@ import styles from '../page.module.css'
 
 const LIFF_ID = process.env.NEXT_PUBLIC_LIFF_ID
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
+const SUBSCRIBE_REDIRECT_DELAY_MS = 1800
+
+function isMissingSubscription(data) {
+  if (!data) return false
+
+  const responseText = JSON.stringify(data).toLowerCase().replaceAll('\\', '')
+  const hasExplicitCode = [
+    'no_subscription',
+    'subscription_not_found',
+    'customer_not_found',
+  ].some((code) => responseText.includes(code))
+  const isPaddleNotFound = /"code"\s*:\s*"not_found"/.test(responseText)
+    && /(customer|subscription).{0,500}not found/.test(responseText)
+
+  return hasExplicitCode || isPaddleNotFound
+}
 
 export default function ManageSubscription() {
   const m = useMessages()
@@ -19,6 +35,7 @@ export default function ManageSubscription() {
   const [error, setError] = useState(null)
   const [portalLoading, setPortalLoading] = useState(false)
   const [portalError, setPortalError] = useState(null)
+  const [missingSubscription, setMissingSubscription] = useState(false)
 
   useEffect(() => {
     async function initLiff() {
@@ -50,6 +67,17 @@ export default function ManageSubscription() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!missingSubscription) return undefined
+
+    trackEvent('manage_subscription_not_found_redirect')
+    const redirectTimer = window.setTimeout(() => {
+      window.location.replace('/subscribe')
+    }, SUBSCRIBE_REDIRECT_DELAY_MS)
+
+    return () => window.clearTimeout(redirectTimer)
+  }, [missingSubscription])
+
   const handleManage = useCallback(async () => {
     if (!lineUserId || portalLoading) return
 
@@ -63,12 +91,15 @@ export default function ManageSubscription() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ parent_identifier: lineUserId }),
       })
-      const data = await res.json()
+      const data = await res.json().catch(() => null)
 
-      if (data.success && data.data?.portal_url) {
+      if (data?.success && data.data?.portal_url) {
         window.location.href = data.data.portal_url
+      } else if (isMissingSubscription(data)) {
+        setMissingSubscription(true)
       } else {
-        setPortalError(data.message || sub.portalError)
+        console.error('Portal API error:', data)
+        setPortalError(sub.portalError)
       }
     } catch (err) {
       console.error('Portal error:', err)
@@ -100,6 +131,19 @@ export default function ManageSubscription() {
             </div>
             <h1 className={styles.notInLineTitle}>{sub.notInLine}</h1>
             <p className={styles.notInLineDesc}>{sub.notInLineDesc}</p>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (missingSubscription) {
+    return (
+      <main className={styles.main}>
+        <div className={styles.container}>
+          <div className={styles.canceled} role="status" aria-live="polite">
+            <h1 className={styles.canceledTitle}>{sub.noSubscriptionTitle}</h1>
+            <p className={styles.canceledDesc}>{sub.noSubscriptionDesc}</p>
           </div>
         </div>
       </main>
