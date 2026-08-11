@@ -12,6 +12,7 @@ import styles from './page.module.css'
 
 const LINE_BOT_URL = process.env.NEXT_PUBLIC_LINE_BOT_URL
 const DAILY_CARDS = [1, 2, 3, 4]
+const PARENT_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8]
 
 export default function ParentPro() {
   const m = useMessages()
@@ -148,7 +149,32 @@ export default function ParentPro() {
 
             <p className={styles.heroPriceHint}>{pp.heroPriceHint}</p>
           </section>
+        </div>
 
+        {/* Parent feature carousel (continuous auto left-scroll) */}
+        <section className={styles.parentCarousel} aria-label={pp.heroBadge}>
+          <div className={styles.parentCarouselTrack}>
+            {[...PARENT_SLIDES, ...PARENT_SLIDES].map((idx, i) => (
+              <div
+                key={i}
+                className={styles.parentSlide}
+                aria-hidden={i >= PARENT_SLIDES.length ? 'true' : undefined}
+              >
+                <Image
+                  src={`/page-0${idx}.jpg`}
+                  alt={`DOGTOR Parent Pro ${idx}`}
+                  width={675}
+                  height={844}
+                  className={styles.parentSlideImg}
+                  sizes="(max-width: 768px) 68vw, 320px"
+                  priority={idx <= 2}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div className="container">
           {/* Section 1: Core Feature (LINE Reports) */}
           <section
             id="features"

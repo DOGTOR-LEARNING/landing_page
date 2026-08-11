@@ -1035,3 +1035,81 @@
 .manageLink a:hover {
   border-color: var(--accent-orange-light);
 }
+
+/* ============================================
+   Parent feature carousel (auto left-scroll)
+   ============================================ */
+.parentCarousel {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+  overflow: hidden;
+  /* Soft fade on both edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.parentCarouselTrack {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: parentMarquee 80s linear infinite;
+}
+
+.parentCarousel:hover .parentCarouselTrack {
+  animation-play-state: paused;
+}
+
+/* Two identical groups → shift by exactly one group for a seamless loop */
+@keyframes parentMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.parentSlide {
+  flex: 0 0 auto;
+  width: clamp(230px, 68vw, 320px);
+  margin-right: clamp(12px, 2.5vw, 24px);
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.parentSlideImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parentCarouselTrack {
+    animation: none;
+  }
+  .parentCarousel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .parentSlide {
+    scroll-snap-align: center;
+  }
+}
