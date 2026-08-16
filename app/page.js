@@ -29,7 +29,13 @@ export default function Home() {
           <div className="container">
             <div className={styles.heroContainer}>
               <div className={styles.heroContent}>
-                <div className={styles.badge}>{m.home.badge}</div>
+                <Link
+                  href="/parent-pro"
+                  className={styles.badge}
+                  onClick={() => trackCTAClick('parent_pro', 'hero_badge')}
+                >
+                  {m.home.badge}
+                </Link>
                 <h1 className={styles.heroTitle}>
                   {m.home.heroTitle1}<br />
                   <span className="gradient-text">{m.home.heroTitle2}</span>
