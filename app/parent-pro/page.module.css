@@ -238,6 +238,56 @@
   }
 }
 
+.heroQuestions {
+  max-width: 640px;
+  margin: 0 auto var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--accent-orange);
+  border-radius: var(--radius-lg);
+}
+
+.heroQuestionsTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-orange-light);
+  margin-bottom: 0.75rem;
+}
+
+.heroQuestionsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+}
+
+.heroQuestion {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.heroQuestion::before {
+  content: '?';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 800;
+  color: var(--accent-orange);
+}
+
+@media (min-width: 768px) {
+  .heroQuestion {
+    font-size: 1.02rem;
+  }
+}
+
 .heroDesc {
   font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.85);

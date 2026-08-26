@@ -127,6 +127,15 @@ export default function ParentPro() {
               </div>
             </div>
 
+            <div className={styles.heroQuestions}>
+              <p className={styles.heroQuestionsTitle}>{pp.heroQuestionsTitle}</p>
+              <ul className={styles.heroQuestionsList}>
+                {pp.heroQuestions.map((q, i) => (
+                  <li key={i} className={styles.heroQuestion}>{q}</li>
+                ))}
+              </ul>
+            </div>
+
             <p className={styles.heroDesc}>{pp.heroDesc}</p>
 
             <div className={styles.heroBenefits}>

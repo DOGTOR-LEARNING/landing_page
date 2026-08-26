@@ -76,12 +76,44 @@
   margin: 0 auto;
   box-shadow: 0 2px 4px rgba(16, 32, 49, 0.2);
   text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* Float via the standalone `translate` property so the hover `scale` below
+     is not swallowed by the running animation. */
+  animation: badgeFloat 2.4s ease-in-out infinite;
+  transition: scale 0.2s ease, box-shadow 0.2s ease;
 }
 
-.badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(16, 32, 49, 0.25);
+.badge::after {
+  content: '\203A';
+  margin-left: 0.4rem;
+  font-weight: 700;
+  display: inline-block;
+  transition: translate 0.2s ease;
+}
+
+.badge:hover,
+.badge:focus-visible {
+  color: var(--text-white);
+  scale: 1.04;
+  box-shadow: 0 10px 20px rgba(245, 155, 3, 0.45);
+}
+
+.badge:hover::after {
+  translate: 3px 0;
+}
+
+@keyframes badgeFloat {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge {
+    animation: none;
+  }
 }
 
 @media (min-width: 768px) {
@@ -135,6 +167,46 @@
     justify-content: flex-start;
     flex-wrap: nowrap;
     gap: var(--space-md);
+  }
+}
+
+.lineCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: var(--space-sm) auto 0;
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius-lg);
+  background: #06C755;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(6, 199, 85, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.lineCta:hover,
+.lineCta:focus-visible {
+  background: #05b34c;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(6, 199, 85, 0.45);
+}
+
+.lineCtaIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .lineCta {
+    margin-left: 0;
+    margin-right: 0;
+    width: fit-content;
   }
 }
 
