@@ -137,6 +137,59 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
+.bannerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* ─── 語言版本切換器 ──────────────────────────────────────────────────────── */
+.langTabs {
+  display: inline-flex;
+  padding: 0.2rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  gap: 0.15rem;
+}
+
+.langTab {
+  padding: 0.35rem 0.875rem;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: calc(var(--radius-md) - 0.2rem);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.langTab:hover {
+  color: var(--text-white);
+}
+
+.langTabActive {
+  background: var(--primary-blue-light);
+  color: var(--primary-blue-dark);
+}
+
+.langTabActive:hover {
+  color: var(--primary-blue-dark);
+}
+
+.langNotice {
+  padding: 0.6rem 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.langNotice strong {
+  color: var(--primary-blue-dark);
+}
+
 /* ─── 管理區主體 ──────────────────────────────────────────────────────────── */
 .adminContent {
   padding: var(--space-2xl) 0;
@@ -863,6 +916,13 @@
   color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.07em;
+}
+
+.annLangHint {
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: normal;
+  opacity: 0.8;
 }
 
 .annDivider {

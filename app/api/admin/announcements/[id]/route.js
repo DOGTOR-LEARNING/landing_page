@@ -1,17 +1,10 @@
 import { NextResponse } from 'next/server'
-
-function getBackendBase() {
-  const backendBase = process.env.BACKEND_Announcement_URL
-  if (!backendBase) {
-    console.error('[admin/announcements/[id]] BACKEND_Announcement_URL env var not set')
-    return null
-  }
-  return backendBase
-}
+import { getAnnouncementBackendBase } from '@/lib/backendConfig'
 
 export async function GET(request, { params }) {
   try {
-    const backendBase = getBackendBase()
+    const lang = request.headers.get('X-App-Lang') || 'zh'
+    const backendBase = getAnnouncementBackendBase(lang)
     if (!backendBase) {
       return NextResponse.json({ success: false, message: '伺服器設定錯誤' }, { status: 500 })
     }
@@ -30,7 +23,8 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
-    const backendBase = getBackendBase()
+    const lang = request.headers.get('X-App-Lang') || 'zh'
+    const backendBase = getAnnouncementBackendBase(lang)
     if (!backendBase) {
       return NextResponse.json({ success: false, message: '伺服器設定錯誤' }, { status: 500 })
     }
@@ -52,7 +46,8 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
-    const backendBase = getBackendBase()
+    const lang = request.headers.get('X-App-Lang') || 'zh'
+    const backendBase = getAnnouncementBackendBase(lang)
     if (!backendBase) {
       return NextResponse.json({ success: false, message: '伺服器設定錯誤' }, { status: 500 })
     }

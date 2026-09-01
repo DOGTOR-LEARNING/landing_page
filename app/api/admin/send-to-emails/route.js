@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { getNotificationsBackendBase } from '@/lib/backendConfig'
 
 export async function POST(request) {
   try {
@@ -11,9 +12,9 @@ export async function POST(request) {
       return NextResponse.json({ success: false, message: '你真的是管理員嗎...' }, { status: 401 })
     }
 
-    const backendBase = process.env.BACKEND_NOTIFICATIONS_URL
+    const lang = request.headers.get('X-App-Lang') || 'zh'
+    const backendBase = getNotificationsBackendBase(lang)
     if (!backendBase) {
-      console.error('[admin/send-to-emails] BACKEND_NOTIFICATIONS_URL env var not set')
       return NextResponse.json({ success: false, message: '伺服器設定錯誤' }, { status: 500 })
     }
 

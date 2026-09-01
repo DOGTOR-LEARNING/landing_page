@@ -40,6 +40,30 @@ const NOTIFICATION_TYPES = [
 const INIT_BROADCAST = { title: '', content: '', notification_type: 'system', save_to_db: true }
 const INIT_EMAIL     = { emails: '', title: '', content: '', notification_type: 'system', save_to_db: true }
 
+// ─── 語言版本選項 ──────────────────────────────────────────────────────────────
+const LANGS = [
+  { value: 'zh', label: '中文版' },
+  { value: 'en', label: '英文版' },
+]
+
+// ─── 語言版本切換器 ────────────────────────────────────────────────────────────
+function LangTabs({ value, onChange }) {
+  return (
+    <div className={styles.langTabs}>
+      {LANGS.map(({ value: v, label }) => (
+        <button
+          key={v}
+          type="button"
+          className={`${styles.langTab} ${value === v ? styles.langTabActive : ''}`}
+          onClick={() => onChange(v)}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 // ─── 公佈欄管理 ───────────────────────────────────────────────────────────────
 const ANN_BASE = '/api/admin/announcements'
 
@@ -108,7 +132,7 @@ function CharCount({ value, max }) {
 }
 
 // ─── 推播預覽 ─────────────────────────────────────────────────────────────────
-function PushPreview({ title, content }) {
+function PushPreview({ title, content, lang = 'zh' }) {
   if (!title && !content) return null
   return (
     <div className={styles.preview}>
@@ -119,8 +143,8 @@ function PushPreview({ title, content }) {
       <div className={styles.previewCard}>
         <div className={styles.previewAppRow}>
           <span className={styles.previewAppDot} />
-          <span className={styles.previewAppName}>Dogtor 逗課</span>
-          <span className={styles.previewTime}>剛剛</span>
+          <span className={styles.previewAppName}>{lang === 'en' ? 'Dogtor' : 'Dogtor 逗課'}</span>
+          <span className={styles.previewTime}>{lang === 'en' ? 'now' : '剛剛'}</span>
         </div>
         <p className={styles.previewTitle}>{title || '（未填標題）'}</p>
         <p className={styles.previewContent}>{content || '（未填內容）'}</p>
@@ -450,7 +474,7 @@ function AnnForm({ initial, onSave, onCancel, loading, isEdit }) {
 }
 
 // ─── 公佈欄管理面板 ───────────────────────────────────────────────────────────
-function AnnouncementsPanel() {
+function AnnouncementsPanel({ lang }) {
   const [publicAnns, setPublicAnns]       = useState(null)
   const [publicLoading, setPublicLoading] = useState(false)
   const [annKeyInput, setAnnKeyInput]     = useState('')
@@ -466,7 +490,7 @@ function AnnouncementsPanel() {
   const fetchPublicAnns = useCallback(async () => {
     setPublicLoading(true)
     try {
-      const res  = await fetch(ANN_BASE)
+      const res  = await fetch(ANN_BASE, { headers: { 'X-App-Lang': lang } })
       const data = await res.json()
       setPublicAnns(data.success ? (data.data?.announcements ?? []) : [])
     } catch {
@@ -474,13 +498,13 @@ function AnnouncementsPanel() {
     } finally {
       setPublicLoading(false)
     }
-  }, [])
+  }, [lang])
 
   const fetchAdminAnns = useCallback(async (key) => {
     setAdminLoading(true)
     try {
       const res  = await fetch(`${ANN_BASE}/admin/all`, {
-        headers: { 'X-Announcements-Key': key },
+        headers: { 'X-Announcements-Key': key, 'X-App-Lang': lang },
       })
       const data = await res.json()
       if (data.success) {
@@ -496,9 +520,14 @@ function AnnouncementsPanel() {
     } finally {
       setAdminLoading(false)
     }
-  }, [])
+  }, [lang])
 
-  useEffect(() => { fetchPublicAnns() }, [fetchPublicAnns])
+  // 語言版本切換時，重新載入該版本的公告（用戶視角 + 已解鎖的管理列表）
+  useEffect(() => {
+    fetchPublicAnns()
+    if (annKey) fetchAdminAnns(annKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang])
 
   const handleKeySubmit = async (e) => {
     e.preventDefault()
@@ -519,7 +548,7 @@ function AnnouncementsPanel() {
         : ANN_BASE
       const res  = await fetch(url, {
         method: isEdit ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Announcements-Key': annKey },
+        headers: { 'Content-Type': 'application/json', 'X-Announcements-Key': annKey, 'X-App-Lang': lang },
         body: JSON.stringify(processedBody),
       })
       const data = await res.json()
@@ -542,7 +571,7 @@ function AnnouncementsPanel() {
     try {
       await fetch(`${ANN_BASE}/${ann.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Announcements-Key': annKey },
+        headers: { 'Content-Type': 'application/json', 'X-Announcements-Key': annKey, 'X-App-Lang': lang },
         body: JSON.stringify({ is_active: !ann.is_active }),
       })
       fetchAdminAnns(annKey)
@@ -555,7 +584,7 @@ function AnnouncementsPanel() {
     try {
       const res  = await fetch(`${ANN_BASE}/${id}`, {
         method: 'DELETE',
-        headers: { 'X-Announcements-Key': annKey },
+        headers: { 'X-Announcements-Key': annKey, 'X-App-Lang': lang },
       })
       const data = await res.json()
       if (data.success) {
@@ -578,13 +607,17 @@ function AnnouncementsPanel() {
     setFormMode(null); setDeleteId(null); setAnnMsg(null)
   }
 
+  const langLabel = LANGS.find(l => l.value === lang)?.label ?? lang
+
   return (
     <div className={styles.annPanel}>
 
       {/* ── 用戶視角 ── */}
       <div className={styles.annSection}>
         <div className={styles.annSectionHeader}>
-          <span className={styles.annSectionLabel}>用戶看到的公告</span>
+          <span className={styles.annSectionLabel}>
+            用戶看到的公告 <span className={styles.annLangHint}>（{langLabel}）</span>
+          </span>
           <button
             type="button" className={styles.annRefreshBtn}
             onClick={fetchPublicAnns} disabled={publicLoading}
@@ -801,6 +834,10 @@ export default function AdminPage() {
   const [loginErr, setLoginErr]       = useState('')
   const [loginLoading, setLoginLoading] = useState(false)
 
+  // ── 語言版本（中文版 / 英文版 App）────────────────────────────────────────
+  const [lang, setLang] = useState('zh')
+  const langLabel = LANGS.find(l => l.value === lang)?.label ?? lang
+
   // ── 廣播 ──────────────────────────────────────────────────────────────────
   const [broadcast, setBroadcast]           = useState(INIT_BROADCAST)
   const [broadcastConfirm, setBroadcastConfirm] = useState(false)
@@ -845,7 +882,7 @@ export default function AdminPage() {
     try {
       const res  = await fetch('/api/admin/broadcast', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang },
         body: JSON.stringify({ ...broadcast, passphrase: pw }),
       })
       const data = await res.json()
@@ -858,7 +895,7 @@ export default function AdminPage() {
     } finally {
       setBroadcastLoading(false)
     }
-  }, [broadcast])
+  }, [broadcast, lang])
 
   // ── Email 發送 ────────────────────────────────────────────────────────────
   const handleEmailSend = useCallback(async (pw) => {
@@ -870,7 +907,7 @@ export default function AdminPage() {
         .filter(Boolean)
       const res  = await fetch('/api/admin/send-to-emails', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang },
         body: JSON.stringify({ ...emailForm, emails, passphrase: pw }),
       })
       const data = await res.json()
@@ -883,7 +920,7 @@ export default function AdminPage() {
     } finally {
       setEmailLoading(false)
     }
-  }, [emailForm])
+  }, [emailForm, lang])
 
   // ── 登入前畫面 ────────────────────────────────────────────────────────────
   if (!authed) {
@@ -953,15 +990,25 @@ export default function AdminPage() {
                   <p className={styles.bannerSub}>Dogtor 逗課 後台管理系統</p>
                 </div>
               </div>
-              <button
-                className={styles.logoutBtn}
-                onClick={() => { setAuthed(false); setLoginPw('') }}
-              >
-                <LogoutOutlinedIcon style={{ fontSize: 16 }} />
-                登出
-              </button>
+              <div className={styles.bannerRight}>
+                <LangTabs value={lang} onChange={setLang} />
+                <button
+                  className={styles.logoutBtn}
+                  onClick={() => { setAuthed(false); setLoginPw('') }}
+                >
+                  <LogoutOutlinedIcon style={{ fontSize: 16 }} />
+                  登出
+                </button>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* ── 目前操作版本提示 ── */}
+        <div className="container">
+          <p className={styles.langNotice}>
+            目前所有推播與公告操作將套用至：<strong>{langLabel}</strong> App 後端
+          </p>
         </div>
 
         {/* ── 功能卡片區 ── */}
@@ -1036,7 +1083,7 @@ export default function AdminPage() {
                     />
                   </div>
 
-                  <PushPreview title={broadcast.title} content={broadcast.content} />
+                  <PushPreview title={broadcast.title} content={broadcast.content} lang={lang} />
 
                   <button
                     type="submit"
@@ -1136,7 +1183,7 @@ export default function AdminPage() {
                     />
                   </div>
 
-                  <PushPreview title={emailForm.title} content={emailForm.content} />
+                  <PushPreview title={emailForm.title} content={emailForm.content} lang={lang} />
 
                   <button
                     type="submit"
@@ -1157,7 +1204,7 @@ export default function AdminPage() {
                   sub="管理 App 內公告：展開可預覽用戶視角，輸入權限密語後可新增、編輯、刪除"
                   badge="公告系統"
                 >
-                  <AnnouncementsPanel />
+                  <AnnouncementsPanel lang={lang} />
                 </ModuleCard>
               </div>
 
@@ -1168,7 +1215,7 @@ export default function AdminPage() {
 
       {broadcastConfirm && (
         <ConfirmModal
-          title={`廣播「${broadcast.title}」給所有用戶`}
+          title={`廣播「${broadcast.title}」給所有${langLabel}用戶`}
           onConfirm={handleBroadcastSend}
           onCancel={() => setBroadcastConfirm(false)}
           loading={broadcastLoading}
@@ -1176,7 +1223,7 @@ export default function AdminPage() {
       )}
       {emailConfirm && (
         <ConfirmModal
-          title={`傳送「${emailForm.title}」給 ${emailCount} 位指定用戶`}
+          title={`傳送「${emailForm.title}」給 ${emailCount} 位${langLabel}指定用戶`}
           onConfirm={handleEmailSend}
           onCancel={() => setEmailConfirm(false)}
           loading={emailLoading}

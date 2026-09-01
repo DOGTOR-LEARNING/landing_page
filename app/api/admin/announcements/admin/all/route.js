@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
+import { getAnnouncementBackendBase } from '@/lib/backendConfig'
 
 export async function GET(request) {
   try {
-    const backendBase = process.env.BACKEND_Announcement_URL
+    const lang = request.headers.get('X-App-Lang') || 'zh'
+    const backendBase = getAnnouncementBackendBase(lang)
     if (!backendBase) {
-      console.error('[admin/announcements/admin/all] BACKEND_Announcement_URL env var not set')
       return NextResponse.json({ success: false, message: '伺服器設定錯誤' }, { status: 500 })
     }
     const key = request.headers.get('X-Announcements-Key') || ''
