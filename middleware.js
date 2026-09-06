@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 
 const COOKIE_NAME = 'dogtor_locale'
 
+// Server-only secret. When ?preview=<token> on /subscribe matches this, the
+// middleware flags the request so the subscribe page skips the LINE sign-in
+// gate — used to hand the payment provider a reachable checkout URL for review.
+const PADDLE_PREVIEW_TOKEN = process.env.PADDLE_PREVIEW_TOKEN
+
 function normalizeLocale(raw) {
   if (!raw) return null
   const v = String(raw).toLowerCase()
@@ -30,6 +35,16 @@ export function middleware(request) {
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-locale', locale)
+
+  // Never trust an inbound x-paddle-preview header; only the middleware may set it.
+  requestHeaders.delete('x-paddle-preview')
+  if (
+    PADDLE_PREVIEW_TOKEN &&
+    url.pathname === '/subscribe' &&
+    url.searchParams.get('preview') === PADDLE_PREVIEW_TOKEN
+  ) {
+    requestHeaders.set('x-paddle-preview', '1')
+  }
 
   const response = NextResponse.next({
     request: { headers: requestHeaders },
