@@ -45,7 +45,7 @@ export default function Pricing() {
               <p className={styles.planPrice}>{pp.monthlyPrice}</p>
               <ul className={styles.planFeatures}>
                 {pp.planFeatures.map((f, i) => (
-                  <li key={i}>{f}</li>
+                  <li key={i}>{typeof f === 'string' ? f : f.text}</li>
                 ))}
               </ul>
               <Link href="/subscribe?plan=monthly" className={styles.planBtn} onClick={() => trackPricingPlanClick('monthly')}>
@@ -62,7 +62,7 @@ export default function Pricing() {
               <p className={styles.planSave}>{pp.yearlySave}</p>
               <ul className={styles.planFeatures}>
                 {pp.planFeatures.map((f, i) => (
-                  <li key={i}>{f}</li>
+                  <li key={i}>{typeof f === 'string' ? f : f.text}</li>
                 ))}
               </ul>
               <Link href="/subscribe?plan=yearly" className={styles.planBtn} onClick={() => trackPricingPlanClick('yearly')}>
