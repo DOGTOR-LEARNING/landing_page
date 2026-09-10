@@ -148,9 +148,13 @@ export default function ParentPro() {
             </div>
 
             <div className={styles.heroCtas}>
-              <a href="#pricing" className={styles.heroCtaPrimary}>
+              <Link
+                href="/subscribe?plan=monthly"
+                className={styles.heroCtaPrimary}
+                onClick={() => trackPricingPlanClick('monthly')}
+              >
                 {pp.subscribeButton}
-              </a>
+              </Link>
               <a href="#features" className={styles.heroCtaSecondary}>
                 {pp.viewPlansButton}
               </a>
