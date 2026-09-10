@@ -7,10 +7,11 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
-import { trackCTAClick, trackPricingPlanClick, trackExternalLinkClick } from '@/lib/analytics'
+import { trackCTAClick, trackPricingPlanClick } from '@/lib/analytics'
+import ParentProStickyCta from '@/components/ParentProStickyCta'
+import LineCtaButton from '@/components/LineCtaButton'
 import styles from './page.module.css'
 
-const LINE_BOT_URL = process.env.NEXT_PUBLIC_LINE_BOT_URL
 const DAILY_CARDS = [1, 2, 3, 4]
 const PARENT_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -127,16 +128,7 @@ export default function ParentPro() {
               </div>
             </div>
 
-            <div className={styles.heroQuestions}>
-              <p className={styles.heroQuestionsTitle}>{pp.heroQuestionsTitle}</p>
-              <ul className={styles.heroQuestionsList}>
-                {pp.heroQuestions.map((q, i) => (
-                  <li key={i} className={styles.heroQuestion}>{q}</li>
-                ))}
-              </ul>
-            </div>
-
-            <p className={styles.heroDesc}>{pp.heroDesc}</p>
+            <p className={styles.heroTagline}>{pp.heroTagline}</p>
 
             <div className={styles.heroBenefits}>
               {pp.planFeatures.slice(0, 4).map((f, i) => (
@@ -147,7 +139,7 @@ export default function ParentPro() {
               ))}
             </div>
 
-            <div className={styles.heroCtas}>
+            <div id="hero-cta" className={styles.heroCtas}>
               <Link
                 href="/subscribe?plan=monthly"
                 className={styles.heroCtaPrimary}
@@ -159,6 +151,12 @@ export default function ParentPro() {
                 {pp.viewPlansButton}
               </a>
             </div>
+
+            <LineCtaButton
+              label={pp.lineButton}
+              location="parent_pro_hero_line"
+              className={styles.heroLineCta}
+            />
 
             <p className={styles.heroPriceHint}>{pp.heroPriceHint}</p>
           </section>
@@ -188,6 +186,19 @@ export default function ParentPro() {
         </section>
 
         <div className="container">
+          {/* 痛點共鳴 + 品牌故事：原本卡在 hero CTA 前面，移到產品畫面之後 */}
+          <section className={styles.empathySection}>
+            <div className={styles.heroQuestions}>
+              <p className={styles.heroQuestionsTitle}>{pp.heroQuestionsTitle}</p>
+              <ul className={styles.heroQuestionsList}>
+                {pp.heroQuestions.map((q, i) => (
+                  <li key={i} className={styles.heroQuestion}>{q}</li>
+                ))}
+              </ul>
+            </div>
+            <p className={styles.storyDesc}>{pp.storyDesc}</p>
+          </section>
+
           {/* Section 1: Core Feature (LINE Reports) */}
           <section
             id="features"
@@ -303,36 +314,6 @@ export default function ParentPro() {
             </div>
           </section>
 
-          {/* Bottom Banners */}
-          <section className={styles.bottomBanners}>
-            {/* Ad-Free Banner */}
-            <div className={styles.adFreeBanner}>
-              <div className={styles.adFreeBannerContent}>
-                <AnimatedIcon name="ShieldCheck" size={48} color="#EF476F" strokeWidth={1.5} variant="bounce" />
-                <h2 className={styles.adFreeTitle}>{pp.featureAdFreeTitle}</h2>
-                <p className={styles.adFreeDesc}>{pp.featureAdFreeDesc}</p>
-              </div>
-            </div>
-
-            {/* LINE Section */}
-            <div className={styles.lineBanner}>
-              <div className={styles.lineBannerContent}>
-                <AnimatedIcon name="MessageCircle" size={48} color="#06C755" strokeWidth={1.5} variant="bounce" />
-                <h2 className={styles.lineTitle}>{pp.lineTitle}</h2>
-                <p className={styles.lineDesc}>{pp.lineDesc}</p>
-                <a
-                  href={LINE_BOT_URL}
-                  className={styles.lineButton}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackExternalLinkClick(LINE_BOT_URL, 'parent_pro_line')}
-                >
-                  {pp.lineButton}
-                </a>
-              </div>
-            </div>
-          </section>
-
           {/* Pricing */}
           <section id="pricing" className={styles.pricingSection}>
             <div className={styles.sectionHeader}>
@@ -381,6 +362,7 @@ export default function ParentPro() {
                 </Link>
               </div>
             </div>
+            {pp.trialNote && <p className={styles.trialNote}>{pp.trialNote}</p>}
             <p className={styles.manageLink}>
               {pp.alreadySubscribed}{' '}
               <Link href="/subscribe/manage">{pp.manageLink}</Link>
@@ -388,6 +370,11 @@ export default function ParentPro() {
           </section>
         </div>
       </main>
+      <ParentProStickyCta
+        label={pp.stickyCtaLabel}
+        hint={pp.stickyCtaHint}
+        buttonText={pp.stickyCtaButton}
+      />
       <Footer />
     </>
   )

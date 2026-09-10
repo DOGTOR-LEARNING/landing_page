@@ -242,6 +242,7 @@ export default function SubscribeClient({ previewMode = false }) {
         >
           {submitting ? sub.subscribing : sub.subscribe}
         </button>
+        {sub.trialNote && <p className={styles.trialNote}>{sub.trialNote}</p>}
 
       </div>
     </main>
