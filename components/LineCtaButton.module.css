@@ -1,0 +1,43 @@
+/* 樣式沿用原本首頁 hero 的 .lineCta，抽出來讓 parent-pro 共用 */
+.lineCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: var(--space-sm) auto 0;
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius-lg);
+  background: #06c755;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(6, 199, 85, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.lineCta:hover,
+.lineCta:focus-visible {
+  background: #05b34c;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(6, 199, 85, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineCta {
+    transition: background 0.2s ease;
+  }
+
+  .lineCta:hover,
+  .lineCta:focus-visible {
+    transform: none;
+  }
+}
+
+.lineCtaIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+}

@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
+import Header from '@/components/Header'
 import { trackSubscribeClick, trackEvent } from '@/lib/analytics'
 import styles from './page.module.css'
 
@@ -106,6 +107,26 @@ export default function SubscribeClient({ previewMode = false }) {
     }
   }, [plan, previewMode])
 
+  // 只有上一頁確實是站內頁面時才回上一頁。從 LINE 官方帳號選單開啟時沒有
+  // 上一頁，而 LIFF 登入會在 history 留下 access.line.me——兩種情況直接
+  // history.back() 不是沒反應就是重新觸發登入。
+  const goBack = useCallback(() => {
+    let sameOrigin = false
+    try {
+      sameOrigin =
+        !!document.referrer &&
+        new URL(document.referrer).origin === window.location.origin
+    } catch {
+      sameOrigin = false
+    }
+
+    if (sameOrigin) {
+      window.history.back()
+    } else {
+      window.location.href = '/parent-pro'
+    }
+  }, [])
+
   const handleSubscribe = useCallback(async () => {
     if (!lineUserId || submitting) return
 
@@ -148,6 +169,8 @@ export default function SubscribeClient({ previewMode = false }) {
 
   if (isCanceled) {
     return (
+      <>
+      <Header />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.canceled}>
@@ -156,11 +179,14 @@ export default function SubscribeClient({ previewMode = false }) {
           </div>
         </div>
       </main>
+      </>
     )
   }
 
   if (error === 'liff' || !liffReady) {
     return (
+      <>
+      <Header />
       <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.notInLine}>
@@ -172,6 +198,7 @@ export default function SubscribeClient({ previewMode = false }) {
           </div>
         </div>
       </main>
+      </>
     )
   }
 
@@ -198,7 +225,7 @@ export default function SubscribeClient({ previewMode = false }) {
             Preview mode — LINE sign-in bypassed for checkout review.
           </p>
         )}
-        <button className={styles.backBtn} onClick={() => window.history.back()}>
+        <button className={styles.backBtn} onClick={goBack}>
           ← {sub.back}
         </button>
         <h1 className={styles.title}>{sub.choosePlan}</h1>
@@ -242,6 +269,7 @@ export default function SubscribeClient({ previewMode = false }) {
         >
           {submitting ? sub.subscribing : sub.subscribe}
         </button>
+        {sub.trialNote && <p className={styles.trialNote}>{sub.trialNote}</p>}
 
       </div>
     </main>

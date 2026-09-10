@@ -411,3 +411,13 @@
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.7;
 }
+
+/* 結帳按鈕下方的免費試用說明 */
+.trialNote {
+  margin: 0.85rem auto 0;
+  max-width: 420px;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.68);
+}

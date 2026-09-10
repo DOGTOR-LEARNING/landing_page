@@ -170,40 +170,10 @@
   }
 }
 
-.lineCta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: var(--space-sm) auto 0;
-  padding: 0.8rem 1.4rem;
-  border-radius: var(--radius-lg);
-  background: #06C755;
-  color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.4;
-  text-align: left;
-  text-decoration: none;
-  box-shadow: 0 4px 14px rgba(6, 199, 85, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-.lineCta:hover,
-.lineCta:focus-visible {
-  background: #05b34c;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(6, 199, 85, 0.45);
-}
-
-.lineCtaIcon {
-  display: inline-flex;
-  flex-shrink: 0;
-}
-
+/* 按鈕本體已抽到 components/LineCtaButton；這裡只留首頁專屬的版面覆寫
+   （首頁 hero 在桌機是靠左對齊，不是置中） */
 @media (min-width: 768px) {
-  .lineCta {
+  .lineCtaHome {
     margin-left: 0;
     margin-right: 0;
     width: fit-content;

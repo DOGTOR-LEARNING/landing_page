@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
-import { trackEvent } from '@/lib/analytics'
+import { trackEvent, trackLeavingEvent } from '@/lib/analytics'
 import styles from '../page.module.css'
 
 const LINE_BOT_URL = process.env.NEXT_PUBLIC_LINE_BOT_URL
@@ -149,7 +149,7 @@ export default function SubscribeSuccess() {
             className={styles.lineCtaButton}
             target="_blank"
             rel="noreferrer"
-            onClick={() => trackEvent('line_add_friend_click', { source: 'subscribe_success' })}
+            onClick={() => trackLeavingEvent('line_add_friend_click', { source: 'subscribe_success' })}
           >
             {sub.lineButton}
           </a>
