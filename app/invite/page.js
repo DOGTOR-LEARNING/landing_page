@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { trackInvitePageVisit, trackDownloadClick, trackEvent } from '@/lib/analytics'
+import { trackInvitePageVisit, trackDownloadClick, trackEvent, trackLeavingEvent } from '@/lib/analytics'
 import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
@@ -65,7 +65,7 @@ function InviteContent() {
                 <a
                   href={appInviteUrl}
                   className="btn btn-secondary"
-                  onClick={() => trackEvent('invite_join_friend_click', { inviter: inviter || 'direct' })}
+                  onClick={() => trackLeavingEvent('invite_join_friend_click', { inviter: inviter || 'direct' })}
                 >
                   加入好友
                 </a>

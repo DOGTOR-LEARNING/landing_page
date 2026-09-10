@@ -63,5 +63,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/|favicon.ico|robots.txt|sitemap.xml|llms.txt|.*\\..*).*)'],
+  matcher: ['/((?!_next/|ingest/|favicon.ico|robots.txt|sitemap.xml|llms.txt|.*\\..*).*)'],
 }
