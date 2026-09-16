@@ -2,12 +2,14 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useMessages } from './LocaleProvider'
+import { useLocale, useMessages } from './LocaleProvider'
+import { COMPANY, getCompanyAddress, getCompanyPhone } from '@/lib/company'
 import styles from './Footer.module.css'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const m = useMessages()
+  const locale = useLocale()
 
   return (
     <footer className={styles.footer}>
@@ -45,9 +47,24 @@ export default function Footer() {
             <Link href="/faq">{m.footer.links.faq}</Link>
           </div>
         </div>
-        <p className={styles.footerCompany}>
-          超棒軟體科技有限公司 SuperB Software Technology Co., Ltd.
-        </p>
+        <div className={styles.footerCompany}>
+          <p className={styles.footerCompanyName}>
+            {COMPANY.nameZh} {COMPANY.nameEn}
+          </p>
+          <p className={styles.footerCompanyMeta}>
+            {m.company.taxIdLabel} {COMPANY.taxId}
+            <span className={styles.footerDivider} aria-hidden="true">｜</span>
+            {m.company.representativeLabel} {COMPANY.representative}
+          </p>
+          <p className={styles.footerCompanyMeta}>
+            {getCompanyAddress(locale)}
+            <span className={styles.footerDivider} aria-hidden="true">｜</span>
+            {m.company.phoneLabel}{' '}
+            <a href={`tel:${COMPANY.phoneHref}`} className={styles.footerCompanyLink}>
+              {getCompanyPhone(locale)}
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   )

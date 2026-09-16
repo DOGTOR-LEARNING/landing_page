@@ -27,7 +27,7 @@ export default async function Terms() {
           </div>
 
           <div className={styles.content}>
-            <LegalContent sections={page.sections} />
+            <LegalContent sections={page.sections} locale={locale} />
           </div>
         </div>
       </main>

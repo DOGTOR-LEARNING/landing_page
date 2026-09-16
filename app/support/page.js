@@ -2,6 +2,7 @@ import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { getMessages } from '@/lib/i18n/messages'
+import CompanyInfo from '@/components/CompanyInfo'
 import {
   Email,
   AccessTime,
@@ -16,7 +17,7 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: '支援中心 - Dogtor 逗課',
-  description: '需要協助嗎？在這裡找到聯絡方式和常見問題的快速解決方案。',
+  description: '需要協助嗎？在這裡找到 Dogtor 逗課的聯絡方式、營運公司資訊（超棒軟體科技有限公司）和常見問題的快速解決方案。',
 }
 
 export default async function Support() {
@@ -115,6 +116,8 @@ export default async function Support() {
                 </a>
               </div>
             </section>
+
+            <CompanyInfo messages={m} locale={locale} />
 
             <section className={styles.tipSection}>
               <h3 className={styles.tipTitle}>

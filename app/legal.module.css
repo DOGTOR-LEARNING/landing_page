@@ -130,6 +130,10 @@
   max-width: 100%;
 }
 
+.contactEmail p + p {
+  margin-top: 0.5rem;
+}
+
 .contactEmail a {
   color: var(--accent-orange-light);
   font-weight: 600;

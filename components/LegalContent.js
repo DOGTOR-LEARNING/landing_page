@@ -1,3 +1,4 @@
+import { COMPANY, getCompanyAddress, getCompanyPhone } from '@/lib/company'
 import styles from '../app/legal.module.css'
 
 function RichText({ text }) {
@@ -28,16 +29,51 @@ function RichText({ text }) {
   return <>{parts}</>
 }
 
-function ContactBlock() {
+function ContactBlock({ locale }) {
+  const isEn = locale === 'en'
+  const labels = isEn
+    ? {
+        name: 'Company: ',
+        taxId: 'Business Registration No.: ',
+        address: 'Address: ',
+        phone: 'Phone: ',
+        email: 'Email: ',
+      }
+    : {
+        name: '公司名稱：',
+        taxId: '統一編號：',
+        address: '公司地址：',
+        phone: '聯絡電話：',
+        email: '客服信箱：',
+      }
+
   return (
-    <p className={styles.contactEmail}>
-      <strong>Email:</strong>{' '}
-      <a href="mailto:dogtor.love.learning@gmail.com">dogtor.love.learning@gmail.com</a>
-    </p>
+    <div className={styles.contactEmail}>
+      <p>
+        <strong>{labels.name}</strong>
+        {COMPANY.nameZh}（{COMPANY.nameEn}）
+      </p>
+      <p>
+        <strong>{labels.taxId}</strong>
+        {COMPANY.taxId}
+      </p>
+      <p>
+        <strong>{labels.address}</strong>
+        {getCompanyAddress(locale)}
+      </p>
+      <p>
+        <strong>{labels.phone}</strong>
+        <a href={`tel:${COMPANY.phoneHref}`}>{getCompanyPhone(locale)}</a>
+      </p>
+      <p>
+        <strong>{labels.email}</strong>
+        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+      </p>
+    </div>
   )
 }
 
-function renderBlocks(blocks) {
+function renderBlocks(blocks, locale) {
   return blocks.map((block, i) => {
     if (block.type === 'p') {
       return (
@@ -58,13 +94,13 @@ function renderBlocks(blocks) {
       )
     }
     if (block.type === 'contact') {
-      return <ContactBlock key={i} />
+      return <ContactBlock key={i} locale={locale} />
     }
     if (block.type === 'sub') {
       return (
         <div key={i}>
           <h3>{block.heading}</h3>
-          {renderBlocks(block.blocks)}
+          {renderBlocks(block.blocks, locale)}
         </div>
       )
     }
@@ -72,11 +108,11 @@ function renderBlocks(blocks) {
   })
 }
 
-export default function LegalContent({ sections }) {
+export default function LegalContent({ sections, locale = 'zh-TW' }) {
   return sections.map((section, i) => (
     <section key={i} className={styles.section}>
       <h2>{section.heading}</h2>
-      {renderBlocks(section.blocks)}
+      {renderBlocks(section.blocks, locale)}
     </section>
   ))
 }
