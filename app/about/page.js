@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import CompanyInfo from '@/components/CompanyInfo'
 import { getMessages } from '@/lib/i18n/messages'
 import styles from './page.module.css'
 
@@ -18,7 +19,7 @@ const TEAM_MEMBERS = [
 export const metadata = {
   title: '關於我們 - Dogtor 逗課 | 國高中生 AI 學習 App｜團隊介紹',
   description:
-    'Dogtor 逗課是專為國高中生打造的 AI 學習 App。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導，讓會考學測複習變有趣又有效率。',
+    'Dogtor 逗課是專為國高中生打造的 AI 學習 App，由超棒軟體科技有限公司（SuperB Software Technology Co., Ltd.）開發及營運。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導，讓會考學測複習變有趣又有效率。',
 }
 
 export default async function About() {
@@ -89,6 +90,8 @@ export default async function About() {
                 ))}
               </div>
             </section>
+
+            <CompanyInfo messages={m} locale={locale} />
 
             <section className={styles.ctaSection}>
               <h2 className={styles.ctaTitle}>{m.about.ctaTitle}</h2>

@@ -99,7 +99,32 @@
   margin-top: var(--space-lg);
   padding-top: var(--space-md);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
   text-align: center;
+}
+
+.footerCompanyName {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.footerCompanyMeta {
+  margin-top: 0.25rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.footerDivider {
+  margin: 0 0.25rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.footerCompanyLink {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: underline;
+}
+
+.footerCompanyLink:hover {
+  color: var(--accent-orange-light);
 }
