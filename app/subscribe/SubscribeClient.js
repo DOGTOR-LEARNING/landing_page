@@ -14,6 +14,12 @@ const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
 const PADDLE_SANDBOX = process.env.NEXT_PUBLIC_PADDLE_SANDBOX === 'true'
 const PADDLE_PRICE_MONTHLY = process.env.NEXT_PUBLIC_PADDLE_PRICE_MONTHLY
 const PADDLE_PRICE_YEARLY = process.env.NEXT_PUBLIC_PADDLE_PRICE_YEARLY
+// Single shared promo campaign surfaced from LINE (e.g. an expiry-reminder
+// push). The `?discount=` value must match this code before the mapped
+// Paddle discount ID gets pre-applied, so a stray/mistyped query param does
+// nothing rather than silently discounting checkout.
+const PADDLE_PROMO_DISCOUNT_CODE = process.env.NEXT_PUBLIC_PADDLE_PROMO_DISCOUNT_CODE
+const PADDLE_PROMO_DISCOUNT_ID = process.env.NEXT_PUBLIC_PADDLE_PROMO_DISCOUNT_ID
 
 // Identifier attached to checkouts opened from the LINE-less preview flow.
 // Used by the payment provider to review the purchase flow end-to-end.
@@ -34,6 +40,14 @@ export default function SubscribeClient({ previewMode = false }) {
   const [error, setError] = useState(null)
 
   const isCanceled = searchParams.get('canceled') === '1'
+
+  const discountParam = searchParams.get('discount')
+  const promoDiscountId =
+    discountParam &&
+    PADDLE_PROMO_DISCOUNT_CODE &&
+    discountParam.toUpperCase() === PADDLE_PROMO_DISCOUNT_CODE.toUpperCase()
+      ? PADDLE_PROMO_DISCOUNT_ID
+      : undefined
 
   useEffect(() => {
     // Preview flow: skip LINE sign-in entirely so the checkout is reachable
@@ -132,12 +146,13 @@ export default function SubscribeClient({ previewMode = false }) {
 
     setSubmitting(true)
     localStorage.setItem('dogtor_parent_id', lineUserId)
-    trackSubscribeClick(plan)
+    trackSubscribeClick(plan, !!promoDiscountId)
 
     try {
       const priceId = plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
       window.Paddle.Checkout.open({
         items: [{ priceId, quantity: 1 }],
+        ...(promoDiscountId ? { discountId: promoDiscountId } : {}),
         customData: {
           parent_identifier: lineUserId,
           parent_type: previewMode ? 'preview' : 'line',
@@ -153,7 +168,7 @@ export default function SubscribeClient({ previewMode = false }) {
       })
     }
     setSubmitting(false)
-  }, [lineUserId, plan, submitting, previewMode])
+  }, [lineUserId, plan, submitting, previewMode, promoDiscountId])
 
   if (loading) {
     return (
