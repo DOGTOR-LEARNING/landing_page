@@ -36,6 +36,12 @@ const nextConfig = {
         source: '/r/:token',
         destination: `${REPORT_BACKEND_URL}/r/:token`,
       },
+      // Endpoint URL of the report LIFF app. LINE loads it with the token in
+      // ?liff.state=, and the backend redirects to /r/:token.
+      {
+        source: '/r',
+        destination: `${REPORT_BACKEND_URL}/r`,
+      },
       {
         source: '/ingest/static/:path*',
         destination: 'https://us-assets.i.posthog.com/static/:path*',
