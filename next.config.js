@@ -1,3 +1,10 @@
+// Backend that serves the parent report pages. Production by default; override
+// with REPORT_BACKEND_URL to point a preview deployment at another backend.
+const REPORT_BACKEND_URL = (
+  process.env.REPORT_BACKEND_URL ||
+  'https://superb-backend-1041765261654.asia-east1.run.app'
+).replace(/\/$/, '')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -23,6 +30,12 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      // Shareable parent report pages are rendered by the backend. Proxying
+      // them here keeps the backend's own URL out of links parents pass around.
+      {
+        source: '/r/:token',
+        destination: `${REPORT_BACKEND_URL}/r/:token`,
+      },
       {
         source: '/ingest/static/:path*',
         destination: 'https://us-assets.i.posthog.com/static/:path*',
