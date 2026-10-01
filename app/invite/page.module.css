@@ -57,3 +57,61 @@
     justify-content: center;
   }
 }
+
+.secondaryButtons {
+  margin-top: var(--space-md);
+}
+
+.codeCard {
+  margin: 0 auto var(--space-xl);
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-lg);
+}
+
+.codeLabel {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-sm);
+}
+
+.codeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.codeValue {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+
+.copyButton {
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a3a5c;
+  background: white;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.copyButton:active {
+  transform: scale(0.97);
+}
+
+.codeHint {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin: 0;
+}
