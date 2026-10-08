@@ -1,20 +1,26 @@
 /**
  * iOS Universal Links - Apple App Site Association
- * URL: https://dogtor.superb-tutor.com/.well-known/apple-app-site-association
+ * URL: https://<host>/.well-known/apple-app-site-association
+ *
+ * Each host names only its own app; see lib/appHosts.js.
  */
-const body = {
-  applinks: {
-    apps: [],
-    details: [
-      {
-        appID: '623TA8PLPU.com.dogtor.superbFlutterApp',
-        paths: ['/invite', '/invite*'],
-      },
-    ],
-  },
-}
+import { appForHost, requestHost } from '@/lib/appHosts'
 
-export async function GET() {
+export const dynamic = 'force-dynamic'
+
+export async function GET(request) {
+  const app = appForHost(requestHost(request.headers))
+  const body = {
+    applinks: {
+      apps: [],
+      details: [
+        {
+          appID: app.iosAppId,
+          paths: ['/invite', '/invite*'],
+        },
+      ],
+    },
+  }
   return new Response(JSON.stringify(body), {
     status: 200,
     headers: {

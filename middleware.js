@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { isGlobalHost, requestHost } from '@/lib/appHosts'
 
 const COOKIE_NAME = 'dogtor_locale'
 
@@ -22,19 +23,31 @@ function localeFromAcceptLanguage(headerValue) {
   return normalizeLocale(first)
 }
 
+// The international host only serves invite links and the legal pages the
+// en app points at; everything else on it is the Taiwan site.
+const GLOBAL_HOST_PATHS = ['/invite', '/privacy', '/terms', '/support']
+
 export function middleware(request) {
   const url = request.nextUrl
+  const globalHost = isGlobalHost(requestHost(request.headers))
+
+  if (globalHost && !GLOBAL_HOST_PATHS.includes(url.pathname)) {
+    return NextResponse.redirect(new URL('/invite', url))
+  }
   const langParam = url.searchParams.get('lang')
   const cookieLocale = request.cookies.get(COOKIE_NAME)?.value
 
-  const locale =
-    normalizeLocale(langParam) ||
+  const locale = globalHost
+    ? 'en'
+    : normalizeLocale(langParam) ||
     normalizeLocale(cookieLocale) ||
     localeFromAcceptLanguage(request.headers.get('accept-language')) ||
     'zh-TW'
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-locale', locale)
+  // Set here rather than trusted from the client, like x-paddle-preview below.
+  requestHeaders.set('x-app-market', globalHost ? 'global' : 'tw')
 
   // Never trust an inbound x-paddle-preview header; only the middleware may set it.
   requestHeaders.delete('x-paddle-preview')
@@ -51,7 +64,7 @@ export function middleware(request) {
   })
 
   // Persist locale in cookie when explicitly set via ?lang= param
-  if (normalizeLocale(langParam)) {
+  if (!globalHost && normalizeLocale(langParam)) {
     response.cookies.set(COOKIE_NAME, locale, {
       path: '/',
       maxAge: 60 * 60 * 24 * 365, // 1 year

@@ -1,33 +1,32 @@
 /**
  * Android App Links - Digital Asset Links
- * URL: https://dogtor.superb-tutor.com/.well-known/assetlinks.json
+ * URL: https://<host>/.well-known/assetlinks.json
  *
- * SHA-256 指紋由環境變數 ANDROID_SHA256_FINGERPRINT 提供（多個請用逗號分隔，例如 debug,release）。
- * 未設定時使用佔位符，Android App Links 驗證不會通過，需在部署環境設定實際指紋。
- *
- * 指紋取得方式（二擇一）：
- * 1. 已上架 Play：Play Console → 你的 App → 設定 → App 簽署 → 「App 簽署金鑰憑證」的 SHA-256。
- * 2. 本機：keytool -list -v -keystore path/to/your.keystore -alias your_key_alias，取 SHA256 並改成冒號分隔。
+ * Each host names only its own app; see lib/appHosts.js. Fingerprints come
+ * from ANDROID_SHA256_FINGERPRINT (tw) / ANDROID_SHA256_FINGERPRINT_GLOBAL (en):
+ * Play Console → App integrity → App signing key certificate → SHA-256.
+ * With the variable unset this returns an empty list, so verification fails
+ * plainly instead of against a placeholder.
  */
-function getSha256Fingerprints() {
-  const raw = process.env.ANDROID_SHA256_FINGERPRINT
-  if (!raw || raw.trim() === '' || raw.includes('REPLACE')) {
-    return ['REPLACE_WITH_YOUR_SHA256']
-  }
-  return raw.split(',').map((s) => s.trim()).filter(Boolean)
-}
+import { androidFingerprints, appForHost, requestHost } from '@/lib/appHosts'
 
-export async function GET() {
-  const body = [
-    {
-      relation: ['delegate_permission/common.handle_all_urls'],
-      target: {
-        namespace: 'android_app',
-        package_name: 'com.dogtor.superb_flutter_app',
-        sha256_cert_fingerprints: getSha256Fingerprints(),
-      },
-    },
-  ]
+export const dynamic = 'force-dynamic'
+
+export async function GET(request) {
+  const app = appForHost(requestHost(request.headers))
+  const fingerprints = androidFingerprints(app)
+  const body = fingerprints.length
+    ? [
+        {
+          relation: ['delegate_permission/common.handle_all_urls'],
+          target: {
+            namespace: 'android_app',
+            package_name: app.androidPackage,
+            sha256_cert_fingerprints: fingerprints,
+          },
+        },
+      ]
+    : []
   return new Response(JSON.stringify(body), {
     status: 200,
     headers: {
