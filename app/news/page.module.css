@@ -4,24 +4,12 @@
   min-height: 100vh;
 }
 
-.pageHeader {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto var(--space-md);
-}
-
-.pageSubtitle {
-  font-size: 1.0625rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.7;
-}
-
 .chips {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-sm);
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
 }
 
 .chip {
@@ -121,10 +109,6 @@
   box-shadow: var(--shadow-lg);
 }
 
-.imageSquare {
-  aspect-ratio: 1 / 1;
-}
-
 .image {
   object-fit: cover;
   transition: transform var(--transition-base);
@@ -138,6 +122,50 @@
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+}
+
+/* Podcast 封面解析度不高，只當標題旁的小縮圖 */
+.cardHeadingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.thumb {
+  position: relative;
+  flex: 0 0 88px;
+  height: 88px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cardHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+/* IG 嵌入：embed.js 會把 blockquote 換成 iframe，預設有 min-width 326px 和外框，這裡讓它跟著欄寬 */
+.instagram :global(.instagram-media) {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+.instagram :global(blockquote.instagram-media) {
+  padding: var(--space-lg);
+  background: #ffffff;
+  text-align: center;
+}
+
+.instagram :global(blockquote.instagram-media) a {
+  color: var(--primary-blue);
+  font-weight: 600;
 }
 
 .cardDate {

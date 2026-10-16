@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import StoreButtons from '@/components/StoreButtons'
 import LiteYouTube from '@/components/LiteYouTube'
+import InstagramEmbed from '@/components/InstagramEmbed'
 import { getMessages } from '@/lib/i18n/messages'
 import { NEWS_CATEGORIES, NEWS_ITEMS } from '@/data/news'
 import styles from './page.module.css'
@@ -54,6 +55,11 @@ function newsJsonLd() {
   return { '@context': 'https://schema.org', '@graph': items }
 }
 
+// 直式影片和 IG Reels 都是 9:16，排在同一排
+function isVertical(item) {
+  return Boolean((item.youtubeId && item.vertical) || item.instagramUrl)
+}
+
 function byDateDesc(a, b) {
   if (!a.date) return 1
   if (!b.date) return -1
@@ -68,24 +74,24 @@ function NewsMedia({ item, m }) {
   if (item.youtubeId) {
     return <LiteYouTube id={item.youtubeId} title={item.title} vertical={item.vertical} playLabel={m.news.play} />
   }
-  if (item.spotifyEpisodeId) {
-    // 有自己的照片就用照片當主視覺，配精簡版播放器；沒有的話用 Spotify 大尺寸播放器（內含封面）。
+  if (item.instagramUrl) {
     return (
-      <>
-        {item.image && (
-          <div className={`${styles.imageFrame} ${styles.imageSquare}`}>
-            <Image src={item.image} alt={item.title} fill sizes="(max-width: 480px) 100vw, 360px" className={styles.image} />
-          </div>
-        )}
-        <iframe
-          src={`https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}`}
-          title={item.title}
-          height={item.image ? 152 : 352}
-          loading="lazy"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          className={styles.spotify}
-        />
-      </>
+      <div className={styles.instagram}>
+        <InstagramEmbed url={item.instagramUrl} label={m.news.viewOnInstagram} />
+      </div>
+    )
+  }
+  if (item.spotifyEpisodeId) {
+    // 有自己的照片時照片放在標題旁當小縮圖（見 NewsCard），這裡用精簡版播放器；沒有的話用大尺寸播放器（內含封面）。
+    return (
+      <iframe
+        src={`https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}`}
+        title={item.title}
+        height={item.image ? 152 : 352}
+        loading="lazy"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        className={styles.spotify}
+      />
     )
   }
   if (item.image) {
@@ -99,13 +105,28 @@ function NewsMedia({ item, m }) {
 }
 
 function NewsCard({ item, m }) {
-  const hasMedia = item.youtubeId || item.spotifyEpisodeId || item.image
+  const hasMedia = item.youtubeId || item.instagramUrl || item.spotifyEpisodeId || item.image
+  const thumb = item.spotifyEpisodeId && item.image
+  const heading = (
+    <div className={styles.cardHeading}>
+      {item.date && <time className={styles.cardDate} dateTime={item.date}>{formatDate(item.date)}</time>}
+      <h3 className={styles.cardTitle}>{item.title}</h3>
+    </div>
+  )
   return (
     <article className={`${styles.card} ${hasMedia ? '' : styles.textCard}`}>
       <NewsMedia item={item} m={m} />
       <div className={styles.cardBody}>
-        {item.date && <time className={styles.cardDate} dateTime={item.date}>{formatDate(item.date)}</time>}
-        <h3 className={styles.cardTitle}>{item.title}</h3>
+        {thumb ? (
+          <div className={styles.cardHeadingRow}>
+            <div className={styles.thumb}>
+              <Image src={item.image} alt="" fill sizes="88px" className={styles.image} />
+            </div>
+            {heading}
+          </div>
+        ) : (
+          heading
+        )}
         {item.description && <p className={styles.cardDesc}>{item.description}</p>}
         {item.url && (
           <a href={item.url} className={styles.cardLink} target="_blank" rel="noreferrer">
@@ -123,13 +144,13 @@ export default async function News() {
   const m = getMessages(locale)
   const jsonLd = newsJsonLd()
 
-  // 直式影片和其他內容分開排，免得一張 9:16 的卡片把整排撐得很高。
+  // 直式內容和其他內容分開排，免得一張 9:16 的卡片把整排撐得很高。
   const sections = NEWS_CATEGORIES.map((category) => {
     const items = NEWS_ITEMS.filter((v) => v.category === category).sort(byDateDesc)
     return {
       category,
-      wide: items.filter((v) => !(v.youtubeId && v.vertical)),
-      vertical: items.filter((v) => v.youtubeId && v.vertical),
+      wide: items.filter((v) => !isVertical(v)),
+      vertical: items.filter(isVertical),
     }
   }).filter((s) => s.wide.length + s.vertical.length > 0)
 
@@ -141,10 +162,7 @@ export default async function News() {
       )}
       <main className={styles.main}>
         <div className="container">
-          <div className={styles.pageHeader}>
-            <h1 className="visually-hidden">{m.news.pageTitle}</h1>
-            <p className={styles.pageSubtitle}>{m.news.pageSubtitle}</p>
-          </div>
+          <h1 className="visually-hidden">{m.news.pageTitle}</h1>
 
           {sections.length > 1 && (
             <nav className={styles.chips} aria-label={m.news.pageTitle}>
@@ -166,7 +184,7 @@ export default async function News() {
               )}
               {vertical.length > 0 && (
                 <div className={styles.verticalGrid}>
-                  {vertical.map((item) => <NewsCard key={item.youtubeId} item={item} m={m} />)}
+                  {vertical.map((item) => <NewsCard key={item.title} item={item} m={m} />)}
                 </div>
               )}
             </section>
