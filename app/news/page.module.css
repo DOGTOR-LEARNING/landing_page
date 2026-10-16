@@ -147,27 +147,6 @@
   min-width: 0;
 }
 
-/* IG 嵌入：embed.js 會把 blockquote 換成 iframe，預設有 min-width 326px 和外框，這裡讓它跟著欄寬 */
-.instagram :global(.instagram-media) {
-  min-width: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  border-radius: var(--radius-lg) !important;
-  overflow: hidden;
-}
-
-.instagram :global(blockquote.instagram-media) {
-  padding: var(--space-lg);
-  background: #ffffff;
-  text-align: center;
-}
-
-.instagram :global(blockquote.instagram-media) a {
-  color: var(--primary-blue);
-  font-weight: 600;
-}
-
 .cardDate {
   font-size: 0.8125rem;
   font-weight: 600;
@@ -196,6 +175,22 @@
 }
 
 .cardLink:hover {
+  color: var(--text-white);
+}
+
+.instagramMore {
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.instagramMore a {
+  font-weight: 600;
+  color: var(--accent-orange-light);
+}
+
+.instagramMore a:hover {
   color: var(--text-white);
 }
 

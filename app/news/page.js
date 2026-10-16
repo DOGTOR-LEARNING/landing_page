@@ -4,9 +4,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import StoreButtons from '@/components/StoreButtons'
 import LiteYouTube from '@/components/LiteYouTube'
-import InstagramEmbed from '@/components/InstagramEmbed'
 import { getMessages } from '@/lib/i18n/messages'
-import { NEWS_CATEGORIES, NEWS_ITEMS } from '@/data/news'
+import { NEWS_CATEGORIES, NEWS_ITEMS, INSTAGRAM_URL } from '@/data/news'
 import styles from './page.module.css'
 
 const TITLE = '逗課動態 - Dogtor 逗課 | 得獎紀錄、媒體採訪、Podcast、演講與街頭訪問'
@@ -55,9 +54,8 @@ function newsJsonLd() {
   return { '@context': 'https://schema.org', '@graph': items }
 }
 
-// 直式影片和 IG Reels 都是 9:16，排在同一排
 function isVertical(item) {
-  return Boolean((item.youtubeId && item.vertical) || item.instagramUrl)
+  return Boolean(item.youtubeId && item.vertical)
 }
 
 function byDateDesc(a, b) {
@@ -73,13 +71,6 @@ function formatDate(date) {
 function NewsMedia({ item, m }) {
   if (item.youtubeId) {
     return <LiteYouTube id={item.youtubeId} title={item.title} vertical={item.vertical} playLabel={m.news.play} />
-  }
-  if (item.instagramUrl) {
-    return (
-      <div className={styles.instagram}>
-        <InstagramEmbed url={item.instagramUrl} label={m.news.viewOnInstagram} />
-      </div>
-    )
   }
   if (item.spotifyEpisodeId) {
     // 有自己的照片時照片放在標題旁當小縮圖（見 NewsCard），這裡用精簡版播放器；沒有的話用大尺寸播放器（內含封面）。
@@ -105,7 +96,7 @@ function NewsMedia({ item, m }) {
 }
 
 function NewsCard({ item, m }) {
-  const hasMedia = item.youtubeId || item.instagramUrl || item.spotifyEpisodeId || item.image
+  const hasMedia = item.youtubeId || item.spotifyEpisodeId || item.image
   const thumb = item.spotifyEpisodeId && item.image
   const heading = (
     <div className={styles.cardHeading}>
@@ -189,6 +180,13 @@ export default async function News() {
               )}
             </section>
           ))}
+
+          <p className={styles.instagramMore}>
+            {m.news.instagramMore}{' '}
+            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+              @dogtor_learning ↗
+            </a>
+          </p>
 
           <section className={styles.ctaSection}>
             <h2 className={styles.ctaTitle}>{m.news.ctaTitle}</h2>
