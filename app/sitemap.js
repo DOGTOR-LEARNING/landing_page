@@ -44,6 +44,18 @@ export default function sitemap() {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/reviews`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/news`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/support`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

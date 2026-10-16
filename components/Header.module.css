@@ -64,7 +64,6 @@
   gap: var(--space-md);
   flex-wrap: nowrap;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 @media (min-width: 1024px) {
@@ -303,8 +302,106 @@
   color: #ffffff;
 }
 
+/* Help dropdown */
+.dropdown {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dropdownToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.caret {
+  width: 0.45em;
+  height: 0.45em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  transition: transform var(--transition-fast);
+}
+
+.caretOpen {
+  transform: translateY(15%) rotate(-135deg);
+}
+
+/* padding-top 讓滑鼠從按鈕移到選單時不會經過空隙而關掉 */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  min-width: 160px;
+  padding-top: 0.75rem;
+  transform: translate(-50%, -4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+}
+
+.dropdownMenuOpen {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdownMenu::before {
+  content: '';
+  position: absolute;
+  inset: 0.75rem 0 0;
+  background: rgba(16, 32, 49, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  z-index: -1;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 0.65rem 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.dropdownItem:first-child {
+  margin-top: 0.35rem;
+}
+
+.dropdownItem:last-child {
+  margin-bottom: 0.35rem;
+}
+
+.dropdownItem:hover {
+  color: var(--accent-orange-light);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mobileGroupLabel {
+  margin-top: var(--space-sm);
+  padding-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.mobileSubLink {
+  padding-left: var(--space-md);
+}
+
 /* Language Switcher */
 .langSwitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-sm);
@@ -312,7 +409,7 @@
   cursor: pointer;
   font-size: 0.8125rem;
   font-weight: 500;
-  padding: 0.35rem 0.7rem;
+  padding: 0.3rem 0.55rem;
   transition: all var(--transition-fast);
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -337,6 +434,9 @@
   text-align: left;
   transition: color var(--transition-fast);
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .mobileLangSwitch:hover {

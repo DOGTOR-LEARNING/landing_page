@@ -1,0 +1,247 @@
+.main {
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+}
+
+.pageHeader {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    font-size: 3rem;
+  }
+}
+
+.pageSubtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+.section {
+  max-width: 1080px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-lg);
+  color: var(--accent-orange-light);
+  text-align: center;
+}
+
+/* Store ratings */
+.ratingGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+.ratingCard {
+  flex: 1 1 240px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: var(--space-xl) var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-white);
+  transition: transform var(--transition-base), background var(--transition-base);
+}
+
+.ratingCard:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text-white);
+}
+
+.ratingStore {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ratingValue {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.ratingCount {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ratingLink {
+  margin-top: var(--space-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-orange-light);
+}
+
+.stars {
+  color: var(--accent-orange);
+  letter-spacing: 0.1em;
+  font-size: 1.125rem;
+}
+
+.starsEmpty {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Masonry for review cards and Facebook posts */
+.masonry {
+  columns: 1;
+  column-gap: var(--space-lg);
+}
+
+@media (min-width: 720px) {
+  .masonry {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .masonry {
+    columns: 3;
+  }
+}
+
+.reviewCard {
+  break-inside: avoid;
+  margin: 0 0 var(--space-lg);
+}
+
+/* 臉書貼文外掛的寬度只能在 350–750px 之間，所以不能塞進三欄 masonry */
+.fbGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 500px));
+  justify-content: center;
+  align-items: start;
+  gap: var(--space-lg);
+}
+
+@media (max-width: 400px) {
+  .fbGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reviewCard {
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+}
+
+.reviewMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.reviewStore {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.reviewText {
+  margin: 0 0 var(--space-md);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: pre-line;
+}
+
+.reviewAuthor {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.reviewDate {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.fbItem {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.fbCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.fbCaption strong {
+  color: var(--accent-orange-light);
+}
+
+.fbItem :global(.fb-post) {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 120px;
+}
+
+/* SDK 載入前（或被擋時）的後備連結 */
+.fbItem :global(.fb-post) blockquote {
+  margin: 0;
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.fbItem :global(.fb-post) blockquote a {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+/* CTA */
+.ctaSection {
+  max-width: 800px;
+  margin: var(--space-2xl) auto 0;
+  padding: var(--space-2xl) var(--space-lg);
+  background: var(--gradient-ocean);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: var(--space-md);
+}
+
+.ctaText {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-xl);
+  line-height: 1.7;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+}
