@@ -46,6 +46,7 @@ function newsJsonLd() {
     description: v.description || v.title,
     datePublished: v.date,
     url: v.url || `https://open.spotify.com/episode/${v.spotifyEpisodeId}`,
+    ...(v.image && { image: `https://dogtor.superb-tutor.com${v.image}` }),
     about: ABOUT_DOGTOR,
   }))
   const items = [...videos, ...podcasts]
@@ -68,15 +69,23 @@ function NewsMedia({ item, m }) {
     return <LiteYouTube id={item.youtubeId} title={item.title} vertical={item.vertical} playLabel={m.news.play} />
   }
   if (item.spotifyEpisodeId) {
+    // 有自己的照片就用照片當主視覺，配精簡版播放器；沒有的話用 Spotify 大尺寸播放器（內含封面）。
     return (
-      <iframe
-        src={`https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}`}
-        title={item.title}
-        height="352"
-        loading="lazy"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        className={styles.spotify}
-      />
+      <>
+        {item.image && (
+          <div className={`${styles.imageFrame} ${styles.imageSquare}`}>
+            <Image src={item.image} alt={item.title} fill sizes="(max-width: 480px) 100vw, 360px" className={styles.image} />
+          </div>
+        )}
+        <iframe
+          src={`https://open.spotify.com/embed/episode/${item.spotifyEpisodeId}`}
+          title={item.title}
+          height={item.image ? 152 : 352}
+          loading="lazy"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          className={styles.spotify}
+        />
+      </>
     )
   }
   if (item.image) {

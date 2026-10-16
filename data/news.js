@@ -2,7 +2,7 @@
 // 同一分類內依日期由新到舊排列。
 //
 // 每一則依填的欄位決定怎麼顯示：youtubeId → 影片；spotifyEpisodeId → Podcast 播放器（含封面圖）；
-// image → 照片；都沒有 → 文字卡片連結到 url。
+// image → 照片（Podcast 同時填 image 的話，上面放照片、下面放精簡播放器）；都沒有 → 文字卡片連結到 url。
 // {
 //   category: 'award' | 'interview' | 'talk' | 'street' | 'demo' | 'event',
 //   title: '標題',
@@ -24,6 +24,7 @@ export const NEWS_ITEMS = [
     date: '2026-08-05',
     description: '三位共同創辦人 Pierre、Bowen、Dino 受邀上節目，聊 AI 怎麼幫學生找到真正不會的地方、遊戲化與陪伴角色的設計，以及給家長的學習報告。',
     spotifyEpisodeId: '2GyfKcLo9dhEzu7vQKiiNF',
+    image: '/news/podcast-chuangye-xinshengdai.webp',
     url: 'https://open.spotify.com/episode/2GyfKcLo9dhEzu7vQKiiNF',
   },
   {
