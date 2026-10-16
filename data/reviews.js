@@ -22,11 +22,13 @@ export const STORE_REVIEWS = []
 
 // 公開的臉書貼文（貼文權限必須是「公開」才嵌得進來）。
 // 嵌入的貼文是 iframe，搜尋引擎和 AI 讀不到裡面的字，所以另外用自己的話寫一句 summary 顯示在頁面上。
-// { url: 'https://www.facebook.com/xxx/posts/yyy', author: '作者／粉專名稱', summary: '一兩句重點摘要' }
+// 有付費、分潤（例如專屬優惠碼）或贈送服務的合作貼文，依公平交易法要標 sponsored: true，會顯示「合作推薦」。
+// { url: 'https://www.facebook.com/xxx/posts/yyy', author: '作者／粉專名稱', summary: '一兩句重點摘要', sponsored: true }
 export const FACEBOOK_POSTS = [
   {
     url: 'https://www.facebook.com/permalink.php?story_fbid=pfbid02Nw4PasD3Ba5VW6S5wrT7pxwxyAkn3KnVj1TTXdRhppv7LTcGixgCYw45Lpa8dMPol&id=100052104880622',
     author: '尚瑞君（作家，粉專「尚瑞君之愛‧傾聽‧解讀心」）',
+    sponsored: true,
     summary: '試用家長版後推薦：AI 分析幫孩子找到弱點、用零碎時間學透知識點，家長也能看到孩子的練習時間、題數和錯題，安心陪孩子一起進步。',
   },
   {

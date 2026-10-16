@@ -5,7 +5,7 @@ import Script from 'next/script'
 
 // 用臉書官方 SDK 嵌入貼文，高度才會跟著內容自動撐開（純 iframe 做不到）。
 // SDK 被擋掉時，blockquote 裡的連結就是後備內容。
-export default function FacebookPosts({ posts, locale, viewOriginalLabel, className, itemClassName, captionClassName }) {
+export default function FacebookPosts({ posts, locale, viewOriginalLabel, sponsoredLabel, className, itemClassName, captionClassName, badgeClassName }) {
   const containerRef = useRef(null)
   const sdkLocale = locale === 'en' ? 'en_US' : 'zh_TW'
 
@@ -26,7 +26,10 @@ export default function FacebookPosts({ posts, locale, viewOriginalLabel, classN
           <figure key={post.url} className={itemClassName}>
             {post.author && (
               <figcaption className={captionClassName}>
-                <strong>{post.author}</strong>
+                <strong>
+                  {post.author}
+                  {post.sponsored && <span className={badgeClassName}>{sponsoredLabel}</span>}
+                </strong>
                 {post.summary && <span>{post.summary}</span>}
               </figcaption>
             )}

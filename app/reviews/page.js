@@ -136,9 +136,11 @@ export default async function Reviews() {
                 posts={FACEBOOK_POSTS}
                 locale={locale}
                 viewOriginalLabel={m.reviews.fbViewOriginal}
+                sponsoredLabel={m.reviews.sponsoredLabel}
                 className={styles.fbGrid}
                 itemClassName={styles.fbItem}
                 captionClassName={styles.fbCaption}
+                badgeClassName={styles.sponsoredBadge}
               />
             </section>
           )}

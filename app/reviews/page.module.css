@@ -197,6 +197,18 @@
   color: var(--accent-orange-light);
 }
 
+.sponsoredBadge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  vertical-align: 0.1em;
+}
+
 .fbItem :global(.fb-post) {
   background: #ffffff;
   border-radius: var(--radius-lg);
