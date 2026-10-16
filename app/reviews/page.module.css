@@ -7,23 +7,12 @@
 .pageHeader {
   text-align: center;
   max-width: 700px;
-  margin: 0 auto var(--space-2xl);
-}
-
-.pageTitle {
-  font-size: 2.5rem;
-  margin-bottom: var(--space-md);
-}
-
-@media (min-width: 768px) {
-  .pageTitle {
-    font-size: 3rem;
-  }
+  margin: 0 auto var(--space-xl);
 }
 
 .pageSubtitle {
-  font-size: 1.125rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.7;
 }
 
@@ -44,58 +33,53 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
 
 .ratingCard {
-  flex: 1 1 240px;
-  max-width: 320px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  padding: var(--space-xl) var(--space-lg);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  gap: var(--space-md);
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
   color: var(--text-white);
-  transition: transform var(--transition-base), background var(--transition-base);
+  transition: background var(--transition-fast);
 }
 
 .ratingCard:hover {
-  transform: translateY(-3px);
   background: rgba(255, 255, 255, 0.14);
   color: var(--text-white);
 }
 
-.ratingStore {
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+.ratingValue {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
-.ratingValue {
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.1;
+.ratingInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.3;
+}
+
+.ratingStore {
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .ratingCount {
-  font-size: 0.9375rem;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.ratingLink {
-  margin-top: var(--space-sm);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--accent-orange-light);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .stars {
   color: var(--accent-orange);
-  letter-spacing: 0.1em;
-  font-size: 1.125rem;
+  letter-spacing: 0.08em;
+  font-size: 0.9375rem;
 }
 
 .starsEmpty {
@@ -125,19 +109,25 @@
   margin: 0 0 var(--space-lg);
 }
 
-/* 臉書貼文外掛的寬度只能在 350–750px 之間，所以不能塞進三欄 masonry */
+/* 臉書貼文外掛的寬度只能在 350–750px 之間，所以不能塞進三欄 masonry：手機一欄、電腦兩欄 */
 .fbGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 500px));
+  grid-template-columns: minmax(0, 500px);
   justify-content: center;
   align-items: start;
   gap: var(--space-lg);
 }
 
-@media (max-width: 400px) {
+@media (min-width: 800px) {
   .fbGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 500px));
   }
+}
+
+/* SDK 產生的 span／iframe 預設寫死 500px，讓它跟著欄寬 */
+.fbItem :global(.fb-post span),
+.fbItem :global(.fb-post iframe) {
+  width: 100% !important;
 }
 
 .reviewCard {

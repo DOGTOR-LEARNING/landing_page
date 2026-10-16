@@ -11,8 +11,8 @@ export const STORE_RATINGS = {
   googlePlay: {
     // Google Play 沒有公開 API，要手動更新。例：rating: 4.8, count: 120
     url: 'https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp',
-    rating: null,
-    count: null,
+    rating: 5.0, // 2026-10-16
+    count: 63,
   },
 }
 

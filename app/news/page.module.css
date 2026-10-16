@@ -10,20 +10,9 @@
   margin: 0 auto var(--space-xl);
 }
 
-.pageTitle {
-  font-size: 2.5rem;
-  margin-bottom: var(--space-md);
-}
-
-@media (min-width: 768px) {
-  .pageTitle {
-    font-size: 3rem;
-  }
-}
-
 .pageSubtitle {
-  font-size: 1.125rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.7;
 }
 

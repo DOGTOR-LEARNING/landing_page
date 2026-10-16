@@ -81,7 +81,7 @@ export default async function Reviews() {
       <main className={styles.main}>
         <div className="container">
           <div className={styles.pageHeader}>
-            <h1 className={styles.pageTitle}>{m.reviews.pageTitle}</h1>
+            <h1 className="visually-hidden">{m.reviews.pageTitle}</h1>
             <p className={styles.pageSubtitle}>{m.reviews.pageSubtitle}</p>
           </div>
 
@@ -92,13 +92,14 @@ export default async function Reviews() {
                   const store = ratings[key]
                   return (
                     <a key={key} href={store.url} className={styles.ratingCard} target="_blank" rel="noreferrer">
-                      <span className={styles.ratingStore}>{name}</span>
                       <span className={styles.ratingValue}>{store.rating.toFixed(1)}</span>
-                      <Stars rating={store.rating} />
-                      {store.count != null && (
-                        <span className={styles.ratingCount}>{m.reviews.ratingsCount(store.count)}</span>
-                      )}
-                      <span className={styles.ratingLink}>{m.reviews.viewInStore} →</span>
+                      <span className={styles.ratingInfo}>
+                        <span className={styles.ratingStore}>{name}</span>
+                        <Stars rating={store.rating} />
+                        {store.count != null && (
+                          <span className={styles.ratingCount}>{m.reviews.ratingsCount(store.count)}</span>
+                        )}
+                      </span>
                     </a>
                   )
                 })}

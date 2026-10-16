@@ -142,7 +142,7 @@ export default async function News() {
       <main className={styles.main}>
         <div className="container">
           <div className={styles.pageHeader}>
-            <h1 className={styles.pageTitle}>{m.news.pageTitle}</h1>
+            <h1 className="visually-hidden">{m.news.pageTitle}</h1>
             <p className={styles.pageSubtitle}>{m.news.pageSubtitle}</p>
           </div>
 
