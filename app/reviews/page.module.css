@@ -1,50 +1,59 @@
 .main {
-  padding-top: 120px;
-  padding-bottom: var(--space-2xl);
+  padding-top: 100px;
+  padding-bottom: var(--space-xl);
   min-height: 100vh;
 }
 
-.pageHeader {
-  text-align: center;
-  max-width: 700px;
+/* globals.css 給每個 section 上下 5rem padding（首頁用的），這頁只靠 margin 分隔 */
+.section {
+  max-width: 1080px;
+  padding: 0;
   margin: 0 auto var(--space-xl);
 }
 
-.pageSubtitle {
-  font-size: 1.0625rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.7;
+.ratingSection {
+  margin-bottom: var(--space-lg);
 }
 
-.section {
-  max-width: 1080px;
-  margin: 0 auto var(--space-2xl);
+@media (max-width: 600px) {
+  .section {
+    margin-bottom: var(--space-lg);
+  }
+
+  .ratingSection {
+    margin-bottom: var(--space-md);
+  }
 }
 
 .sectionTitle {
   font-size: 1.75rem;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   color: var(--accent-orange-light);
   text-align: center;
 }
 
-/* Store ratings */
+/* Store ratings：電腦版 [icon][分數][商店/星等/評分數]，手機版兩張並排、改成上下兩層 */
 .ratingGrid {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-md);
 }
 
 .ratingCard {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-areas:
+    'icon value store'
+    'icon value stars'
+    'icon value count';
   align-items: center;
-  gap: var(--space-md);
-  padding: 0.75rem 1.25rem;
+  column-gap: 0.875rem;
+  padding: 0.875rem 1.25rem;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-lg);
   color: var(--text-white);
+  line-height: 1.3;
   transition: background var(--transition-fast);
 }
 
@@ -53,27 +62,77 @@
   color: var(--text-white);
 }
 
+.ratingIcon {
+  grid-area: icon;
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.ratingIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
 .ratingValue {
+  grid-area: value;
   font-size: 2.25rem;
   font-weight: 800;
   line-height: 1;
 }
 
-.ratingInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  line-height: 1.3;
-}
-
 .ratingStore {
+  grid-area: store;
   font-size: 0.875rem;
   font-weight: 600;
 }
 
+.ratingStars {
+  grid-area: stars;
+}
+
 .ratingCount {
+  grid-area: count;
   font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 600px) {
+  .ratingGrid {
+    gap: 0.625rem;
+  }
+
+  .ratingCard {
+    flex: 1 1 0;
+    min-width: 0;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'icon store'
+      'value stars'
+      'value count';
+    column-gap: 0.5rem;
+    row-gap: 0.15rem;
+    padding: 0.625rem 0.75rem;
+  }
+
+  .ratingIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    justify-self: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .ratingStore {
+    margin-bottom: 0.25rem;
+  }
+
+  .ratingValue {
+    font-size: 1.625rem;
+  }
+
+  .ratingCount {
+    font-size: 0.75rem;
+  }
 }
 
 .stars {
@@ -221,8 +280,8 @@
 /* CTA */
 .ctaSection {
   max-width: 800px;
-  margin: var(--space-2xl) auto 0;
-  padding: var(--space-2xl) var(--space-lg);
+  margin: var(--space-xl) auto 0;
+  padding: var(--space-xl) var(--space-lg);
   background: var(--gradient-ocean);
   border-radius: var(--radius-lg);
   text-align: center;
@@ -237,7 +296,7 @@
 .ctaText {
   font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
   line-height: 1.7;
 }
 
