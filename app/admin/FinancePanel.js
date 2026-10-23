@@ -22,8 +22,9 @@ const STEP_STATE = {
 }
 
 const ERROR_TEXT = {
-  UNAUTHORIZED: '通關密語錯誤或已失效，請重新登入。',
-  FINANCE_NOT_CONFIGURED: '財務功能尚未設定（後端網址或通關密語）。',
+  UNAUTHORIZED: '登入已失效，請重新登入。',
+  FORBIDDEN: '你的帳號沒有財務報帳的權限，請聯絡管理員。',
+  FINANCE_NOT_CONFIGURED: '財務功能尚未設定（後端網址或 FINANCE_API_KEY）。',
   BACKEND_UNREACHABLE: '連不到後端或處理太久，請稍後再送一次；系統會避免重複建立。',
   TOO_MANY_ATTACHMENTS: '附件數量超過上限。',
   ATTACHMENT_TOO_LARGE: '有附件超過大小上限。',
@@ -127,7 +128,7 @@ function AgentResult({ plan, result, duplicate }) {
   )
 }
 
-function AgentForm({ passphrase, config }) {
+function AgentForm({ config }) {
   const [expenseId, setExpenseId] = useState(newId)
   const [submitter, setSubmitter] = useState('')
   const [note, setNote] = useState('')
@@ -168,7 +169,6 @@ function AgentForm({ passphrase, config }) {
     try {
       const res = await fetch(`/api/admin/finance/agent?action=${action}`, {
         method: 'POST',
-        headers: { 'X-Admin-Passphrase': passphrase },
         body,
       })
       const data = await res.json().catch(() => ({}))
@@ -297,7 +297,7 @@ function AgentForm({ passphrase, config }) {
   )
 }
 
-function StatusView({ passphrase }) {
+function StatusView() {
   const [status, setStatus] = useState(null)
   const [error, setError] = useState('')
   const [checking, setChecking] = useState(false)
@@ -306,7 +306,7 @@ function StatusView({ passphrase }) {
     setChecking(check)
     setError('')
     try {
-      const res = await fetch(`/api/admin/finance/status${check ? '?check=1' : ''}`, { headers: { 'X-Admin-Passphrase': passphrase } })
+      const res = await fetch(`/api/admin/finance/status${check ? '?check=1' : ''}`)
       const data = await res.json()
       if (!data.success) throw new Error(data.message)
       setStatus(data.data)
@@ -315,7 +315,7 @@ function StatusView({ passphrase }) {
     } finally {
       setChecking(false)
     }
-  }, [passphrase])
+  }, [])
 
   useEffect(() => { load(false) }, [load])
 
@@ -350,14 +350,14 @@ function StatusView({ passphrase }) {
   )
 }
 
-export default function FinancePanel({ passphrase }) {
+export default function FinancePanel() {
   const [tab, setTab] = useState('submit')
   const [config, setConfig] = useState(null)
   const [error, setError] = useState('')
 
   useEffect(() => {
     let cancelled = false
-    fetch('/api/admin/finance/config', { headers: { 'X-Admin-Passphrase': passphrase } })
+    fetch('/api/admin/finance/config')
       .then((res) => res.json())
       .then((data) => {
         if (cancelled) return
@@ -366,7 +366,7 @@ export default function FinancePanel({ passphrase }) {
       })
       .catch(() => !cancelled && setError(ERROR_TEXT.BACKEND_UNREACHABLE))
     return () => { cancelled = true }
-  }, [passphrase])
+  }, [])
 
   const tabs = [['submit', '新增報帳'], ['status', '整合狀態']]
 
@@ -382,9 +382,9 @@ export default function FinancePanel({ passphrase }) {
       {tab === 'submit' && (
         error ? <p className={styles.errorMsg}>{error}</p>
           : !config ? <p className={styles.hint}>載入中…</p>
-            : <AgentForm passphrase={passphrase} config={config} />
+            : <AgentForm config={config} />
       )}
-      {tab === 'status' && <StatusView passphrase={passphrase} />}
+      {tab === 'status' && <StatusView />}
     </div>
   )
 }

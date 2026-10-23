@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { checkAdmin, forwardToFinance } from '@/lib/financeProxy'
+import { requireEmployee, forwardToFinance } from '@/lib/financeProxy'
 
 // The agent reads Notion and Drive over several model turns before writing.
 export const maxDuration = 180
@@ -9,7 +9,7 @@ export const maxDuration = 180
 const ACTIONS = { submit: '/agent/submit', commit: '/agent/commit' }
 
 export async function POST(request) {
-  const denied = checkAdmin(request)
+  const denied = await requireEmployee(request, 'finance.manage')
   if (denied) return denied
   const action = new URL(request.url).searchParams.get('action') || 'submit'
   const path = ACTIONS[action]

@@ -12,7 +12,7 @@
 
 | 階段 | 狀態 | 說明 |
 |---|---|---|
-| Phase 1 登入與 RBAC | **程式完成並已 commit（未 push）；正式 DB 已 migration；尚未部署** | 細節與指令見 `docs/admin-operations.md` |
+| Phase 1 登入與 RBAC | **已 push 前後端 main 與後端 production（2026-10-23）；正式 DB 已 migration；需確認官網環境變數** | 細節與指令見 `docs/admin-operations.md` |
 | Phase 2 多人聊天室 + 單 Agent | 未開始 | — |
 | Phase 3 多 Agent 討論 | 未開始 | — |
 | Phase 4 工具與自動化 | 未開始 | — |
@@ -21,14 +21,15 @@
 - 後端（`../superb_app/backend`，commit e99603bc）：`app/admin_auth.py`、`app/routers/admin_auth.py`、migration `e7f8a9b0c1d2`、`scripts/bootstrap_admin.py`、`tests/test_admin_auth.py`；推播／公告 API 改為驗證員工 session。
 - 前端（本 repo，commit 7f13c3c）：`app/admin/**` 多頁工作區、`app/api/admin/**` 同源 proxy、`lib/adminProxy.js`。
 - UI 已改為官網風格的淺色版：深藍側欄（同官網 header）+ 官方字標、橘色漸層主按鈕與標籤、首頁 hero 風格的深藍歡迎卡。**後續頁面請沿用 `admin.module.css` 中 `.workspace` 的 `--ws-*` 色票，不要另起風格。**
+- 財務報帳（另一位開發者以通關密語版本做的）已併入新後台：`/admin/finance`，權限 `finance.view`（看設定／整合狀態）與 `finance.manage`（送出報帳）；瀏覽器不再送通關密語，官網伺服器用 `FINANCE_API_KEY` 呼叫後端 `/finance`。
 - 密碼最短 **8 字元**（前後端一致，最多 72 bytes）。
 - DB：`dogtor_staging` 與正式 `dogtor` 皆已套用 migration（正式環境套用前已建立 Cloud SQL 備份，instance `dogtor-dev`）。
 - 正式 DB 首位 super_admin `superb.taipei@gmail.com`：已於 2026-10-23 建立（active），密碼由負責人自行輸入，AI 未經手。
 - 權限：使用者表示權限細節之後會自行調整；目前沿用固定角色 `super_admin/admin/staff` + 逐人勾選功能權限，**不要再擴充權限系統**，除非使用者要求。
 
 **下一步（依序）**
-1. 部署後以正式 super_admin 登入正式網站驗證。
-2. Push 並部署後端到 Cloud Run（`superb-backend`）→ 部署官網，設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`；英文版後端同步更新（見 operations 文件「部署順序」）。
+1. 官網環境變數設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`、`FINANCE_API_KEY`，確認 Cloud Build 部署成功後，以正式 super_admin 登入正式網站驗證。
+2. 英文版後端同步更新（見 operations 文件「部署順序」）。
 3. 輪替／移除舊 `ADMIN_PASSPHRASE` 與公告 key。
 4. 待補：員工 Email 邀請、自助忘記密碼（需寄信服務）。
 5. 開始 Phase 2（第 5、7、8 章與第 11 章規格）。

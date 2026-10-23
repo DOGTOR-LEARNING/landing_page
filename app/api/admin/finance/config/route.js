@@ -1,5 +1,5 @@
-import { checkAdmin, forwardToFinance } from '@/lib/financeProxy'
+import { requireEmployee, forwardToFinance } from '@/lib/financeProxy'
 
 export async function GET(request) {
-  return checkAdmin(request) || forwardToFinance('/config')
+  return (await requireEmployee(request, 'finance.view')) || forwardToFinance('/config')
 }

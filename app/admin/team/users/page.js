@@ -8,6 +8,7 @@ const PERMISSION_GROUPS = [
   { title: '進入後台', view: 'admin.access' },
   { title: '推播通知', view: 'push.view', manage: 'push.manage' },
   { title: 'App 公告', view: 'announcements.view', manage: 'announcements.manage' },
+  { title: '財務報帳', view: 'finance.view', manage: 'finance.manage' },
   { title: '員工管理', view: 'users.view', manage: 'users.manage' },
 ]
 const ROLE_NAMES = { super_admin: '超級管理員', admin: '管理員', staff: '團隊成員' }
