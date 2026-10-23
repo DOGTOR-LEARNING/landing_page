@@ -27,7 +27,7 @@ UI：已改為與官網一致的淺色風格（深藍側欄、官方字標、橘
 
 登入限流存 MySQL，跨 Cloud Run instance 共用。錯誤登入不透露帳號是否存在。帳號建立、更新、啟用、登入成功／失敗、登出及修改密碼會寫入稽核紀錄；推播送達統計保留原系統行為。後台不載入公開網站的分析與廣告追蹤。啟用 token 放 URL fragment，使用後從網址清除，資料庫只存其 hash。
 
-後端公告管理與全體／指定推播均驗證員工權限；舊 `ADMIN_PASSPHRASE`、`X-Announcements-Key` 不再授權操作。`/api/admin/verify` 回 410。公開 App 公告和 App 使用的 `/admin/subjects_and_chapters` 維持原讀取入口；舊後端的其他管理工具僅限 super_admin。
+後端公告管理與全體／指定推播均驗證員工權限；2026-10-23 已移除舊的推播通關密語 `ADMIN_PASSPHRASE` 與公告 `X-Announcements-Key` 授權：程式不再讀取，`/api/admin/verify` 已刪除，Cloud Run 與官網也不需要 `ADMIN_PASSPHRASE`。財務報帳改用 `FINANCE_API_KEY`（官網與後端同值）。注意：後端環境變數 `ANNOUNCEMENTS_API_KEY` **仍要保留**，它現在只給 Cloud Scheduler／Cloud Tasks 呼叫 campaigns、scheduled reports 用，不再能管理公告。公開 App 公告和 App 使用的 `/admin/subjects_and_chapters` 維持原讀取入口；舊後端的其他管理工具僅限 super_admin。
 
 ## 本機啟動
 
@@ -101,7 +101,7 @@ DB_NAME=dogtor_staging venv/bin/python -m scripts.bootstrap_admin \
 3. 正式上線前建立 Cloud SQL 備份，套用相同 migration、bootstrap 正式員工，再更新後端與前端。切換期間舊 key 頁面會無法操作，應安排維護窗口。
 4. 官網環境設定 `ADMIN_AUTH_BACKEND_URL` 為中央驗證後端 origin（無 `/admin` 尾綴）；`ADMIN_PUBLIC_ORIGIN` 為官網正式 origin。保留既有中／英文公告與推播後端設定。
 5. 英文 Cloud Run 更新同一版本，設定其 `ADMIN_AUTH_BACKEND_URL` 指向中央身分後端。中央後端自己**不要設定此變數**，避免遞迴驗證。這樣同一員工登入可操作不同市場；員工管理一律由前端連中央後端。
-6. 確認中文版與英文版服務都已更新驗證，才部署前端。移除／輪替舊共用密語與公告 key。
+6. 確認中文版與英文版服務都已更新驗證，才部署前端。舊共用密語已移除（見上方「安全與資料」）。
 
 新增設定只包含上述 URL；不需要新的 AI Key、session secret 或外部驗證服務。既有 DB_USER/DB_PASSWORD、GCP 憑證仍使用目前 Secret 管理。
 

@@ -7,8 +7,6 @@ let response = await request('/api/admin/auth/login', { method: 'POST', headers:
 assert.equal(response.status, 403)
 response = await request('/api/admin/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
 assert.equal(response.status, 403)
-response = await request('/api/admin/verify', { method: 'POST', body: JSON.stringify({ passphrase: 'old-key' }) })
-assert.equal(response.status, 410)
 for (const path of ['/api/admin/users', '/api/admin/announcements', '/api/admin/announcements/admin/all']) assert.equal((await request(path)).status, 401)
 response = await request('/api/admin/auth/login', { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ email: 'owner@example.com', password: 'strong-owner-password' }) })
 assert.equal(response.status, 200)

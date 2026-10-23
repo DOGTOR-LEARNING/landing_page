@@ -30,7 +30,7 @@
 **下一步（依序）**
 1. 官網環境變數設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`、`FINANCE_API_KEY`，確認 Cloud Build 部署成功後，以正式 super_admin 登入正式網站驗證。
 2. 英文版後端同步更新（見 operations 文件「部署順序」）。
-3. 輪替／移除舊 `ADMIN_PASSPHRASE` 與公告 key。
+3. ~~移除舊 `ADMIN_PASSPHRASE` 與公告 key~~：2026-10-23 已完成；若 Vercel 仍有 `ADMIN_PASSPHRASE` 可刪除。`ANNOUNCEMENTS_API_KEY` 保留給排程用。
 4. 待補：員工 Email 邀請、自助忘記密碼（需寄信服務）。
 5. 開始 Phase 2（第 5、7、8 章與第 11 章規格）。
 
