@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import styles from './admin.module.css'
+import FinancePanel from './FinancePanel'
 
 // MUI Icons
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined'
@@ -28,6 +29,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined'
 
 // ─── 通知類型選項 ────────────────────────────────────────────────────────────
 const NOTIFICATION_TYPES = [
@@ -1205,6 +1207,18 @@ export default function AdminPage() {
                   badge="公告系統"
                 >
                   <AnnouncementsPanel lang={lang} />
+                </ModuleCard>
+              </div>
+
+              {/* 財務報帳（公司內部，不受上方語言版本切換影響） */}
+              <div style={{ gridColumn: '1 / -1' }}>
+                <ModuleCard
+                  icon={ReceiptLongOutlinedIcon}
+                  title="財務報帳"
+                  sub="上傳收據到 Google Drive、記到 Notion 帳務表，並通知管理層"
+                  badge="公司內部"
+                >
+                  <FinancePanel passphrase={loginPw} />
                 </ModuleCard>
               </div>
 
