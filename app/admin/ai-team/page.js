@@ -4,7 +4,10 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkBreaks from 'remark-breaks'
 import remarkCjkFriendly from 'remark-cjk-friendly'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles } from 'lucide-react'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
@@ -221,7 +224,7 @@ export default function AiTeamPage() {
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
         {canPost ? <form className={chat.composer} onSubmit={e => { e.preventDefault(); send(draft) }}>
           {suggestions.length > 0 && <ul className={chat.suggestions} role="listbox">{suggestions.map(a => <li key={a.id}><button type="button" onMouseDown={e => { e.preventDefault(); insertMention(a) }}>{a.kind === 'lead' ? <Sparkles size={15} /> : <Bot size={15} />}<strong>@{a.kind === 'lead' ? 'Team' : a.display_name}</strong><span>{a.description}</span></button></li>)}</ul>}
-          <textarea value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息，@角色 請 AI 回覆，@Team 啟動團隊討論（Enter 送出，Shift+Enter 換行）" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
+          <textarea value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息（支援 Markdown 與 $LaTeX$），@角色 請 AI 回覆，@Team 啟動團隊討論" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
           <div className={chat.composerFoot}><span className={draft.length > MAX_CHARS ? chat.over : ''}><Info size={13} />AI 只提供建議，不會執行任何操作 · {draft.length}/{MAX_CHARS}</span><button className={styles.btnPrimary} disabled={!draft.trim() || draft.length > MAX_CHARS}><Send size={16} />送出</button></div>
         </form> : <p className={chat.readOnly}>你的帳號只有檢視權限，無法在聊天室發言。</p>}
       </>}
@@ -232,6 +235,27 @@ export default function AiTeamPage() {
 }
 
 const STEP_LABEL = { plan: '分派任務', summary: '彙整結論' }
+const REMARK = [remarkGfm, remarkCjkFriendly, remarkMath, remarkBreaks]
+const REHYPE = [[rehypeKatex, { throwOnError: false, strict: 'ignore' }]]
+
+// People and AI share one renderer: Markdown plus KaTeX ($...$ / $$...$$).
+// No raw HTML is rendered and KaTeX runs untrusted, so messages cannot inject markup.
+// Models often write "$$ formula" across lines with the closing $$ glued to
+// the last line (inside a list item), which remark-math cannot parse; fold
+// such a span onto one line. Real blocks ($$ on its own line) are untouched.
+const foldDisplayMath = text => text.replace(/\$\$(?!\s*\n)([\s\S]+?)\$\$/g, (_, body) => `$$${body.replace(/\s*\n\s*/g, ' ')}$$`)
+
+function ChatMarkdown({ children }) {
+  return <div className={chat.markdown}><ReactMarkdown remarkPlugins={REMARK} rehypePlugins={REHYPE}>{foldDisplayMath(children)}</ReactMarkdown></div>
+}
+
+async function downloadReport(runId) {
+  const data = await api(`/api/admin/chat/runs/${runId}/report`)
+  const url = URL.createObjectURL(new Blob([data.markdown], { type: 'text/markdown;charset=utf-8' }))
+  const link = Object.assign(document.createElement('a'), { href: url, download: data.filename })
+  document.body.appendChild(link); link.click(); link.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
 
 function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend }) {
   const run = m.ai_run
@@ -248,8 +272,7 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
     <div className={chat.bubble}>
       {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.step?.kind === 'plan' || (team && !m.step && m.agent_slug === 'team') ? 'Team Lead 正在安排討論…' : `${m.sender_name} 正在思考…`}</span>
         : m.status === 'failed' || m.status === 'cancelled' ? <span className={chat.failed}>{ERRORS[errorCode] || '回覆失敗，請重試。'}</span>
-          : isAgent ? <div className={chat.markdown}><ReactMarkdown remarkPlugins={[remarkGfm, remarkCjkFriendly, remarkBreaks]}>{m.content}</ReactMarkdown></div>
-            : <p className={chat.text}>{m.content}</p>}
+          : <ChatMarkdown>{m.content}</ChatMarkdown>}
     </div>
     <div className={chat.footer}>
       {m.status === 'sending' && <span>傳送中…</span>}
@@ -257,6 +280,7 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
       {isAgent && run && <span title={`${m.step?.token_input || 0} 輸入 / ${m.step?.token_output || 0} 輸出 tokens`}>{run.model}{m.status === 'sent' && tokens ? ` · ${tokens} tokens` : ''}</span>}
       {m.status === 'pending' && owner && canPost && <button onClick={() => onRun(run.id, 'cancel')}><Square size={11} />{team ? '停止討論' : '停止'}</button>}
       {(m.status === 'failed' || m.status === 'cancelled') && canRetry && <button onClick={() => onRun(run.id, 'retry')}><RotateCcw size={12} />{team ? '繼續討論' : '重試'}</button>}
+      {m.status === 'sent' && run?.status === 'succeeded' && (team ? m.step?.kind === 'summary' : true) && <button onClick={() => downloadReport(run.id).catch(e => alert(e.message))}><Download size={12} />{team ? '下載最終結論 .md' : '下載 .md'}</button>}
     </div>
   </article>
 }

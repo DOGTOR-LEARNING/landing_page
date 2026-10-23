@@ -42,7 +42,8 @@
 - 每次 `execute` 只跑一步並用 `lease_until`（150 秒）鎖住，瀏覽器持續呼叫直到完成；重新整理頁面會自動接續。每步更新 `heartbeat_at`，5 分鐘沒進度就標記失敗；可「停止討論」與「繼續討論」（保留已完成步驟，只重跑失敗的）。單一角色回覆也走同一套 step 機制（一個 step）。
 - 上限：最多 3 個角色（`AI_TEAM_MAX_AGENTS`）、最多 3 輪（`AI_TEAM_MAX_ROUNDS`）、每次討論 80000 tokens（`AI_TEAM_RUN_TOKENS`）、300 秒（`AI_TEAM_RUN_SECONDS`）、費用上限 `AI_TEAM_RUN_COST_USD`（0 = 不限）。超過時跳過剩下的發言，直接請 Team Lead 彙整並註明提前結束。某個角色失敗不會中斷討論。
 - 實測（本機隔離 DB + 真實 OpenAI）：「5 萬元 IG 廣告」問題，Team Lead 指派 Finance、Marketing 各 1 輪後彙整，約 30 秒、5,600 tokens。
-- 測試：`tests/test_admin_chat.py` 共 13 個情境（含 5 個 Team 情境）。
+- 2026-10-23 追加：員工與 AI 訊息都支援 Markdown + LaTeX（`remark-math`、`rehype-katex`）；討論完成後可下載「最終結論 .md」（`GET /admin/chat/runs/{id}/report`）。
+- 測試：`tests/test_admin_chat.py` 共 14 個情境（含 5 個 Team 情境與結論 .md）。
 
 **下一步（依序）**
 1. 官網環境變數設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`（`ADMIN_PASSPHRASE` 保留不動），確認 Cloud Build 部署成功後，以正式 super_admin 登入正式網站驗證。

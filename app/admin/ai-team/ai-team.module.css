@@ -52,6 +52,9 @@
 .markdown pre code { background: transparent; color: inherit; padding: 0; }
 .markdown table { border-collapse: collapse; font-size: 13px; display: block; overflow-x: auto; }
 .markdown th, .markdown td { border: 1px solid #cfe0e8; padding: 4px 8px; }
+.markdown :global(.katex-display) { overflow-x: auto; overflow-y: hidden; padding: 4px 0; margin: 6px 0; }
+.markdown :global(.katex) { font-size: 1.05em; }
+.markdown blockquote { border-left: 3px solid var(--ws-orange); padding-left: 10px; color: var(--ws-muted); }
 .markdown a { color: var(--ws-orange-dark) !important; text-decoration: underline !important; }
 .typing { display: inline-flex; align-items: center; gap: 4px; color: var(--ws-muted); font-size: 14px; }
 .typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--ws-ocean); animation: blink 1.2s infinite ease-in-out; }

@@ -130,6 +130,8 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 
 - 入口：`/admin/ai-team`（需 `chat.view`；發言需 `chat.post`；建立聊天室、設定私人聊天室成員、停止別人的 AI 任務需 `chat.manage`）。`/admin/ai-team/agents` 調整 AI 角色與查看用量（`agents.view`／`agents.manage`）。super_admin 自動擁有全部權限，其他員工到「員工管理」勾選。
 - 使用：在訊息中輸入 `@Finance`、`@Marketing`、`@Operations`、`@Engineering`（也可用英文代號），該角色會根據聊天室最近 20 則訊息回覆。跨部門問題輸入 `@Team`：Team Lead 先分派角色與任務，角色依輪次發言，最後彙整「結論／分歧／資料不足／建議下一步」。發問者的頁面會自動推進討論，可隨時「停止討論」，失敗或停止後可「繼續討論」。AI 只提供文字建議，沒有任何工具或寫入權限，也不能呼叫其他 AI。
+- 顯示：所有訊息（員工與 AI）都支援 Markdown 與 LaTeX（KaTeX，行內 `$...$`、獨立 `$$...$$`），不渲染 HTML。AI 角色的系統指示會自動附上公式格式提醒。
+- 最終結論 .md：`@Team` 討論完成後，彙整訊息下方有「下載最終結論 .md」（單一角色回覆是「下載 .md」）。內容含主題、時間、發問者、參與角色、最終結論與各角色發言附錄；由後端 `GET /admin/chat/runs/{id}/report` 即時產生，不另外存檔。
 - 聊天內容只存在 Cloud SQL，不寫進 log。停用員工後保留歷史訊息，但撤銷登入即無法再讀取。
 - Migration：`alembic upgrade head` 會套用 `2728ffdfa62d`（六張表＋預設 4 個角色與 Team Lead＋「公司大廳」）。回滾：`alembic downgrade e7f8a9b0c1d2` 會刪除聊天紀錄，正式環境先備份。
 - 環境變數（後端，皆可不設）：`AI_TEAM_DAILY_RUNS_PER_USER`（預設 50，一次 @Team 算 1 次）、`AI_TEAM_DAILY_TOKENS`（預設 3000000）、Team 討論的 `AI_TEAM_MAX_AGENTS`（3）、`AI_TEAM_MAX_ROUNDS`（3）、`AI_TEAM_RUN_TOKENS`（80000）、`AI_TEAM_RUN_SECONDS`（300）、`AI_TEAM_RUN_COST_USD`（0＝不限）、`AI_TEAM_PRICE_INPUT_PER_1M`／`AI_TEAM_PRICE_OUTPUT_PER_1M`（USD，用來估算費用）。模型金鑰沿用既有 `OPENAI_API_KEY`（staging、正式都已設定）。
