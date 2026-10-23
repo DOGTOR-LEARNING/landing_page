@@ -3,12 +3,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkBreaks from 'remark-breaks'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info } from 'lucide-react'
+import remarkCjkFriendly from 'remark-cjk-friendly'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
 
 const MAX_CHARS = 4000
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 const POLL_MS = 3000
 const ERRORS = {
   provider_not_configured: 'AI 服務尚未設定（後端缺少 OPENAI_API_KEY）。',
@@ -129,13 +131,38 @@ export default function AiTeamPage() {
     requestAnimationFrame(() => { list.scrollTop = list.scrollHeight - height })
   }
 
-  const runAgent = useCallback(async (runId, action = 'execute') => {
+  // Each execute call advances a run by one step (a single reply, or one
+  // turn of an @Team discussion); keep calling until it finishes. A fast
+  // answer with no progress means someone else holds the step, so wait.
+  const driving = useRef(new Set())
+  const driveRun = useCallback(async runId => {
+    if (driving.current.has(runId)) return
+    driving.current.add(runId)
     try {
-      const updated = await post(`/api/admin/chat/runs/${runId}/${action}`)
-      setMessages(list => mergeMessages(list, [updated]))
-      if (action === 'retry') await runAgent(runId)
+      for (let i = 0; i < 40; i++) {
+        const started = Date.now()
+        const state = await post(`/api/admin/chat/runs/${runId}/execute`)
+        setMessages(list => mergeMessages(list, state.messages))
+        if (state.run.finished) break
+        if (Date.now() - started < 800) await sleep(1500)
+      }
     } catch (e) { setError(e.message) }
+    finally { driving.current.delete(runId) }
   }, [])
+  const runAction = useCallback(async (runId, action) => {
+    try {
+      const state = await post(`/api/admin/chat/runs/${runId}/${action}`)
+      setMessages(list => mergeMessages(list, state.messages))
+      if (action === 'retry') driveRun(runId)
+    } catch (e) { setError(e.message) }
+  }, [driveRun])
+
+  // After a reload, pick up runs this person started that are still going.
+  useEffect(() => {
+    for (const m of messages) {
+      if (m.status === 'pending' && m.ai_run?.triggered_by_user_id === user.id && !driving.current.has(m.ai_run.id)) driveRun(m.ai_run.id)
+    }
+  }, [messages, user.id, driveRun])
 
   async function send(text, requestId = newRequestId()) {
     const content = text.trim()
@@ -148,7 +175,7 @@ export default function AiTeamPage() {
       const data = await post(`/api/admin/chat/rooms/${roomId}/messages`, { content, client_request_id: requestId })
       setMessages(list => mergeMessages(list, [data.message, ...data.agent_messages]))
       for (const reply of data.agent_messages) {
-        if (reply.status === 'pending' && reply.ai_run?.triggered_by_user_id === user.id) runAgent(reply.ai_run.id)
+        if (reply.status === 'pending' && reply.ai_run?.triggered_by_user_id === user.id) driveRun(reply.ai_run.id)
       }
     } catch (e) {
       setMessages(list => list.map(m => m.client_request_id === requestId && !m.id ? { ...m, status: 'error', error: e.message } : m))
@@ -162,7 +189,8 @@ export default function AiTeamPage() {
   }
   const suggestions = useMemo(() => mention === null ? [] : agents.filter(a => a.slug.startsWith(mention) || a.display_name.toLowerCase().startsWith(mention)), [agents, mention])
   function insertMention(agent) {
-    setDraft(current => current.replace(/(^|\s)@([\w-]*)$/, `$1@${agent.display_name} `))
+    const name = agent.kind === 'lead' ? 'Team' : agent.display_name
+    setDraft(current => current.replace(/(^|\s)@([\w-]*)$/, `$1@${name} `))
     setMention(null)
   }
   function onKeyDown(e) {
@@ -177,7 +205,7 @@ export default function AiTeamPage() {
     <aside className={chat.rooms}>
       <div className={chat.roomsHead}><span>聊天室</span>{canManage && <button className={chat.iconButton} onClick={() => setRoomForm({ name: '', visibility: 'public', member_ids: [] })} aria-label="新增聊天室" title="新增聊天室"><Plus size={17} /></button>}</div>
       <nav className={chat.roomList}>{rooms.map(r => <button key={r.id} className={`${chat.roomItem} ${r.id === roomId ? chat.roomActive : ''}`} onClick={() => setRoomId(r.id)}>{r.visibility === 'private' ? <Lock size={15} /> : <Hash size={15} />}<span>{r.name}</span></button>)}</nav>
-      <div className={chat.agentList}><span>AI 角色</span>{agents.map(a => <button key={a.id} type="button" disabled={!canPost} onClick={() => setDraft(d => `${d}${d && !d.endsWith(' ') ? ' ' : ''}@${a.display_name} `)} title={a.description}><Bot size={14} />{a.display_name}</button>)}</div>
+      <div className={chat.agentList}><span>AI 角色</span>{agents.map(a => <button key={a.id} type="button" className={a.kind === 'lead' ? chat.leadChip : ''} disabled={!canPost} onClick={() => setDraft(d => `${d}${d && !d.endsWith(' ') ? ' ' : ''}@${a.kind === 'lead' ? a.slug.replace(/^./, c => c.toUpperCase()) : a.display_name} `)} title={a.description}>{a.kind === 'lead' ? <Sparkles size={14} /> : <Bot size={14} />}{a.kind === 'lead' ? '@Team 團隊討論' : a.display_name}</button>)}</div>
     </aside>
     <section className={chat.main}>
       {!room ? <div className={styles.emptyState}><Hash size={30} /><p>目前沒有可進入的聊天室。</p></div> : <>
@@ -187,13 +215,13 @@ export default function AiTeamPage() {
         </header>
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
-          {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong>，就能請對應的 AI 角色回覆。</p></div>}
-          {messages.map(m => <Message key={m.id || m.client_request_id} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAgent} onResend={() => send(m.content, m.client_request_id)} />)}
+          {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong> 請單一角色回覆；跨部門的問題輸入 <strong>@Team</strong>，由 Team Lead 安排角色討論並整理結論。</p></div>}
+          {messages.map(m => <Message key={m.id || m.client_request_id} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onResend={() => send(m.content, m.client_request_id)} />)}
         </div>
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
         {canPost ? <form className={chat.composer} onSubmit={e => { e.preventDefault(); send(draft) }}>
-          {suggestions.length > 0 && <ul className={chat.suggestions} role="listbox">{suggestions.map(a => <li key={a.id}><button type="button" onMouseDown={e => { e.preventDefault(); insertMention(a) }}><Bot size={15} /><strong>@{a.display_name}</strong><span>{a.description}</span></button></li>)}</ul>}
-          <textarea value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息，@ 可以請 AI 角色回覆（Enter 送出，Shift+Enter 換行）" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
+          {suggestions.length > 0 && <ul className={chat.suggestions} role="listbox">{suggestions.map(a => <li key={a.id}><button type="button" onMouseDown={e => { e.preventDefault(); insertMention(a) }}>{a.kind === 'lead' ? <Sparkles size={15} /> : <Bot size={15} />}<strong>@{a.kind === 'lead' ? 'Team' : a.display_name}</strong><span>{a.description}</span></button></li>)}</ul>}
+          <textarea value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息，@角色 請 AI 回覆，@Team 啟動團隊討論（Enter 送出，Shift+Enter 換行）" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
           <div className={chat.composerFoot}><span className={draft.length > MAX_CHARS ? chat.over : ''}><Info size={13} />AI 只提供建議，不會執行任何操作 · {draft.length}/{MAX_CHARS}</span><button className={styles.btnPrimary} disabled={!draft.trim() || draft.length > MAX_CHARS}><Send size={16} />送出</button></div>
         </form> : <p className={chat.readOnly}>你的帳號只有檢視權限，無法在聊天室發言。</p>}
       </>}
@@ -203,24 +231,32 @@ export default function AiTeamPage() {
   </div>
 }
 
+const STEP_LABEL = { plan: '分派任務', summary: '彙整結論' }
+
 function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend }) {
   const run = m.ai_run
   const isAgent = m.sender_type === 'agent'
   const owner = run && (run.triggered_by_user_id === userId || canManage)
-  return <article className={`${chat.message} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''}`}>
-    <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}><Bot size={12} />AI</span>}<strong>{m.sender_name}</strong>{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
+  const team = run?.mode === 'team'
+  const stepLabel = team && m.step ? STEP_LABEL[m.step.kind] || `第 ${m.step.round} 輪` : null
+  const errorCode = m.step?.error_code || run?.error_code
+  const tokens = (m.step?.token_input || 0) + (m.step?.token_output || 0)
+  // A failed member turn inside a finished discussion cannot be retried on its own.
+  const canRetry = canPost && run && ['failed', 'cancelled'].includes(run.status)
+  return <article className={`${chat.message} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''}`}>
+    <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}>{m.agent_slug === 'team' ? <Sparkles size={12} /> : <Bot size={12} />}AI</span>}<strong>{m.sender_name}</strong>{stepLabel && <span className={chat.stepBadge}>{stepLabel}</span>}{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
     <div className={chat.bubble}>
-      {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.sender_name} 正在思考…</span>
-        : m.status === 'failed' || m.status === 'cancelled' ? <span className={chat.failed}>{ERRORS[run?.error_code] || '回覆失敗，請重試。'}</span>
-          : isAgent ? <div className={chat.markdown}><ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{m.content}</ReactMarkdown></div>
+      {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.step?.kind === 'plan' || (team && !m.step && m.agent_slug === 'team') ? 'Team Lead 正在安排討論…' : `${m.sender_name} 正在思考…`}</span>
+        : m.status === 'failed' || m.status === 'cancelled' ? <span className={chat.failed}>{ERRORS[errorCode] || '回覆失敗，請重試。'}</span>
+          : isAgent ? <div className={chat.markdown}><ReactMarkdown remarkPlugins={[remarkGfm, remarkCjkFriendly, remarkBreaks]}>{m.content}</ReactMarkdown></div>
             : <p className={chat.text}>{m.content}</p>}
     </div>
     <div className={chat.footer}>
       {m.status === 'sending' && <span>傳送中…</span>}
       {m.status === 'error' && <><span className={chat.failedText}>{m.error || '傳送失敗'}</span><button onClick={onResend}><RotateCcw size={12} />重新傳送</button></>}
-      {isAgent && run && <span title={`${run.token_input || 0} 輸入 / ${run.token_output || 0} 輸出 tokens`}>{run.model}{m.status === 'sent' ? ` · ${(run.token_input || 0) + (run.token_output || 0)} tokens` : ''}</span>}
-      {m.status === 'pending' && owner && canPost && <button onClick={() => onRun(run.id, 'cancel')}><Square size={11} />停止</button>}
-      {(m.status === 'failed' || m.status === 'cancelled') && canPost && <button onClick={() => onRun(run.id, 'retry')}><RotateCcw size={12} />重試</button>}
+      {isAgent && run && <span title={`${m.step?.token_input || 0} 輸入 / ${m.step?.token_output || 0} 輸出 tokens`}>{run.model}{m.status === 'sent' && tokens ? ` · ${tokens} tokens` : ''}</span>}
+      {m.status === 'pending' && owner && canPost && <button onClick={() => onRun(run.id, 'cancel')}><Square size={11} />{team ? '停止討論' : '停止'}</button>}
+      {(m.status === 'failed' || m.status === 'cancelled') && canRetry && <button onClick={() => onRun(run.id, 'retry')}><RotateCcw size={12} />{team ? '繼續討論' : '重試'}</button>}
     </div>
   </article>
 }

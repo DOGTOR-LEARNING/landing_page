@@ -39,9 +39,9 @@ export default function AgentsPage() {
         <div key={label} className={page.stat}><span>{label}</span><strong>{value}</strong><small>{note}</small></div>)}
     </section>}
     <section className={styles.tableCard}>
-      <div className={styles.tableToolbar}><div><h2>AI 角色</h2><p>在聊天室輸入 @角色名稱 就會由該角色回覆。系統指示只有具「AI 角色」權限的人看得到。</p></div></div>
+      <div className={styles.tableToolbar}><div><h2>AI 角色</h2><p>在聊天室輸入 @角色名稱 就會由該角色回覆；輸入 @Team 由 Team Lead 安排討論{usage ? `（最多 ${usage.limits.team_max_agents} 個角色、${usage.limits.team_max_rounds} 輪，每次討論上限 ${number(usage.limits.team_run_tokens)} tokens、${Math.round(usage.limits.team_run_seconds / 60)} 分鐘）` : ''}。系統指示只有具「AI 角色」權限的人看得到。</p></div></div>
       <div className={page.agentGrid}>{agents.map(a => <article key={a.id} className={page.agentCard}>
-        <div className={page.agentTop}><span className={page.agentIcon}><Bot size={20} /></span><div><h3>@{a.display_name}</h3><p>{a.description}</p></div></div>
+        <div className={page.agentTop}><span className={page.agentIcon}><Bot size={20} /></span><div><h3>{a.kind === 'lead' ? '@Team · Team Lead' : `@${a.display_name}`}</h3><p>{a.description}</p></div></div>
         <dl className={page.facts}><div><dt>模型</dt><dd>{a.provider} · {a.model}</dd></div><div><dt>單次回覆上限</dt><dd>{number(a.max_output_tokens)} tokens</dd></div><div><dt>狀態</dt><dd><span className={`${styles.statusBadge} ${a.is_enabled ? '' : styles.statusDisabled}`}>{a.is_enabled ? '啟用中' : '已停用'}</span></dd></div></dl>
         {canManage && <button className={styles.smallButton} onClick={() => setEditing({ ...a })}><Pencil size={13} />編輯</button>}
       </article>)}</div>
@@ -66,7 +66,7 @@ function AgentDialog({ agent, setAgent, onSaved }) {
   const field = (key, label, props = {}) => <div className={styles.fieldGroup}><label className={styles.label} htmlFor={`agent-${key}`}>{label}</label><input id={`agent-${key}`} className={styles.input} value={agent[key]} onChange={e => setAgent({ ...agent, [key]: e.target.value })} {...props} /></div>
   return <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="agent-title"><form className={`${styles.modal} ${styles.employeeModal}`} onSubmit={submit}>
     <button type="button" className={styles.modalClose} onClick={() => setAgent(null)} aria-label="關閉"><X size={18} /></button>
-    <h2 id="agent-title">編輯 @{agent.display_name}</h2><p className={styles.hint}>改名後，聊天室要用新名字 @ 它（英文代號 @{agent.slug} 也一直有效）。</p>
+    <h2 id="agent-title">編輯 @{agent.display_name}</h2><p className={styles.hint}>{agent.kind === 'lead' ? 'Team Lead 只負責分派與彙整，聊天室輸入 @Team 啟動。' : `改名後，聊天室要用新名字 @ 它（英文代號 @${agent.slug} 也一直有效）。`}</p>
     <div className={styles.form}>
       <div className={styles.formColumns}>{field('display_name', '顯示名稱', { required: true, maxLength: 60 })}{field('model', `模型（${agent.provider}）`, { required: true, maxLength: 80, pattern: '[A-Za-z0-9._:-]+' })}</div>
       {field('description', '簡介', { maxLength: 255 })}

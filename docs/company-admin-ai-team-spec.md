@@ -13,8 +13,8 @@
 | 階段 | 狀態 | 說明 |
 |---|---|---|
 | Phase 1 登入與 RBAC | **已 push 前後端 main 與後端 production（2026-10-23）；正式 DB 已 migration；需確認官網環境變數** | 細節與指令見 `docs/admin-operations.md` |
-| Phase 2 多人聊天室 + 單 Agent | **程式完成、測試通過（2026-10-23）；尚未 migration 到 staging／正式、尚未部署** | 見下方「Phase 2 已完成」與 `docs/admin-operations.md`「AI Team」 |
-| Phase 3 多 Agent 討論 | 未開始 | — |
+| Phase 2 多人聊天室 + 單 Agent | **完成（2026-10-23）** | 見下方「Phase 2 已完成」與 `docs/admin-operations.md`「AI Team」 |
+| Phase 3 多 Agent 討論 | **完成（2026-10-23）**，與 Phase 2 同一個 migration | 見下方「Phase 3 已完成」 |
 | Phase 4 工具與自動化 | 未開始 | — |
 
 **Phase 1 已完成**
@@ -28,22 +28,29 @@
 - 權限：使用者表示權限細節之後會自行調整；目前沿用固定角色 `super_admin/admin/staff` + 逐人勾選功能權限，**不要再擴充權限系統**，除非使用者要求。
 
 **Phase 2 已完成（2026-10-23）**
-- 後端 migration `2728ffdfa62d`（接在 `e7f8a9b0c1d2` 後）：`chat_rooms`、`chat_room_members`、`chat_messages`、`ai_agents`、`ai_runs`；預設 4 個 AI 角色（Finance／Operations／Marketing／Engineering，OpenAI `gpt-6-luna`）與公開聊天室「公司大廳」。
+- 後端 migration `2728ffdfa62d`（接在 `e7f8a9b0c1d2` 後，Phase 2、3 共用）：`chat_rooms`、`chat_room_members`、`chat_messages`、`ai_agents`、`ai_runs`、`ai_run_steps`；預設 4 個 AI 角色（Finance／Operations／Marketing／Engineering）＋ Team Lead（`kind='lead'`，代號 `team`），模型 OpenAI `gpt-6-luna`，與公開聊天室「公司大廳」。
 - 後端 `app/routers/admin_chat.py`、`app/services/ai_team.py`（Provider Adapter，目前只接 OpenAI，沿用既有 `OPENAI_API_KEY`）、`tests/test_admin_chat.py`（8 個情境）。
 - 權限新增 `chat.view`／`chat.post`／`chat.manage`、`agents.view`／`agents.manage`（員工管理頁可勾選）。
 - 前端 `/admin/ai-team`（聊天室）與 `/admin/ai-team/agents`（AI 角色設定與用量）；同源 proxy `app/api/admin/chat/[...path]`、`agents`、`ai-usage`。
 - 運作方式：訊息先寫 DB；其他人每 3 秒輪詢（不依賴記憶體，多 instance 可用）。`@角色` 會建立 `ai_run` 與「思考中」訊息，由發問者的瀏覽器呼叫 `/runs/{id}/execute` 取得回覆；沒人完成的任務 5 分鐘後標記失敗，可重試、可停止。`client_request_id` 防重複。
 - 限制：每則最多 3 個角色、每人每分鐘 30 則訊息、每人每天 `AI_TEAM_DAILY_RUNS_PER_USER`（預設 50）次 AI 回覆、全公司每天 `AI_TEAM_DAILY_TOKENS`（預設 300 萬）tokens；費用估算用 `AI_TEAM_PRICE_INPUT_PER_1M`／`AI_TEAM_PRICE_OUTPUT_PER_1M`（USD，未設為 0）。
 - 順手修正：後端全域限流原本把所有員工（都經由官網伺服器同一 IP）算成同一人、且 `/admin/` 每分鐘只有 30 次；現在員工改以登入 session 分開計算，聊天室輪詢另有每分鐘 240 次額度（`app/security.py`）。
-- **Phase 3 尚未開始**：Team Lead 多 Agent 討論。資料表已預留 `ai_runs.mode`，可再加 `ai_run_steps`。
+
+**Phase 3 已完成（2026-10-23）**
+- 在訊息中輸入 `@Team`（可同時點名角色當作提示）→ 建立 `mode='team'` 的 ai_run。流程寫死在程式（`app/services/ai_team_lead.py` + `admin_chat.py` 的 `next_job`／`complete_job`），模型只負責內容：Team Lead 先回 JSON 計畫（選哪些角色、各自任務、幾輪）→ 依序讓角色發言，第 2 輪起要針對他人觀點回應 → Team Lead 用「結論／分歧／資料不足／建議下一步」彙整。
+- AI 不能呼叫 AI：角色發言直接寫入 DB，不會被當成 @mention 解析；系統指示也要求不要點名其他角色。
+- 每次 `execute` 只跑一步並用 `lease_until`（150 秒）鎖住，瀏覽器持續呼叫直到完成；重新整理頁面會自動接續。每步更新 `heartbeat_at`，5 分鐘沒進度就標記失敗；可「停止討論」與「繼續討論」（保留已完成步驟，只重跑失敗的）。單一角色回覆也走同一套 step 機制（一個 step）。
+- 上限：最多 3 個角色（`AI_TEAM_MAX_AGENTS`）、最多 3 輪（`AI_TEAM_MAX_ROUNDS`）、每次討論 80000 tokens（`AI_TEAM_RUN_TOKENS`）、300 秒（`AI_TEAM_RUN_SECONDS`）、費用上限 `AI_TEAM_RUN_COST_USD`（0 = 不限）。超過時跳過剩下的發言，直接請 Team Lead 彙整並註明提前結束。某個角色失敗不會中斷討論。
+- 實測（本機隔離 DB + 真實 OpenAI）：「5 萬元 IG 廣告」問題，Team Lead 指派 Finance、Marketing 各 1 輪後彙整，約 30 秒、5,600 tokens。
+- 測試：`tests/test_admin_chat.py` 共 13 個情境（含 5 個 Team 情境）。
 
 **下一步（依序）**
 1. 官網環境變數設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`（`ADMIN_PASSPHRASE` 保留不動），確認 Cloud Build 部署成功後，以正式 super_admin 登入正式網站驗證。
 2. 英文版後端同步更新（見 operations 文件「部署順序」）。
 3. ~~移除推播與公告的舊 key 授權~~：2026-10-23 已完成。`ADMIN_PASSPHRASE` 保留給財務伺服器之間使用，`ANNOUNCEMENTS_API_KEY` 保留給排程用，兩者都不要刪。
 4. 待補：員工 Email 邀請、自助忘記密碼（需寄信服務）。
-5. Phase 2：備份後對 staging 與正式 DB 執行 migration `2728ffdfa62d`，push 後端 main／production 與官網 main；到員工管理為員工勾選 AI Team 權限（super_admin 自動擁有）。
-6. Phase 3：Team Lead Orchestrator（第 5.3、11 章）。
+5. 到員工管理為員工勾選 AI Team 權限（super_admin 自動擁有）。若要在用量頁看到費用估算，設定 `AI_TEAM_PRICE_INPUT_PER_1M`／`AI_TEAM_PRICE_OUTPUT_PER_1M`。
+6. Phase 4（未開始）：Notion／Drive／財務模組受控讀取、需核准的寫入工具（第 11 章）。
 
 ---
 
