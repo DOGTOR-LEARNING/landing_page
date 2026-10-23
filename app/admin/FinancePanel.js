@@ -479,6 +479,7 @@ function StatusView({ passphrase }) {
         <div className={fin.resultBox}>
           <span>Google Drive：{badge(status.drive)} {status.drive.detail?.account && `授權帳號 ${status.drive.detail.account}`}</span>
           <span>Notion：{badge(status.notion)}</span>
+          {status.notion.detail && <span className={styles.hint}>Notion 回應：{status.notion.detail}</span>}
           {status.notion.mapping && (
             <span className={styles.hint}>
               找不到的欄位（會略過）：{status.notion.mapping.filter((m) => !m.type).map((m) => m.property).join('、') || '無'}
