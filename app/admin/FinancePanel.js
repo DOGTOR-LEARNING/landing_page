@@ -93,6 +93,22 @@ function Segmented({ value, options, onChange, invalid }) {
   )
 }
 
+// 有設定成員名單就用下拉選單，沒設定就直接輸入名字
+function PersonField({ id, members, value, onChange, disabled }) {
+  if (!members.length) {
+    return (
+      <input id={id} className={styles.input} maxLength={100} placeholder="輸入名字" value={value}
+        disabled={disabled} onChange={(e) => onChange(e.target.value)} />
+    )
+  }
+  return (
+    <select id={id} className={styles.input} value={value} disabled={disabled} onChange={(e) => onChange(e.target.value)}>
+      <option value="">請選擇</option>
+      {members.map((m) => <option key={m.email} value={m.email}>{m.name}</option>)}
+    </select>
+  )
+}
+
 function emptyForm(today, memberEmail) {
   return {
     expense_id: newId(),
@@ -167,7 +183,7 @@ function SubmitForm({ passphrase, config }) {
 
   function validate() {
     const e = {}
-    if (!form.submitter_email) e.submitter_email = FIELD_TEXT.submitter_email
+    if (!form.submitter_email.trim()) e.submitter_email = FIELD_TEXT.submitter_email
     if (!form.expense_date) e.expense_date = FIELD_TEXT.expense_date
     if (!/^\d+$/.test(String(form.amount)) || Number(form.amount) <= 0) e.amount = FIELD_TEXT.amount
     if (!form.purpose.trim()) e.purpose = FIELD_TEXT.purpose
@@ -246,11 +262,8 @@ function SubmitForm({ passphrase, config }) {
       <div className={fin.grid2}>
         <div className={styles.fieldGroup}>
           <label className={styles.label} htmlFor="fin-submitter">申請人 <span className={styles.required}>*</span></label>
-          <select id="fin-submitter" className={styles.input} value={form.submitter_email} disabled={locked}
-            onChange={(e) => set('submitter_email')(e.target.value)}>
-            <option value="">請選擇</option>
-            {members.map((m) => <option key={m.email} value={m.email}>{m.name}</option>)}
-          </select>
+          <PersonField id="fin-submitter" members={members} value={form.submitter_email} disabled={locked}
+            onChange={set('submitter_email')} />
           {err('submitter_email')}
         </div>
         <div className={styles.fieldGroup}>
@@ -301,11 +314,8 @@ function SubmitForm({ passphrase, config }) {
         <div className={`${fin.subPanel} ${fin.grid2}`}>
           <div className={styles.fieldGroup}>
             <label className={styles.label} htmlFor="fin-payer">付款人 <span className={styles.required}>*</span></label>
-            <select id="fin-payer" className={styles.input} value={form.payer_email} disabled={locked}
-              onChange={(e) => set('payer_email')(e.target.value)}>
-              <option value="">請選擇</option>
-              {members.map((m) => <option key={m.email} value={m.email}>{m.name}</option>)}
-            </select>
+            <PersonField id="fin-payer" members={members} value={form.payer_email} disabled={locked}
+              onChange={set('payer_email')} />
             {err('payer_email')}
           </div>
           <div className={styles.fieldGroup}>
@@ -517,8 +527,7 @@ export default function FinancePanel({ passphrase }) {
       {tab === 'submit' && (
         error ? <p className={styles.errorMsg}>{error}</p>
           : !config ? <p className={styles.hint}>載入中…</p>
-            : config.members.length === 0 ? <p className={styles.errorMsg}>尚未設定成員名單（後端 FINANCE_MEMBERS）。</p>
-              : <SubmitForm passphrase={passphrase} config={config} />
+            : <SubmitForm passphrase={passphrase} config={config} />
       )}
       {tab === 'recent' && <RecentList passphrase={passphrase} />}
       {tab === 'status' && <StatusView passphrase={passphrase} />}
