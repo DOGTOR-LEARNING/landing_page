@@ -27,7 +27,7 @@ UI：已改為與官網一致的淺色風格（深藍側欄、官方字標、橘
 
 登入限流存 MySQL，跨 Cloud Run instance 共用。錯誤登入不透露帳號是否存在。帳號建立、更新、啟用、登入成功／失敗、登出及修改密碼會寫入稽核紀錄；推播送達統計保留原系統行為。後台不載入公開網站的分析與廣告追蹤。啟用 token 放 URL fragment，使用後從網址清除，資料庫只存其 hash。
 
-後端公告管理與全體／指定推播均驗證員工權限；2026-10-23 已移除舊的推播通關密語 `ADMIN_PASSPHRASE` 與公告 `X-Announcements-Key` 授權：程式不再讀取，`/api/admin/verify` 已刪除，Cloud Run 與官網也不需要 `ADMIN_PASSPHRASE`。財務報帳改用 `FINANCE_API_KEY`（官網與後端同值）。注意：後端環境變數 `ANNOUNCEMENTS_API_KEY` **仍要保留**，它現在只給 Cloud Scheduler／Cloud Tasks 呼叫 campaigns、scheduled reports 用，不再能管理公告。公開 App 公告和 App 使用的 `/admin/subjects_and_chapters` 維持原讀取入口；舊後端的其他管理工具僅限 super_admin。
+後端公告管理與全體／指定推播均驗證員工權限；2026-10-23 已移除推播與公告的舊共用 key 授權：瀏覽器不再送通關密語，`X-Announcements-Key` 不能管理公告，`/api/admin/verify` 已刪除。`ADMIN_PASSPHRASE` 環境變數**保留**在官網與 `superb-backend`，現在只當財務報帳的伺服器之間金鑰（官網 → 後端 `/finance`），沒有 `FINANCE_API_KEY`。注意：後端環境變數 `ANNOUNCEMENTS_API_KEY` **仍要保留**，它現在只給 Cloud Scheduler／Cloud Tasks 呼叫 campaigns、scheduled reports 用，不再能管理公告。公開 App 公告和 App 使用的 `/admin/subjects_and_chapters` 維持原讀取入口；舊後端的其他管理工具僅限 super_admin。
 
 ## 本機啟動
 

@@ -24,7 +24,7 @@ const STEP_STATE = {
 const ERROR_TEXT = {
   UNAUTHORIZED: '登入已失效，請重新登入。',
   FORBIDDEN: '你的帳號沒有財務報帳的權限，請聯絡管理員。',
-  FINANCE_NOT_CONFIGURED: '財務功能尚未設定（後端網址或 FINANCE_API_KEY）。',
+  FINANCE_NOT_CONFIGURED: '財務功能尚未設定（後端網址或 ADMIN_PASSPHRASE）。',
   BACKEND_UNREACHABLE: '連不到後端或處理太久，請稍後再送一次；系統會避免重複建立。',
   TOO_MANY_ATTACHMENTS: '附件數量超過上限。',
   ATTACHMENT_TOO_LARGE: '有附件超過大小上限。',
