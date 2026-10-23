@@ -1,20 +1,19 @@
 import { NextResponse } from 'next/server'
 import { checkAdmin, forwardToFinance } from '@/lib/financeProxy'
 
-// Drive + Notion + email run inside one backend request.
-export const maxDuration = 120
+// The agent reads Notion and Drive over several model turns before writing.
+export const maxDuration = 180
 
-export async function GET(request) {
-  const denied = checkAdmin(request)
-  if (denied) return denied
-  const month = new URL(request.url).searchParams.get('month')
-  const query = month && /^\d{4}-\d{2}$/.test(month) ? `?month=${month}` : ''
-  return forwardToFinance(`/expenses${query}`)
-}
+// submit: the agent plans and the backend writes the plan.
+// commit: write a plan returned earlier again (retry after a failed step).
+const ACTIONS = { submit: '/agent/submit', commit: '/agent/commit' }
 
 export async function POST(request) {
   const denied = checkAdmin(request)
   if (denied) return denied
+  const action = new URL(request.url).searchParams.get('action') || 'submit'
+  const path = ACTIONS[action]
+  if (!path) return NextResponse.json({ success: false, message: 'INVALID_ACTION' }, { status: 400 })
   let incoming
   try {
     incoming = await request.formData()
@@ -27,5 +26,5 @@ export async function POST(request) {
   for (const file of incoming.getAll('attachments')) {
     if (typeof file !== 'string' && file.size > 0) outgoing.append('attachments', file, file.name)
   }
-  return forwardToFinance('/expenses', { method: 'POST', body: outgoing })
+  return forwardToFinance(path, { method: 'POST', body: outgoing }, 170_000)
 }
