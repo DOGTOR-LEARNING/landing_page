@@ -125,3 +125,14 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 已驗證 migration upgrade/downgrade（隔離 MySQL 9.3）、staging MySQL 8.0 migration、員工登入與權限、資料庫 session 撤銷、公告管理舊 key 拒絕、Origin／Cookie／logout、防止最後超級管理員移除，以及桌面／窄版實際瀏覽器。沒有發送真實推播或更改現有正式公告。
 
 最終結果：後端整合與既有相容性測試 **24 passed**，Next.js production build 成功，同源閘道測試成功。剩餘警告為專案原有 Pydantic／Python 版本與 Next.js workspace／middleware 提示。新版首頁截圖：`docs/screenshots/admin-overview.png`。測試過程沒有發送通知，發送確認視窗已以取消結束。
+
+## AI Team 聊天室（Phase 2）
+
+- 入口：`/admin/ai-team`（需 `chat.view`；發言需 `chat.post`；建立聊天室、設定私人聊天室成員、停止別人的 AI 任務需 `chat.manage`）。`/admin/ai-team/agents` 調整 AI 角色與查看用量（`agents.view`／`agents.manage`）。super_admin 自動擁有全部權限，其他員工到「員工管理」勾選。
+- 使用：在訊息中輸入 `@Finance`、`@Marketing`、`@Operations`、`@Engineering`（也可用英文代號），該角色會根據聊天室最近 20 則訊息回覆。AI 只提供文字建議，沒有任何工具或寫入權限。
+- 聊天內容只存在 Cloud SQL，不寫進 log。停用員工後保留歷史訊息，但撤銷登入即無法再讀取。
+- Migration：`alembic upgrade head` 會套用 `2728ffdfa62d`（五張表＋預設角色＋「公司大廳」）。回滾：`alembic downgrade e7f8a9b0c1d2` 會刪除聊天紀錄，正式環境先備份。
+- 環境變數（後端，皆可不設）：`AI_TEAM_DAILY_RUNS_PER_USER`（預設 50）、`AI_TEAM_DAILY_TOKENS`（預設 3000000）、`AI_TEAM_PRICE_INPUT_PER_1M`／`AI_TEAM_PRICE_OUTPUT_PER_1M`（USD，用來估算費用）。模型金鑰沿用既有 `OPENAI_API_KEY`（staging、正式都已設定）。
+- 官網的 `/api/admin/chat/.../execute` 設定 `maxDuration = 120`，後端呼叫模型逾時 90 秒。
+- 測試：`ADMIN_AUTH_TEST_DB=admin_auth_test ... pytest tests/test_admin_chat.py tests/test_admin_auth.py`（同樣只能指向隔離 DB）。
+

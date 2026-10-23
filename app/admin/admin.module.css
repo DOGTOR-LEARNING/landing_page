@@ -1377,7 +1377,7 @@
 .navItem span { flex: 1; }
 .navItem:hover { background: rgba(255,255,255,.08); color: #fff !important; }
 .navActive, .navActive:hover { background: linear-gradient(135deg, var(--ws-orange), var(--ws-orange-dark)) !important; color: #fff !important; box-shadow: 0 6px 16px rgba(245,155,3,.28); }
-.navItem:nth-child(6), .navItem:last-child { margin-top: 16px; }
+.navDivider { margin-top: 16px; }
 .sidebarFoot { margin-top: auto; padding-top: 30px; }
 .websiteLink { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,.65) !important; margin: 0 12px 18px; }
 .websiteLink:hover { color: var(--ws-orange) !important; }

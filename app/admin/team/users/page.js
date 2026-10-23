@@ -9,6 +9,9 @@ const PERMISSION_GROUPS = [
   { title: '推播通知', view: 'push.view', manage: 'push.manage' },
   { title: 'App 公告', view: 'announcements.view', manage: 'announcements.manage' },
   { title: '財務報帳', view: 'finance.view', manage: 'finance.manage' },
+  { title: 'AI Team 聊天室（檢視／發言）', view: 'chat.view', manage: 'chat.post' },
+  { title: '聊天室管理（建立、成員）', view: 'chat.manage' },
+  { title: 'AI 角色與用量', view: 'agents.view', manage: 'agents.manage' },
   { title: '員工管理', view: 'users.view', manage: 'users.manage' },
 ]
 const ROLE_NAMES = { super_admin: '超級管理員', admin: '管理員', staff: '團隊成員' }
