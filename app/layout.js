@@ -307,9 +307,11 @@ const jsonLd = [
 export default async function RootLayout({ children }) {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
+  const isAdmin = h.get('x-admin-workspace') === '1'
   return (
     <html lang={locale}>
       <head>
+        {!isAdmin && <>
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-G8DS1J0250"
@@ -349,6 +351,7 @@ export default async function RootLayout({ children }) {
           />
         </noscript>
         {/* End Meta Pixel Code */}
+        </>}
         <link rel="llms-txt" type="text/plain" href="/llms.txt" />
         {jsonLd.map((schema, i) => (
           <script
@@ -359,10 +362,10 @@ export default async function RootLayout({ children }) {
         ))}
       </head>
       <body>
-        <PostHogProvider>
-          <LocaleProvider locale={locale}>{children}</LocaleProvider>
-        </PostHogProvider>
-        <Analytics />
+        {isAdmin ? <LocaleProvider locale={locale}>{children}</LocaleProvider> : <>
+          <PostHogProvider><LocaleProvider locale={locale}>{children}</LocaleProvider></PostHogProvider>
+          <Analytics />
+        </>}
       </body>
     </html>
   )

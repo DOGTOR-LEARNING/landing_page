@@ -19,6 +19,12 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
   // 但關掉是全站生效的，會讓 /pricing 和 /pricing/ 都回 200。本站沒有 canonical
   // 標籤，等於製造重複內容，所以這裡把頁面的正規化補回來，只排除 /ingest。
+  async headers() {
+    return [{ source: '/admin/:path*', headers: [
+      { key: 'Referrer-Policy', value: 'no-referrer' },
+      { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+    ] }]
+  },
   async redirects() {
     return [
       {

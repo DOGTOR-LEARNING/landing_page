@@ -45,6 +45,7 @@ export function middleware(request) {
     'zh-TW'
 
   const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-admin-workspace', url.pathname === '/admin' || url.pathname.startsWith('/admin/') ? '1' : '0')
   requestHeaders.set('x-locale', locale)
   // Set here rather than trusted from the client, like x-paddle-preview below.
   requestHeaders.set('x-app-market', globalHost ? 'global' : 'tw')

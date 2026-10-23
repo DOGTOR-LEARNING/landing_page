@@ -1,6 +1,8 @@
 'use client'
 
 import posthog from 'posthog-js'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { PostHogProvider as PHProvider } from 'posthog-js/react'
 import { detectInAppBrowser } from '@/lib/analytics'
 
@@ -17,6 +19,10 @@ if (typeof window !== 'undefined' && POSTHOG_KEY) {
     // Next App Router 的 <Link> 換頁完全不計。設了才會變成 'history_change'。
     defaults: '2025-05-24',
     capture_pageleave: true,
+    // Employee pages can contain private content and single-use activation links.
+    before_send: event => window.location.pathname.startsWith('/admin') ? null : event,
+    disable_session_recording: window.location.pathname.startsWith('/admin'),
+    session_recording: { maskAllInputs: true },
     persistence: 'localStorage+cookie',
     cross_subdomain_cookie: true,
     loaded: (ph) => {
@@ -32,6 +38,8 @@ if (typeof window !== 'undefined' && POSTHOG_KEY) {
 }
 
 export default function PostHogProviderWrapper({ children }) {
+  const pathname = usePathname()
+  useEffect(() => { if (pathname.startsWith('/admin')) posthog.stopSessionRecording() }, [pathname])
   if (!POSTHOG_KEY) return children
 
   return (
