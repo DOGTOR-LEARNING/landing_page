@@ -43,7 +43,8 @@
 - 上限：最多 3 個角色（`AI_TEAM_MAX_AGENTS`）、最多 3 輪（`AI_TEAM_MAX_ROUNDS`）、每次討論 80000 tokens（`AI_TEAM_RUN_TOKENS`）、300 秒（`AI_TEAM_RUN_SECONDS`）、費用上限 `AI_TEAM_RUN_COST_USD`（0 = 不限）。超過時跳過剩下的發言，直接請 Team Lead 彙整並註明提前結束。某個角色失敗不會中斷討論。
 - 實測（本機隔離 DB + 真實 OpenAI）：「5 萬元 IG 廣告」問題，Team Lead 指派 Finance、Marketing 各 1 輪後彙整，約 30 秒、5,600 tokens。
 - 2026-10-23 追加：員工與 AI 訊息都支援 Markdown + LaTeX（`remark-math`、`rehype-katex`）；討論完成後可下載「最終結論 .md」（`GET /admin/chat/runs/{id}/report`）。
-- 測試：`tests/test_admin_chat.py` 共 14 個情境（含 5 個 Team 情境與結論 .md）。
+- 2026-10-24 追加：多模型。`app/services/ai_team.py` 有 OpenAI、Gemini、DeepSeek、Claude 四個 adapter，每個角色可選服務與模型；migration `46932d4ad765` 在 `ai_run_steps` 記錄實際的 provider／model。實測 Finance 用 DeepSeek、Marketing 用 Gemini 兩輪辯論，觀點明顯不同。Claude 待設定 `ANTHROPIC_API_KEY`。
+- 測試：`tests/test_admin_chat.py` 共 15 個情境；`tests/test_ai_team_providers.py` 8 個 adapter 測試（本機假伺服器，不打真 API）。
 
 **下一步（依序）**
 1. 官網環境變數設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`（`ADMIN_PASSPHRASE` 保留不動），確認 Cloud Build 部署成功後，以正式 super_admin 登入正式網站驗證。

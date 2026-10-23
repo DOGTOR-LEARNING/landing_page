@@ -12,6 +12,7 @@
 .facts { display: grid; grid-template-columns: repeat(3, auto); gap: 4px 20px; font-size: 13px; }
 .facts dt { color: var(--ws-soft); font-size: 12px; }
 .facts dd { color: var(--ws-text); font-weight: 700; }
+.warn { display: inline-block; margin-left: 6px; background: #fff1f0; color: #c0392b; border-radius: 999px; padding: 0 8px; font-size: 11px; font-weight: 800; }
 @media (max-width: 900px) {
   .stats { grid-template-columns: 1fr 1fr; }
   .agentGrid { grid-template-columns: 1fr; padding: 0 18px 18px; }

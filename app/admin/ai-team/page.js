@@ -16,7 +16,8 @@ const MAX_CHARS = 4000
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 const POLL_MS = 3000
 const ERRORS = {
-  provider_not_configured: 'AI 服務尚未設定（後端缺少 OPENAI_API_KEY）。',
+  provider_not_configured: '這個角色使用的 AI 服務尚未設定 API 金鑰，請管理員到「AI 角色與用量」調整。',
+  refused: 'AI 服務基於安全政策拒絕回答這個問題，請換個方式描述。',
   provider_timeout: 'AI 回覆逾時，請重試。',
   provider_rate_limited: 'AI 服務目前忙碌，請稍後重試。',
   provider_error: 'AI 服務發生錯誤，請重試。',
@@ -243,7 +244,11 @@ const REHYPE = [[rehypeKatex, { throwOnError: false, strict: 'ignore' }]]
 // Models often write "$$ formula" across lines with the closing $$ glued to
 // the last line (inside a list item), which remark-math cannot parse; fold
 // such a span onto one line. Real blocks ($$ on its own line) are untouched.
-const foldDisplayMath = text => text.replace(/\$\$(?!\s*\n)([\s\S]+?)\$\$/g, (_, body) => `$$${body.replace(/\s*\n\s*/g, ' ')}$$`)
+// Some models (e.g. DeepSeek) also write \[ \] / \( \) delimiters; turn those into $$ / $ first.
+const foldDisplayMath = text => text
+  .replace(/\\\[([\s\S]+?)\\\]/g, (_, body) => `$$${body}$$`)
+  .replace(/\\\(([\s\S]+?)\\\)/g, (_, body) => `$${body}$`)
+  .replace(/\$\$(?!\s*\n)([\s\S]+?)\$\$/g, (_, body) => `$$${body.replace(/\s*\n\s*/g, ' ')}$$`)
 
 function ChatMarkdown({ children }) {
   return <div className={chat.markdown}><ReactMarkdown remarkPlugins={REMARK} rehypePlugins={REHYPE}>{foldDisplayMath(children)}</ReactMarkdown></div>
