@@ -9,7 +9,7 @@ import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel, HelpCircle, AtSign } from 'lucide-react'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel, HelpCircle, AtSign, Trash2 } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
@@ -87,14 +87,24 @@ function AiTeamPage() {
   const listRef = useRef(null)
   const inputRef = useRef(null)
 
-  // Phones: size the chat to the visible viewport so the composer stays above the keyboard.
+  // Phones: pin the chat to the visible viewport. When the keyboard opens iOS
+  // shrinks the visual viewport and scrolls the page; follow both so the
+  // composer stays above the keyboard and nothing behind the app shows.
   useEffect(() => {
     const vv = window.visualViewport
     if (!vv) return
-    const fit = () => document.documentElement.style.setProperty('--app-vh', `${vv.height}px`)
+    const root = document.documentElement
+    const fit = () => {
+      root.style.setProperty('--app-vh', `${vv.height}px`)
+      root.style.setProperty('--app-top', `${vv.offsetTop}px`)
+    }
     fit()
     vv.addEventListener('resize', fit)
-    return () => { vv.removeEventListener('resize', fit); document.documentElement.style.removeProperty('--app-vh') }
+    vv.addEventListener('scroll', fit)
+    return () => {
+      vv.removeEventListener('resize', fit); vv.removeEventListener('scroll', fit)
+      root.style.removeProperty('--app-vh'); root.style.removeProperty('--app-top')
+    }
   }, [])
   const stickToBottom = useRef(true)
   const scrolledTo = useRef(null)
@@ -204,6 +214,14 @@ function AiTeamPage() {
     } catch (e) { setError(e.message) }
   }, [driveRun])
 
+  async function removeMessage(messageId) {
+    if (!window.confirm('確定刪除這則訊息？刪除後大家都看不到內容，AI 也不會再讀到它。')) return
+    try {
+      await api(`/api/admin/chat/messages/${messageId}`, { method: 'DELETE' })
+      setMessages(list => list.map(m => m.id === messageId ? { ...m, status: 'deleted', content: '' } : m))
+    } catch (e) { setError(e.message) }
+  }
+
   async function undoTodo(messageId, eventId) {
     try {
       await api(`/api/admin/todos/events/${eventId}/undo`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
@@ -283,7 +301,7 @@ function AiTeamPage() {
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
           {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong> 請單一角色回覆；跨部門的問題輸入 <strong>@Team</strong>，由 Team Lead 挑選角色討論，每輪結束後決定誰需要再發言（最多 3 輪），最後整理結論。想指定參與者就寫 <strong>@Team @Finance @Marketing</strong>。</p></div>}
-          {messages.map(m => <Message key={m.id || m.client_request_id} focused={m.id === focusMessage} canTodo={user.permissions.includes('todos.manage')} onTodo={setQuickTodo} onUndoTodo={undoTodo} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onForget={forget} canForget={m => user.permissions.includes('agents.manage') || m.ai_run?.triggered_by_user_id === user.id} onResend={() => send(m.content, m.client_request_id)} />)}
+          {messages.map(m => <Message key={m.id || m.client_request_id} focused={m.id === focusMessage} canTodo={user.permissions.includes('todos.manage')} onTodo={setQuickTodo} onUndoTodo={undoTodo} onDelete={removeMessage} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onForget={forget} canForget={m => user.permissions.includes('agents.manage') || m.ai_run?.triggered_by_user_id === user.id} onResend={() => send(m.content, m.client_request_id)} />)}
         </div>
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
         {canPost ? <form className={chat.composer} onSubmit={e => { e.preventDefault(); send(draft) }}>
@@ -294,8 +312,8 @@ function AiTeamPage() {
               const next = `${draft}${draft && !draft.endsWith(' ') ? ' ' : ''}@`
               setDraft(next); setMention('')
               requestAnimationFrame(() => { inputRef.current?.focus(); inputRef.current?.setSelectionRange(next.length, next.length) })
-            }}><AtSign size={17} /></button>
-            <span className={`${chat.footHint} ${draft.length > MAX_CHARS ? chat.over : ''}`}><Info size={13} /><span className={chat.btnText}>AI 只提供建議，不會執行任何操作 · </span>{draft.length}/{MAX_CHARS}</span>
+            }}><AtSign size={15} />提及</button>
+            <span className={`${chat.footHint} ${draft.length > MAX_CHARS * 0.75 ? chat.nearLimit : ''} ${draft.length > MAX_CHARS ? chat.over : ''}`}><Info size={13} /><span className={chat.btnText}>AI 只提供建議，不會執行任何操作 · </span>{draft.length}/{MAX_CHARS}</span>
             <button className={styles.btnPrimary} disabled={!draft.trim() || draft.length > MAX_CHARS} aria-label="送出"><Send size={16} /><span className={chat.btnText}>送出</span></button>
           </div>
         </form> : <p className={chat.readOnly}>你的帳號只有檢視權限，無法在聊天室發言。</p>}
@@ -367,7 +385,19 @@ async function downloadReport(runId) {
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend, onForget, canForget, focused, canTodo, onTodo, onUndoTodo }) {
+// Team Lead's planning and between-round decisions are for the AI roles, so the
+// chat shows them as one line (details on tap) instead of a full bubble.
+function teamLeadLine(m) {
+  const names = [...(m.content || '').matchAll(/\*\*(.+?)\*\*/g)].map(x => x[1])
+  if (m.status === 'pending') return m.step?.kind === 'review' ? `Team Lead 正在判斷第 ${m.step.round} 輪後誰要再發言…` : 'Team Lead 正在分工…'
+  if (m.step?.kind === 'review') {
+    return m.content.includes('由以下角色發言') ? `第 ${m.step.round} 輪後：請 ${names.join('、')} 再回應` : `第 ${m.step.round} 輪後：討論已足夠，開始彙整`
+  }
+  if (m.content.includes('由 Team Lead 直接回覆')) return 'Team Lead 直接處理這件事'
+  return names.length ? `Team Lead 分工給 ${names.join('、')}` : 'Team Lead 已安排討論'
+}
+
+function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend, onForget, canForget, focused, canTodo, onTodo, onUndoTodo, onDelete }) {
   const run = m.ai_run
   const isAgent = m.sender_type === 'agent'
   const owner = run && (run.triggered_by_user_id === userId || canManage)
@@ -377,6 +407,17 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
   const tokens = (m.step?.token_input || 0) + (m.step?.token_output || 0)
   // A failed member turn inside a finished discussion cannot be retried on its own.
   const canRetry = canPost && run && ['failed', 'cancelled'].includes(run.status)
+  const canDelete = m.id && m.status !== 'pending' && (canManage || mine)
+  if (m.status === 'deleted') {
+    return <article data-message-id={m.id} className={`${chat.message} ${mine ? chat.mine : ''} ${chat.deleted}`}><p><Trash2 size={12} />{m.sender_name} 的訊息已刪除</p></article>
+  }
+  const leadNote = team && m.agent_slug === 'team' && (['plan', 'review'].includes(m.step?.kind) || (m.status === 'pending' && !m.step))
+  if (leadNote && m.status !== 'failed' && m.status !== 'cancelled') {
+    return <article data-message-id={m.id || undefined} className={`${chat.leadNote} ${focused ? chat.focused : ''}`}>
+      {m.status === 'pending' ? <p><span className={chat.typing}><i /><i /><i /></span>{teamLeadLine(m)}{owner && canPost && <button onClick={() => onRun(run.id, 'cancel')}><Square size={10} />停止討論</button>}</p>
+        : <details><summary><Sparkles size={12} />{teamLeadLine(m)}</summary><div className={chat.leadDetail}><ChatMarkdown>{m.content}</ChatMarkdown></div></details>}
+    </article>
+  }
   return <article data-message-id={m.id || undefined} className={`${chat.message} ${focused ? chat.focused : ''} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''} ${m.step?.kind === 'review' ? chat.review : ''}`}>
     <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}>{m.agent_slug === 'team' ? <Sparkles size={12} /> : <Bot size={12} />}AI</span>}<strong title={m.sender_bio || undefined}>{m.sender_name}</strong>{m.sender_title && <span className={chat.titleBadge} title={m.sender_bio || undefined}>{m.sender_title}</span>}{stepLabel && <span className={chat.stepBadge}>{stepLabel}</span>}{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
     <div className={chat.bubble}>
@@ -398,6 +439,7 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
       {(m.status === 'failed' || m.status === 'cancelled') && canRetry && <button onClick={() => onRun(run.id, 'retry')}><RotateCcw size={12} />{team ? '繼續討論' : '重試'}</button>}
       {m.status === 'sent' && run?.status === 'succeeded' && (team ? m.step?.kind === 'summary' : true) && <button onClick={() => downloadReport(run.id).catch(e => alert(e.message))}><Download size={12} />{team ? '下載最終結論 .md' : '下載 .md'}</button>}
       {canTodo && m.id && m.status === 'sent' && m.content && <button onClick={() => onTodo(m)} aria-label="加入待辦" title="加入待辦"><ListTodo size={12} /><span className={chat.btnText}>加入待辦</span></button>}
+      {canDelete && <button className={chat.deleteButton} onClick={() => onDelete(m.id)} aria-label="刪除訊息" title="刪除訊息"><Trash2 size={12} /></button>}
     </div>
   </article>
 }

@@ -46,6 +46,18 @@
 .actions button { margin-left: auto; border: 0; background: transparent; color: var(--ws-orange-dark); font-size: 12px; font-weight: 700; cursor: pointer; }
 .undone { opacity: .6; }
 .focused .bubble { box-shadow: 0 0 0 3px var(--ws-orange); }
+.deleted p { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ws-soft); font-style: italic; padding: 4px 10px; border: 1px dashed var(--ws-line); border-radius: 999px; }
+.deleteButton { color: var(--ws-soft) !important; }
+.deleteButton:hover { color: #c0392b !important; }
+.leadNote { align-self: center; max-width: min(640px, 96%); font-size: 12px; color: var(--ws-muted); }
+.leadNote p, .leadNote summary { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; text-align: center; }
+.leadNote summary { cursor: pointer; list-style: none; padding: 3px 12px; border-radius: 999px; background: #eef2f6; }
+.leadNote summary::-webkit-details-marker { display: none; }
+.leadNote summary svg { color: var(--ws-orange-dark); }
+.leadNote p { padding: 3px 12px; }
+.leadNote button { border: 0; background: transparent; color: var(--ws-orange-dark); font-size: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
+.leadNote .typing i { width: 5px; height: 5px; }
+.leadDetail { margin-top: 6px; background: #fff; border: 1px solid var(--ws-line); border-radius: 12px; padding: 8px 12px; text-align: left; font-size: 13px; color: var(--ws-text); }
 .memories { list-style: none; margin: 4px 6px 0; display: flex; flex-direction: column; gap: 3px; }
 .memories li { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ws-brand); background: #f3f0ff; border-radius: 8px; padding: 3px 8px; }
 .memories li svg { color: #7c5cff; flex: 0 0 auto; }
@@ -85,7 +97,7 @@
 .composer textarea { width: 100%; resize: none; border: 1.5px solid #d7e1ea; border-radius: 14px; padding: 10px 14px; font-size: 15px; line-height: 1.6; color: var(--ws-text); background: #fff; max-height: 180px; field-sizing: content; min-height: 52px; }
 .composer textarea:focus { outline: none; border-color: var(--ws-ocean); box-shadow: 0 0 0 3px #319cb622; }
 .composerFoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
-.atButton { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; flex: 0 0 38px; border-radius: 50%; border: 1.5px solid #d7e1ea; background: #fff; color: var(--ws-brand); cursor: pointer; }
+.atButton { display: inline-flex; align-items: center; gap: 3px; height: 34px; padding: 0 12px; border-radius: 999px; border: 1.5px solid #d7e1ea; background: #fff; color: var(--ws-brand); font-size: 13px; font-weight: 800; cursor: pointer; white-space: nowrap; }
 .atButton:hover { border-color: var(--ws-orange); color: var(--ws-orange-dark); }
 .roomAddInline { display: none; }
 .footHint { margin-right: auto; }
@@ -142,7 +154,8 @@
   .composer { padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); }
   .composer textarea { min-height: 42px; padding: 9px 12px; }
   .composerFoot { margin-top: 6px; gap: 8px; }
-  .footHint { margin-right: auto; font-size: 11px; }
+  .footHint { margin-right: auto; font-size: 11px; visibility: hidden; }
+  .footHint.nearLimit { visibility: visible; }
   .composerFoot .btnPrimary { min-height: 38px; padding: 8px 14px; }
   .people, .choice { grid-template-columns: 1fr; }
 }

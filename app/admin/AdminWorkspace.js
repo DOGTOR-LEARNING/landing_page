@@ -105,6 +105,14 @@ export default function AdminWorkspace({ children }) {
 
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
+  // The public site's body is navy; behind the admin it must be light, or it
+  // shows through when iOS moves the page for the keyboard.
+  useEffect(() => {
+    const previous = document.body.style.backgroundColor
+    document.body.style.backgroundColor = '#f3f6f9'
+    return () => { document.body.style.backgroundColor = previous }
+  }, [])
+
   // The admin is installable as a PWA; the service worker also receives pushes.
   useEffect(() => {
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/admin-sw.js', { scope: '/admin/' }).catch(() => {})
