@@ -7,7 +7,7 @@ import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download } from 'lucide-react'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
@@ -161,6 +161,13 @@ export default function AiTeamPage() {
     } catch (e) { setError(e.message) }
   }, [driveRun])
 
+  async function forget(messageId, memoryId) {
+    try {
+      await api(`/api/admin/agents/memories/${memoryId}`, { method: 'DELETE' })
+      setMessages(list => list.map(m => m.id === messageId ? { ...m, memories: (m.memories || []).filter(x => x.id !== memoryId) } : m))
+    } catch (e) { setError(e.message) }
+  }
+
   // After a reload, pick up runs this person started that are still going.
   useEffect(() => {
     for (const m of messages) {
@@ -220,7 +227,7 @@ export default function AiTeamPage() {
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
           {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong> 請單一角色回覆；跨部門的問題輸入 <strong>@Team</strong>，由 Team Lead 挑選角色討論，每輪結束後決定誰需要再發言（最多 3 輪），最後整理結論。想指定參與者就寫 <strong>@Team @Finance @Marketing</strong>。</p></div>}
-          {messages.map(m => <Message key={m.id || m.client_request_id} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onResend={() => send(m.content, m.client_request_id)} />)}
+          {messages.map(m => <Message key={m.id || m.client_request_id} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onForget={forget} canForget={m => user.permissions.includes('agents.manage') || m.ai_run?.triggered_by_user_id === user.id} onResend={() => send(m.content, m.client_request_id)} />)}
         </div>
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
         {canPost ? <form className={chat.composer} onSubmit={e => { e.preventDefault(); send(draft) }}>
@@ -262,7 +269,7 @@ async function downloadReport(runId) {
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend }) {
+function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend, onForget, canForget }) {
   const run = m.ai_run
   const isAgent = m.sender_type === 'agent'
   const owner = run && (run.triggered_by_user_id === userId || canManage)
@@ -273,12 +280,13 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
   // A failed member turn inside a finished discussion cannot be retried on its own.
   const canRetry = canPost && run && ['failed', 'cancelled'].includes(run.status)
   return <article className={`${chat.message} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''} ${m.step?.kind === 'review' ? chat.review : ''}`}>
-    <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}>{m.agent_slug === 'team' ? <Sparkles size={12} /> : <Bot size={12} />}AI</span>}<strong>{m.sender_name}</strong>{stepLabel && <span className={chat.stepBadge}>{stepLabel}</span>}{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
+    <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}>{m.agent_slug === 'team' ? <Sparkles size={12} /> : <Bot size={12} />}AI</span>}<strong title={m.sender_bio || undefined}>{m.sender_name}</strong>{m.sender_title && <span className={chat.titleBadge} title={m.sender_bio || undefined}>{m.sender_title}</span>}{stepLabel && <span className={chat.stepBadge}>{stepLabel}</span>}{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
     <div className={chat.bubble}>
       {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.step?.kind === 'plan' || (team && !m.step && m.agent_slug === 'team') ? 'Team Lead 正在安排討論…' : m.step?.kind === 'review' ? 'Team Lead 正在判斷誰需要再發言…' : m.step?.kind === 'summary' ? 'Team Lead 正在彙整結論…' : `${m.sender_name} 正在思考…`}</span>
         : m.status === 'failed' || m.status === 'cancelled' ? <span className={chat.failed}>{ERRORS[errorCode] || '回覆失敗，請重試。'}</span>
           : <ChatMarkdown>{m.content}</ChatMarkdown>}
     </div>
+    {m.memories?.length > 0 && <ul className={chat.memories}>{m.memories.map(x => <li key={x.id}><Brain size={12} /><span>{m.sender_name} 記住了：{x.content}</span>{canForget(m) && <button onClick={() => onForget(m.id, x.id)}>撤銷</button>}</li>)}</ul>}
     <div className={chat.footer}>
       {m.status === 'sending' && <span>傳送中…</span>}
       {m.status === 'error' && <><span className={chat.failedText}>{m.error || '傳送失敗'}</span><button onClick={onResend}><RotateCcw size={12} />重新傳送</button></>}

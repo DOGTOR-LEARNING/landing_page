@@ -133,6 +133,10 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 - 顯示：所有訊息（員工與 AI）都支援 Markdown 與 LaTeX（KaTeX，行內 `$...$`、獨立 `$$...$$`），不渲染 HTML。AI 角色的系統指示會自動附上公式格式提醒。
 - 最終結論 .md：`@Team` 討論完成後，彙整訊息下方有「下載最終結論 .md」（單一角色回覆是「下載 .md」）。內容含主題、時間、發問者、參與角色、最終結論與各角色發言附錄；由後端 `GET /admin/chat/runs/{id}/report` 即時產生，不另外存檔。
 - 多模型：每個 AI 角色可在「AI 角色與用量」選擇 AI 服務與模型（Team Lead 也可以）。支援 OpenAI GPT（`OPENAI_API_KEY`）、Google Gemini（`GEMINI_API_KEY`，Google 的 OpenAI 相容端點）、DeepSeek（`DEEPSEEK_API_KEY`，DeepSeek 的 OpenAI 相容端點）、Anthropic Claude（`ANTHROPIC_API_KEY`，官方 `anthropic` SDK）。前三個金鑰 staging／正式 Cloud Run 都已有；Claude 要先在 Cloud Run 加 `ANTHROPIC_API_KEY` 才能用，沒設定時角色卡會顯示「尚未設定金鑰」，回覆會失敗並提示。每一步都記錄實際回覆的服務與模型（Claude 拒答時自動改由備援模型回答、Gemini `-latest` 解析成實際版本），之後改設定也不會改到歷史。用量頁有「本月各模型用量」。Claude 預設 `claude-opus-5-5`，effort `medium`，啟用 `fallbacks: "default"`；Claude 有內建牌價估算（$4／$20 每百萬 tokens），其他服務可用 `AI_TEAM_PRICE_<PROVIDER>_INPUT_PER_1M`／`_OUTPUT_PER_1M` 設定。
+- 記憶：每個 AI 角色有自己的記憶（`ai_agent_memories`，每角色最多 50 則），每次回覆都會附上最近 30 則（標明是資料不是指令）。管理員在「AI 角色與用量 → 記憶」新增／修改／刪除；AI 在對話中遇到值得長期記住的事實會自己寫「[記住] …」（每次最多 3 則，不會出現在回覆內文），聊天室該則回覆下方顯示「XX 記住了：…」，發起該對話的人或管理員可按「撤銷」。實測：在一個聊天室告訴 Finance 本月支出，另一個聊天室問「還能再花多少」能正確引用。
+- 個人介紹：每位員工在「帳號設定 → 個人介紹」填職稱與自我介紹（`admin_users.job_title`／`bio`），聊天室名字旁顯示職稱、滑過看介紹；AI 回覆時會收到發言同事的背景。
+- 新增角色：「AI 角色與用量 → 新增 AI 角色」（英文代號建立後不能改，名稱與代號不能和現有角色重複）。預設新增 Engineering B（DeepSeek），負責交叉審查 Engineering 的方案；Team Lead 會讓同領域的角色都參與並在下一輪互相檢查。`@Engineering B` 只會叫 B（名稱最長者優先比對）。
+- 回覆長度：角色的「單次回覆上限」改為提示 AI 的長度目標；送給模型的上限至少 8000 tokens，避免推理型模型想太久而沒有輸出（GPT 在長討論中曾因此失敗）。
 - 聊天內容只存在 Cloud SQL，不寫進 log。停用員工後保留歷史訊息，但撤銷登入即無法再讀取。
 - Migration：`alembic upgrade head` 會套用 `2728ffdfa62d`（六張表＋預設 4 個角色與 Team Lead＋「公司大廳」）。回滾：`alembic downgrade e7f8a9b0c1d2` 會刪除聊天紀錄，正式環境先備份。
 - 環境變數（後端，皆可不設）：`AI_TEAM_DAILY_RUNS_PER_USER`（預設 50，一次 @Team 算 1 次）、`AI_TEAM_DAILY_TOKENS`（預設 3000000）、Team 討論的 `AI_TEAM_MAX_AGENTS`（3）、`AI_TEAM_MAX_ROUNDS`（3）、`AI_TEAM_RUN_TOKENS`（80000）、`AI_TEAM_RUN_SECONDS`（300）、`AI_TEAM_RUN_COST_USD`（0＝不限）、`AI_TEAM_PRICE_INPUT_PER_1M`／`AI_TEAM_PRICE_OUTPUT_PER_1M`（USD，用來估算費用）。模型金鑰沿用既有 `OPENAI_API_KEY`（staging、正式都已設定）。

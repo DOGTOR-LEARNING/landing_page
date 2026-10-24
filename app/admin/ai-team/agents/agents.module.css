@@ -18,3 +18,11 @@
   .agentGrid { grid-template-columns: 1fr; padding: 0 18px 18px; }
   .facts { grid-template-columns: 1fr 1fr; }
 }
+.cardActions { display: flex; gap: 8px; flex-wrap: wrap; }
+.memoryAdd { display: flex; gap: 8px; margin: 8px 0 12px; width: 100%; }
+.memoryAdd input { flex: 1; min-width: 0; }
+.memoryAdd button { white-space: nowrap; }
+.memoryList { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 50dvh; overflow-y: auto; margin-bottom: 12px; }
+.memoryList li { border: 1px solid var(--ws-line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; }
+.memoryList p { font-size: 14px; color: var(--ws-text); }
+.memoryList small { font-size: 12px; color: var(--ws-soft); }

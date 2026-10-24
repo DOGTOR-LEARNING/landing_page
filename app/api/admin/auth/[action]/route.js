@@ -3,7 +3,7 @@ import { adminProxy, authBackend } from '@/lib/adminProxy'
 
 async function handle(request, { params }) {
   const { action } = await params
-  const methods = { login: 'POST', logout: 'POST', me: 'GET', 'change-password': 'POST', activate: 'POST' }
+  const methods = { login: 'POST', logout: 'POST', me: 'GET', 'change-password': 'POST', activate: 'POST', profile: 'PUT' }
   if (methods[action] !== request.method) return NextResponse.json({ success: false }, { status: 404 })
   return adminProxy(request, `/admin/auth/${action}`, authBackend(), {
     login: action === 'login' || action === 'activate', clear: action === 'logout' || action === 'change-password',
@@ -11,3 +11,4 @@ async function handle(request, { params }) {
 }
 export const GET = handle
 export const POST = handle
+export const PUT = handle

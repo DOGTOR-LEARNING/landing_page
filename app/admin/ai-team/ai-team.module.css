@@ -38,6 +38,11 @@
 .stepBadge { background: #fff4e0; color: var(--ws-orange-dark); border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 800; }
 .review .bubble { background: #f7fafc; border-style: dashed; font-size: 14px; }
 .summary .bubble { background: #fff; border: 2px solid var(--ws-orange); }
+.titleBadge { background: var(--ws-card-blue); color: var(--ws-brand); border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 700; cursor: help; }
+.memories { list-style: none; margin: 4px 6px 0; display: flex; flex-direction: column; gap: 3px; }
+.memories li { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ws-brand); background: #f3f0ff; border-radius: 8px; padding: 3px 8px; }
+.memories li svg { color: #7c5cff; flex: 0 0 auto; }
+.memories button { margin-left: auto; border: 0; background: transparent; color: var(--ws-orange-dark); font-size: 12px; font-weight: 700; cursor: pointer; }
 .aiBadge { display: inline-flex; align-items: center; gap: 3px; background: var(--ws-navy); color: #fff; border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 800; }
 .bubble { background: #fff; border: 1px solid var(--ws-line); border-radius: 4px 18px 18px 18px; padding: 10px 14px; font-size: 15px; line-height: 1.7; color: var(--ws-text); overflow-wrap: anywhere; }
 .mine .bubble { background: #fff4e0; border-color: #ffd89a; border-radius: 18px 4px 18px 18px; }
