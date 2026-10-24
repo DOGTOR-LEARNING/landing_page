@@ -219,7 +219,7 @@ export default function AiTeamPage() {
         </header>
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
-          {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong> 請單一角色回覆；跨部門的問題輸入 <strong>@Team</strong>，由 Team Lead 安排角色討論並整理結論。</p></div>}
+          {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong> 請單一角色回覆；跨部門的問題輸入 <strong>@Team</strong>，由 Team Lead 挑選角色討論，每輪結束後決定誰需要再發言（最多 3 輪），最後整理結論。想指定參與者就寫 <strong>@Team @Finance @Marketing</strong>。</p></div>}
           {messages.map(m => <Message key={m.id || m.client_request_id} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onResend={() => send(m.content, m.client_request_id)} />)}
         </div>
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
@@ -267,15 +267,15 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
   const isAgent = m.sender_type === 'agent'
   const owner = run && (run.triggered_by_user_id === userId || canManage)
   const team = run?.mode === 'team'
-  const stepLabel = team && m.step ? STEP_LABEL[m.step.kind] || `第 ${m.step.round} 輪` : null
+  const stepLabel = team && m.step ? (m.step.kind === 'review' ? `第 ${m.step.round} 輪後 · 安排下一步` : STEP_LABEL[m.step.kind] || `第 ${m.step.round} 輪`) : null
   const errorCode = m.step?.error_code || run?.error_code
   const tokens = (m.step?.token_input || 0) + (m.step?.token_output || 0)
   // A failed member turn inside a finished discussion cannot be retried on its own.
   const canRetry = canPost && run && ['failed', 'cancelled'].includes(run.status)
-  return <article className={`${chat.message} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''}`}>
+  return <article className={`${chat.message} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''} ${m.step?.kind === 'review' ? chat.review : ''}`}>
     <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}>{m.agent_slug === 'team' ? <Sparkles size={12} /> : <Bot size={12} />}AI</span>}<strong>{m.sender_name}</strong>{stepLabel && <span className={chat.stepBadge}>{stepLabel}</span>}{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
     <div className={chat.bubble}>
-      {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.step?.kind === 'plan' || (team && !m.step && m.agent_slug === 'team') ? 'Team Lead 正在安排討論…' : `${m.sender_name} 正在思考…`}</span>
+      {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.step?.kind === 'plan' || (team && !m.step && m.agent_slug === 'team') ? 'Team Lead 正在安排討論…' : m.step?.kind === 'review' ? 'Team Lead 正在判斷誰需要再發言…' : m.step?.kind === 'summary' ? 'Team Lead 正在彙整結論…' : `${m.sender_name} 正在思考…`}</span>
         : m.status === 'failed' || m.status === 'cancelled' ? <span className={chat.failed}>{ERRORS[errorCode] || '回覆失敗，請重試。'}</span>
           : <ChatMarkdown>{m.content}</ChatMarkdown>}
     </div>
