@@ -5,5 +5,9 @@ export const metadata = {
   appleWebApp: { capable: true, title: 'Dogtor 團隊', statusBarStyle: 'default' },
   icons: { apple: '/admin-apple-touch-icon.png' },
 }
-export const viewport = { themeColor: '#1e374b' }
+// The admin is used as an installed app: fixed to the device width, no pinch or double-tap zoom.
+export const viewport = {
+  width: 'device-width', initialScale: 1, maximumScale: 1, userScalable: false, viewportFit: 'cover',
+  themeColor: '#1e374b',
+}
 export default function AdminLayout({ children }) { return <AdminWorkspace>{children}</AdminWorkspace> }

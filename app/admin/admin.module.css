@@ -1603,3 +1603,13 @@
 .bellEmpty { padding: 18px 14px; font-size: 13px; color: var(--ws-muted); }
 .bellFoot { display: block; padding: 10px 14px; font-size: 12px; font-weight: 700; color: var(--ws-brand) !important; background: #f7fafc; }
 @media (max-width: 760px) { .bellPanel { position: fixed; left: 12px; right: 12px; top: 64px; width: auto; } }
+
+/* Installed-app feel on phones: no sideways scroll, no double-tap zoom, and
+   inputs at 16px so iOS does not zoom in when one is focused. */
+.workspace { overflow-x: hidden; touch-action: manipulation; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+.workspace main, .workArea { min-width: 0; max-width: 100vw; }
+@media (max-width: 760px) {
+  .workspace input, .workspace select, .workspace textarea { font-size: 16px !important; }
+  .workMain { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+  .topbar { padding-top: env(safe-area-inset-top); height: calc(60px + env(safe-area-inset-top)); }
+}
