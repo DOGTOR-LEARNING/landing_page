@@ -1,9 +1,9 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ArrowUpRight, Menu, X, ChevronRight } from 'lucide-react'
+import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, Bell, ArrowUpRight, Menu, X, ChevronRight } from 'lucide-react'
 import styles from './admin.module.css'
 
 const AdminContext = createContext(null)
@@ -15,11 +15,57 @@ export const NAV = [
   { href: '/admin/announcements', title: 'App 公告', icon: ClipboardList, permission: 'announcements.view', desc: '管理公告、發布狀態與版本更新' },
   { href: '/admin/finance', title: '財務報帳', icon: ReceiptText, permission: 'finance.view', desc: '說明＋收據交給 AI 記帳，自動存 Drive、寫 Notion' },
   { href: '/admin/ai-team', title: 'AI Team', icon: MessagesSquare, permission: 'chat.view', desc: '和夥伴、AI 角色一起討論，@Finance 就能請 AI 回覆' },
+  { href: '/admin/todos', title: '待辦', icon: ListTodo, permission: 'todos.view', desc: '討論後的待辦、負責人與期限，Team Lead 也會幫忙更新' },
   { href: '/admin/team/users', title: '員工管理', icon: Users, permission: 'users.view', divider: true, desc: '讓每位夥伴都有自己的工作入口' },
   { href: '/admin/team/roles', title: '角色與權限', icon: ShieldCheck, permission: 'users.view', desc: '清楚掌握團隊的功能存取範圍' },
   { href: '/admin/ai-team/agents', title: 'AI 角色與用量', icon: Bot, permission: 'agents.view', desc: '調整 AI 角色設定，查看使用次數與費用' },
   { href: '/admin/settings', title: '帳號設定', icon: Settings, permission: 'admin.access', divider: true, desc: '管理你的個人登入密碼' },
 ]
+
+const KIND_LABEL = { mention: '提到你', decision: '請你決策', todo_assigned: '指派待辦', test: '測試' }
+
+function NotificationBell() {
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
+  const [items, setItems] = useState([])
+  const [unread, setUnread] = useState(0)
+  const box = useRef(null)
+  async function load() {
+    try {
+      const response = await fetch('/api/admin/notifications?limit=20', { cache: 'no-store' })
+      const data = await response.json()
+      if (data.success) { setItems(data.data); setUnread(data.unread) }
+    } catch { /* the bell retries on the next tick */ }
+  }
+  useEffect(() => {
+    load()
+    const timer = setInterval(load, 30000)
+    const close = e => { if (box.current && !box.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', close)
+    return () => { clearInterval(timer); document.removeEventListener('mousedown', close) }
+  }, [])
+  async function read(ids, all = false) {
+    await fetch('/api/admin/notifications/read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids, all }) }).catch(() => {})
+    load()
+  }
+  function openItem(item) {
+    if (!item.read) read([item.id])
+    setOpen(false)
+    router.push(item.room_id ? `/admin/ai-team?room=${item.room_id}&message=${item.message_id || ''}` : item.todo_id ? `/admin/todos?todo=${item.todo_id}` : '/admin')
+  }
+  const when = iso => new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(new Date(iso))
+  return <div className={styles.bell} ref={box}>
+    <button className={styles.bellButton} onClick={() => setOpen(o => !o)} aria-label={`通知${unread ? `（${unread} 則未讀）` : ''}`} aria-expanded={open}><Bell size={19} />{unread > 0 && <span className={styles.bellCount}>{unread > 99 ? '99+' : unread}</span>}</button>
+    {open && <div className={styles.bellPanel} role="dialog" aria-label="通知">
+      <div className={styles.bellHead}><strong>通知</strong>{unread > 0 && <button onClick={() => read([], true)}>全部標為已讀</button>}</div>
+      {!items.length ? <p className={styles.bellEmpty}>目前沒有通知。有人 @你、請你決策或指派待辦時會出現在這裡。</p>
+        : <ul>{items.map(item => <li key={item.id}><button className={item.read ? '' : styles.bellUnread} onClick={() => openItem(item)}>
+          <span className={styles.bellKind}>{KIND_LABEL[item.kind] || '通知'}</span><strong>{item.title}</strong>{item.body && <span className={styles.bellBody}>{item.body}</span>}<time>{when(item.created_at)}</time>
+        </button></li>)}</ul>}
+      <Link href="/admin/settings#notifications" className={styles.bellFoot} onClick={() => setOpen(false)}>推播通知設定 →</Link>
+    </div>}
+  </div>
+}
 
 export async function adminFetch(url, options) {
   const response = await fetch(url, options)
@@ -59,6 +105,11 @@ export default function AdminWorkspace({ children }) {
 
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
+  // The admin is installable as a PWA; the service worker also receives pushes.
+  useEffect(() => {
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/admin-sw.js', { scope: '/admin/' }).catch(() => {})
+  }, [])
+
   async function logout() {
     setLoggingOut(true)
     try {
@@ -89,7 +140,7 @@ export default function AdminWorkspace({ children }) {
         </div>
       </aside>
       <div className={styles.workArea}>
-        <header className={styles.topbar}><div><button className={styles.mobileMenu} onClick={() => setMobileOpen(true)} aria-label="開啟導航"><Menu size={21} /></button><span>團隊工作台</span><ChevronRight size={14} /><strong>{current.title}</strong></div><span className={styles.internalBadge}><span />內部管理系統</span></header>
+        <header className={styles.topbar}><div><button className={styles.mobileMenu} onClick={() => setMobileOpen(true)} aria-label="開啟導航"><Menu size={21} /></button><span>團隊工作台</span><ChevronRight size={14} /><strong>{current.title}</strong></div><div className={styles.topbarRight}><span className={styles.internalBadge}><span />內部管理系統</span><NotificationBell /></div></header>
         <main className={styles.workMain} id="admin-content">
           <div className={styles.pageHeading}><div><p className={styles.eyebrow}>DOGTOR / WORKSPACE</p><h1>{current.title}</h1><p>{current.desc}</p></div><span className={styles.dateLabel}>{new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'long', day: 'numeric', weekday: 'long' }).format(new Date())}</span></div>
           {serviceError && <p role="alert" className={styles.loginError}>{serviceError}</p>}

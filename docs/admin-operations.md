@@ -143,3 +143,14 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 - 官網的 `/api/admin/chat/.../execute` 設定 `maxDuration = 120`，後端呼叫模型逾時 90 秒。
 - 測試：`ADMIN_AUTH_TEST_DB=admin_auth_test ... pytest tests/test_admin_chat.py tests/test_admin_auth.py`（同樣只能指向隔離 DB）。
 
+## PWA、通知與待辦（2026-10-24）
+
+- **PWA**：後台可「加入主畫面」／Chrome「安裝」，名稱「Dogtor 團隊」，從 `/admin/ai-team` 開啟（`public/admin-manifest.webmanifest`、`public/admin-sw.js`，service worker scope 為 `/admin/`，不做離線快取）。
+- **@同事與通知**：聊天室輸入 `@名字` 會通知那位同事（自動完成會列出有聊天權限的同事；看不到該聊天室的人不會收到）。右上角鈴鐺顯示「提到你／請你決策／指派待辦」，點了會跳到那則訊息或待辦。
+- **推播**：同事在「帳號設定 → 推播通知」於每台裝置開啟。iPhone／iPad 需先用 Safari「加入主畫面」並從主畫面打開（iOS 16.4+）。後端要設定 VAPID 金鑰才會推播（未設定時仍有鈴鐺）：
+  1. `cd ../superb_app/backend && venv/bin/python -m scripts.generate_vapid_keys`
+  2. 在中央 Cloud Run（`superb-backend`，staging 另產一組）設定 `VAPID_PUBLIC_KEY`、`VAPID_PRIVATE_KEY`（私鑰放 Secret Manager 更好）、`VAPID_SUBJECT=mailto:...`。換金鑰後所有裝置要重新開啟通知。
+- **待辦**（`/admin/todos`，權限 `todos.view`／`todos.manage`）：三欄看板、「指派給我」、負責人可為同事或 AI 角色、期限、優先、變更紀錄與復原。聊天訊息可按「加入待辦」。指派給同事會通知他。
+- **Team Lead 兼任 PM**：所有 AI 都看得到未完成待辦（資料，不是指令）；Team Lead 的回覆可直接新增／更新待辦、用「請決策」通知同事，聊天室會顯示做了什麼並可取消／復原。只有 Team Lead 能動待辦，其他角色只能建議。只寫 `@Team` 的待辦類問題（例如「把 #9 改成進行中」「目前還有哪些待辦」）Team Lead 會直接處理、不召集其他角色。
+- 資料表（migration `594709dac30e`）：`admin_todos`、`admin_todo_events`、`admin_notifications`、`admin_push_subscriptions`。
+

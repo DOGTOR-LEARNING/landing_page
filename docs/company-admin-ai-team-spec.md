@@ -43,6 +43,7 @@
 - 上限：最多 3 個角色（`AI_TEAM_MAX_AGENTS`）、最多 3 輪（`AI_TEAM_MAX_ROUNDS`）、每次討論 80000 tokens（`AI_TEAM_RUN_TOKENS`）、300 秒（`AI_TEAM_RUN_SECONDS`）、費用上限 `AI_TEAM_RUN_COST_USD`（0 = 不限）。超過時跳過剩下的發言，直接請 Team Lead 彙整並註明提前結束。某個角色失敗不會中斷討論。
 - 實測（本機隔離 DB + 真實 OpenAI）：「5 萬元 IG 廣告」問題，Team Lead 指派 Finance、Marketing 各 1 輪後彙整，約 30 秒、5,600 tokens。
 - 2026-10-23 追加：員工與 AI 訊息都支援 Markdown + LaTeX（`remark-math`、`rehype-katex`）；討論完成後可下載「最終結論 .md」（`GET /admin/chat/runs/{id}/report`）。
+- 2026-10-24 追加：PWA＋推播（Web Push／VAPID）、@同事通知與鈴鐺、待辦看板（`/admin/todos`）、Team Lead 兼任 PM（直接新增／更新待辦、請同事決策，可復原）。migration `594709dac30e`。實測：Alice @Pierre 請他拍板→Pierre 收到通知；Pierre 在聊天室做決定後 Team Lead 建立兩項待辦並換算期限、通知 Alice；改狀態與請 Alice 決策都有實際寫入。推播加密／簽章以本機假推播服務驗證；內建瀏覽器無法註冊 service worker，實機推播待部署並設定 VAPID 後驗證。
 - 2026-10-24 追加：AI 角色記憶（人工管理＋AI 自動記錄、可撤銷）、員工職稱與自我介紹（顯示在聊天室並提供給 AI）、可新增 AI 角色並預設 Engineering B 交叉審查。migration `d1b098724273`。
 - 2026-10-24 追加：Team Lead 每輪動態決策。流程改為 plan（只排第 1 輪）→ 角色發言 → review（Team Lead 決定 continue＋誰回應哪一點，或 conclude）→ … → summary；最多 3 輪，最後一輪不做 review。`@Team` 同時點名角色時，點名名單就是參與名單。`ai_run_steps.kind` 新增 `review`；`plan_json.rounds` 改為每輪名單的陣列（舊格式會自動轉換）。實測：第 1 輪後 Team Lead 指出 Finance、Marketing 對測試門檻的分歧並請雙方回應，第 2 輪後判斷只剩資料不足而提前結束。
 - 2026-10-24 追加：多模型。`app/services/ai_team.py` 有 OpenAI、Gemini、DeepSeek、Claude 四個 adapter，每個角色可選服務與模型；migration `46932d4ad765` 在 `ai_run_steps` 記錄實際的 provider／model。實測 Finance 用 DeepSeek、Marketing 用 Gemini 兩輪辯論，觀點明顯不同。Claude 待設定 `ANTHROPIC_API_KEY`。

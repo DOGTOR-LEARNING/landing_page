@@ -39,6 +39,13 @@
 .review .bubble { background: #f7fafc; border-style: dashed; font-size: 14px; }
 .summary .bubble { background: #fff; border: 2px solid var(--ws-orange); }
 .titleBadge { background: var(--ws-card-blue); color: var(--ws-brand); border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 700; cursor: help; }
+.actions { list-style: none; margin: 4px 6px 0; display: flex; flex-direction: column; gap: 3px; }
+.actions li { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ws-brand); background: #fff7e8; border-radius: 8px; padding: 3px 8px; }
+.actions li svg { color: var(--ws-orange-dark); flex: 0 0 auto; }
+.actions a { color: var(--ws-orange-dark) !important; font-weight: 700; }
+.actions button { margin-left: auto; border: 0; background: transparent; color: var(--ws-orange-dark); font-size: 12px; font-weight: 700; cursor: pointer; }
+.undone { opacity: .6; }
+.focused .bubble { box-shadow: 0 0 0 3px var(--ws-orange); }
 .memories { list-style: none; margin: 4px 6px 0; display: flex; flex-direction: column; gap: 3px; }
 .memories li { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ws-brand); background: #f3f0ff; border-radius: 8px; padding: 3px 8px; }
 .memories li svg { color: #7c5cff; flex: 0 0 auto; }

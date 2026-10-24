@@ -1,5 +1,7 @@
 'use client'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkBreaks from 'remark-breaks'
@@ -7,12 +9,14 @@ import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain } from 'lucide-react'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
 
 const MAX_CHARS = 4000
+// "@name" being typed at the caret: not after an ASCII letter/digit (emails), any script for the name.
+const MENTION_TAIL = /(^|[^A-Za-z0-9_.])@([^\s@]*)$/
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 const POLL_MS = 3000
 const ERRORS = {
@@ -49,11 +53,19 @@ function mergeMessages(list, incoming) {
   return [...[...byId.values()].sort((a, b) => a.id - b.id), ...pending.filter(m => !confirmed.has(m.client_request_id))]
 }
 
-export default function AiTeamPage() {
+export default function AiTeamPageWithParams() {
+  return <Suspense fallback={null}><AiTeamPage /></Suspense>
+}
+
+function AiTeamPage() {
+  const params = useSearchParams()
+  const focusMessage = Number(params.get('message')) || null
   const { user } = useAdmin()
   const [rooms, setRooms] = useState([])
   const [roomId, setRoomId] = useState(null)
   const [agents, setAgents] = useState([])
+  const [people, setPeople] = useState([])
+  const [quickTodo, setQuickTodo] = useState(null)
   const [messages, setMessages] = useState([])
   const [hasMore, setHasMore] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -65,6 +77,7 @@ export default function AiTeamPage() {
   const cursor = useRef({ lastId: 0, since: null })
   const listRef = useRef(null)
   const stickToBottom = useRef(true)
+  const scrolledTo = useRef(null)
   const canPost = user.permissions.includes('chat.post')
   const canManage = user.permissions.includes('chat.manage')
   const room = rooms.find(r => r.id === roomId)
@@ -72,13 +85,21 @@ export default function AiTeamPage() {
   const loadRooms = useCallback(async () => {
     const data = await api('/api/admin/chat/rooms')
     setRooms(data)
-    setRoomId(current => current && data.some(r => r.id === current) ? current : data[0]?.id ?? null)
+    const linked = Number(new URLSearchParams(window.location.search).get('room'))
+    setRoomId(current => current && data.some(r => r.id === current) ? current : data.some(r => r.id === linked) ? linked : data[0]?.id ?? null)
   }, [])
 
   useEffect(() => {
+    api('/api/admin/chat/mentionable').then(setPeople).catch(() => {})
     Promise.all([loadRooms(), api('/api/admin/agents').then(list => setAgents(list.filter(a => a.is_enabled)))])
       .catch(e => setError(e.message)).finally(() => setLoading(false))
   }, [loadRooms])
+
+  // A notification link can point at another room while the page is open.
+  useEffect(() => {
+    const linked = Number(params.get('room'))
+    if (linked && rooms.some(r => r.id === linked)) setRoomId(linked)
+  }, [params, rooms])
 
   // Initial page of the selected room.
   useEffect(() => {
@@ -120,6 +141,8 @@ export default function AiTeamPage() {
 
   useEffect(() => {
     const list = listRef.current
+    const target = focusMessage && scrolledTo.current !== focusMessage && list?.querySelector(`[data-message-id="${focusMessage}"]`)
+    if (target) { target.scrollIntoView({ block: 'center' }); scrolledTo.current = focusMessage; stickToBottom.current = false; return }
     if (list && stickToBottom.current) list.scrollTop = list.scrollHeight
   }, [messages])
 
@@ -161,6 +184,13 @@ export default function AiTeamPage() {
     } catch (e) { setError(e.message) }
   }, [driveRun])
 
+  async function undoTodo(messageId, eventId) {
+    try {
+      await api(`/api/admin/todos/events/${eventId}/undo`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+      setMessages(list => list.map(m => m.id === messageId ? { ...m, actions: (m.actions || []).map(a => a.event_id === eventId ? { ...a, undone: true } : a) } : m))
+    } catch (e) { setError(e.message) }
+  }
+
   async function forget(messageId, memoryId) {
     try {
       await api(`/api/admin/agents/memories/${memoryId}`, { method: 'DELETE' })
@@ -195,13 +225,19 @@ export default function AiTeamPage() {
 
   function onDraftChange(value, caret) {
     setDraft(value)
-    const match = value.slice(0, caret).match(/(^|\s)@([\w-]*)$/)
+    const match = value.slice(0, caret).match(MENTION_TAIL)
     setMention(match ? match[2].toLowerCase() : null)
   }
-  const suggestions = useMemo(() => mention === null ? [] : agents.filter(a => a.slug.startsWith(mention) || a.display_name.toLowerCase().startsWith(mention)), [agents, mention])
-  function insertMention(agent) {
-    const name = agent.kind === 'lead' ? 'Team' : agent.display_name
-    setDraft(current => current.replace(/(^|\s)@([\w-]*)$/, `$1@${name} `))
+  // AI roles and people both answer to @; people get a notification.
+  const suggestions = useMemo(() => {
+    if (mention === null) return []
+    const ai = agents.filter(a => a.slug.startsWith(mention) || a.display_name.toLowerCase().startsWith(mention)).map(a => ({ ...a, type: 'agent' }))
+    const humans = people.filter(p => p.id !== user.id && p.display_name.toLowerCase().startsWith(mention)).map(p => ({ ...p, type: 'person' }))
+    return [...ai, ...humans].slice(0, 8)
+  }, [agents, people, mention, user.id])
+  function insertMention(item) {
+    const name = item.type === 'person' ? item.display_name : item.kind === 'lead' ? 'Team' : item.display_name
+    setDraft(current => current.replace(MENTION_TAIL, `$1@${name} `))
     setMention(null)
   }
   function onKeyDown(e) {
@@ -227,22 +263,55 @@ export default function AiTeamPage() {
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
           {!messages.length && <div className={chat.welcome}><Bot size={30} /><h3>開始聊天吧</h3><p>輸入 <strong>@Finance</strong>、<strong>@Marketing</strong>、<strong>@Operations</strong> 或 <strong>@Engineering</strong> 請單一角色回覆；跨部門的問題輸入 <strong>@Team</strong>，由 Team Lead 挑選角色討論，每輪結束後決定誰需要再發言（最多 3 輪），最後整理結論。想指定參與者就寫 <strong>@Team @Finance @Marketing</strong>。</p></div>}
-          {messages.map(m => <Message key={m.id || m.client_request_id} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onForget={forget} canForget={m => user.permissions.includes('agents.manage') || m.ai_run?.triggered_by_user_id === user.id} onResend={() => send(m.content, m.client_request_id)} />)}
+          {messages.map(m => <Message key={m.id || m.client_request_id} focused={m.id === focusMessage} canTodo={user.permissions.includes('todos.manage')} onTodo={setQuickTodo} onUndoTodo={undoTodo} message={m} mine={m.sender_type === 'human' && m.sender_user_id === user.id} canPost={canPost} canManage={canManage} userId={user.id} onRun={runAction} onForget={forget} canForget={m => user.permissions.includes('agents.manage') || m.ai_run?.triggered_by_user_id === user.id} onResend={() => send(m.content, m.client_request_id)} />)}
         </div>
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
         {canPost ? <form className={chat.composer} onSubmit={e => { e.preventDefault(); send(draft) }}>
-          {suggestions.length > 0 && <ul className={chat.suggestions} role="listbox">{suggestions.map(a => <li key={a.id}><button type="button" onMouseDown={e => { e.preventDefault(); insertMention(a) }}>{a.kind === 'lead' ? <Sparkles size={15} /> : <Bot size={15} />}<strong>@{a.kind === 'lead' ? 'Team' : a.display_name}</strong><span>{a.description}</span></button></li>)}</ul>}
+          {suggestions.length > 0 && <ul className={chat.suggestions} role="listbox">{suggestions.map(a => <li key={`${a.type}-${a.id}`}><button type="button" onMouseDown={e => { e.preventDefault(); insertMention(a) }}>{a.type === 'person' ? <UserRound size={15} /> : a.kind === 'lead' ? <Sparkles size={15} /> : <Bot size={15} />}<strong>@{a.type === 'person' ? a.display_name : a.kind === 'lead' ? 'Team' : a.display_name}</strong><span>{a.type === 'person' ? `${a.job_title || '同事'} · 會收到通知` : a.description}</span></button></li>)}</ul>}
           <textarea value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息（支援 Markdown 與 $LaTeX$），@角色 請 AI 回覆，@Team 啟動團隊討論" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
           <div className={chat.composerFoot}><span className={draft.length > MAX_CHARS ? chat.over : ''}><Info size={13} />AI 只提供建議，不會執行任何操作 · {draft.length}/{MAX_CHARS}</span><button className={styles.btnPrimary} disabled={!draft.trim() || draft.length > MAX_CHARS}><Send size={16} />送出</button></div>
         </form> : <p className={chat.readOnly}>你的帳號只有檢視權限，無法在聊天室發言。</p>}
       </>}
     </section>
+    {quickTodo && <QuickTodo message={quickTodo} people={people} agents={agents} onClose={done => { setQuickTodo(null); if (done) setError(done) }} />}
     {roomForm && <RoomDialog form={roomForm} setForm={setRoomForm} onCreated={async created => { setRoomForm(null); await loadRooms(); setRoomId(created.id) }} />}
     {membersOpen && room && <MembersDialog room={room} canManage={canManage} onClose={() => setMembersOpen(false)} />}
   </div>
 }
 
 const STEP_LABEL = { plan: '分派任務', summary: '彙整結論' }
+const STATUS_TEXT = { todo: '待辦', doing: '進行中', done: '完成', cancelled: '取消' }
+
+function QuickTodo({ message, people, agents, onClose }) {
+  const firstLine = message.content.replace(/[#*>`$_~-]/g, '').split('\n').map(l => l.trim()).find(Boolean) || ''
+  const [title, setTitle] = useState(firstLine.slice(0, 120))
+  const [assignee, setAssignee] = useState('')
+  const [due, setDue] = useState('')
+  const [error, setError] = useState('')
+  async function submit(e) {
+    e.preventDefault()
+    const [type, id] = assignee.split(':')
+    try {
+      await api('/api/admin/todos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        title, source_message_id: message.id, due_date: due || null,
+        assignee_user_id: type === 'user' ? Number(id) : null, assignee_agent_id: type === 'agent' ? Number(id) : null }) })
+      onClose('已加入待辦')
+    } catch (err) { setError(err.message) }
+  }
+  return <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="quick-todo"><form className={`${styles.modal} ${styles.employeeModal}`} onSubmit={submit}>
+    <button type="button" className={styles.modalClose} onClick={() => onClose()} aria-label="關閉"><X size={18} /></button>
+    <h2 id="quick-todo">加入待辦</h2><p className={styles.hint}>來自 {message.sender_name} 的訊息，待辦會連回這則訊息。</p>
+    <div className={styles.form}>
+      <div className={styles.fieldGroup}><label className={styles.label} htmlFor="qt-title">標題</label><input id="qt-title" className={styles.input} required maxLength={200} value={title} onChange={e => setTitle(e.target.value)} /></div>
+      <div className={styles.formColumns}>
+        <div className={styles.fieldGroup}><label className={styles.label} htmlFor="qt-who">負責人</label><select id="qt-who" className={styles.input} value={assignee} onChange={e => setAssignee(e.target.value)}><option value="">未指派</option><optgroup label="同事">{people.map(p => <option key={p.id} value={`user:${p.id}`}>{p.display_name}</option>)}</optgroup><optgroup label="AI 角色">{agents.map(a => <option key={a.id} value={`agent:${a.id}`}>AI {a.display_name}</option>)}</optgroup></select></div>
+        <div className={styles.fieldGroup}><label className={styles.label} htmlFor="qt-due">期限</label><input id="qt-due" type="date" className={styles.input} value={due} onChange={e => setDue(e.target.value)} /></div>
+      </div>
+      {error && <p role="alert" className={styles.loginError}>{error}</p>}
+      <div className={styles.modalActions}><button type="button" className={styles.btnSecondary} onClick={() => onClose()}>取消</button><button className={styles.btnPrimary}>加入待辦</button></div>
+    </div>
+  </form></div>
+}
 const REMARK = [remarkGfm, remarkCjkFriendly, remarkMath, remarkBreaks]
 const REHYPE = [[rehypeKatex, { throwOnError: false, strict: 'ignore' }]]
 
@@ -269,7 +338,7 @@ async function downloadReport(runId) {
   setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend, onForget, canForget }) {
+function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend, onForget, canForget, focused, canTodo, onTodo, onUndoTodo }) {
   const run = m.ai_run
   const isAgent = m.sender_type === 'agent'
   const owner = run && (run.triggered_by_user_id === userId || canManage)
@@ -279,7 +348,7 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
   const tokens = (m.step?.token_input || 0) + (m.step?.token_output || 0)
   // A failed member turn inside a finished discussion cannot be retried on its own.
   const canRetry = canPost && run && ['failed', 'cancelled'].includes(run.status)
-  return <article className={`${chat.message} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''} ${m.step?.kind === 'review' ? chat.review : ''}`}>
+  return <article data-message-id={m.id || undefined} className={`${chat.message} ${focused ? chat.focused : ''} ${mine ? chat.mine : ''} ${isAgent ? chat.agent : ''} ${m.step?.kind === 'summary' ? chat.summary : ''} ${m.step?.kind === 'review' ? chat.review : ''}`}>
     <div className={chat.meta}>{isAgent && <span className={chat.aiBadge}>{m.agent_slug === 'team' ? <Sparkles size={12} /> : <Bot size={12} />}AI</span>}<strong title={m.sender_bio || undefined}>{m.sender_name}</strong>{m.sender_title && <span className={chat.titleBadge} title={m.sender_bio || undefined}>{m.sender_title}</span>}{stepLabel && <span className={chat.stepBadge}>{stepLabel}</span>}{m.created_at && <time>{timeLabel(m.created_at)}</time>}</div>
     <div className={chat.bubble}>
       {m.status === 'pending' ? <span className={chat.typing}><i /><i /><i />{m.step?.kind === 'plan' || (team && !m.step && m.agent_slug === 'team') ? 'Team Lead 正在安排討論…' : m.step?.kind === 'review' ? 'Team Lead 正在判斷誰需要再發言…' : m.step?.kind === 'summary' ? 'Team Lead 正在彙整結論…' : `${m.sender_name} 正在思考…`}</span>
@@ -287,6 +356,11 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
           : <ChatMarkdown>{m.content}</ChatMarkdown>}
     </div>
     {m.memories?.length > 0 && <ul className={chat.memories}>{m.memories.map(x => <li key={x.id}><Brain size={12} /><span>{m.sender_name} 記住了：{x.content}</span>{canForget(m) && <button onClick={() => onForget(m.id, x.id)}>撤銷</button>}</li>)}</ul>}
+    {m.actions?.length > 0 && <ul className={chat.actions}>{m.actions.map((a, i) => <li key={i} className={a.undone ? chat.undone : ''}>
+      {a.type === 'decision' ? <><Gavel size={12} /><span>已請 <strong>{a.who}</strong> 決策：{a.question}</span></>
+        : <><ListTodo size={12} /><span>{a.type === 'todo_created' ? '新增待辦' : '更新待辦'} <Link href={`/admin/todos?todo=${a.todo_id}`}>#{a.todo_id} {a.title}</Link>{a.type === 'todo_updated' && a.changes.status ? `（${STATUS_TEXT[a.changes.status[0]]} → ${STATUS_TEXT[a.changes.status[1]]}）` : ''}{a.undone ? '（已復原）' : ''}</span>
+          {canTodo && !a.undone && <button onClick={() => onUndoTodo(m.id, a.event_id)}>{a.type === 'todo_created' ? '取消' : '復原'}</button>}</>}
+    </li>)}</ul>}
     <div className={chat.footer}>
       {m.status === 'sending' && <span>傳送中…</span>}
       {m.status === 'error' && <><span className={chat.failedText}>{m.error || '傳送失敗'}</span><button onClick={onResend}><RotateCcw size={12} />重新傳送</button></>}
@@ -294,6 +368,7 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
       {m.status === 'pending' && owner && canPost && <button onClick={() => onRun(run.id, 'cancel')}><Square size={11} />{team ? '停止討論' : '停止'}</button>}
       {(m.status === 'failed' || m.status === 'cancelled') && canRetry && <button onClick={() => onRun(run.id, 'retry')}><RotateCcw size={12} />{team ? '繼續討論' : '重試'}</button>}
       {m.status === 'sent' && run?.status === 'succeeded' && (team ? m.step?.kind === 'summary' : true) && <button onClick={() => downloadReport(run.id).catch(e => alert(e.message))}><Download size={12} />{team ? '下載最終結論 .md' : '下載 .md'}</button>}
+      {canTodo && m.id && m.status === 'sent' && m.content && <button onClick={() => onTodo(m)}><ListTodo size={12} />加入待辦</button>}
     </div>
   </article>
 }

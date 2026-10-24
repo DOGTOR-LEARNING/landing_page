@@ -23,6 +23,10 @@ const nextConfig = {
     return [{ source: '/admin/:path*', headers: [
       { key: 'Referrer-Policy', value: 'no-referrer' },
       { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+    ] }, { source: '/admin-sw.js', headers: [
+      // The admin PWA must pick up a new service worker right away.
+      { key: 'Cache-Control', value: 'no-cache' },
+      { key: 'Service-Worker-Allowed', value: '/admin/' },
     ] }]
   },
   async redirects() {

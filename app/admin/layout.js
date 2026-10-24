@@ -1,3 +1,9 @@
 import AdminWorkspace from './AdminWorkspace'
-export const metadata = { title: 'Dogtor 團隊工作台', robots: { index: false, follow: false } }
+export const metadata = {
+  title: 'Dogtor 團隊工作台', robots: { index: false, follow: false },
+  manifest: '/admin-manifest.webmanifest',
+  appleWebApp: { capable: true, title: 'Dogtor 團隊', statusBarStyle: 'default' },
+  icons: { apple: '/admin-apple-touch-icon.png' },
+}
+export const viewport = { themeColor: '#1e374b' }
 export default function AdminLayout({ children }) { return <AdminWorkspace>{children}</AdminWorkspace> }
