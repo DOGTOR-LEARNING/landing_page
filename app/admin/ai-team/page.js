@@ -9,7 +9,7 @@ import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel } from 'lucide-react'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel, HelpCircle } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
@@ -74,6 +74,15 @@ function AiTeamPage() {
   const [mention, setMention] = useState(null)
   const [roomForm, setRoomForm] = useState(null)
   const [membersOpen, setMembersOpen] = useState(false)
+  const [helpOpen, setHelpOpen] = useState(false)
+  // The guide opens until someone closes it once; storage can be unavailable (private mode).
+  useEffect(() => {
+    try { if (!localStorage.getItem('aiTeamGuideSeen')) setHelpOpen(true) } catch { /* keep it closed */ }
+  }, [])
+  function closeGuide() {
+    setHelpOpen(false)
+    try { localStorage.setItem('aiTeamGuideSeen', '1') } catch { /* fine: it just opens again next time */ }
+  }
   const cursor = useRef({ lastId: 0, since: null })
   const listRef = useRef(null)
   const stickToBottom = useRef(true)
@@ -258,7 +267,7 @@ function AiTeamPage() {
       {!room ? <div className={styles.emptyState}><Hash size={30} /><p>目前沒有可進入的聊天室。</p></div> : <>
         <header className={chat.roomHeader}>
           <div><h2>{room.visibility === 'private' ? <Lock size={17} /> : <Hash size={17} />}{room.name}</h2><p>{room.visibility === 'private' ? '私人聊天室：只有成員看得到' : '公開聊天室：具聊天權限的夥伴都看得到'}</p></div>
-          {room.visibility === 'private' && <button className={styles.smallButton} onClick={() => setMembersOpen(true)}><Users size={14} />成員</button>}
+          <div className={chat.headerActions}>{room.visibility === 'private' && <button className={styles.smallButton} onClick={() => setMembersOpen(true)}><Users size={14} />成員</button>}<button className={styles.smallButton} onClick={() => setHelpOpen(true)}><HelpCircle size={14} />使用說明</button></div>
         </header>
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
@@ -275,6 +284,7 @@ function AiTeamPage() {
     </section>
     {quickTodo && <QuickTodo message={quickTodo} people={people} agents={agents} onClose={done => { setQuickTodo(null); if (done) setError(done) }} />}
     {roomForm && <RoomDialog form={roomForm} setForm={setRoomForm} onCreated={async created => { setRoomForm(null); await loadRooms(); setRoomId(created.id) }} />}
+    {helpOpen && <GuideDialog onClose={closeGuide} />}
     {membersOpen && room && <MembersDialog room={room} canManage={canManage} onClose={() => setMembersOpen(false)} />}
   </div>
 }
@@ -371,6 +381,27 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
       {canTodo && m.id && m.status === 'sent' && m.content && <button onClick={() => onTodo(m)}><ListTodo size={12} />加入待辦</button>}
     </div>
   </article>
+}
+
+const GUIDE = [
+  ['💬 跟同事聊天', '像一般群組一樣直接打字。輸入 @同事名字 會通知他（例如「@Pierre 這個請你拍板」），他會在右上角鈴鐺和手機推播收到。'],
+  ['🤖 問單一 AI 角色', '輸入 @Finance、@Marketing、@Operations、@Engineering 或 @Engineering B，該角色會讀這個聊天室最近的對話後回覆。打 @ 會跳出清單可以選。'],
+  ['🧑‍🤝‍🧑 請 AI 團隊討論', '輸入 @Team 加上問題，Team Lead 會挑合適的角色討論，每輪結束後決定誰需要再回應，最多 3 輪，最後整理「結論／分歧／資料不足／建議下一步」，可下載成 .md。想指定參與者就寫「@Team @Finance @Marketing 問題」。'],
+  ['✅ 決策與待辦', '做了決定後，直接請 Team Lead 排進待辦（例如「@Team 決定先做 A/B 測試，Alice 負責，下週五前」），它會建立待辦並通知負責人；也可以按任何訊息下方的「加入待辦」。待辦在左側「待辦」頁，AI 做的變更都可以復原。'],
+  ['🧠 AI 會記住重要事實', 'AI 會把「本月花了多少」「已決定的事」這類事實記下來，換聊天室也記得；回覆下方會顯示「記住了：…」，記錯了可以按「撤銷」。'],
+  ['📝 寫得越完整越好', 'AI 只看得到聊天室裡的文字，看不到 Notion、帳務或其他系統。把背景數字、限制、你想要的結果寫在同一則訊息裡，答案會更具體。支援 Markdown 與公式（$x^2$）。'],
+  ['⚠️ 要記得', 'AI 只提供建議，不會寄信、付款或改任何系統資料（待辦除外）；重要決定請由負責的同事確認。發問後請不要馬上關掉頁面，AI 討論需要約 1～3 分鐘。'],
+]
+
+function GuideDialog({ onClose }) {
+  return <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="guide-title" onClick={e => e.target === e.currentTarget && onClose()}><div className={`${styles.modal} ${styles.employeeModal} ${chat.guide}`}>
+    <button type="button" className={styles.modalClose} onClick={onClose} aria-label="關閉"><X size={18} /></button>
+    <h2 id="guide-title">AI Team 怎麼用？</h2>
+    <p className={styles.hint}>這裡是夥伴和 AI 角色一起討論的地方。先到「帳號設定」填好職稱與自我介紹，AI 和同事就知道你負責什麼；也記得開啟推播通知。</p>
+    <ol>{GUIDE.map(([title, text]) => <li key={title}><strong>{title}</strong><p>{text}</p></li>)}</ol>
+    <div className={chat.guideExample}><span>試試看</span><code>@Team 下個月想花 5 萬元投 IG 廣告，目前月費 199、平均留存 6 個月，值得嗎？</code></div>
+    <div className={styles.modalActions}><a className={styles.btnSecondary} href="/admin/settings">去填個人介紹</a><button className={styles.btnPrimary} onClick={onClose}>開始使用</button></div>
+  </div></div>
 }
 
 function RoomDialog({ form, setForm, onCreated }) {

@@ -94,6 +94,16 @@
 .suggestions span { color: var(--ws-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .readOnly { border-top: 1px solid var(--ws-line); padding: 16px 22px; font-size: 14px; color: var(--ws-muted); background: #fff; }
 
+/* Usage guide */
+.headerActions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.guide ol { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 14px 0; max-height: 55dvh; overflow-y: auto; }
+.guide li { background: #f7fafc; border: 1px solid var(--ws-line); border-radius: 12px; padding: 10px 12px; }
+.guide li strong { font-size: 14px; color: var(--ws-text); }
+.guide li p { font-size: 13px; color: var(--ws-muted); line-height: 1.7; margin-top: 2px; }
+.guideExample { display: flex; flex-direction: column; gap: 4px; background: #fff4e0; border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; }
+.guideExample span { font-size: 12px; font-weight: 800; color: var(--ws-orange-dark); }
+.guideExample code { font-size: 13px; color: var(--ws-text); white-space: normal; }
+
 /* Dialogs */
 .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .choice label { display: flex; flex-direction: column; gap: 2px; border: 1.5px solid var(--ws-line); border-radius: 14px; padding: 12px 14px; cursor: pointer; font-size: 13px; color: var(--ws-muted); }
