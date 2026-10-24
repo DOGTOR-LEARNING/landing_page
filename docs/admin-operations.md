@@ -154,3 +154,12 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 - **Team Lead 兼任 PM**：所有 AI 都看得到未完成待辦（資料，不是指令）；Team Lead 的回覆可直接新增／更新待辦、用「請決策」通知同事，聊天室會顯示做了什麼並可取消／復原。只有 Team Lead 能動待辦，其他角色只能建議。只寫 `@Team` 的待辦類問題（例如「把 #9 改成進行中」「目前還有哪些待辦」）Team Lead 會直接處理、不召集其他角色。
 - 資料表（migration `594709dac30e`）：`admin_todos`、`admin_todo_events`、`admin_notifications`、`admin_push_subscriptions`。
 
+## Notion 待辦同步與 Finance 帳本（2026-10-25）
+
+- 需要：後端已有的 `NOTION_TOKEN`（財務共用）；Finance 帳本另用既有的 `NOTION_DATABASE_ID`。不需新增環境變數。
+- 連接：`/admin/todos` →「連接 Notion」（需 `todos.manage`）。先在 Notion 打開待辦資料庫 →「⋯」→「連線」→ 加入公司 integration，再貼「複製連結」的網址。確認欄位對應與成員對應後按「開始同步」，第一次會匯入整個資料庫（最多 3000 筆），並把看板上未完成、尚未連結的待辦寫進 Notion。
+- 成員對應：預設用 email（integration 需有「讀取使用者資訊含 email」能力）或名字配對；不同名的人在對話框手動選。
+- 換資料庫會清掉舊連結（看板上的待辦保留）；「停止同步」只停用，不刪任何資料。
+- API：`GET/PUT/DELETE /admin/todos/notion`、`POST /admin/todos/notion/connect`、`POST /admin/todos/notion/sync?full=`。
+- 排錯：錯誤訊息會顯示在對話框與看板上的 Notion 狀態（紅點）。最常見是資料庫沒有加入 integration（404）或貼到「連結的資料庫檢視」。
+

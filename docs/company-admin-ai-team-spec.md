@@ -8,14 +8,14 @@
 
 ---
 
-## 目前進度（接手的 AI 請先讀這段，最後更新：2026-10-23）
+## 目前進度（接手的 AI 請先讀這段，最後更新：2026-10-25）
 
 | 階段 | 狀態 | 說明 |
 |---|---|---|
 | Phase 1 登入與 RBAC | **已 push 前後端 main 與後端 production（2026-10-23）；正式 DB 已 migration；需確認官網環境變數** | 細節與指令見 `docs/admin-operations.md` |
 | Phase 2 多人聊天室 + 單 Agent | **完成（2026-10-23）** | 見下方「Phase 2 已完成」與 `docs/admin-operations.md`「AI Team」 |
 | Phase 3 多 Agent 討論 | **完成（2026-10-23）**，與 Phase 2 同一個 migration | 見下方「Phase 3 已完成」 |
-| Phase 4 工具與自動化 | 未開始 | — |
+| Phase 4 工具與自動化 | **進行中**：Notion 待辦雙向同步、Finance 唯讀帳本（2026-10-25） | 見下方「Phase 4」與 `docs/admin-operations.md`「Notion 待辦同步」 |
 
 **Phase 1 已完成**
 - 後端（`../superb_app/backend`，commit e99603bc）：`app/admin_auth.py`、`app/routers/admin_auth.py`、migration `e7f8a9b0c1d2`、`scripts/bootstrap_admin.py`、`tests/test_admin_auth.py`；推播／公告 API 改為驗證員工 session。
@@ -49,13 +49,20 @@
 - 2026-10-24 追加：多模型。`app/services/ai_team.py` 有 OpenAI、Gemini、DeepSeek、Claude 四個 adapter，每個角色可選服務與模型；migration `46932d4ad765` 在 `ai_run_steps` 記錄實際的 provider／model。實測 Finance 用 DeepSeek、Marketing 用 Gemini 兩輪辯論，觀點明顯不同。Claude 待設定 `ANTHROPIC_API_KEY`。
 - 測試：`tests/test_admin_chat.py` 共 15 個情境；`tests/test_ai_team_providers.py` 8 個 adapter 測試（本機假伺服器，不打真 API）。
 
+**Phase 4（2026-10-25）**
+- Notion 待辦雙向同步：後端 `app/services/notion_todos.py`、migration `956cf23c07e8`（`admin_settings`、`admin_todos.notion_*`、`external_assignee`）。在 `/admin/todos` 右上「連接 Notion」貼資料庫連結（也可貼含資料庫的頁面），自動判斷欄位（標題／狀態／負責人／期限／優先／說明），可手動改與對應 Notion 成員↔員工。token 沿用財務的 `NOTION_TOKEN`，資料庫需在 Notion「連線」加入該 integration。
+- 同步規則：每筆待辦存「上次同步時兩邊的值」；只在 Notion 改的欄位拉回，只在看板改的寫回，兩邊都改時看板優先並寫回。看板／AI 的變更在請求結束後立即寫入（`notion_dirty` 計數＋60 秒 lease 防重複建立頁面）；看板開著時每分鐘、AI 討論每一步前（超過 60 秒）會拉一次；「全部重新同步」會關閉 Notion 已刪除的事項。Notion 沒有「取消」選項時寫成完成狀態，看板仍顯示取消。AI 角色當負責人不會寫進 Notion；Notion 上不是員工的負責人顯示為「（Notion）」。不讀頁面內文，只讀屬性欄位。
+- Team Lead：看到最多 150 筆未完成待辦（含優先與說明摘要），一次最多 20 個動作，新增 `優先=`、`說明=`，提示裡有整理規則（重複→取消並註明、過時先請同事確認）。
+- Finance 角色：`app/services/finance_ledger.py` 在 Finance 發言前附上 Notion 帳本（`NOTION_DATABASE_ID`）本月與上月依支出性質的合計、最近 15 筆；唯讀、快取 10 分鐘。
+- 測試：`tests/test_notion_todos.py`（假 Notion API，涵蓋連接、匯入、雙向、衝突、刪除、Team Lead 整理、Finance 帳本）。
+
 **下一步（依序）**
 1. 官網環境變數設定 `ADMIN_AUTH_BACKEND_URL`、`ADMIN_PUBLIC_ORIGIN`（`ADMIN_PASSPHRASE` 保留不動），確認 Cloud Build 部署成功後，以正式 super_admin 登入正式網站驗證。
 2. 英文版後端同步更新（見 operations 文件「部署順序」）。
 3. ~~移除推播與公告的舊 key 授權~~：2026-10-23 已完成。`ADMIN_PASSPHRASE` 保留給財務伺服器之間使用，`ANNOUNCEMENTS_API_KEY` 保留給排程用，兩者都不要刪。
 4. 待補：員工 Email 邀請、自助忘記密碼（需寄信服務）。
 5. 到員工管理為員工勾選 AI Team 權限（super_admin 自動擁有）。若要在用量頁看到費用估算，設定 `AI_TEAM_PRICE_INPUT_PER_1M`／`AI_TEAM_PRICE_OUTPUT_PER_1M`。
-6. Phase 4（未開始）：Notion／Drive／財務模組受控讀取、需核准的寫入工具（第 11 章）。
+6. Phase 4 其餘：Drive、更多財務查詢、需核准的寫入工具（第 11 章）。
 
 ---
 

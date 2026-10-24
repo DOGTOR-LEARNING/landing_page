@@ -37,3 +37,30 @@
   .board { grid-template-columns: 1fr; }
   .column { min-height: 0; }
 }
+.notionChip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--ws-line); background: #fff; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 700; color: var(--ws-brand); cursor: pointer; }
+.notionChip:hover { border-color: var(--ws-orange); }
+.notionChip svg { color: var(--ws-muted); }
+.dotOk, .dotError { width: 8px; height: 8px; border-radius: 50%; background: #2e8a5c; }
+.dotError { background: #c0392b; }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.notion { margin-left: auto; display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 4px; border-radius: 5px; border: 1px solid #d6dde3; font-size: 11px; font-weight: 900; color: #37352f; text-decoration: none; background: #fff; }
+.notion:hover { border-color: #37352f; }
+.syncStatus { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; margin: 12px 0; border-radius: 14px; background: #f3f7fa; font-size: 13px; color: var(--ws-muted); }
+.syncStatus strong { color: var(--ws-text); margin-right: 8px; }
+.syncStatus a { display: inline-flex; align-items: center; gap: 3px; font-weight: 700; }
+.warn { color: #b9481e; font-size: 13px; }
+.ok { color: #2e8a5c; font-size: 13px; font-weight: 700; margin-top: 10px; }
+.steps { margin: 12px 0; font-size: 14px; }
+.steps summary { cursor: pointer; font-weight: 800; color: var(--ws-brand); }
+.steps ol { margin: 8px 0 10px 20px; display: flex; flex-direction: column; gap: 4px; color: var(--ws-muted); }
+.linkRow { display: flex; gap: 8px; }
+.linkRow input { flex: 1; min-width: 0; }
+.subhead { font-size: 15px; font-weight: 800; margin: 18px 0 4px; }
+.mapGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; margin-top: 8px; }
+.mapGrid label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 700; color: var(--ws-text); }
+.mapGrid label > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 600px) {
+  .mapGrid { grid-template-columns: 1fr; }
+  .linkRow { flex-direction: column; }
+}
