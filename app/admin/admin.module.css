@@ -1613,3 +1613,14 @@
   .workMain { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); padding-bottom: max(24px, env(safe-area-inset-bottom)); }
   .topbar { padding-top: env(safe-area-inset-top); height: calc(60px + env(safe-area-inset-top)); }
 }
+
+/* Full-screen chat on phones: the work area is exactly the visible viewport
+   (--app-vh follows the keyboard), the heading and footer are hidden, and only
+   the chat's own message list scrolls. */
+@media (max-width: 900px) {
+  .immersive { height: var(--app-vh, 100dvh); min-height: 0; overflow: hidden; }
+  .immersive .workArea { height: 100%; min-height: 0; display: flex; flex-direction: column; }
+  .immersive .topbar { position: relative; flex: 0 0 auto; }
+  .immersive .workMain { flex: 1 1 auto; min-height: 0; padding: 0 !important; display: flex; flex-direction: column; overflow: hidden; }
+  .immersive .pageHeading, .immersive .workspaceFooter { display: none; }
+}

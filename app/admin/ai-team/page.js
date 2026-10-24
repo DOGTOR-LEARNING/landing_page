@@ -9,7 +9,7 @@ import remarkCjkFriendly from 'remark-cjk-friendly'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel, HelpCircle } from 'lucide-react'
+import { Bot, Hash, Lock, Plus, Send, Square, RotateCcw, Users, X, ChevronUp, Info, Sparkles, Download, Brain, ListTodo, UserRound, Gavel, HelpCircle, AtSign } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import chat from './ai-team.module.css'
@@ -85,6 +85,17 @@ function AiTeamPage() {
   }
   const cursor = useRef({ lastId: 0, since: null })
   const listRef = useRef(null)
+  const inputRef = useRef(null)
+
+  // Phones: size the chat to the visible viewport so the composer stays above the keyboard.
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!vv) return
+    const fit = () => document.documentElement.style.setProperty('--app-vh', `${vv.height}px`)
+    fit()
+    vv.addEventListener('resize', fit)
+    return () => { vv.removeEventListener('resize', fit); document.documentElement.style.removeProperty('--app-vh') }
+  }, [])
   const stickToBottom = useRef(true)
   const scrolledTo = useRef(null)
   const canPost = user.permissions.includes('chat.post')
@@ -260,14 +271,14 @@ function AiTeamPage() {
   return <div className={chat.shell}>
     <aside className={chat.rooms}>
       <div className={chat.roomsHead}><span>聊天室</span>{canManage && <button className={chat.iconButton} onClick={() => setRoomForm({ name: '', visibility: 'public', member_ids: [] })} aria-label="新增聊天室" title="新增聊天室"><Plus size={17} /></button>}</div>
-      <nav className={chat.roomList}>{rooms.map(r => <button key={r.id} className={`${chat.roomItem} ${r.id === roomId ? chat.roomActive : ''}`} onClick={() => setRoomId(r.id)}>{r.visibility === 'private' ? <Lock size={15} /> : <Hash size={15} />}<span>{r.name}</span></button>)}</nav>
+      <nav className={chat.roomList}>{rooms.map(r => <button key={r.id} className={`${chat.roomItem} ${r.id === roomId ? chat.roomActive : ''}`} onClick={() => setRoomId(r.id)}>{r.visibility === 'private' ? <Lock size={15} /> : <Hash size={15} />}<span>{r.name}</span></button>)}{canManage && <button className={`${chat.iconButton} ${chat.roomAddInline}`} onClick={() => setRoomForm({ name: '', visibility: 'public', member_ids: [] })} aria-label="新增聊天室" title="新增聊天室"><Plus size={16} /></button>}</nav>
       <div className={chat.agentList}><span>AI 角色</span>{agents.map(a => <button key={a.id} type="button" className={a.kind === 'lead' ? chat.leadChip : ''} disabled={!canPost} onClick={() => setDraft(d => `${d}${d && !d.endsWith(' ') ? ' ' : ''}@${a.kind === 'lead' ? a.slug.replace(/^./, c => c.toUpperCase()) : a.display_name} `)} title={a.description}>{a.kind === 'lead' ? <Sparkles size={14} /> : <Bot size={14} />}{a.kind === 'lead' ? '@Team 團隊討論' : a.display_name}</button>)}</div>
     </aside>
     <section className={chat.main}>
       {!room ? <div className={styles.emptyState}><Hash size={30} /><p>目前沒有可進入的聊天室。</p></div> : <>
         <header className={chat.roomHeader}>
           <div><h2>{room.visibility === 'private' ? <Lock size={17} /> : <Hash size={17} />}{room.name}</h2><p>{room.visibility === 'private' ? '私人聊天室：只有成員看得到' : '公開聊天室：具聊天權限的夥伴都看得到'}</p></div>
-          <div className={chat.headerActions}>{room.visibility === 'private' && <button className={styles.smallButton} onClick={() => setMembersOpen(true)}><Users size={14} />成員</button>}<button className={styles.smallButton} onClick={() => setHelpOpen(true)}><HelpCircle size={14} />使用說明</button></div>
+          <div className={chat.headerActions}>{room.visibility === 'private' && <button className={styles.smallButton} onClick={() => setMembersOpen(true)} aria-label="成員"><Users size={14} /><span className={chat.btnText}>成員</span></button>}<button className={styles.smallButton} onClick={() => setHelpOpen(true)} aria-label="使用說明"><HelpCircle size={14} /><span className={chat.btnText}>使用說明</span></button></div>
         </header>
         <div className={chat.messages} ref={listRef} onScroll={e => { const el = e.currentTarget; stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80 }} aria-live="polite">
           {hasMore && <button className={chat.older} onClick={loadOlder}><ChevronUp size={15} />載入更早的訊息</button>}
@@ -277,8 +288,16 @@ function AiTeamPage() {
         {error && <p role="alert" className={chat.error}>{error}<button onClick={() => setError('')} aria-label="關閉"><X size={14} /></button></p>}
         {canPost ? <form className={chat.composer} onSubmit={e => { e.preventDefault(); send(draft) }}>
           {suggestions.length > 0 && <ul className={chat.suggestions} role="listbox">{suggestions.map(a => <li key={`${a.type}-${a.id}`}><button type="button" onMouseDown={e => { e.preventDefault(); insertMention(a) }}>{a.type === 'person' ? <UserRound size={15} /> : a.kind === 'lead' ? <Sparkles size={15} /> : <Bot size={15} />}<strong>@{a.type === 'person' ? a.display_name : a.kind === 'lead' ? 'Team' : a.display_name}</strong><span>{a.type === 'person' ? `${a.job_title || '同事'} · 會收到通知` : a.description}</span></button></li>)}</ul>}
-          <textarea value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息（支援 Markdown 與 $LaTeX$），@角色 請 AI 回覆，@Team 啟動團隊討論" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
-          <div className={chat.composerFoot}><span className={draft.length > MAX_CHARS ? chat.over : ''}><Info size={13} />AI 只提供建議，不會執行任何操作 · {draft.length}/{MAX_CHARS}</span><button className={styles.btnPrimary} disabled={!draft.trim() || draft.length > MAX_CHARS}><Send size={16} />送出</button></div>
+          <textarea ref={inputRef} value={draft} rows={2} maxLength={MAX_CHARS + 200} placeholder="輸入訊息…（@ 可以叫 AI 角色或同事）" onChange={e => onDraftChange(e.target.value, e.target.selectionStart)} onKeyDown={onKeyDown} aria-label="訊息內容" />
+          <div className={chat.composerFoot}>
+            <button type="button" className={chat.atButton} aria-label="選擇要 @ 的 AI 角色或同事" title="@ AI 角色或同事" onClick={() => {
+              const next = `${draft}${draft && !draft.endsWith(' ') ? ' ' : ''}@`
+              setDraft(next); setMention('')
+              requestAnimationFrame(() => { inputRef.current?.focus(); inputRef.current?.setSelectionRange(next.length, next.length) })
+            }}><AtSign size={17} /></button>
+            <span className={`${chat.footHint} ${draft.length > MAX_CHARS ? chat.over : ''}`}><Info size={13} /><span className={chat.btnText}>AI 只提供建議，不會執行任何操作 · </span>{draft.length}/{MAX_CHARS}</span>
+            <button className={styles.btnPrimary} disabled={!draft.trim() || draft.length > MAX_CHARS} aria-label="送出"><Send size={16} /><span className={chat.btnText}>送出</span></button>
+          </div>
         </form> : <p className={chat.readOnly}>你的帳號只有檢視權限，無法在聊天室發言。</p>}
       </>}
     </section>
@@ -378,7 +397,7 @@ function Message({ message: m, mine, canPost, canManage, userId, onRun, onResend
       {m.status === 'pending' && owner && canPost && <button onClick={() => onRun(run.id, 'cancel')}><Square size={11} />{team ? '停止討論' : '停止'}</button>}
       {(m.status === 'failed' || m.status === 'cancelled') && canRetry && <button onClick={() => onRun(run.id, 'retry')}><RotateCcw size={12} />{team ? '繼續討論' : '重試'}</button>}
       {m.status === 'sent' && run?.status === 'succeeded' && (team ? m.step?.kind === 'summary' : true) && <button onClick={() => downloadReport(run.id).catch(e => alert(e.message))}><Download size={12} />{team ? '下載最終結論 .md' : '下載 .md'}</button>}
-      {canTodo && m.id && m.status === 'sent' && m.content && <button onClick={() => onTodo(m)}><ListTodo size={12} />加入待辦</button>}
+      {canTodo && m.id && m.status === 'sent' && m.content && <button onClick={() => onTodo(m)} aria-label="加入待辦" title="加入待辦"><ListTodo size={12} /><span className={chat.btnText}>加入待辦</span></button>}
     </div>
   </article>
 }

@@ -124,8 +124,10 @@ export default function AdminWorkspace({ children }) {
   const current = NAV.find(item => item.href === pathname) || NAV[0]
   const allowed = user.permissions.includes(current.permission)
 
+  // The chat is a full-screen app on phones (no page heading, only the messages scroll).
+  const immersive = pathname === '/admin/ai-team'
   return <AdminContext.Provider value={{ user, setUser }}>
-    <div className={styles.workspace}>
+    <div className={`${styles.workspace} ${immersive ? styles.immersive : ''}`}>
       {mobileOpen && <button className={styles.mobileScrim} onClick={() => setMobileOpen(false)} aria-label="關閉導航" />}
       <aside className={`${styles.sidebar} ${mobileOpen ? styles.sidebarOpen : ''}`}>
         <Link href="/admin" className={styles.brand}><img src="/dogtor_eng_logo.svg" alt="Dogtor" /><img src="/dogtor_logo.svg" alt="逗課" /><span className={styles.brandCaption}>TEAM WORKSPACE</span></Link>
