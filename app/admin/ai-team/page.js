@@ -281,7 +281,8 @@ function AiTeamPage() {
   function onKeyDown(e) {
     if (e.nativeEvent.isComposing) return
     if (suggestions.length && (e.key === 'Tab' || e.key === 'Enter')) { e.preventDefault(); insertMention(suggestions[0]); return }
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (draft.length <= MAX_CHARS) send(draft) }
+    // Enter inserts a newline; Cmd/Ctrl+Enter sends (the send button is the main way).
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); if (draft.length <= MAX_CHARS) send(draft) }
     if (e.key === 'Escape') setMention(null)
   }
 
