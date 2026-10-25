@@ -22,6 +22,9 @@ import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import LocalDrinkOutlinedIcon from '@mui/icons-material/LocalDrinkOutlined'
+import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOutlined'
+import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined'
 
 // ─── 通知類型選項 ────────────────────────────────────────────────────────────
 const NOTIFICATION_TYPES = [
@@ -31,8 +34,42 @@ const NOTIFICATION_TYPES = [
   { value: 'social',    label: '社群動態',  desc: '好友互動、對戰邀請',   Icon: GroupOutlinedIcon },
 ]
 
-const INIT_BROADCAST = { title: '', content: '', notification_type: 'system', save_to_db: true }
-const INIT_EMAIL     = { emails: '', title: '', content: '', notification_type: 'system', save_to_db: true }
+const INIT_BROADCAST = { title: '', content: '', notification_type: 'system', save_to_db: true, with_potions: false, potion_count: 1 }
+const INIT_EMAIL     = {
+  emails: '', title: '', content: '', notification_type: 'system', save_to_db: true,
+  reward: 'none', potion_count: 1, pro_days: 365, pro_program: 'low_income', pro_note: '',
+}
+
+// ─── 獎勵（僅中文版後端）─────────────────────────────────────────────────────
+// Limits mirror backend/app/routers/admin_grants.py.
+const MAX_POTIONS_PER_GRANT = 20
+const MAX_POTIONS_PER_BROADCAST = 5
+const MAX_PRO_DAYS = 730
+
+const REWARDS = [
+  { value: 'none',    label: '只發通知',   desc: '不附加任何獎勵',         Icon: SendRoundedIcon },
+  { value: 'potions', label: '體力恢復劑', desc: '直接加進用戶的背包',     Icon: LocalDrinkOutlinedIcon },
+  { value: 'pro',     label: '開通 Pro',   desc: '不需綁 LINE、不需優惠碼', Icon: WorkspacePremiumOutlinedIcon },
+]
+
+const PRO_PROGRAMS = [
+  { value: 'low_income', label: '清寒方案' },
+  { value: 'gift',       label: '贈送' },
+]
+
+const POTION_SOURCES = {
+  purchase: '購買', starter_quest: '新手任務', achievement: '成就', invite: '邀請好友',
+  test_code: '測試碼', admin_grant: '後台發放', admin_broadcast: '全體贈送', use: '使用',
+}
+
+// A fresh id per broadcast form: the backend pays each user once per id, so a
+// double click or a retried request cannot send potions twice.
+const newCampaignId = () => `bc_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`
+
+// The backend sends naive UTC datetimes; without the Z they would parse as local time.
+const formatDate = value => value
+  ? new Date(/(Z|[+-]\d\d:\d\d)$/.test(value) ? value : `${value}Z`).toLocaleDateString('zh-TW', { timeZone: 'Asia/Taipei' })
+  : '—'
 
 // ─── 語言版本選項 ──────────────────────────────────────────────────────────────
 const LANGS = [
@@ -204,6 +241,7 @@ function ResultModal({ result, onClose }) {
         {ok && result.data && (
           <div className={styles.statsGrid}>
             {[
+              { key: 'credited_users',   label: '獲得恢復劑', type: 'success' },
               { key: 'total_tokens',     label: '目標裝置' },
               { key: 'success_count',    label: '成功送達',  type: 'success' },
               { key: 'failure_count',    label: '發送失敗',  type: 'warn', hideZero: false },
@@ -758,6 +796,114 @@ function AnnouncementsPanel({ lang, canManage }) {
   )
 }
 
+// ─── 獎勵發放紀錄 ─────────────────────────────────────────────────────────────
+function GrantsPanel({ canManage, refreshKey }) {
+  const [summary, setSummary] = useState(null)
+  const [grants, setGrants]   = useState([])
+  const [error, setError]     = useState('')
+  const [loading, setLoading] = useState(false)
+  const [revoking, setRevoking] = useState('')
+
+  const load = useCallback(async () => {
+    setLoading(true); setError('')
+    try {
+      const [s, g] = await Promise.all([
+        fetch('/api/admin/grants/potions/summary?days=30').then(r => r.json()),
+        fetch('/api/admin/grants/pro').then(r => r.json()),
+      ])
+      if (!s.success || !g.success) throw new Error(s.message || g.message || '讀取失敗')
+      setSummary(s.data); setGrants(g.data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => { load() }, [load, refreshKey])
+
+  async function revoke(email) {
+    if (!window.confirm(`確定要取消 ${email} 的 Pro 授權嗎？若沒有其他付費來源，對方會立刻變回免費版。`)) return
+    setRevoking(email)
+    try {
+      const data = await fetch('/api/admin/grants/pro/revoke', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
+      }).then(r => r.json())
+      if (!data.success) throw new Error(data.message)
+      await load()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setRevoking('')
+    }
+  }
+
+  return (
+    <ModuleCard icon={HistoryOutlinedIcon} title="獎勵發放紀錄" sub="近 30 天體力恢復劑進出，以及目前有效的 Pro 授權" badge="中文版">
+      <div className={styles.form}>
+        <div className={styles.labelRow}>
+          <span className={styles.label}>體力恢復劑（近 30 天）</span>
+          <button type="button" className={styles.smallButton} onClick={load} disabled={loading}>
+            <RefreshRoundedIcon style={{ fontSize: 16 }} />重新整理
+          </button>
+        </div>
+        {error && <p role="alert" className={styles.loginError}>{error}</p>}
+        {summary && <>
+          <div className={styles.statsGrid}>
+            {[
+              ['發出', summary.received, 'success'],
+              ['使用', summary.used],
+              ['目前持有', summary.held_now],
+              ['持有人數', summary.holders],
+            ].map(([label, value, type]) => (
+              <div key={label} className={`${styles.statCard} ${type ? styles[`stat_${type}`] : ''}`}>
+                <span className={styles.statNum}>{value}</span>
+                <span className={styles.statLabel}>{label}</span>
+              </div>
+            ))}
+          </div>
+          {summary.by_source.length > 0 && (
+            <div className={styles.tableScroll}>
+              <table className={styles.dataTable}>
+                <thead><tr><th>來源</th><th>數量</th><th>次數</th><th>人數</th></tr></thead>
+                <tbody>{summary.by_source.map(row => (
+                  <tr key={row.source}>
+                    <td>{POTION_SOURCES[row.source] || row.source}</td>
+                    <td>{row.potions}</td><td>{row.events}</td><td>{row.users}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          )}
+          <p className={styles.hint}>紀錄從這次上線開始累積，「目前持有」包含上線前就有的恢復劑。</p>
+        </>}
+
+        <span className={styles.label}>有效的 Pro 授權（{grants.length}）</span>
+        {grants.length === 0
+          ? <p className={styles.hint}>目前沒有後台開通的 Pro。</p>
+          : <div className={styles.tableScroll}>
+              <table className={styles.dataTable}>
+                <thead><tr><th>用戶</th><th>方案</th><th>到期日</th><th>發放者</th>{canManage && <th />}</tr></thead>
+                <tbody>{grants.map(grant => (
+                  <tr key={grant.id}>
+                    <td>{grant.name ? `${grant.name}・` : ''}{grant.email}{grant.note ? <><br /><small>{grant.note}</small></> : null}</td>
+                    <td>{PRO_PROGRAMS.find(p => p.value === grant.program)?.label || grant.program}</td>
+                    <td>{formatDate(grant.expires_at)}</td>
+                    <td>{grant.granted_by_name || '—'}</td>
+                    {canManage && <td>
+                      <button type="button" className={styles.smallButton} disabled={revoking === grant.email} onClick={() => revoke(grant.email)}>
+                        {revoking === grant.email ? '取消中…' : '取消授權'}
+                      </button>
+                    </td>}
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>}
+      </div>
+    </ModuleCard>
+  )
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // 主頁面
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -778,26 +924,44 @@ export default function AdminTools({ section, user }) {
   const [emailLoading, setEmailLoading] = useState(false)
   const [emailResult, setEmailResult]   = useState(null)
 
+  // ── 獎勵（體力恢復劑／Pro，僅中文版）───────────────────────────────────────
+  const canPush      = user.permissions.includes('push.manage')
+  const canGrant     = lang === 'zh' && user.permissions.includes('grants.manage')
+  const canSeeGrants = lang === 'zh' && user.permissions.includes('grants.view')
+  const [campaignId, setCampaignId]       = useState(newCampaignId)
+  const [grantsRefresh, setGrantsRefresh] = useState(0)
+
   // ── 廣播發送 ──────────────────────────────────────────────────────────────
   const handleBroadcastSend = useCallback(async () => {
     setBroadcastLoading(true)
     try {
-      const res  = await fetch('/api/admin/broadcast', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang },
-        body: JSON.stringify(broadcast),
-      })
+      const withPotions = canGrant && broadcast.with_potions
+      const { with_potions, potion_count, ...notice } = broadcast
+      const res  = withPotions
+        ? await fetch('/api/admin/grants/potions/broadcast', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...notice, count: potion_count, campaign_id: campaignId }),
+          })
+        : await fetch('/api/admin/broadcast', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang },
+            body: JSON.stringify(notice),
+          })
       const data = await res.json()
       setBroadcastConfirm(false)
       setBroadcastResult(data)
-      if (data.success) setBroadcast(INIT_BROADCAST)
+      if (data.success) {
+        setBroadcast(INIT_BROADCAST)
+        setCampaignId(newCampaignId())
+      }
     } catch (err) {
       setBroadcastConfirm(false)
       setBroadcastResult({ success: false, message: `連線失敗: ${err.message}` })
     } finally {
       setBroadcastLoading(false)
     }
-  }, [broadcast, lang])
+  }, [broadcast, lang, canGrant, campaignId])
 
   // ── Email 發送 ────────────────────────────────────────────────────────────
   const handleEmailSend = useCallback(async () => {
@@ -807,27 +971,50 @@ export default function AdminTools({ section, user }) {
         .split(/[\n,]+/)
         .map(e => e.trim().toLowerCase())
         .filter(Boolean)
-      const res  = await fetch('/api/admin/send-to-emails', {
+      const { reward, potion_count, pro_days, pro_program, pro_note, ...notice } = emailForm
+      const grant = canGrant ? reward : 'none'
+      const [url, body] = {
+        none:    ['/api/admin/send-to-emails', { ...notice, emails }],
+        potions: ['/api/admin/grants/potions', { ...notice, emails, count: potion_count }],
+        pro:     ['/api/admin/grants/pro', { ...notice, emails, days: pro_days, program: pro_program, note: pro_note.trim() || null }],
+      }[grant]
+      const res  = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang },
-        body: JSON.stringify({ ...emailForm, emails }),
+        body: JSON.stringify(body),
       })
       const data = await res.json()
       setEmailConfirm(false)
       setEmailResult(data)
-      if (data.success) setEmailForm(INIT_EMAIL)
+      if (data.success) {
+        setEmailForm(INIT_EMAIL)
+        if (grant !== 'none') setGrantsRefresh(n => n + 1)
+      }
     } catch (err) {
       setEmailConfirm(false)
       setEmailResult({ success: false, message: `連線失敗: ${err.message}` })
     } finally {
       setEmailLoading(false)
     }
-  }, [emailForm, lang])
+  }, [emailForm, lang, canGrant])
 
   // ── 管理區 ────────────────────────────────────────────────────────────────
   const emailCount   = emailForm.emails.split(/[\n,]+/).map(e => e.trim()).filter(Boolean).length
   const broadcastOk  = broadcast.title.trim() && broadcast.content.trim()
-  const emailOk      = emailCount > 0 && emailForm.title.trim() && emailForm.content.trim()
+  const emailReward  = canGrant ? emailForm.reward : 'none'
+  const hasTitle     = Boolean(emailForm.title.trim())
+  const hasContent   = Boolean(emailForm.content.trim())
+  // A grant may go out without a push, but a half-filled push is a mistake.
+  const noticeOk     = emailReward === 'none' ? canPush && hasTitle && hasContent : hasTitle === hasContent
+  const rewardOk     = emailReward === 'potions'
+    ? emailForm.potion_count >= 1 && emailForm.potion_count <= MAX_POTIONS_PER_GRANT
+    : emailReward === 'pro' ? emailForm.pro_days >= 1 && emailForm.pro_days <= MAX_PRO_DAYS : true
+  const emailOk      = emailCount > 0 && noticeOk && rewardOk
+  const emailAction  = {
+    none:    `發送推播給 ${emailCount} 位${langLabel}用戶`,
+    potions: `發給 ${emailCount} 位用戶各 ${emailForm.potion_count} 瓶體力恢復劑`,
+    pro:     `為 ${emailCount} 位用戶開通 Pro ${emailForm.pro_days} 天（${PRO_PROGRAMS.find(p => p.value === emailForm.pro_program)?.label}）`,
+  }[emailReward]
 
   return (
     <>
@@ -901,15 +1088,39 @@ export default function AdminTools({ section, user }) {
                     />
                   </div>
 
+                  {canGrant && (
+                    <div className={styles.fieldGroup}>
+                      <Toggle
+                        checked={broadcast.with_potions}
+                        onChange={v => setBroadcast(p => ({ ...p, with_potions: v }))}
+                        label="同時贈送體力恢復劑"
+                        desc="發給資料庫裡的每一位用戶（包含沒開推播的人），同一次廣播重送也不會重複發"
+                      />
+                      {broadcast.with_potions && <>
+                        <label className={styles.label} htmlFor="bc-potions">每人幾瓶</label>
+                        <input
+                          id="bc-potions"
+                          type="number"
+                          className={styles.input}
+                          min={1}
+                          max={MAX_POTIONS_PER_BROADCAST}
+                          value={broadcast.potion_count}
+                          onChange={e => setBroadcast(p => ({ ...p, potion_count: Number(e.target.value) }))}
+                        />
+                        <p className={styles.hint}>全體贈送每人最多 {MAX_POTIONS_PER_BROADCAST} 瓶</p>
+                      </>}
+                    </div>
+                  )}
+
                   <PushPreview title={broadcast.title} content={broadcast.content} lang={lang} />
 
                   <button
                     type="submit"
                     className={`${styles.btnPrimary} ${styles.sendBtn}`}
-                    disabled={!broadcastOk || broadcastLoading}
+                    disabled={!broadcastOk || broadcastLoading || (canGrant && broadcast.with_potions && !(broadcast.potion_count >= 1 && broadcast.potion_count <= MAX_POTIONS_PER_BROADCAST))}
                   >
                     <SendRoundedIcon style={{ fontSize: 18 }} />
-                    發送廣播給所有用戶
+                    {canGrant && broadcast.with_potions ? '發送廣播並贈送恢復劑' : '發送廣播給所有用戶'}
                   </button>
                 </fieldset></form>
               </ModuleCard>}
@@ -924,7 +1135,7 @@ export default function AdminTools({ section, user }) {
                 <form
                   onSubmit={e => { e.preventDefault(); if (emailOk) setEmailConfirm(true) }}
                   className={styles.form}
-                ><fieldset className={styles.toolFields} disabled={!user.permissions.includes('push.manage')}>
+                ><fieldset className={styles.toolFields} disabled={!canPush && !canGrant}>
                   <div className={styles.fieldGroup}>
                     <div className={styles.labelRow}>
                       <label className={styles.label} htmlFor="em-emails">
@@ -945,10 +1156,89 @@ export default function AdminTools({ section, user }) {
                     <p className={styles.hint}>支援換行或逗號分隔，系統會自動去重並比對資料庫</p>
                   </div>
 
+                  {canGrant && (
+                    <div className={styles.fieldGroup}>
+                      <label className={styles.label}>附加獎勵</label>
+                      <div className={styles.typeGrid}>
+                        {REWARDS.map(({ value, label, desc, Icon }) => (
+                          <button
+                            key={value}
+                            type="button"
+                            className={`${styles.typeOption} ${emailForm.reward === value ? styles.typeSelected : ''}`}
+                            onClick={() => setEmailForm(p => ({ ...p, reward: value }))}
+                          >
+                            <Icon className={styles.typeIcon} fontSize="small" />
+                            <span className={styles.typeLabel}>{label}</span>
+                            <span className={styles.typeDesc}>{desc}</span>
+                          </button>
+                        ))}
+                      </div>
+
+                      {emailForm.reward === 'potions' && <>
+                        <label className={styles.label} htmlFor="em-potions">每人幾瓶</label>
+                        <input
+                          id="em-potions"
+                          type="number"
+                          className={styles.input}
+                          min={1}
+                          max={MAX_POTIONS_PER_GRANT}
+                          value={emailForm.potion_count}
+                          onChange={e => setEmailForm(p => ({ ...p, potion_count: Number(e.target.value) }))}
+                        />
+                        <p className={styles.hint}>每人最多 {MAX_POTIONS_PER_GRANT} 瓶，送出後立即入帳</p>
+                      </>}
+
+                      {emailForm.reward === 'pro' && <>
+                        <div className={styles.formColumns}>
+                          <div className={styles.fieldGroup}>
+                            <label className={styles.label} htmlFor="em-program">方案</label>
+                            <select
+                              id="em-program"
+                              className={styles.input}
+                              value={emailForm.pro_program}
+                              onChange={e => setEmailForm(p => ({ ...p, pro_program: e.target.value }))}
+                            >
+                              {PRO_PROGRAMS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+                            </select>
+                          </div>
+                          <div className={styles.fieldGroup}>
+                            <label className={styles.label} htmlFor="em-days">天數</label>
+                            <input
+                              id="em-days"
+                              type="number"
+                              className={styles.input}
+                              min={1}
+                              max={MAX_PRO_DAYS}
+                              value={emailForm.pro_days}
+                              onChange={e => setEmailForm(p => ({ ...p, pro_days: Number(e.target.value) }))}
+                            />
+                          </div>
+                        </div>
+                        <label className={styles.label} htmlFor="em-note">備註（選填）</label>
+                        <input
+                          id="em-note"
+                          type="text"
+                          className={styles.input}
+                          placeholder="例：學校推薦、申請編號"
+                          maxLength={255}
+                          value={emailForm.pro_note}
+                          onChange={e => setEmailForm(p => ({ ...p, pro_note: e.target.value }))}
+                        />
+                        <p className={styles.hint}>到期會自動收回；已經有授權的人會延長，到期日取兩者中較晚的。付費訂閱到期也不會影響這份授權。</p>
+                      </>}
+
+                      {emailForm.reward !== 'none' && (
+                        <p className={styles.hint}>通知標題與內容可以留空，只發獎勵不推播{canPush ? '' : '（你的帳號沒有推播權限，請留空）'}</p>
+                      )}
+                    </div>
+                  )}
+
+                  <fieldset className={styles.toolFields} disabled={!canPush}>
+
                   <div className={styles.fieldGroup}>
                     <div className={styles.labelRow}>
                       <label className={styles.label} htmlFor="em-title">
-                        通知標題 <span className={styles.required}>*</span>
+                        通知標題 {emailReward === 'none' && <span className={styles.required}>*</span>}
                       </label>
                       <CharCount value={emailForm.title} max={50} />
                     </div>
@@ -967,7 +1257,7 @@ export default function AdminTools({ section, user }) {
                   <div className={styles.fieldGroup}>
                     <div className={styles.labelRow}>
                       <label className={styles.label} htmlFor="em-content">
-                        通知內容 <span className={styles.required}>*</span>
+                        通知內容 {emailReward === 'none' && <span className={styles.required}>*</span>}
                       </label>
                       <CharCount value={emailForm.content} max={200} />
                     </div>
@@ -1002,6 +1292,11 @@ export default function AdminTools({ section, user }) {
                   </div>
 
                   <PushPreview title={emailForm.title} content={emailForm.content} lang={lang} />
+                  </fieldset>
+
+                  {emailReward !== 'none' && hasTitle !== hasContent && (
+                    <p className={styles.hint}>通知標題與內容要一起填，或一起留空</p>
+                  )}
 
                   <button
                     type="submit"
@@ -1009,10 +1304,14 @@ export default function AdminTools({ section, user }) {
                     disabled={!emailOk || emailLoading}
                   >
                     <SendRoundedIcon style={{ fontSize: 18 }} />
-                    發送給指定用戶{emailCount > 0 ? `（${emailCount} 位）` : ''}
+                    {{ none: '發送給指定用戶', potions: '發送體力恢復劑', pro: '開通 Pro' }[emailReward]}{emailCount > 0 ? `（${emailCount} 位）` : ''}
                   </button>
                 </fieldset></form>
               </ModuleCard>}
+
+              {section === 'email' && canSeeGrants && (
+                <GrantsPanel canManage={canGrant} refreshKey={grantsRefresh} />
+              )}
 
               {/* 公佈欄管理 */}
               {section === 'announcements' && <div>
@@ -1029,7 +1328,7 @@ export default function AdminTools({ section, user }) {
 
       {broadcastConfirm && (
         <ConfirmModal
-          title={`廣播「${broadcast.title}」給所有${langLabel}用戶`}
+          title={`廣播「${broadcast.title}」給所有${langLabel}用戶${canGrant && broadcast.with_potions ? `，並每人送 ${broadcast.potion_count} 瓶體力恢復劑` : ''}`}
           onConfirm={handleBroadcastSend}
           onCancel={() => setBroadcastConfirm(false)}
           loading={broadcastLoading}
@@ -1037,7 +1336,7 @@ export default function AdminTools({ section, user }) {
       )}
       {emailConfirm && (
         <ConfirmModal
-          title={`傳送「${emailForm.title}」給 ${emailCount} 位${langLabel}指定用戶`}
+          title={hasTitle ? `${emailAction}，並推播「${emailForm.title}」` : `${emailAction}（不發推播）`}
           onConfirm={handleEmailSend}
           onCancel={() => setEmailConfirm(false)}
           loading={emailLoading}

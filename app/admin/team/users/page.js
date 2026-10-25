@@ -7,6 +7,7 @@ import styles from '../../admin.module.css'
 const PERMISSION_GROUPS = [
   { title: '進入後台', view: 'admin.access' },
   { title: '推播通知', view: 'push.view', manage: 'push.manage' },
+  { title: '獎勵發放（體力恢復劑／Pro）', view: 'grants.view', manage: 'grants.manage' },
   { title: 'App 公告', view: 'announcements.view', manage: 'announcements.manage' },
   { title: '財務報帳', view: 'finance.view', manage: 'finance.manage' },
   { title: 'AI Team 聊天室（檢視／發言）', view: 'chat.view', manage: 'chat.post' },
