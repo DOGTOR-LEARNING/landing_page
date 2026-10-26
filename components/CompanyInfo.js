@@ -1,4 +1,4 @@
-import { COMPANY, getCompanyAddress, getCompanyPhone } from '@/lib/company'
+import { COMPANY, getCompanyAddress } from '@/lib/company'
 import styles from './CompanyInfo.module.css'
 
 /**
@@ -27,14 +27,6 @@ export default function CompanyInfo({ messages, locale = 'zh-TW', headingLevel =
             <dd className={styles.value}>{row.value}</dd>
           </div>
         ))}
-        <div className={styles.row}>
-          <dt className={styles.label}>{c.phoneLabel}</dt>
-          <dd className={styles.value}>
-            <a href={`tel:${COMPANY.phoneHref}`} className={styles.link}>
-              {getCompanyPhone(locale)}
-            </a>
-          </dd>
-        </div>
         <div className={styles.row}>
           <dt className={styles.label}>{c.emailLabel}</dt>
           <dd className={styles.value}>

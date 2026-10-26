@@ -163,7 +163,6 @@ const jsonLd = [
     email: 'dogtor.love.learning@gmail.com',
     taxID: '62214225',
     vatID: '62214225',
-    telephone: '+886-963-779-263',
     legalName: '超棒軟體科技有限公司',
     address: {
       '@type': 'PostalAddress',
@@ -177,7 +176,6 @@ const jsonLd = [
       '@type': 'ContactPoint',
       contactType: 'customer support',
       email: 'dogtor.love.learning@gmail.com',
-      telephone: '+886-963-779-263',
       availableLanguage: ['zh-TW', 'en'],
     },
     description: '超棒軟體科技有限公司（SuperB Software Technology Co., Ltd.）是一家台灣軟體科技公司，致力於開發創新的教育科技產品。旗下產品 Dogtor 逗課是國高中生最喜歡的 AI 複習 App，提供題庫刷題、AI 解題、好友互動對戰、AI 分析弱點與個人化推薦功能。',

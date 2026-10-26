@@ -1,4 +1,4 @@
-import { COMPANY, getCompanyAddress, getCompanyPhone } from '@/lib/company'
+import { COMPANY, getCompanyAddress } from '@/lib/company'
 import styles from '../app/legal.module.css'
 
 function RichText({ text }) {
@@ -36,14 +36,12 @@ function ContactBlock({ locale }) {
         name: 'Company: ',
         taxId: 'Business Registration No.: ',
         address: 'Address: ',
-        phone: 'Phone: ',
         email: 'Email: ',
       }
     : {
         name: '公司名稱：',
         taxId: '統一編號：',
         address: '公司地址：',
-        phone: '聯絡電話：',
         email: '客服信箱：',
       }
 
@@ -60,10 +58,6 @@ function ContactBlock({ locale }) {
       <p>
         <strong>{labels.address}</strong>
         {getCompanyAddress(locale)}
-      </p>
-      <p>
-        <strong>{labels.phone}</strong>
-        <a href={`tel:${COMPANY.phoneHref}`}>{getCompanyPhone(locale)}</a>
       </p>
       <p>
         <strong>{labels.email}</strong>

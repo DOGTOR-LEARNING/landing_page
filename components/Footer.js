@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale, useMessages } from './LocaleProvider'
-import { COMPANY, getCompanyAddress, getCompanyPhone } from '@/lib/company'
+import { COMPANY, getCompanyAddress } from '@/lib/company'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -60,11 +60,6 @@ export default function Footer() {
           </p>
           <p className={styles.footerCompanyMeta}>
             {getCompanyAddress(locale)}
-            <span className={styles.footerDivider} aria-hidden="true">｜</span>
-            {m.company.phoneLabel}{' '}
-            <a href={`tel:${COMPANY.phoneHref}`} className={styles.footerCompanyLink}>
-              {getCompanyPhone(locale)}
-            </a>
           </p>
         </div>
       </div>
