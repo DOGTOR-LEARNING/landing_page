@@ -263,8 +263,21 @@ export default function SubscribeClient({ previewMode = false }) {
 
         {/* Plan Details */}
         <div className={styles.planDetails}>
+          {/* A valid promo link shows the discount before checkout opens;
+              otherwise parents only learned about it inside Paddle's
+              overlay, after tapping the trial button. */}
+          {promoDiscountId && (
+            <p className={styles.promoBadge}>{sub.promoBadge}</p>
+          )}
+          {promoDiscountId && (
+            <p className={styles.planPriceOriginal}>
+              {plan === 'monthly' ? sub.monthlyPrice : sub.yearlyPrice}
+            </p>
+          )}
           <p className={styles.planPrice}>
-            {plan === 'monthly' ? sub.monthlyPrice : sub.yearlyPrice}
+            {promoDiscountId
+              ? (plan === 'monthly' ? sub.promoMonthlyPrice : sub.promoYearlyPrice)
+              : (plan === 'monthly' ? sub.monthlyPrice : sub.yearlyPrice)}
           </p>
           {plan === 'yearly' && (
             <p className={styles.planSave}>{sub.yearlySave}</p>
@@ -284,7 +297,11 @@ export default function SubscribeClient({ previewMode = false }) {
         >
           {submitting ? sub.subscribing : sub.subscribe}
         </button>
-        {sub.trialNote && <p className={styles.trialNote}>{sub.trialNote}</p>}
+        {sub.trialNote && (
+          <p className={styles.trialNote}>
+            {promoDiscountId ? sub.promoTrialNote : sub.trialNote}
+          </p>
+        )}
 
       </div>
     </main>
