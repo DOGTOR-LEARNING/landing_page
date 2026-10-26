@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import CompanyLink from '@/components/CompanyLink'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, ShieldCheck, Eye, EyeOff } from 'lucide-react'
 import { useAdmin } from '../AdminWorkspace'
@@ -25,7 +26,7 @@ export default function LoginPage() {
     finally { setLoading(false) }
   }
   return <main className={styles.loginPage}>
-    <div className={styles.loginStory}><Link href="/" className={styles.brand}><img src="/dogtor_eng_logo.svg" alt="Dogtor" /><img src="/dogtor_logo.svg" alt="逗課" /><span className={styles.brandCaption}>TEAM WORKSPACE</span></Link><div className={styles.loginStoryBody}><p className={styles.eyebrow}>DOGTOR 團隊工作台</p><h1>一起，把好點子<br /><em>變成每天的進步。</em></h1><p>歡迎回到團隊工作台。<br />讓每一個小小的行動，都成為學習路上的助力。</p><div className={styles.loginIllustration}><img src="/question-corgi.png" alt="Dogtor 小狗夥伴" /></div></div><span className={styles.loginCopyright}>© {new Date().getFullYear()} Dogtor · 超棒軟體科技</span></div>
+    <div className={styles.loginStory}><Link href="/" className={styles.brand}><img src="/dogtor_eng_logo.svg" alt="Dogtor" /><img src="/dogtor_logo.svg" alt="逗課" /><span className={styles.brandCaption}>TEAM WORKSPACE</span></Link><div className={styles.loginStoryBody}><p className={styles.eyebrow}>DOGTOR 團隊工作台</p><h1>一起，把好點子<br /><em>變成每天的進步。</em></h1><p>歡迎回到團隊工作台。<br />讓每一個小小的行動，都成為學習路上的助力。</p><div className={styles.loginIllustration}><img src="/question-corgi.png" alt="Dogtor 小狗夥伴" /></div></div><span className={styles.loginCopyright}>© {new Date().getFullYear()} Dogtor · <CompanyLink>超棒軟體科技</CompanyLink></span></div>
     <div className={styles.loginFormSide}><div className={styles.loginCard}><div className={styles.loginIconWrap}><ShieldCheck size={25} /></div><p className={styles.eyebrow}>WELCOME BACK</p><h2 className={styles.loginTitle}>登入團隊工作台</h2><p className={styles.loginSubtitle}>使用你的員工帳號，開始今天的工作。</p><form onSubmit={submit} className={styles.loginForm}>
       <div className={styles.fieldGroup}><label className={styles.label} htmlFor="email">員工 Email</label><input id="email" className={styles.input} type="email" autoComplete="username" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@company.com" /></div>
       <div className={styles.fieldGroup}><label className={styles.label} htmlFor="password">密碼</label><div className={styles.passwordField}><input id="password" className={styles.input} type={visible ? 'text' : 'password'} autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} placeholder="輸入你的密碼" /><button type="button" aria-label={visible ? '隱藏密碼' : '顯示密碼'} onClick={() => setVisible(!visible)}>{visible ? <EyeOff size={18} /> : <Eye size={18} />}</button></div></div>

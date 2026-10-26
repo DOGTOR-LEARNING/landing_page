@@ -1,5 +1,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import CompanyLink from '@/components/CompanyLink'
+import { COMPANY } from '@/lib/company'
 import styles from './partnership.module.css'
 
 export const metadata = {
@@ -25,7 +27,7 @@ export default function Partnership() {
               <div className={styles.partyBlock}>
                 <p>
                   <span className={styles.partyLabel}>甲方：</span>
-                  超棒軟體科技有限公司（SuperB Software Technology Co., Ltd.），以下簡稱甲方
+                  <CompanyLink>{COMPANY.nameZh}（{COMPANY.nameEn}）</CompanyLink>，以下簡稱甲方
                 </p>
               </div>
               <div className={styles.partyBlock}>
@@ -91,7 +93,7 @@ export default function Partnership() {
               <h2>三、股權分配與歸屬</h2>
               <ul className={styles.orderedList}>
                 <li>
-                  <span className={styles.highlight}>股權授予：</span>甲方同意授予乙方超棒軟體科技有限公司{' '}
+                  <span className={styles.highlight}>股權授予：</span>甲方同意授予乙方<CompanyLink>{COMPANY.nameZh}</CompanyLink>{' '}
                   <span className={styles.highlight}>4%</span> 之股權，作為長期合夥之對價。
                 </li>
                 <li>
@@ -156,7 +158,7 @@ export default function Partnership() {
                   <h3>甲方</h3>
                   <div className={styles.infoRow}>
                     <span className={styles.infoLabel}>公司名稱</span>
-                    <span className={styles.infoValue}>超棒軟體科技有限公司</span>
+                    <span className={styles.infoValue}><CompanyLink>{COMPANY.nameZh}</CompanyLink></span>
                   </div>
                   <div className={styles.infoRow}>
                     <span className={styles.infoLabel}>統一編號</span>

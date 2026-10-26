@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale, useMessages } from './LocaleProvider'
 import { COMPANY, getCompanyAddress } from '@/lib/company'
+import CompanyLink from './CompanyLink'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -51,7 +52,9 @@ export default function Footer() {
         </div>
         <div className={styles.footerCompany}>
           <p className={styles.footerCompanyName}>
-            {COMPANY.nameZh} {COMPANY.nameEn}
+            <CompanyLink className={styles.footerCompanyLink}>
+              {COMPANY.nameZh} {COMPANY.nameEn}
+            </CompanyLink>
           </p>
           <p className={styles.footerCompanyMeta}>
             {m.company.taxIdLabel} {COMPANY.taxId}

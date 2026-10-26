@@ -1,4 +1,5 @@
 import { COMPANY, getCompanyAddress } from '@/lib/company'
+import CompanyLink from './CompanyLink'
 import styles from './CompanyInfo.module.css'
 
 /**
@@ -10,7 +11,14 @@ export default function CompanyInfo({ messages, locale = 'zh-TW', headingLevel =
   const Heading = headingLevel
 
   const rows = [
-    { label: c.nameLabel, value: `${COMPANY.nameZh}（${COMPANY.nameEn}）` },
+    {
+      label: c.nameLabel,
+      value: (
+        <CompanyLink className={styles.link}>
+          {COMPANY.nameZh}（{COMPANY.nameEn}）
+        </CompanyLink>
+      ),
+    },
     { label: c.taxIdLabel, value: COMPANY.taxId },
     { label: c.representativeLabel, value: COMPANY.representative },
     { label: c.addressLabel, value: getCompanyAddress(locale) },

@@ -1,4 +1,5 @@
 import { COMPANY, getCompanyAddress } from '@/lib/company'
+import CompanyLink from './CompanyLink'
 import styles from '../app/legal.module.css'
 
 function RichText({ text }) {
@@ -49,7 +50,7 @@ function ContactBlock({ locale }) {
     <div className={styles.contactEmail}>
       <p>
         <strong>{labels.name}</strong>
-        {COMPANY.nameZh}（{COMPANY.nameEn}）
+        <CompanyLink>{COMPANY.nameZh}（{COMPANY.nameEn}）</CompanyLink>
       </p>
       <p>
         <strong>{labels.taxId}</strong>

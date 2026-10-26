@@ -1,0 +1,10 @@
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration-thickness: 2px;
+}

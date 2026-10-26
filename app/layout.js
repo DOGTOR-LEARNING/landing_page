@@ -1,4 +1,5 @@
 import './globals.css'
+import { COMPANY } from '@/lib/company'
 import Script from 'next/script'
 import { headers } from 'next/headers'
 import { LocaleProvider } from '@/components/LocaleProvider'
@@ -50,7 +51,7 @@ export const metadata = {
     '超棒軟體科技有限公司',
     'SuperB Software Technology',
   ],
-  authors: [{ name: 'Dogtor 逗課 Team' }, { name: '超棒軟體科技有限公司' }],
+  authors: [{ name: 'Dogtor 逗課 Team' }, { name: COMPANY.nameZh, url: COMPANY.website }],
   openGraph: {
     title: 'Dogtor 逗課 | 國高中生最愛的 AI 複習 App',
     description:
@@ -90,7 +91,8 @@ const jsonLd = [
     email: 'dogtor.love.learning@gmail.com',
     parentOrganization: {
       '@type': 'Organization',
-      name: '超棒軟體科技有限公司',
+      name: COMPANY.nameZh,
+      url: COMPANY.website,
       alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體'],
     },
     description:
@@ -159,7 +161,7 @@ const jsonLd = [
     '@type': 'Organization',
     name: '超棒軟體科技有限公司',
     alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體', '超棒軟體科技'],
-    url: 'https://dogtor.superb-tutor.com',
+    url: COMPANY.website,
     email: 'dogtor.love.learning@gmail.com',
     taxID: '62214225',
     vatID: '62214225',
@@ -270,7 +272,8 @@ const jsonLd = [
     url: 'https://dogtor.superb-tutor.com',
     publisher: {
       '@type': 'Organization',
-      name: '超棒軟體科技有限公司',
+      name: COMPANY.nameZh,
+      url: COMPANY.website,
       alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體'],
     },
     downloadUrl: 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627',
