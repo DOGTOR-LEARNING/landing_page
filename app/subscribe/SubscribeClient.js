@@ -25,6 +25,8 @@ const PADDLE_PROMO_DISCOUNT_ID = process.env.NEXT_PUBLIC_PADDLE_PROMO_DISCOUNT_I
 // Used by the payment provider to review the purchase flow end-to-end.
 const PREVIEW_IDENTIFIER = 'paddle-review-preview'
 
+const DISCOUNT_STORAGE_KEY = 'dogtor_subscribe_discount'
+
 export default function SubscribeClient({ previewMode = false }) {
   const searchParams = useSearchParams()
   const m = useMessages()
@@ -41,7 +43,16 @@ export default function SubscribeClient({ previewMode = false }) {
 
   const isCanceled = searchParams.get('canceled') === '1'
 
-  const discountParam = searchParams.get('discount')
+  // LINE login sends the parent back to the LIFF endpoint without our query
+  // string, so a promo link's ?discount= is kept in sessionStorage across it.
+  const [discountParam, setDiscountParam] = useState(searchParams.get('discount'))
+  useEffect(() => {
+    if (discountParam) return
+    try {
+      const saved = sessionStorage.getItem(DISCOUNT_STORAGE_KEY)
+      if (saved) setDiscountParam(saved)
+    } catch {}
+  }, [discountParam])
   const promoDiscountId =
     discountParam &&
     PADDLE_PROMO_DISCOUNT_CODE &&
@@ -65,7 +76,13 @@ export default function SubscribeClient({ previewMode = false }) {
         await liff.init({ liffId: LIFF_ID })
 
         if (!liff.isLoggedIn()) {
-          liff.login()
+          const discount = new URLSearchParams(window.location.search).get('discount')
+          if (discount) {
+            try {
+              sessionStorage.setItem(DISCOUNT_STORAGE_KEY, discount)
+            } catch {}
+          }
+          liff.login({ redirectUri: window.location.href })
           return
         }
 
