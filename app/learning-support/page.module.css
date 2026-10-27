@@ -1,9 +1,25 @@
 .main {
+  --section-gap: 2.5rem;
   position: relative;
   padding-top: 120px;
   padding-bottom: var(--space-2xl);
   min-height: 100vh;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .main {
+    --section-gap: 3.5rem;
+  }
+}
+
+/* globals.css 給每個 section 上下 5rem padding，這頁改用 --section-gap 統一控制間距。
+   .letter 和 .cta 自己有設 padding，不受影響。 */
+.hero,
+.video,
+.steps {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* 頁面頂端的暖色光暈 */
@@ -23,7 +39,7 @@
 .hero {
   position: relative;
   max-width: 760px;
-  margin: 0 auto var(--space-2xl);
+  margin: 0 auto var(--section-gap);
   text-align: center;
 }
 
@@ -147,7 +163,7 @@
 /* === 影片 === */
 .video {
   max-width: 880px;
-  margin: 0 auto var(--space-2xl);
+  margin: 0 auto var(--section-gap);
 }
 
 .videoVertical {
@@ -157,7 +173,7 @@
 /* === 創辦人的話 === */
 .letter {
   max-width: 760px;
-  margin: 0 auto var(--space-2xl);
+  margin: 0 auto var(--section-gap);
   padding: var(--space-xl) var(--space-md);
   border-radius: var(--radius-xl);
   background: #fffaf0;
@@ -218,7 +234,7 @@
 /* === 申請步驟 === */
 .steps {
   max-width: 960px;
-  margin: 0 auto var(--space-2xl);
+  margin: 0 auto var(--section-gap);
 }
 
 .sectionTitle {
