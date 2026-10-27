@@ -36,7 +36,7 @@ export default function Footer() {
             <p className={styles.footerCopy}>{m.footer.copyright(currentYear)}</p>
             <p className={styles.footerContact}>
               {m.footer.contact}{' '}
-              <a href="mailto:dogtor.love.learning@gmail.com">dogtor.love.learning@gmail.com</a>
+              <a href="mailto:dogtor@superb-tutor.com">dogtor@superb-tutor.com</a>
             </p>
           </div>
 

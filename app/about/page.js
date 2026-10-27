@@ -51,8 +51,8 @@ export default async function About() {
               <p className={styles.text}>{m.about.teamP2}</p>
               <div className={styles.contactBox}>
                 <p className={styles.contactLabel}>{m.about.contactLabel}</p>
-                <a href="mailto:dogtor.love.learning@gmail.com" className={styles.contactEmail}>
-                  dogtor.love.learning@gmail.com
+                <a href="mailto:dogtor@superb-tutor.com" className={styles.contactEmail}>
+                  dogtor@superb-tutor.com
                 </a>
               </div>
             </section>

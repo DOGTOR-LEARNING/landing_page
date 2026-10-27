@@ -48,10 +48,10 @@ export default async function Support() {
                   <div>
                     <p className={styles.contactLabel}>{s.emailLabel}</p>
                     <a
-                      href="mailto:dogtor.love.learning@gmail.com"
+                      href="mailto:dogtor@superb-tutor.com"
                       className={styles.contactValue}
                     >
-                      dogtor.love.learning@gmail.com
+                      dogtor@superb-tutor.com
                     </a>
                   </div>
                 </div>
@@ -75,7 +75,7 @@ export default async function Support() {
                   <p className={styles.actionDesc}>{s.actions.faq.desc}</p>
                 </a>
                 <a
-                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.emailSubjects.bug)}`}
+                  href={`mailto:dogtor@superb-tutor.com?subject=${encodeURIComponent(s.emailSubjects.bug)}`}
                   className={styles.actionCard}
                 >
                   <BugReport className={styles.actionIcon} />
@@ -83,7 +83,7 @@ export default async function Support() {
                   <p className={styles.actionDesc}>{s.actions.bug.desc}</p>
                 </a>
                 <a
-                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.emailSubjects.login)}`}
+                  href={`mailto:dogtor@superb-tutor.com?subject=${encodeURIComponent(s.emailSubjects.login)}`}
                   className={styles.actionCard}
                 >
                   <Lock className={styles.actionIcon} />
@@ -91,7 +91,7 @@ export default async function Support() {
                   <p className={styles.actionDesc}>{s.actions.login.desc}</p>
                 </a>
                 <a
-                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.emailSubjects.billing)}`}
+                  href={`mailto:dogtor@superb-tutor.com?subject=${encodeURIComponent(s.emailSubjects.billing)}`}
                   className={styles.actionCard}
                 >
                   <CreditCard className={styles.actionIcon} />
@@ -99,7 +99,7 @@ export default async function Support() {
                   <p className={styles.actionDesc}>{s.actions.billing.desc}</p>
                 </a>
                 <a
-                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.emailSubjects.delete)}`}
+                  href={`mailto:dogtor@superb-tutor.com?subject=${encodeURIComponent(s.emailSubjects.delete)}`}
                   className={styles.actionCard}
                 >
                   <Delete className={styles.actionIcon} />
@@ -107,7 +107,7 @@ export default async function Support() {
                   <p className={styles.actionDesc}>{s.actions.delete.desc}</p>
                 </a>
                 <a
-                  href={`mailto:dogtor.love.learning@gmail.com?subject=${encodeURIComponent(s.emailSubjects.feature)}`}
+                  href={`mailto:dogtor@superb-tutor.com?subject=${encodeURIComponent(s.emailSubjects.feature)}`}
                   className={styles.actionCard}
                 >
                   <Lightbulb className={styles.actionIcon} />

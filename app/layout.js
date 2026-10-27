@@ -88,7 +88,7 @@ const jsonLd = [
     alternateName: ['逗課', 'Dogtor App', '逗課學習 App', 'Dogtor 學習'],
     url: 'https://dogtor.superb-tutor.com',
     logo: 'https://dogtor.superb-tutor.com/dogtor_logo.svg',
-    email: 'dogtor.love.learning@gmail.com',
+    email: 'dogtor@superb-tutor.com',
     parentOrganization: {
       '@type': 'Organization',
       name: COMPANY.nameZh,
@@ -162,7 +162,7 @@ const jsonLd = [
     name: '超棒軟體科技有限公司',
     alternateName: ['SuperB Software Technology Co., Ltd.', 'SuperB Software', '超棒軟體', '超棒軟體科技'],
     url: COMPANY.website,
-    email: 'dogtor.love.learning@gmail.com',
+    email: 'dogtor@superb-tutor.com',
     taxID: '62214225',
     vatID: '62214225',
     legalName: '超棒軟體科技有限公司',
@@ -177,7 +177,7 @@ const jsonLd = [
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
-      email: 'dogtor.love.learning@gmail.com',
+      email: 'dogtor@superb-tutor.com',
       availableLanguage: ['zh-TW', 'en'],
     },
     description: '超棒軟體科技有限公司（SuperB Software Technology Co., Ltd.）是一家台灣軟體科技公司，致力於開發創新的教育科技產品。旗下產品 Dogtor 逗課是國高中生最喜歡的 AI 複習 App，提供題庫刷題、AI 解題、好友互動對戰、AI 分析弱點與個人化推薦功能。',

@@ -123,7 +123,7 @@ npm run build
 
 ## 聯絡
 
-如有問題請聯絡：dogtor.love.learning@gmail.com
+如有問題請聯絡：dogtor@superb-tutor.com
 
 ---
 

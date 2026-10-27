@@ -288,7 +288,7 @@ Dogtor 逗課 由 **[超棒軟體科技有限公司（SuperB Software Technology
 - 常見問題: https://dogtor.superb-tutor.com/faq
 - 網友評價: https://dogtor.superb-tutor.com/reviews
 - 逗課動態（得獎、採訪、演講）: https://dogtor.superb-tutor.com/news
-- Email: dogtor.love.learning@gmail.com
+- Email: dogtor@superb-tutor.com
 
 ## 團隊
 Dogtor 逗課 是一款國高中生 AI 學習 App，由以下三方共同打造：
