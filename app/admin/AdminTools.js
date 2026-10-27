@@ -106,7 +106,7 @@ const ANN_TYPES = [
 ]
 
 const ANN_INIT = {
-  title: '', content: '', type: 'info',
+  title: '', content: '', image_url: '', type: 'info',
   is_active: true, force_update: false,
   expires_at: '', min_app_version: '', update_url: '',
 }
@@ -338,6 +338,7 @@ function AnnCard({ ann }) {
         </span>
       </div>
       <p className={styles.annCardTitle}>{ann.title}</p>
+      {ann.image_url && <img className={styles.annCardImage} src={ann.image_url} alt="" />}
       {ann.content && <p className={styles.annCardContent}>{ann.content}</p>}
     </div>
   )
@@ -347,8 +348,12 @@ function AnnCard({ ann }) {
 function AnnForm({ initial, onSave, onCancel, loading, isEdit }) {
   const [form, setForm] = useState({ ...ANN_INIT, ...initial })
   const originalExpiresAt = initial?.expires_at ?? ''
+  const originalImageUrl  = initial?.image_url ?? ''
+  const [imageBroken, setImageBroken] = useState(false)
   const upd   = (k, v) => setForm(p => ({ ...p, [k]: v }))
-  const valid = form.title.trim() && form.content.trim()
+  const imageUrl   = form.image_url.trim()
+  const imageValid = !imageUrl || /^https:\/\/\S+$/i.test(imageUrl)
+  const valid = form.title.trim() && form.content.trim() && imageValid
 
   const handleSave = () => {
     const body = { ...form }
@@ -360,6 +365,10 @@ function AnnForm({ initial, onSave, onCancel, loading, isEdit }) {
     }
     if (!body.min_app_version) delete body.min_app_version
     if (!body.update_url) delete body.update_url
+    // The backend treats "" as "remove the image", so only send it when an
+    // existing image is being cleared.
+    body.image_url = imageUrl
+    if (!imageUrl && !(isEdit && originalImageUrl)) delete body.image_url
     onSave(body)
   }
 
@@ -406,6 +415,30 @@ function AnnForm({ initial, onSave, onCancel, loading, isEdit }) {
           maxLength={500} value={form.content}
           onChange={e => upd('content', e.target.value)}
         />
+      </div>
+
+      {/* Image */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>圖片網址（選填）</label>
+        <input
+          type="url" className={styles.input}
+          placeholder="例：https://storage.googleapis.com/.../poster.png"
+          maxLength={1000} value={form.image_url}
+          onChange={e => { upd('image_url', e.target.value); setImageBroken(false) }}
+        />
+        <p className={styles.hint}>
+          {!imageValid
+            ? '圖片網址必須以 https:// 開頭'
+            : imageBroken
+              ? '圖片載入失敗，App 會略過這張圖片，請確認網址是否公開'
+              : '圖片會顯示在公告標題上方，點擊可放大；需 App 新版本才看得到'}
+        </p>
+        {imageValid && imageUrl && !imageBroken && (
+          <img
+            className={styles.annFormImagePreview} src={imageUrl} alt=""
+            onError={() => setImageBroken(true)}
+          />
+        )}
       </div>
 
       {/* 啟用 / 強制更新 */}
@@ -705,6 +738,7 @@ function AnnouncementsPanel({ lang, canManage }) {
                         <AnnForm
                           initial={{
                             title: ann.title, content: ann.content, type: ann.type,
+                            image_url: ann.image_url || '',
                             is_active: ann.is_active, force_update: ann.force_update,
                             expires_at: ann.expires_at ? ann.expires_at.slice(0, 16) : '',
                             min_app_version: ann.min_app_version || '',
