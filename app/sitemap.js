@@ -30,6 +30,12 @@ export default function sitemap() {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/learning-support`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
     ...guideUrls,
     {
       url: `${baseUrl}/faq`,
