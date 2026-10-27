@@ -68,7 +68,7 @@ export default async function LearningSupport() {
           {/* 影片 */}
           {youtubeId && (
             <section className={`${styles.video} ${videoVertical ? styles.videoVertical : ''}`}>
-              <LiteYouTube id={youtubeId} title={ls.videoTitle} vertical={videoVertical} playLabel={ls.play} />
+              <LiteYouTube id={youtubeId} title={ls.videoTitle} vertical={videoVertical} playLabel={ls.play} autoplayDelay={2000} />
             </section>
           )}
 
