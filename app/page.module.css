@@ -122,6 +122,37 @@
   }
 }
 
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.badgeRow .badge {
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .badgeRow {
+    justify-content: flex-start;
+  }
+}
+
+/* 第二顆徽章：外框樣式，和橘色實心的那顆區分開，浮動節奏也錯開 */
+.badgeOutline {
+  background: rgba(245, 155, 3, 0.12);
+  border: 1px solid var(--accent-orange-light);
+  color: var(--accent-orange-light);
+  box-shadow: none;
+  animation-delay: -1.2s;
+}
+
+.badgeOutline:hover,
+.badgeOutline:focus-visible {
+  color: var(--accent-orange-light);
+}
+
 .heroTitle {
   font-size: 2rem;
   line-height: 1.15;
@@ -796,4 +827,61 @@
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: var(--space-xl);
   line-height: 1.7;
+}
+
+/* 學習支持計劃 */
+.learningSupportSection {
+  padding: 2rem 0;
+}
+
+.learningSupportCard {
+  display: block;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  border: 1px solid rgba(255, 163, 104, 0.4);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(245, 155, 3, 0.18) 0%, rgba(30, 56, 117, 0.4) 100%);
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.learningSupportCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 163, 104, 0.8);
+}
+
+.learningSupportBadge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  margin-bottom: var(--space-sm);
+  border-radius: 999px;
+  background: rgba(245, 155, 3, 0.18);
+  color: var(--accent-orange-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.learningSupportTitle {
+  font-size: 1.6rem;
+  margin-bottom: var(--space-xs);
+}
+
+@media (min-width: 768px) {
+  .learningSupportTitle {
+    font-size: 2rem;
+  }
+}
+
+.learningSupportDesc {
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-sm);
+}
+
+.learningSupportLink {
+  color: var(--accent-orange-light);
+  font-weight: 700;
 }

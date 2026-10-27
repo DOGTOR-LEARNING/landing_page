@@ -9,6 +9,7 @@ import { useMessages } from '@/components/LocaleProvider'
 import { getFeaturedArticles } from '@/lib/articles'
 import { trackDownloadClick, trackCTAClick, trackGuideArticleClick } from '@/lib/analytics'
 import LineCtaButton from '@/components/LineCtaButton'
+import { LEARNING_SUPPORT } from '@/lib/learningSupport'
 import styles from './page.module.css'
 
 const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
@@ -30,13 +31,22 @@ export default function Home() {
           <div className="container">
             <div className={styles.heroContainer}>
               <div className={styles.heroContent}>
-                <Link
-                  href="/parent-pro"
-                  className={styles.badge}
-                  onClick={() => trackCTAClick('parent_pro', 'hero_badge')}
-                >
-                  {m.home.badge}
-                </Link>
+                <div className={styles.badgeRow}>
+                  <Link
+                    href="/parent-pro"
+                    className={styles.badge}
+                    onClick={() => trackCTAClick('parent_pro', 'hero_badge')}
+                  >
+                    {m.home.badge}
+                  </Link>
+                  <Link
+                    href="/learning-support"
+                    className={`${styles.badge} ${styles.badgeOutline}`}
+                    onClick={() => trackCTAClick('learning_support', 'hero_badge')}
+                  >
+                    {m.learningSupport.homeBadge}
+                  </Link>
+                </div>
                 <h1 className={styles.heroTitle}>
                   {m.home.heroTitle1}<br />
                   <span className="gradient-text">{m.home.heroTitle2}</span>
@@ -110,6 +120,22 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* 學習支持計劃 */}
+        <section className={styles.learningSupportSection}>
+          <div className="container">
+            <Link
+              href="/learning-support"
+              className={styles.learningSupportCard}
+              onClick={() => trackCTAClick('learning_support', 'home_banner')}
+            >
+              <span className={styles.learningSupportBadge}>{m.learningSupport.badge}</span>
+              <h2 className={styles.learningSupportTitle}>{m.learningSupport.homeTitle}</h2>
+              <p className={styles.learningSupportDesc}>{m.learningSupport.homeDesc(LEARNING_SUPPORT.seats)}</p>
+              <span className={styles.learningSupportLink}>{m.learningSupport.learnMore} →</span>
+            </Link>
           </div>
         </section>
 
