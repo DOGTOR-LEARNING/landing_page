@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, Bell, ArrowUpRight, Menu, X, ChevronRight } from 'lucide-react'
+import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, BookOpen, Bell, ArrowUpRight, Menu, X, ChevronRight } from 'lucide-react'
 import styles from './admin.module.css'
 
 const AdminContext = createContext(null)
@@ -16,6 +16,7 @@ export const NAV = [
   { href: '/admin/finance', title: '財務報帳', icon: ReceiptText, permission: 'finance.view', desc: '說明＋收據交給 AI 記帳，自動存 Drive、寫 Notion' },
   { href: '/admin/ai-team', title: 'AI Team', icon: MessagesSquare, permission: 'chat.view', desc: '和夥伴、AI 角色一起討論，@Finance 就能請 AI 回覆' },
   { href: '/admin/todos', title: '待辦', icon: ListTodo, permission: 'todos.view', desc: '討論後的待辦、負責人與期限，Team Lead 也會幫忙更新' },
+  { href: '/admin/knowledge', title: 'AI 知識庫', icon: BookOpen, permission: 'knowledge.view', desc: '汪汪題與 LINE 回答產品問題時依據的文件，存檔一分鐘內生效' },
   { href: '/admin/team/users', title: '員工管理', icon: Users, permission: 'users.view', divider: true, desc: '讓每位夥伴都有自己的工作入口' },
   { href: '/admin/team/roles', title: '角色與權限', icon: ShieldCheck, permission: 'users.view', desc: '清楚掌握團隊的功能存取範圍' },
   { href: '/admin/ai-team/agents', title: 'AI 角色與用量', icon: Bot, permission: 'agents.view', desc: '調整 AI 角色設定，查看使用次數與費用' },

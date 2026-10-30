@@ -163,3 +163,12 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 - API：`GET/PUT/DELETE /admin/todos/notion`、`POST /admin/todos/notion/connect`、`POST /admin/todos/notion/sync?full=`。
 - 排錯：錯誤訊息會顯示在對話框與看板上的 Notion 狀態（紅點）。最常見是資料庫沒有加入 integration（404）或貼到「連結的資料庫檢視」。
 
+
+## AI 知識庫（2026-10-30）
+
+- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件，可預覽 Markdown。
+- 汪汪題與 LINE 官方帳號回答產品問題（功能、價格、規則）時只根據這份文件。儲存後一分鐘內生效，不用重新部署。
+- 文件存在 `gs://dogtor_asset/product_info/<staging|production>/<tw|en>.md`，由後端 `GET/PUT /admin/product-info/{market}` 讀寫（一律走預設的 tw 後端，兩個市場共用 bucket）。staging 後台改的不會影響正式環境。
+- 兩個人同時編輯時，後存的會被擋下（409），按「載入最新版本」重新載入再改。
+- 還沒從後台存過時，顯示的是程式碼裡 `backend/app/prompts/product_info/<market>.md` 的初始版本。
+- 後端需要：各 Cloud Run 服務帳號對 `dogtor_asset` 有讀取權限，tw 後端另需寫入權限；建議 `gsutil versioning set on gs://dogtor_asset` 保留歷史版本。

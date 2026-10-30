@@ -14,6 +14,7 @@ const PERMISSION_GROUPS = [
   { title: '聊天室管理（建立、成員）', view: 'chat.manage' },
   { title: 'AI 角色與用量', view: 'agents.view', manage: 'agents.manage' },
   { title: '待辦（檢視／新增修改）', view: 'todos.view', manage: 'todos.manage' },
+  { title: 'AI 知識庫（檢視／編輯）', view: 'knowledge.view', manage: 'knowledge.manage' },
   { title: '員工管理', view: 'users.view', manage: 'users.manage' },
 ]
 const ROLE_NAMES = { super_admin: '超級管理員', admin: '管理員', staff: '團隊成員' }
