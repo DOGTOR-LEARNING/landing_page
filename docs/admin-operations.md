@@ -166,7 +166,7 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 
 ## AI 知識庫（2026-10-30）
 
-- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件，可預覽 Markdown。
+- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件。用區塊編輯，不用寫 Markdown：每個區塊是一個大標或中標，底下可以加小點、編號、段落，小點和編號還能加子項目；後端會轉成 Markdown 存檔。「預覽」顯示 AI 讀到的樣子。
 - 汪汪題與 LINE 官方帳號回答產品問題（功能、價格、規則）時只根據這份文件。儲存後一分鐘內生效，不用重新部署。
 - 文件存在 `gs://dogtor_asset/product_info/<staging|production>/<tw|en>.md`，由後端 `GET/PUT /admin/product-info/{market}` 讀寫（一律走預設的 tw 後端，兩個市場共用 bucket）。staging 後台改的不會影響正式環境。
 - 兩個人同時編輯時，後存的會被擋下（409），按「載入最新版本」重新載入再改。
