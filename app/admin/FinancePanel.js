@@ -5,12 +5,14 @@ import styles from './admin.module.css'
 import fin from './finance.module.css'
 
 // ─── 財務報帳 ─────────────────────────────────────────────────────────────────
-// Submitters describe the expense and attach receipts; the backend's finance
+// 新增報帳: submitters describe the expense and attach receipts; the backend's finance
 // agent reads Notion and Drive, decides where it goes and writes it
 // (/api/admin/finance/agent → backend /finance/agent/submit).
 // Each form gets one expense id. After a failed step the returned plan is
 // committed again with the same id, so nothing is uploaded, recorded or
 // emailed twice and the model is not asked again.
+// 收入: the month's platform statements go to the month's 收入 folder and the
+// agent rewrites that month's 收入整理 doc (/api/admin/finance/income).
 
 const STEP_LABEL = { drive: 'Google Drive', notion: 'Notion', email: '通知管理層' }
 const STEP_STATE = {
@@ -33,6 +35,8 @@ const ERROR_TEXT = {
   INVALID_FORM: '表單內容無法讀取，請再試一次。',
   NOTION_NOT_CONFIGURED: 'Notion 尚未設定（NOTION_TOKEN）。',
   NOTION_EXPENSE_ID_PROPERTY_MISSING: '帳務表缺少「交易 ID」文字欄位，請在 Notion 表格新增後再送一次。',
+  STATEMENT_REQUIRED: '請至少上傳一個對帳單或收入明細檔。',
+  AGENT_NO_SUMMARY: 'AI 沒能整理出收入，請補充說明或換一個檔案再試。',
   PLAN_HAS_NO_LEDGER: 'AI 找不到帳務表，請確認 Notion 表格已在「⋯ → 連線」加入 integration。',
 }
 
@@ -88,7 +92,29 @@ function Links({ result }) {
   ))
 }
 
-function AgentResult({ plan, result, duplicate }) {
+const CHECK_FIELDS = [['company_name', '公司名稱'], ['tax_id', '統編'], ['address', '地址']]
+
+// AI's check that each receipt was issued to the company.
+function ReceiptChecks({ checks }) {
+  if (!checks?.length) return null
+  return (
+    <div className={fin.steps}>
+      {checks.map((c) => {
+        if (!c.checked || !c.readable) {
+          return <span key={c.receipt} className={`${fin.chip} ${fin.chipWarn}`}>憑證 {c.receipt}：{c.checked ? '無法辨識' : 'AI 未檢查'}</span>
+        }
+        const marks = CHECK_FIELDS.map(([key, label]) => `${label}${c[key] ? '✓' : '✗'}`).join(' ')
+        return (
+          <span key={c.receipt} className={`${fin.chip} ${c.ok ? fin.chipOk : fin.chipBad}`} title={c.note || ''}>
+            憑證 {c.receipt}：{c.ok ? marks : `沒有公司資訊（${marks}）`}
+          </span>
+        )
+      })}
+    </div>
+  )
+}
+
+function AgentResult({ plan, result, duplicate, receiptChecks }) {
   const steps = result?.steps || {}
   return (
     <div className={fin.resultBox} role="status">
@@ -107,6 +133,7 @@ function AgentResult({ plan, result, duplicate }) {
       {plan?.missing?.length > 0 && (
         <span>待補資訊：{plan.missing.join('、')}</span>
       )}
+      <ReceiptChecks checks={receiptChecks} />
       {result && (
         <div className={fin.steps}>
           {Object.entries(STEP_LABEL).map(([key, label]) => {
@@ -179,6 +206,7 @@ function AgentForm({ config }) {
           plan: data.data.plan,
           result: data.data.result,
           duplicate: data.message === 'DUPLICATE',
+          receiptChecks: data.data.receipt_checks,
         })
       } else if (data?.message === 'AGENT_NO_PLAN') {
         // The model asked something instead of filing; let the person answer.
@@ -297,6 +325,166 @@ function AgentForm({ config }) {
   )
 }
 
+const thisMonth = (today) => (today || new Date().toISOString()).slice(0, 7)
+const amountText = (n) => (typeof n === 'number' ? n.toLocaleString(undefined, { maximumFractionDigits: 2 }) : n)
+
+function IncomeForm({ config }) {
+  const [incomeId, setIncomeId] = useState(newId)
+  const [month, setMonth] = useState(() => thisMonth(config.today))
+  const [submitter, setSubmitter] = useState('')
+  const [note, setNote] = useState('')
+  const [files, setFiles] = useState([])
+  const [working, setWorking] = useState(false)
+  const [message, setMessage] = useState('')
+  const [result, setResult] = useState(null)
+  // After a failed attempt the same batch id is resent, so files already in
+  // Drive are not uploaded again; changing anything starts a new batch.
+  const [attempted, setAttempted] = useState(false)
+
+  const totalBytes = useMemo(() => files.reduce((s, f) => s + f.file.size, 0), [files])
+
+  function edit(apply) {
+    if (attempted && !result) { setIncomeId(newId()); setAttempted(false) }
+    apply()
+  }
+
+  async function pickFiles(list) {
+    if (!list?.length) return
+    const next = [...files]
+    const problems = []
+    for (const raw of Array.from(list)) {
+      if (next.length >= 10) { problems.push('一次最多 10 個檔案'); break }
+      const file = await compressImage(raw)
+      if (file.size > config.max_upload_bytes) { problems.push(`「${raw.name}」超過 ${mb(config.max_upload_bytes)}`); continue }
+      next.push({ file, key: `${raw.name}-${raw.size}-${raw.lastModified}-${next.length}` })
+    }
+    edit(() => setFiles(next))
+    setMessage(problems.join('；'))
+  }
+
+  async function submit(e) {
+    e.preventDefault()
+    if (working) return
+    if (!files.length) { setMessage(ERROR_TEXT.STATEMENT_REQUIRED); return }
+    if (totalBytes > MAX_REQUEST_BYTES) {
+      setMessage(`檔案合計 ${mb(totalBytes)}，超過單次上傳上限 ${mb(MAX_REQUEST_BYTES)}，請分批上傳。`)
+      return
+    }
+    const body = new FormData()
+    body.set('payload', JSON.stringify({ income_id: incomeId, month, submitter, note }))
+    for (const f of files) body.append('attachments', f.file, f.file.name)
+    setWorking(true)
+    setMessage('')
+    setAttempted(true)
+    try {
+      const res = await fetch('/api/admin/finance/income', { method: 'POST', body })
+      const data = await res.json().catch(() => ({}))
+      if (data?.success) {
+        setResult(data.data)
+      } else if (res.status === 413) {
+        setMessage('檔案太大，請分批上傳。')
+      } else {
+        const detail = data?.data?.detail ? `（${data.data.detail}）` : ''
+        setMessage((ERROR_TEXT[data?.message] || `上傳失敗：${data?.message || '未知錯誤'}`) + detail + ' 可以直接再送一次，不會重複上傳。')
+      }
+    } catch {
+      setMessage('網路連線中斷，請確認網路後再送一次；不會重複上傳。')
+    } finally {
+      setWorking(false)
+    }
+  }
+
+  function startNew() {
+    setIncomeId(newId())
+    setNote('')
+    setFiles([])
+    setMessage('')
+    setResult(null)
+    setAttempted(false)
+  }
+
+  if (result) {
+    return (
+      <div className={styles.form}>
+        <div className={fin.resultBox} role="status">
+          <strong>{result.already_done ? '這批先前已整理過。' : `${result.month} 收入整理已更新！`}</strong>
+          {result.summary && <span>{result.summary}</span>}
+          {result.missing?.length > 0 && <span>待確認：{result.missing.join('、')}</span>}
+          {result.entries?.length > 0 && (
+            <div className={fin.tableWrap}>
+              <table className={fin.table}>
+                <thead><tr><th>平台</th><th>類型</th><th>期間</th><th className={fin.num}>金額</th><th>幣別</th><th>備註</th></tr></thead>
+                <tbody>
+                  {result.entries.map((e, i) => (
+                    <tr key={i}>
+                      <td>{e.platform}</td><td>{e.kind}</td><td>{e.period}</td>
+                      <td className={fin.num}>{amountText(e.amount)}</td><td>{e.currency}</td><td>{e.note}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {result.document_link && <a href={result.document_link} target="_blank" rel="noopener noreferrer">開啟 {result.month} 收入整理（Drive）</a>}
+          {result.folder_link && <a href={result.folder_link} target="_blank" rel="noopener noreferrer">開啟收入資料夾</a>}
+        </div>
+        <button type="button" className={styles.btnPrimary} onClick={startNew}>再上傳一批</button>
+      </div>
+    )
+  }
+
+  return (
+    <form className={styles.form} onSubmit={submit} noValidate>
+      <div className={fin.grid2}>
+        <div className={styles.fieldGroup}>
+          <label className={styles.label} htmlFor="inc-month">月份 <span className={styles.required}>*</span></label>
+          <input id="inc-month" type="month" className={styles.input} value={month} disabled={working}
+            onChange={(e) => edit(() => setMonth(e.target.value))} />
+        </div>
+        <div className={styles.fieldGroup}>
+          <label className={styles.label} htmlFor="inc-submitter">上傳人</label>
+          <PersonField id="inc-submitter" members={config.members} value={submitter} disabled={working}
+            onChange={(v) => edit(() => setSubmitter(v))} />
+        </div>
+      </div>
+
+      <div className={styles.fieldGroup}>
+        <label className={styles.label} htmlFor="inc-files">各平台的應收／實收明細 <span className={styles.required}>*</span></label>
+        <input id="inc-files" type="file" multiple disabled={working}
+          accept="application/pdf,image/jpeg,image/png,image/webp,image/heic,.heic,.csv,.txt,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          className={styles.input}
+          onChange={(e) => { pickFiles(e.target.files); e.target.value = '' }} />
+        <p className={styles.hint}>
+          App Store、Google Play、Paddle 的報表、銀行入帳截圖都可以，支援 PDF、圖片、CSV、Excel（.xlsx），一次最多 10 個。
+          檔案會存到該月份資料夾裡的「收入」資料夾，AI 讀完後更新「{month} 收入整理」文件。
+        </p>
+        {files.length > 0 && (
+          <ul className={fin.fileList}>
+            {files.map((f) => (
+              <li key={f.key} className={fin.fileItem}>
+                <span className={fin.fileName}>{f.file.name}（{mb(f.file.size)}）</span>
+                {!working && <button type="button" className={fin.linkBtn} onClick={() => edit(() => setFiles(files.filter((x) => x.key !== f.key)))}>移除</button>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className={styles.fieldGroup}>
+        <label className={styles.label} htmlFor="inc-note">補充說明（選填）</label>
+        <textarea id="inc-note" className={styles.textarea} rows={3} maxLength={2000} value={note} disabled={working}
+          placeholder="例：Google Play 10 月的款項 11/15 才會入帳；銀行截圖是 Paddle 9 月的撥款。"
+          onChange={(e) => edit(() => setNote(e.target.value))} />
+      </div>
+
+      {message && <p className={styles.errorMsg} role="alert">{message}</p>}
+      <button type="submit" className={`${styles.btnPrimary} ${styles.sendBtn}`} disabled={working}>
+        {working ? 'AI 整理中…（上傳與整理約需 30–90 秒）' : attempted ? '再送一次' : '上傳並整理收入'}
+      </button>
+    </form>
+  )
+}
+
 function StatusView() {
   const [status, setStatus] = useState(null)
   const [error, setError] = useState('')
@@ -368,7 +556,7 @@ export default function FinancePanel() {
     return () => { cancelled = true }
   }, [])
 
-  const tabs = [['submit', '新增報帳'], ['status', '整合狀態']]
+  const tabs = [['submit', '新增報帳'], ['income', '收入'], ['status', '整合狀態']]
 
   return (
     <div>
@@ -383,6 +571,11 @@ export default function FinancePanel() {
         error ? <p className={styles.errorMsg}>{error}</p>
           : !config ? <p className={styles.hint}>載入中…</p>
             : <AgentForm config={config} />
+      )}
+      {tab === 'income' && (
+        error ? <p className={styles.errorMsg}>{error}</p>
+          : !config ? <p className={styles.hint}>載入中…</p>
+            : <IncomeForm config={config} />
       )}
       {tab === 'status' && <StatusView />}
     </div>

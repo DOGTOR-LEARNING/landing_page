@@ -13,7 +13,7 @@ export const NAV = [
   { href: '/admin/push', title: '系統廣播', icon: Megaphone, permission: 'push.view', desc: '讓重要消息，準時抵達每一位用戶' },
   { href: '/admin/email', title: '指定用戶通知', icon: Mail, permission: 'push.view', desc: '把合適的消息，傳給需要的人' },
   { href: '/admin/announcements', title: 'App 公告', icon: ClipboardList, permission: 'announcements.view', desc: '管理公告、發布狀態與版本更新' },
-  { href: '/admin/finance', title: '財務報帳', icon: ReceiptText, permission: 'finance.view', desc: '說明＋收據交給 AI 記帳，自動存 Drive、寫 Notion' },
+  { href: '/admin/finance', title: '財務報帳', icon: ReceiptText, permission: 'finance.view', desc: '說明＋收據交給 AI 記帳，自動存 Drive、寫 Notion；每月收入由 AI 整理' },
   { href: '/admin/ai-team', title: 'AI Team', icon: MessagesSquare, permission: 'chat.view', desc: '和夥伴、AI 角色一起討論，@Finance 就能請 AI 回覆' },
   { href: '/admin/todos', title: '待辦', icon: ListTodo, permission: 'todos.view', desc: '討論後的待辦、負責人與期限，Team Lead 也會幫忙更新' },
   { href: '/admin/knowledge', title: 'AI 知識庫', icon: BookOpen, permission: 'knowledge.view', desc: '汪汪題與 LINE 回答產品問題時依據的文件，存檔一分鐘內生效' },
