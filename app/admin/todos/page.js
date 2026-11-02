@@ -2,11 +2,12 @@
 import { Suspense, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Plus, Bot, CalendarDays, Hash, X, RotateCcw, Play, Check, RefreshCw, ExternalLink, CloudOff } from 'lucide-react'
+import { Plus, Bot, CalendarDays, Hash, X, RotateCcw, Play, Check, RefreshCw, ExternalLink, CloudOff, GitCommitHorizontal } from 'lucide-react'
 import { adminFetch, useAdmin } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import page from './todos.module.css'
 import NotionDialog, { ago } from './NotionDialog'
+import CommitDialog from './CommitDialog'
 
 const COLUMNS = [['todo', '待辦'], ['doing', '進行中'], ['done', '完成']]
 const STATUS = { todo: '待辦', doing: '進行中', done: '完成', cancelled: '取消' }
@@ -52,6 +53,7 @@ function TodosPage() {
   const [notion, setNotion] = useState(null)
   const [notionOpen, setNotionOpen] = useState(false)
   const [syncing, setSyncing] = useState(false)
+  const [commitsOpen, setCommitsOpen] = useState(false)
   const canManage = user.permissions.includes('todos.manage')
 
   const load = useCallback(async () => {
@@ -100,6 +102,7 @@ function TodosPage() {
           <RefreshCw size={13} className={syncing ? page.spin : ''} onClick={e => { e.stopPropagation(); syncNotion(false) }} aria-label="立即同步" />
         </button>
         : canManage && <button className={page.notionChip} onClick={() => setNotionOpen(true)}><CloudOff size={13} />連接 Notion</button>)}
+      {canManage && <button className={page.notionChip} onClick={() => setCommitsOpen(true)} title="Team Lead 讀最近的 commit，關閉已經做完的待辦"><GitCommitHorizontal size={14} />從 commit 檢查</button>}
       {canManage && <button className={styles.btnPrimary} onClick={() => setEditing({ ...EMPTY })}><Plus size={16} />新增待辦</button>}
     </div>
     {message && <p className={styles.inlineMessage} role="status">{message}<button className={page.dismiss} onClick={() => setMessage('')} aria-label="關閉"><X size={14} /></button></p>}
@@ -129,6 +132,7 @@ function TodosPage() {
       })}
     </div>
     {editing && <TodoDialog todo={editing} setTodo={setEditing} people={people} canManage={canManage} onSaved={async text => { setEditing(null); setMessage(text); await load() }} />}
+    {commitsOpen && <CommitDialog canManage={canManage} onClose={() => setCommitsOpen(false)} onChanged={load} />}
     {notionOpen && <NotionDialog people={people} canManage={canManage} onClose={() => setNotionOpen(false)}
       onSynced={async () => { setNotion((await api('/api/admin/todos/notion')).data); await load() }} />}
   </>
