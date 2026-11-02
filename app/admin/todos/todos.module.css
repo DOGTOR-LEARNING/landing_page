@@ -1,5 +1,5 @@
 .toolbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
-.toolbar > button { margin-left: auto; }
+.toolbar > button:first-of-type { margin-left: auto; }
 .check { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ws-muted); cursor: pointer; }
 .check input { accent-color: var(--ws-orange); }
 .dismiss { float: right; border: 0; background: transparent; color: inherit; cursor: pointer; }
@@ -64,3 +64,11 @@
   .mapGrid { grid-template-columns: 1fr; }
   .linkRow { flex-direction: column; }
 }
+.commitResult { margin-top: 12px; }
+.commitResult ul { list-style: none; display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+.commitResult li { display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--ws-muted); padding: 8px 10px; border-radius: 10px; background: #f7fafc; }
+.commitResult li > div { display: flex; align-items: center; gap: 8px; color: var(--ws-text); }
+.commitResult li button { margin-left: auto; display: inline-flex; align-items: center; gap: 3px; border: 0; background: transparent; color: var(--ws-orange-dark); font-size: 12px; font-weight: 700; cursor: pointer; }
+.commitResult li em { margin-left: auto; font-style: normal; font-size: 12px; color: var(--ws-soft); }
+.commitRefs { display: flex; flex-wrap: wrap; gap: 6px; }
+.commitRefs a { display: inline-flex; align-items: center; gap: 2px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; color: var(--ws-brand); }

@@ -54,6 +54,7 @@
 - 同步規則：每筆待辦存「上次同步時兩邊的值」；只在 Notion 改的欄位拉回，只在看板改的寫回，兩邊都改時看板優先並寫回。看板／AI 的變更在請求結束後立即寫入（`notion_dirty` 計數＋60 秒 lease 防重複建立頁面）；看板開著時每分鐘、AI 討論每一步前（超過 60 秒）會拉一次；「全部重新同步」會關閉 Notion 已刪除的事項。Notion 沒有「取消」選項時寫成完成狀態，看板仍顯示取消。AI 角色當負責人不會寫進 Notion；Notion 上不是員工的負責人顯示為「（Notion）」。不讀頁面內文，只讀屬性欄位。
 - Team Lead：看到最多 150 筆未完成待辦（含優先與說明摘要），一次最多 20 個動作，新增 `優先=`、`說明=`，提示裡有整理規則（重複→取消並註明、過時先請同事確認）。
 - Finance 角色：`app/services/finance_ledger.py` 在 Finance 發言前附上 Notion 帳本（`NOTION_DATABASE_ID`）本月與上月依支出性質的合計、最近 15 筆；唯讀、快取 10 分鐘。
+- 2026-11-02 追加：依 commit 關閉待辦。`/admin/todos` 右上「從 commit 檢查」→ 後端 `app/services/commit_todos.py` 讀設定的 repo（預設 DOGTOR-LEARNING/dogtor_app、landing_page）預設分支最近 N 天（預設 14）的非 merge commit，連同未完成待辦交給 Team Lead（同一個模型）回 JSON：`done` 直接改完成並在說明附上依據的 commit（可復原），`maybe` 只列出請同事確認。程式端保護：只能關未完成的待辦、必須引用實際讀到的 commit、一次最多 20 筆、3 分鐘 lease 防重複執行。設定存 `admin_settings['commit_todos']`；私有 repo 需要 Cloud Run 環境變數 `GITHUB_TOKEN`（fine-grained，Contents 唯讀）。測試：`tests/test_commit_todos.py`。
 - 測試：`tests/test_notion_todos.py`（假 Notion API，涵蓋連接、匯入、雙向、衝突、刪除、Team Lead 整理、Finance 帳本）。
 
 **下一步（依序）**
