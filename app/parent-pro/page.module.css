@@ -439,7 +439,21 @@
 .heroPriceHint {
   margin-top: var(--space-md);
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.heroSaleTag {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.1rem 0.6rem;
+  background: rgba(6, 199, 85, 0.9);
+  color: white;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  vertical-align: 1px;
 }
 
 /* Split Section (Zig-Zag Layout) */
