@@ -101,6 +101,7 @@ export default function Header() {
 
           <nav className={styles.desktopNav}>
             <Link href="/about" className={styles.navLink} onClick={() => trackNavClick('about')}>{m.header.about}</Link>
+            <Link href="/technology" className={styles.navLink} onClick={() => trackNavClick('technology')}>{m.header.technology}</Link>
             <Link href="/reviews" className={styles.navLink} onClick={() => trackNavClick('reviews')}>{m.header.reviews}</Link>
             <Link href="/news" className={styles.navLink} onClick={() => trackNavClick('news')}>{m.header.news}</Link>
             <div
@@ -166,6 +167,9 @@ export default function Header() {
           <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
             <Link href="/about" className={styles.mobileNavLink} onClick={closeMenu}>
               {m.header.about}
+            </Link>
+            <Link href="/technology" className={styles.mobileNavLink} onClick={closeMenu}>
+              {m.header.technology}
             </Link>
             <Link href="/reviews" className={styles.mobileNavLink} onClick={closeMenu}>
               {m.header.reviews}

@@ -145,6 +145,7 @@ export default function Home() {
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>{m.home.featuresSectionTitle}</h2>
               <p className={styles.sectionSubtitle}>{m.home.featuresSectionSubtitle}</p>
+              <Link href="/technology" className={styles.techLink}>{m.home.featuresTechLink}</Link>
             </div>
 
             <div className={styles.featuresGrid}>
