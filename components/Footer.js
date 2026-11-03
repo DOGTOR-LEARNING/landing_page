@@ -41,6 +41,7 @@ export default function Footer() {
           </div>
 
           <div className={styles.footerLinks}>
+            <Link href="/technology">{m.footer.links.technology}</Link>
             <Link href="/reviews">{m.footer.links.reviews}</Link>
             <Link href="/news">{m.footer.links.news}</Link>
             <Link href="/terms">{m.footer.links.terms}</Link>
