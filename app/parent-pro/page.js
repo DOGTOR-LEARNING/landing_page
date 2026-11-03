@@ -158,7 +158,12 @@ export default function ParentPro() {
               className={styles.heroLineCta}
             />
 
-            <p className={styles.heroPriceHint}>{pp.heroPriceHint}</p>
+            <p className={styles.heroPriceHint}>
+              {pp.heroSaleTag && (
+                <a href="#pricing" className={styles.heroSaleTag}>{pp.heroSaleTag}</a>
+              )}
+              {pp.heroPriceHint}
+            </p>
           </section>
         </div>
 

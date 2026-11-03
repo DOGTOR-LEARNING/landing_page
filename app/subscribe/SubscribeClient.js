@@ -26,6 +26,7 @@ const PADDLE_PROMO_DISCOUNT_ID = process.env.NEXT_PUBLIC_PADDLE_PROMO_DISCOUNT_I
 const PREVIEW_IDENTIFIER = 'paddle-review-preview'
 
 const DISCOUNT_STORAGE_KEY = 'dogtor_subscribe_discount'
+const PLANS = ['monthly', 'yearly']
 
 export default function SubscribeClient({ previewMode = false }) {
   const searchParams = useSearchParams()
@@ -262,48 +263,52 @@ export default function SubscribeClient({ previewMode = false }) {
         </button>
         <h1 className={styles.title}>{sub.choosePlan}</h1>
 
-        {/* Plan Toggle */}
-        <div className={styles.planToggle}>
-          <button
-            className={`${styles.planOption} ${plan === 'monthly' ? styles.planOptionActive : ''}`}
-            onClick={() => { setPlan('monthly'); trackEvent('subscribe_plan_toggle', { plan: 'monthly' }) }}
-          >
-            {sub.monthly}
-          </button>
-          <button
-            className={`${styles.planOption} ${plan === 'yearly' ? styles.planOptionActive : ''}`}
-            onClick={() => { setPlan('yearly'); trackEvent('subscribe_plan_toggle', { plan: 'yearly' }) }}
-          >
-            {sub.yearly}
-          </button>
-        </div>
+        {/* 標價跟 parent-pro 同步：原價劃掉、顯示特價；帶有效優惠碼時再打 9 折。
+            優惠碼要在結帳前就看得到，否則家長要到 Paddle 視窗裡才發現有折扣。 */}
+        <p className={styles.promoNotice}>
+          {promoDiscountId ? sub.promoNotice : pp.promoNotice}
+        </p>
 
-        {/* Plan Details */}
-        <div className={styles.planDetails}>
-          {/* A valid promo link shows the discount before checkout opens;
-              otherwise parents only learned about it inside Paddle's
-              overlay, after tapping the trial button. */}
-          {promoDiscountId && (
-            <p className={styles.promoBadge}>{sub.promoBadge}</p>
-          )}
-          {promoDiscountId && (
-            <p className={styles.planPriceOriginal}>
-              {plan === 'monthly' ? sub.monthlyPrice : sub.yearlyPrice}
-            </p>
-          )}
-          <p className={styles.planPrice}>
-            {promoDiscountId
-              ? (plan === 'monthly' ? sub.promoMonthlyPrice : sub.promoYearlyPrice)
-              : (plan === 'monthly' ? sub.monthlyPrice : sub.yearlyPrice)}
-          </p>
-          {plan === 'yearly' && (
-            <p className={styles.planSave}>{sub.yearlySave}</p>
-          )}
-          <ul className={styles.planFeatures}>
-            {pp.planFeatures.map((f, i) => (
-              <li key={i}>{typeof f === 'string' ? f : f.text}</li>
-            ))}
-          </ul>
+        <div className={styles.planGrid} role="radiogroup" aria-label={sub.choosePlan}>
+          {PLANS.map((key) => {
+            const isMonthly = key === 'monthly'
+            const selected = plan === key
+            const badge = isMonthly
+              ? (promoDiscountId ? sub.promoBadge : pp.promoBadge)
+              : (promoDiscountId ? sub.promoYearlySave : pp.yearlySave)
+            return (
+              <button
+                key={key}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                className={`${styles.planCard} ${selected ? styles.planCardSelected : ''}`}
+                onClick={() => {
+                  setPlan(key)
+                  trackEvent('subscribe_plan_toggle', { plan: key })
+                }}
+              >
+                <span className={isMonthly ? styles.planBadgeSale : styles.planBadgeSave}>
+                  {badge}
+                </span>
+                <span className={styles.planRadio} aria-hidden="true" />
+                <span className={styles.planName}>{isMonthly ? pp.monthlyPlan : pp.yearlyPlan}</span>
+                <span className={styles.planPriceOriginal}>
+                  {isMonthly ? pp.monthlyOriginalPrice : pp.yearlyOriginalPrice}
+                </span>
+                <span className={styles.planPrice}>
+                  {promoDiscountId
+                    ? (isMonthly ? sub.promoMonthlyPrice : sub.promoYearlyPrice)
+                    : (isMonthly ? sub.monthlyPrice : sub.yearlyPrice)}
+                </span>
+                <span className={styles.planDaily}>
+                  {promoDiscountId
+                    ? (isMonthly ? sub.promoMonthlyDailyPrice : sub.promoYearlyDailyPrice)
+                    : (isMonthly ? pp.monthlyDailyPrice : pp.yearlyDailyPrice)}
+                </span>
+              </button>
+            )
+          })}
         </div>
 
         {/* Submit */}
@@ -320,6 +325,18 @@ export default function SubscribeClient({ previewMode = false }) {
           </p>
         )}
 
+        <div className={styles.planFeatures}>
+          <p className={styles.planFeaturesTitle}>{sub.featuresTitle}</p>
+          {pp.planFeatures.map((f, i) => (
+            <div
+              key={i}
+              className={`${styles.planFeature} ${f.important ? styles.planFeatureImportant : ''}`}
+            >
+              <AnimatedIcon name={f.icon} size={f.important ? 22 : 20} color={f.color} />
+              <span>{f.text}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
     </>

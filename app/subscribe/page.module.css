@@ -41,98 +41,165 @@
   }
 }
 
-/* Plan Selection */
-.planToggle {
-  display: flex;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  padding: 4px;
-  margin-bottom: var(--space-xl);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+/* Plan Selection — 卡片樣式對齊 /parent-pro 的定價區 */
+.promoNotice {
+  display: inline-block;
+  margin: 0 auto var(--space-lg);
+  padding: 0.45rem 1.1rem;
+  background: rgba(245, 155, 3, 0.12);
+  border: 1px solid rgba(245, 155, 3, 0.4);
+  border-radius: 2rem;
+  color: var(--accent-orange-light);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
-.planOption {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: var(--radius-md);
+.planGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding-top: 0.75rem;
+  margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 480px) {
+  .planGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+.planCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.6rem 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-xl);
+  color: inherit;
+  font: inherit;
+  text-align: center;
   cursor: pointer;
   transition: all var(--transition-base);
 }
 
-.planOption:hover {
-  color: var(--text-white);
+.planCard:hover {
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
-.planOptionActive {
-  background: var(--gradient-button);
+.planCardSelected,
+.planCardSelected:hover {
+  border-color: var(--accent-orange);
+  background: rgba(255, 163, 104, 0.06);
+  box-shadow: 0 10px 40px rgba(245, 155, 3, 0.12);
+}
+
+.planBadgeSale,
+.planBadgeSave {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.9rem;
+  border-radius: 2rem;
   color: white;
-  box-shadow: var(--shadow-md);
-}
-
-/* Plan Details */
-.planDetails {
-  padding: var(--space-xl);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--space-xl);
-}
-
-.planPrice {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--accent-orange-light);
-  margin-bottom: var(--space-xs);
-}
-
-.promoBadge {
-  display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--success);
-  border: 1px solid var(--success);
-  border-radius: 999px;
-  padding: 2px 10px;
+  white-space: nowrap;
+}
+
+.planBadgeSale {
+  background: rgba(6, 199, 85, 0.9);
+  box-shadow: 0 4px 10px rgba(6, 199, 85, 0.25);
+}
+
+.planBadgeSave {
+  background: var(--gradient-button);
+  box-shadow: 0 4px 10px rgba(245, 155, 3, 0.3);
+}
+
+.planRadio {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  transition: all var(--transition-base);
+}
+
+.planCardSelected .planRadio {
+  border-color: var(--accent-orange);
+  background: radial-gradient(circle, var(--accent-orange) 0 40%, transparent 45%);
+}
+
+.planName {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-white);
   margin-bottom: var(--space-xs);
 }
 
 .planPriceOriginal {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.45);
   text-decoration: line-through;
 }
 
-.planSave {
-  font-size: 0.95rem;
-  color: var(--success);
-  font-weight: 600;
-  margin-bottom: var(--space-md);
+.planPrice {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-white);
+  white-space: nowrap;
 }
 
+.planCardSelected .planPrice {
+  color: var(--accent-orange-light);
+}
+
+.planDaily {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 方案包含 */
 .planFeatures {
-  list-style: none;
-  padding: 0;
+  display: grid;
+  gap: 10px;
+  margin-top: var(--space-xl);
+  padding: 1.25rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
   text-align: left;
 }
 
-.planFeatures li {
-  padding: 0.5rem 0;
-  color: rgba(255, 255, 255, 0.85);
+.planFeaturesTitle {
   font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.planFeatures li::before {
-  content: '\2713';
-  color: var(--success);
+.planFeature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+}
+
+.planFeatureImportant {
+  color: var(--text-white);
   font-weight: 700;
+  padding: 0.55rem 0.9rem;
+  background: rgba(6, 199, 85, 0.1);
+  border: 1px solid rgba(6, 199, 85, 0.2);
+  border-radius: var(--radius-lg);
 }
 
 /* Subscribe Button */
