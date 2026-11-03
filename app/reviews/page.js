@@ -8,7 +8,7 @@ import { STORE_REVIEWS, FACEBOOK_POSTS } from '@/data/reviews'
 import { getStoreRatings, combineRatings } from '@/lib/storeRatings'
 import styles from './page.module.css'
 
-const TITLE = '網友評價 - Dogtor 逗課 | App Store、Google Play 評分與親子教育作家推薦'
+const TITLE = '口碑推薦 - Dogtor 逗課 | App Store、Google Play 評分與親子教育作家推薦'
 const DESCRIPTION =
   '看看學生和家長怎麼評價 Dogtor 逗課：App Store 與 Google Play 的評分和評論，以及親子教育作家在臉書上的推薦。'
 

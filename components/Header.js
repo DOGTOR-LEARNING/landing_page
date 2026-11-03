@@ -54,8 +54,9 @@ export default function Header() {
   }, [openDropdown])
 
   const aboutLinks = [
-    { href: '/about', label: m.header.about, key: 'about' },
-    { href: '/technology', label: m.header.technology, key: 'technology' },
+    { href: '/about', label: m.header.aboutTeam, key: 'about' },
+    { href: '/reviews', label: m.header.reviews, key: 'reviews' },
+    { href: '/news', label: m.header.news, key: 'news' },
   ]
 
   const helpLinks = [
@@ -139,8 +140,7 @@ export default function Header() {
 
           <nav ref={navRef} className={styles.desktopNav}>
             {renderDropdown('about', m.header.about, aboutLinks)}
-            <Link href="/reviews" className={styles.navLink} onClick={() => trackNavClick('reviews')}>{m.header.reviews}</Link>
-            <Link href="/news" className={styles.navLink} onClick={() => trackNavClick('news')}>{m.header.news}</Link>
+            <Link href="/technology" className={styles.navLink} onClick={() => trackNavClick('technology')}>{m.header.technology}</Link>
             {renderDropdown('help', m.header.helpMenu, helpLinks)}
             <button
               className={styles.langSwitch}
@@ -175,17 +175,19 @@ export default function Header() {
           </button>
 
           <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
-            <Link href="/about" className={styles.mobileNavLink} onClick={closeMenu}>
-              {m.header.about}
-            </Link>
+            <p className={styles.mobileGroupLabel}>{m.header.about}</p>
+            {aboutLinks.map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                className={`${styles.mobileNavLink} ${styles.mobileSubLink}`}
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link href="/technology" className={styles.mobileNavLink} onClick={closeMenu}>
               {m.header.technology}
-            </Link>
-            <Link href="/reviews" className={styles.mobileNavLink} onClick={closeMenu}>
-              {m.header.reviews}
-            </Link>
-            <Link href="/news" className={styles.mobileNavLink} onClick={closeMenu}>
-              {m.header.news}
             </Link>
             <p className={styles.mobileGroupLabel}>{m.header.helpMenu}</p>
             {helpLinks.map((link) => (
