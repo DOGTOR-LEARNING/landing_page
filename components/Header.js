@@ -21,8 +21,8 @@ function GlobeIcon() {
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isHelpOpen, setIsHelpOpen] = useState(false)
-  const helpRef = useRef(null)
+  const [openDropdown, setOpenDropdown] = useState(null)
+  const navRef = useRef(null)
   const locale = useLocale()
   const m = useMessages()
 
@@ -36,13 +36,13 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    if (!isHelpOpen) return
+    if (!openDropdown) return
 
     const handlePointerDown = (e) => {
-      if (helpRef.current && !helpRef.current.contains(e.target)) setIsHelpOpen(false)
+      if (navRef.current && !navRef.current.contains(e.target)) setOpenDropdown(null)
     }
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') setIsHelpOpen(false)
+      if (e.key === 'Escape') setOpenDropdown(null)
     }
 
     document.addEventListener('pointerdown', handlePointerDown)
@@ -51,13 +51,51 @@ export default function Header() {
       document.removeEventListener('pointerdown', handlePointerDown)
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isHelpOpen])
+  }, [openDropdown])
+
+  const aboutLinks = [
+    { href: '/about', label: m.header.about, key: 'about' },
+    { href: '/technology', label: m.header.technology, key: 'technology' },
+  ]
 
   const helpLinks = [
     { href: '/guide', label: m.header.guide, key: 'guide' },
     { href: '/faq', label: m.header.faq, key: 'faq' },
     { href: '/support', label: m.header.support, key: 'support' },
   ]
+
+  const renderDropdown = (key, label, links) => {
+    const isOpen = openDropdown === key
+    return (
+      <div
+        className={styles.dropdown}
+        onMouseEnter={() => setOpenDropdown(key)}
+        onMouseLeave={() => setOpenDropdown(null)}
+      >
+        <button
+          className={`${styles.navLink} ${styles.dropdownToggle}`}
+          onClick={() => setOpenDropdown(isOpen ? null : key)}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+        >
+          {label}
+          <span className={`${styles.caret} ${isOpen ? styles.caretOpen : ''}`} aria-hidden="true" />
+        </button>
+        <div className={`${styles.dropdownMenu} ${isOpen ? styles.dropdownMenuOpen : ''}`}>
+          {links.map((link) => (
+            <Link
+              key={link.key}
+              href={link.href}
+              className={styles.dropdownItem}
+              onClick={() => { setOpenDropdown(null); trackNavClick(link.key) }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -99,39 +137,11 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className={styles.desktopNav}>
-            <Link href="/about" className={styles.navLink} onClick={() => trackNavClick('about')}>{m.header.about}</Link>
-            <Link href="/technology" className={styles.navLink} onClick={() => trackNavClick('technology')}>{m.header.technology}</Link>
+          <nav ref={navRef} className={styles.desktopNav}>
+            {renderDropdown('about', m.header.about, aboutLinks)}
             <Link href="/reviews" className={styles.navLink} onClick={() => trackNavClick('reviews')}>{m.header.reviews}</Link>
             <Link href="/news" className={styles.navLink} onClick={() => trackNavClick('news')}>{m.header.news}</Link>
-            <div
-              ref={helpRef}
-              className={styles.dropdown}
-              onMouseEnter={() => setIsHelpOpen(true)}
-              onMouseLeave={() => setIsHelpOpen(false)}
-            >
-              <button
-                className={`${styles.navLink} ${styles.dropdownToggle}`}
-                onClick={() => setIsHelpOpen(!isHelpOpen)}
-                aria-expanded={isHelpOpen}
-                aria-haspopup="true"
-              >
-                {m.header.helpMenu}
-                <span className={`${styles.caret} ${isHelpOpen ? styles.caretOpen : ''}`} aria-hidden="true" />
-              </button>
-              <div className={`${styles.dropdownMenu} ${isHelpOpen ? styles.dropdownMenuOpen : ''}`}>
-                {helpLinks.map((link) => (
-                  <Link
-                    key={link.key}
-                    href={link.href}
-                    className={styles.dropdownItem}
-                    onClick={() => { setIsHelpOpen(false); trackNavClick(link.key) }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            {renderDropdown('help', m.header.helpMenu, helpLinks)}
             <button
               className={styles.langSwitch}
               onClick={switchLocale}
