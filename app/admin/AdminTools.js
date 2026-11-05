@@ -40,7 +40,7 @@ const INIT_EMAIL     = {
   reward: 'none', potion_count: 1, pro_days: 365, pro_program: 'low_income', pro_note: '',
 }
 
-// ─── 獎勵（僅中文版後端）─────────────────────────────────────────────────────
+// ─── 獎勵（每個語言版本寫進各自的後端）──────────────────────────────────────
 // Limits mirror backend/app/routers/admin_grants.py.
 const MAX_POTIONS_PER_GRANT = 20
 const MAX_POTIONS_PER_BROADCAST = 5
@@ -56,6 +56,8 @@ const PRO_PROGRAMS = [
   { value: 'low_income', label: '清寒方案' },
   { value: 'gift',       label: '贈送' },
 ]
+// The low-income programme is Taiwan-only; the English backend refuses it.
+const proProgramsFor = lang => lang === 'en' ? PRO_PROGRAMS.filter(p => p.value === 'gift') : PRO_PROGRAMS
 
 const POTION_SOURCES = {
   purchase: '購買', starter_quest: '新手任務', achievement: '成就', invite: '邀請好友',
@@ -831,7 +833,7 @@ function AnnouncementsPanel({ lang, canManage }) {
 }
 
 // ─── 獎勵發放紀錄 ─────────────────────────────────────────────────────────────
-function GrantsPanel({ canManage, refreshKey }) {
+function GrantsPanel({ canManage, refreshKey, lang, langLabel }) {
   const [summary, setSummary] = useState(null)
   const [grants, setGrants]   = useState([])
   const [error, setError]     = useState('')
@@ -842,8 +844,8 @@ function GrantsPanel({ canManage, refreshKey }) {
     setLoading(true); setError('')
     try {
       const [s, g] = await Promise.all([
-        fetch('/api/admin/grants/potions/summary?days=30').then(r => r.json()),
-        fetch('/api/admin/grants/pro').then(r => r.json()),
+        fetch('/api/admin/grants/potions/summary?days=30', { headers: { 'X-App-Lang': lang } }).then(r => r.json()),
+        fetch('/api/admin/grants/pro', { headers: { 'X-App-Lang': lang } }).then(r => r.json()),
       ])
       if (!s.success || !g.success) throw new Error(s.message || g.message || '讀取失敗')
       setSummary(s.data); setGrants(g.data)
@@ -852,7 +854,7 @@ function GrantsPanel({ canManage, refreshKey }) {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [lang])
 
   useEffect(() => { load() }, [load, refreshKey])
 
@@ -861,7 +863,7 @@ function GrantsPanel({ canManage, refreshKey }) {
     setRevoking(email)
     try {
       const data = await fetch('/api/admin/grants/pro/revoke', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }),
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang }, body: JSON.stringify({ email }),
       }).then(r => r.json())
       if (!data.success) throw new Error(data.message)
       await load()
@@ -873,7 +875,7 @@ function GrantsPanel({ canManage, refreshKey }) {
   }
 
   return (
-    <ModuleCard icon={HistoryOutlinedIcon} title="獎勵發放紀錄" sub="近 30 天體力恢復劑進出，以及目前有效的 Pro 授權" badge="中文版">
+    <ModuleCard icon={HistoryOutlinedIcon} title="獎勵發放紀錄" sub="近 30 天體力恢復劑進出，以及目前有效的 Pro 授權" badge={langLabel}>
       <div className={styles.form}>
         <div className={styles.labelRow}>
           <span className={styles.label}>體力恢復劑（近 30 天）</span>
@@ -958,10 +960,11 @@ export default function AdminTools({ section, user }) {
   const [emailLoading, setEmailLoading] = useState(false)
   const [emailResult, setEmailResult]   = useState(null)
 
-  // ── 獎勵（體力恢復劑／Pro，僅中文版）───────────────────────────────────────
+  // ── 獎勵（體力恢復劑／Pro）────────────────────────────────────────────────
   const canPush      = user.permissions.includes('push.manage')
-  const canGrant     = lang === 'zh' && user.permissions.includes('grants.manage')
-  const canSeeGrants = lang === 'zh' && user.permissions.includes('grants.view')
+  const canGrant     = user.permissions.includes('grants.manage')
+  const canSeeGrants = user.permissions.includes('grants.view')
+  const proPrograms  = proProgramsFor(lang)
   const [campaignId, setCampaignId]       = useState(newCampaignId)
   const [grantsRefresh, setGrantsRefresh] = useState(0)
 
@@ -974,7 +977,7 @@ export default function AdminTools({ section, user }) {
       const res  = withPotions
         ? await fetch('/api/admin/grants/potions/broadcast', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-App-Lang': lang },
             body: JSON.stringify({ ...notice, count: potion_count, campaign_id: campaignId }),
           })
         : await fetch('/api/admin/broadcast', {
@@ -1007,10 +1010,11 @@ export default function AdminTools({ section, user }) {
         .filter(Boolean)
       const { reward, potion_count, pro_days, pro_program, pro_note, ...notice } = emailForm
       const grant = canGrant ? reward : 'none'
+      const program = proProgramsFor(lang).some(p => p.value === pro_program) ? pro_program : 'gift'
       const [url, body] = {
         none:    ['/api/admin/send-to-emails', { ...notice, emails }],
         potions: ['/api/admin/grants/potions', { ...notice, emails, count: potion_count }],
-        pro:     ['/api/admin/grants/pro', { ...notice, emails, days: pro_days, program: pro_program, note: pro_note.trim() || null }],
+        pro:     ['/api/admin/grants/pro', { ...notice, emails, days: pro_days, program, note: pro_note.trim() || null }],
       }[grant]
       const res  = await fetch(url, {
         method: 'POST',
@@ -1044,10 +1048,11 @@ export default function AdminTools({ section, user }) {
     ? emailForm.potion_count >= 1 && emailForm.potion_count <= MAX_POTIONS_PER_GRANT
     : emailReward === 'pro' ? emailForm.pro_days >= 1 && emailForm.pro_days <= MAX_PRO_DAYS : true
   const emailOk      = emailCount > 0 && noticeOk && rewardOk
+  const proProgram   = proPrograms.find(p => p.value === emailForm.pro_program) ?? proPrograms.find(p => p.value === 'gift')
   const emailAction  = {
     none:    `發送推播給 ${emailCount} 位${langLabel}用戶`,
     potions: `發給 ${emailCount} 位用戶各 ${emailForm.potion_count} 瓶體力恢復劑`,
-    pro:     `為 ${emailCount} 位用戶開通 Pro ${emailForm.pro_days} 天（${PRO_PROGRAMS.find(p => p.value === emailForm.pro_program)?.label}）`,
+    pro:     `為 ${emailCount} 位用戶開通 Pro ${emailForm.pro_days} 天（${proProgram.label}）`,
   }[emailReward]
 
   return (
@@ -1229,10 +1234,10 @@ export default function AdminTools({ section, user }) {
                             <select
                               id="em-program"
                               className={styles.input}
-                              value={emailForm.pro_program}
+                              value={proProgram.value}
                               onChange={e => setEmailForm(p => ({ ...p, pro_program: e.target.value }))}
                             >
-                              {PRO_PROGRAMS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+                              {proPrograms.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
                             </select>
                           </div>
                           <div className={styles.fieldGroup}>
@@ -1344,7 +1349,7 @@ export default function AdminTools({ section, user }) {
               </ModuleCard>}
 
               {section === 'email' && canSeeGrants && (
-                <GrantsPanel canManage={canGrant} refreshKey={grantsRefresh} />
+                <GrantsPanel canManage={canGrant} refreshKey={grantsRefresh} lang={lang} langLabel={langLabel} />
               )}
 
               {/* 公佈欄管理 */}
