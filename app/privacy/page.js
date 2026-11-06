@@ -3,9 +3,20 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import LegalContent from '@/components/LegalContent'
 import { getLegalMessages } from '@/lib/i18n/legalMessages'
+import { MARKET_GLOBAL, normalizeMarket } from '@/lib/market'
 import styles from '../legal.module.css'
 
-export const metadata = {
+const GLOBAL_METADATA = {
+  title: 'Privacy Policy - Dogtor',
+  description: 'How the Dogtor app collects, uses and protects your personal data.',
+}
+
+export async function generateMetadata() {
+  const h = await headers()
+  return normalizeMarket(h.get('x-app-market')) === MARKET_GLOBAL ? GLOBAL_METADATA : TW_METADATA
+}
+
+const TW_METADATA = {
   title: '隱私權政策 - Dogtor 逗課',
   description: '了解 Dogtor 逗課 App 如何收集、使用和保護你的個人資料。',
 }
@@ -13,7 +24,7 @@ export const metadata = {
 export default async function Privacy() {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
-  const legal = getLegalMessages(locale)
+  const legal = getLegalMessages(locale, normalizeMarket(h.get('x-app-market')))
   const page = legal.privacy
 
   return (

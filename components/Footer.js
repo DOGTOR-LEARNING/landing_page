@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useLocale, useMessages } from './LocaleProvider'
+import { useLocale, useMarket, useMessages } from './LocaleProvider'
+import { MARKET_GLOBAL } from '@/lib/market'
 import { COMPANY, getCompanyAddress } from '@/lib/company'
 import CompanyLink from './CompanyLink'
 import styles from './Footer.module.css'
@@ -11,6 +12,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
   const m = useMessages()
   const locale = useLocale()
+  const isGlobal = useMarket() === MARKET_GLOBAL
 
   return (
     <footer className={styles.footer}>
@@ -25,13 +27,15 @@ export default function Footer() {
                 height={28}
                 className={styles.footerLogoImg}
               />
-              <Image
-                src="/dogtor_logo.svg"
-                alt="逗課 logo"
-                width={110}
-                height={28}
-                className={styles.footerLogoImg}
-              />
+              {!isGlobal && (
+                <Image
+                  src="/dogtor_logo.svg"
+                  alt="逗課 logo"
+                  width={110}
+                  height={28}
+                  className={styles.footerLogoImg}
+                />
+              )}
             </Link>
             <p className={styles.footerCopy}>{m.footer.copyright(currentYear)}</p>
             <p className={styles.footerContact}>
@@ -42,11 +46,13 @@ export default function Footer() {
 
           <div className={styles.footerLinks}>
             <Link href="/technology">{m.footer.links.technology}</Link>
-            <Link href="/reviews">{m.footer.links.reviews}</Link>
-            <Link href="/news">{m.footer.links.news}</Link>
+            {/* Reviews, news and the web refund policy (Paddle) belong to the
+                Taiwan app; international purchases go through the stores. */}
+            {!isGlobal && <Link href="/reviews">{m.footer.links.reviews}</Link>}
+            {!isGlobal && <Link href="/news">{m.footer.links.news}</Link>}
             <Link href="/terms">{m.footer.links.terms}</Link>
             <Link href="/privacy">{m.footer.links.privacy}</Link>
-            <Link href="/refund">{m.footer.links.refund}</Link>
+            {!isGlobal && <Link href="/refund">{m.footer.links.refund}</Link>}
             <Link href="/support">{m.footer.links.support}</Link>
             <Link href="/faq">{m.footer.links.faq}</Link>
           </div>
@@ -54,7 +60,7 @@ export default function Footer() {
         <div className={styles.footerCompany}>
           <p className={styles.footerCompanyName}>
             <CompanyLink className={styles.footerCompanyLink}>
-              {COMPANY.nameZh} {COMPANY.nameEn}
+              {isGlobal ? COMPANY.nameEn : `${COMPANY.nameZh} ${COMPANY.nameEn}`}
             </CompanyLink>
           </p>
           <p className={styles.footerCompanyMeta}>

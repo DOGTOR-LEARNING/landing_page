@@ -5,7 +5,9 @@ import Link from 'next/link'
 import { Heart, GraduationCap, Smile } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { useMessages } from '@/components/LocaleProvider'
+import { useMarket, useMessages } from '@/components/LocaleProvider'
+import GlobalHome from '@/components/GlobalHome'
+import { MARKET_GLOBAL } from '@/lib/market'
 import { getFeaturedArticles } from '@/lib/articles'
 import { trackDownloadClick, trackCTAClick, trackGuideArticleClick } from '@/lib/analytics'
 import LineCtaButton from '@/components/LineCtaButton'
@@ -18,8 +20,10 @@ const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.dogtor
 const testimonialIcons = { Heart, GraduationCap, Smile }
 
 export default function Home() {
-  const featuredArticles = getFeaturedArticles(4)
+  const market = useMarket()
   const m = useMessages()
+  if (market === MARKET_GLOBAL) return <GlobalHome />
+  const featuredArticles = getFeaturedArticles(4)
 
   return (
     <>

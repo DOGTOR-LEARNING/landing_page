@@ -5,8 +5,10 @@ import { headers } from 'next/headers'
 import { LocaleProvider } from '@/components/LocaleProvider'
 import PostHogProvider from '@/components/PostHogProvider'
 import { Analytics } from '@vercel/analytics/next'
+import { MARKET_GLOBAL, normalizeMarket } from '@/lib/market'
+import { GLOBAL_METADATA, GLOBAL_JSON_LD } from '@/lib/globalSeo'
 
-export const metadata = {
+const TW_METADATA = {
   metadataBase: new URL('https://dogtor.superb-tutor.com'),
   title: 'Dogtor 逗課 | 國高中生最愛的 AI 複習 App・會考學測題庫、AI 解題、好友對戰',
   description:
@@ -80,7 +82,7 @@ export const viewport = {
   maximumScale: 5,
 }
 
-const jsonLd = [
+const TW_JSON_LD = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -305,9 +307,16 @@ const jsonLd = [
   },
 ]
 
+export async function generateMetadata() {
+  const h = await headers()
+  return normalizeMarket(h.get('x-app-market')) === MARKET_GLOBAL ? GLOBAL_METADATA : TW_METADATA
+}
+
 export default async function RootLayout({ children }) {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
+  const market = normalizeMarket(h.get('x-app-market'))
+  const jsonLd = market === MARKET_GLOBAL ? GLOBAL_JSON_LD : TW_JSON_LD
   const isAdmin = h.get('x-admin-workspace') === '1'
   return (
     <html lang={locale}>
@@ -363,8 +372,8 @@ export default async function RootLayout({ children }) {
         ))}
       </head>
       <body>
-        {isAdmin ? <LocaleProvider locale={locale}>{children}</LocaleProvider> : <>
-          <PostHogProvider><LocaleProvider locale={locale}>{children}</LocaleProvider></PostHogProvider>
+        {isAdmin ? <LocaleProvider locale={locale} market={market}>{children}</LocaleProvider> : <>
+          <PostHogProvider><LocaleProvider locale={locale} market={market}>{children}</LocaleProvider></PostHogProvider>
           <Analytics />
         </>}
       </body>

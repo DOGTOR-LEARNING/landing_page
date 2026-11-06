@@ -39,7 +39,16 @@ const nextConfig = {
     ]
   },
   async rewrites() {
-    return [
+    // The international host has its own robots.txt, llms.txt and sitemap;
+    // these run before the filesystem so the Taiwan files in public/ and
+    // app/sitemap.js do not answer for it.
+    const globalHost = [{ type: 'host', value: '(global\\.superb-tutor\\.com|global\\.localhost)' }]
+    const beforeFiles = [
+      { source: '/robots.txt', has: globalHost, destination: '/robots-global.txt' },
+      { source: '/llms.txt', has: globalHost, destination: '/llms-global.txt' },
+      { source: '/sitemap.xml', has: globalHost, destination: '/global-sitemap.xml' },
+    ]
+    const afterFiles = [
       // Shareable parent report pages are rendered by the backend. Proxying
       // them here keeps the backend's own URL out of links parents pass around.
       {
@@ -61,6 +70,7 @@ const nextConfig = {
         destination: 'https://us.i.posthog.com/:path*',
       },
     ]
+    return { beforeFiles, afterFiles }
   },
 }
 

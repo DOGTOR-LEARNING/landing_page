@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { isGlobalHost, requestHost } from '@/lib/appHosts'
+import { GLOBAL_PATHS } from '@/lib/market'
 
 const COOKIE_NAME = 'dogtor_locale'
 
@@ -23,16 +24,14 @@ function localeFromAcceptLanguage(headerValue) {
   return normalizeLocale(first)
 }
 
-// The international host only serves invite links and the legal pages the
-// en app points at; everything else on it is the Taiwan site.
-const GLOBAL_HOST_PATHS = ['/invite', '/privacy', '/terms', '/support']
-
 export function middleware(request) {
   const url = request.nextUrl
   const globalHost = isGlobalHost(requestHost(request.headers))
 
-  if (globalHost && !GLOBAL_HOST_PATHS.includes(url.pathname)) {
-    return NextResponse.redirect(new URL('/invite', url))
+  // The international site only has the pages in GLOBAL_PATHS; the rest of
+  // the site describes the Taiwan app.
+  if (globalHost && !GLOBAL_PATHS.includes(url.pathname)) {
+    return NextResponse.redirect(new URL('/', url))
   }
   const langParam = url.searchParams.get('lang')
   const cookieLocale = request.cookies.get(COOKIE_NAME)?.value

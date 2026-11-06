@@ -1,0 +1,36 @@
+# Dogtor
+
+> Dogtor is a free AI study app for students preparing for AP exams, the SAT and the GRE. Available on the App Store and Google Play.
+
+## What it is
+Dogtor (pronounced like "doctor") is an education app whose mascot is a study-whiz corgi. It is not related to veterinarians, animal doctors or pet care.
+
+Students clear bite-sized practice levels on subject "islands". Every question maps to one concept; a wrong answer is explained immediately and saved to a mistake book, and AI chooses the next questions from the concepts the student is weakest on.
+
+## Subjects
+- AP Biology
+- AP Psychology
+- AP Environmental Science
+- AP U.S. Government and Politics
+- SAT Reading and Writing
+- GRE Vocabulary
+- Custom: students photograph or upload their own notes, handouts or PDFs and AI turns them into a practice level, for any subject.
+
+Dogtor is not affiliated with the College Board (AP, SAT) or ETS (GRE).
+
+## Features
+- AI tutor ("Ask Dogtor"): explains any typed or photographed question, writes practice questions on request, and summarizes recent progress.
+- Mistake book for re-practicing missed questions.
+- Real-time quiz battles with friends and ranked matchmaking with monthly leaderboards.
+- Daily streaks and achievements.
+- Dogtor Pro (optional in-app subscription): unlimited hearts, more AI tutor questions a day, more custom levels and no ads.
+
+## Links
+- Website: https://global.superb-tutor.com
+- App Store: https://apps.apple.com/us/app/dogtor-daily-ap-sat-prep/id6805425251
+- Google Play: https://play.google.com/store/apps/details?id=com.dogtor.global
+- FAQ: https://global.superb-tutor.com/faq
+- Contact: dogtor@superb-tutor.com
+
+## Company
+Developed and operated by SuperB Software Technology Co., Ltd. (Taipei, Taiwan).

@@ -5,9 +5,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import CompanyInfo from '@/components/CompanyInfo'
 import { getMessages } from '@/lib/i18n/messages'
+import { MARKET_GLOBAL, normalizeMarket, storeLinks } from '@/lib/market'
 import styles from './page.module.css'
-
-const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 const TEAM_MEMBERS = [
   { nickname: 'Pierre', name: '陳冠宇', roleZh: '執行長', roleEn: 'CEO', avatar: '/pierre_ava.png', website: 'https://www.pierre-chen.com/' },
@@ -16,7 +15,18 @@ const TEAM_MEMBERS = [
   { nickname: null, name: '李宜嘉', roleZh: '行銷長', roleEn: 'CMO', avatar: '/yichia_ava.png' },
 ]
 
-export const metadata = {
+const GLOBAL_METADATA = {
+  title: 'About Us - Dogtor | AI study app for AP, SAT & GRE prep',
+  description:
+    'Dogtor is an AI study app for AP, SAT and GRE prep, built by National Taiwan University students and experienced exam-prep teachers and advised by NTU professors.',
+}
+
+export async function generateMetadata() {
+  const h = await headers()
+  return normalizeMarket(h.get('x-app-market')) === MARKET_GLOBAL ? GLOBAL_METADATA : TW_METADATA
+}
+
+const TW_METADATA = {
   title: '關於我們 - Dogtor 逗課 | 國高中生 AI 學習 App｜團隊介紹',
   description:
     'Dogtor 逗課是專為國高中生打造的 AI 學習 App，由超棒軟體科技有限公司（SuperB Software Technology Co., Ltd.）開發及營運。由台大學生與補習班老師聯手開發，並由多位台大教授顧問在 AI、軟體、HCI、學習互動等方面提供專業指導，讓會考學測複習變有趣又有效率。',
@@ -25,7 +35,10 @@ export const metadata = {
 export default async function About() {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
-  const m = getMessages(locale)
+  const market = normalizeMarket(h.get('x-app-market'))
+  const isGlobal = market === MARKET_GLOBAL
+  const m = getMessages(locale, market)
+  const APP_STORE_URL = storeLinks(market).appStore
 
   return (
     <>
@@ -82,7 +95,7 @@ export default async function About() {
                         )}
                       </p>
                       <p className={styles.memberRole}>
-                        <span>{member.roleZh}</span>
+                        {!isGlobal && <span>{member.roleZh}</span>}
                         <span className={styles.memberRoleEn}>{member.roleEn}</span>
                       </p>
                     </div>

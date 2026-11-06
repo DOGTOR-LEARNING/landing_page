@@ -3,15 +3,14 @@ import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { getTechnologyMessages } from '@/lib/i18n/technologyMessages'
+import { normalizeMarket, storeLinks } from '@/lib/market'
 import styles from './page.module.css'
-
-const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 const SECTION_ORDER = ['graph', 'pipeline', 'tutor', 'custom', 'mastery', 'parent', 'cloud', 'responsible']
 
 export async function generateMetadata() {
   const h = await headers()
-  const t = getTechnologyMessages(h.get('x-locale') || 'zh-TW')
+  const t = getTechnologyMessages(h.get('x-locale') || 'zh-TW', normalizeMarket(h.get('x-app-market')))
   return {
     title: t.metaTitle,
     description: t.metaDescription,
@@ -32,8 +31,9 @@ function Points({ items }) {
 
 export default async function Technology() {
   const h = await headers()
-  const t = getTechnologyMessages(h.get('x-locale') || 'zh-TW')
+  const t = getTechnologyMessages(h.get('x-locale') || 'zh-TW', normalizeMarket(h.get('x-app-market')))
   const s = t.sections
+  const APP_STORE_URL = storeLinks(normalizeMarket(h.get('x-app-market'))).appStore
 
   return (
     <>
@@ -56,7 +56,7 @@ export default async function Technology() {
           </dl>
 
           <nav className={styles.toc} aria-label={t.tocLabel}>
-            {SECTION_ORDER.map((key) => (
+            {SECTION_ORDER.filter((key) => s[key]).map((key) => (
               <a key={key} href={`#${key}`} className={styles.tocLink}>
                 {s[key].title}
               </a>
@@ -125,11 +125,13 @@ export default async function Technology() {
               </div>
             </section>
 
-            <section id="parent" className={styles.section}>
-              <p className={styles.tag}>{s.parent.tag}</p>
-              <h2 className={styles.sectionTitle}>{s.parent.title}</h2>
-              <p className={styles.text}>{s.parent.lead}</p>
-            </section>
+            {s.parent && (
+              <section id="parent" className={styles.section}>
+                <p className={styles.tag}>{s.parent.tag}</p>
+                <h2 className={styles.sectionTitle}>{s.parent.title}</h2>
+                <p className={styles.text}>{s.parent.lead}</p>
+              </section>
+            )}
 
             <section id="cloud" className={styles.section}>
               <p className={styles.tag}>{s.cloud.tag}</p>

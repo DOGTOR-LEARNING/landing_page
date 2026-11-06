@@ -6,10 +6,10 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { trackInvitePageVisit, trackDownloadClick, trackEvent, trackLeavingEvent } from '@/lib/analytics'
+import { MARKET_GLOBAL, STORE_LINKS } from '@/lib/market'
 import styles from './page.module.css'
 
-// Store links, deeplink scheme and copy per app. The international app is
-// iOS-only until its Play listing exists, so it has no Play link yet.
+// Store links, deeplink scheme and copy per app.
 const MARKETS = {
   tw: {
     appStoreUrl: 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627',
@@ -36,11 +36,10 @@ const MARKETS = {
     },
   },
   global: {
-    appStoreUrl: 'https://apps.apple.com/app/id6805425251',
-    playStoreUrl: null,
+    appStoreUrl: STORE_LINKS[MARKET_GLOBAL].appStore,
+    playStoreUrl: STORE_LINKS[MARKET_GLOBAL].googlePlay,
     scheme: 'dogtorglobal',
-    // The Taiwan site's header and footer link to pages this host does not serve.
-    showSiteChrome: false,
+    showSiteChrome: true,
     copy: {
       titleInvited: 'Your friend invited you to Dogtor',
       title: 'Join Dogtor',

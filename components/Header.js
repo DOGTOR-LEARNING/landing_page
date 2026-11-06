@@ -3,11 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useLocale, useMessages } from './LocaleProvider'
+import { useLocale, useMarket, useMessages } from './LocaleProvider'
 import { trackDownloadClick, trackNavClick } from '@/lib/analytics'
+import { MARKET_GLOBAL, MARKET_TW, siteUrl, storeLinks } from '@/lib/market'
 import styles from './Header.module.css'
-
-const APP_STORE_URL = 'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627'
 
 function GlobeIcon() {
   return (
@@ -25,6 +24,9 @@ export default function Header() {
   const navRef = useRef(null)
   const locale = useLocale()
   const m = useMessages()
+  const market = useMarket()
+  const isGlobal = market === MARKET_GLOBAL
+  const APP_STORE_URL = storeLinks(market).appStore
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,14 +55,18 @@ export default function Header() {
     }
   }, [openDropdown])
 
+  // Reviews, news and guides are about the Taiwan app; the international
+  // site does not serve them (lib/market.js).
   const aboutLinks = [
     { href: '/about', label: m.header.aboutTeam, key: 'about' },
-    { href: '/reviews', label: m.header.reviews, key: 'reviews' },
-    { href: '/news', label: m.header.news, key: 'news' },
+    ...(isGlobal ? [] : [
+      { href: '/reviews', label: m.header.reviews, key: 'reviews' },
+      { href: '/news', label: m.header.news, key: 'news' },
+    ]),
   ]
 
   const helpLinks = [
-    { href: '/guide', label: m.header.guide, key: 'guide' },
+    ...(isGlobal ? [] : [{ href: '/guide', label: m.header.guide, key: 'guide' }]),
     { href: '/faq', label: m.header.faq, key: 'faq' },
     { href: '/support', label: m.header.support, key: 'support' },
   ]
@@ -107,6 +113,12 @@ export default function Header() {
   }
 
   const switchLocale = () => {
+    // The international site is English only; its switch opens the Taiwan
+    // site, which is a different app.
+    if (isGlobal) {
+      window.location.href = `${siteUrl(MARKET_TW)}/?lang=zh-TW`
+      return
+    }
     const newLocale = locale === 'zh-TW' ? 'en' : 'zh-TW'
     const url = new URL(window.location.href)
     url.searchParams.set('lang', newLocale)
@@ -127,14 +139,16 @@ export default function Header() {
                 className={styles.logoImgEn}
                 priority
               />
-              <Image
-                src="/dogtor_logo.svg"
-                alt="Dogtor 逗課 國高中題庫學習 App 中文標誌"
-                width={110}
-                height={28}
-                className={styles.logoImgCn}
-                priority
-              />
+              {!isGlobal && (
+                <Image
+                  src="/dogtor_logo.svg"
+                  alt="Dogtor 逗課 國高中題庫學習 App 中文標誌"
+                  width={110}
+                  height={28}
+                  className={styles.logoImgCn}
+                  priority
+                />
+              )}
             </div>
           </Link>
 
@@ -160,9 +174,11 @@ export default function Header() {
             >
               {m.common.downloadApp}
             </a>
-            <Link href="/parent-pro" className={styles.parentProBtn} onClick={() => trackNavClick('parent_pro')}>
-              {m.header.parentPro}
-            </Link>
+            {!isGlobal && (
+              <Link href="/parent-pro" className={styles.parentProBtn} onClick={() => trackNavClick('parent_pro')}>
+                {m.header.parentPro}
+              </Link>
+            )}
           </nav>
 
           <button
@@ -216,13 +232,15 @@ export default function Header() {
             >
               {m.common.downloadApp}
             </a>
-            <Link
-              href="/parent-pro"
-              className={styles.mobileParentProBtn}
-              onClick={closeMenu}
-            >
-              {m.header.parentPro}
-            </Link>
+            {!isGlobal && (
+              <Link
+                href="/parent-pro"
+                className={styles.mobileParentProBtn}
+                onClick={closeMenu}
+              >
+                {m.header.parentPro}
+              </Link>
+            )}
           </div>
         </div>
       </div>

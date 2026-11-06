@@ -2,6 +2,7 @@ import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { getMessages } from '@/lib/i18n/messages'
+import { MARKET_GLOBAL, normalizeMarket } from '@/lib/market'
 import CompanyInfo from '@/components/CompanyInfo'
 import {
   Email,
@@ -15,7 +16,17 @@ import {
 } from '@mui/icons-material'
 import styles from './page.module.css'
 
-export const metadata = {
+const GLOBAL_METADATA = {
+  title: 'Support Center - Dogtor',
+  description: 'Need help with Dogtor? Contact the team, report a bug, ask about Dogtor Pro or request account deletion.',
+}
+
+export async function generateMetadata() {
+  const h = await headers()
+  return normalizeMarket(h.get('x-app-market')) === MARKET_GLOBAL ? GLOBAL_METADATA : TW_METADATA
+}
+
+const TW_METADATA = {
   title: '支援中心 - Dogtor 逗課',
   description: '需要協助嗎？在這裡找到 Dogtor 逗課的聯絡方式、營運公司資訊（超棒軟體科技有限公司）和常見問題的快速解決方案。',
 }
@@ -23,7 +34,7 @@ export const metadata = {
 export default async function Support() {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
-  const m = getMessages(locale)
+  const m = getMessages(locale, normalizeMarket(h.get('x-app-market')))
   const s = m.support
 
   return (

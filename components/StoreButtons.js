@@ -1,13 +1,15 @@
 'use client'
 
 import { trackDownloadClick } from '@/lib/analytics'
-import { STORE_RATINGS } from '@/data/reviews'
+import { storeLinks } from '@/lib/market'
+import { useMarket } from './LocaleProvider'
 
 export default function StoreButtons({ location, className }) {
+  const stores = storeLinks(useMarket())
   return (
     <div className={className}>
       <a
-        href={STORE_RATINGS.appStore.url}
+        href={stores.appStore}
         className="appStoreButton"
         target="_blank"
         rel="noreferrer"
@@ -24,7 +26,7 @@ export default function StoreButtons({ location, className }) {
         </span>
       </a>
       <a
-        href={STORE_RATINGS.googlePlay.url}
+        href={stores.googlePlay}
         className="appStoreButton"
         target="_blank"
         rel="noreferrer"

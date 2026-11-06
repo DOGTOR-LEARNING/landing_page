@@ -897,3 +897,78 @@
 .techLink:hover {
   text-decoration: underline;
 }
+
+/* International home (components/GlobalHome.js) */
+.badgeStatic {
+  cursor: default;
+}
+
+.badgeStatic::after {
+  content: none;
+}
+
+.badgeStatic:hover,
+.badgeStatic:focus-visible {
+  scale: 1;
+  box-shadow: 0 2px 4px rgba(16, 32, 49, 0.2);
+}
+
+.heroIllustration {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+@media (min-width: 768px) {
+  .heroIllustration {
+    max-width: 420px;
+  }
+}
+
+.heroIllustrationImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.globalSubjects {
+  padding: 4rem 0 2rem;
+}
+
+.subjectChips {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 860px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.subjectChip {
+  padding: 0.6rem 1.1rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 163, 104, 0.5);
+  background: rgba(245, 155, 3, 0.12);
+  color: var(--text-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.subjectsNote {
+  max-width: 640px;
+  margin: var(--space-lg) auto 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+.globalCtaButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}

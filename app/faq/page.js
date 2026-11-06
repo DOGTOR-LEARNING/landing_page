@@ -4,9 +4,30 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Accordion from '@/components/Accordion'
 import { getMessages } from '@/lib/i18n/messages'
+import { MARKET_GLOBAL, normalizeMarket, siteUrl } from '@/lib/market'
 import styles from './page.module.css'
 
-export const metadata = {
+const GLOBAL_METADATA = {
+  title: 'FAQ - Dogtor | AI study app for AP, SAT & GRE prep',
+  description:
+    'Answers to common questions about Dogtor: is it free, which AP and SAT subjects it covers, how the AI tutor and custom quizzes work, hearts, battles, Dogtor Pro and your account.',
+  alternates: { canonical: `${siteUrl(MARKET_GLOBAL)}/faq` },
+  openGraph: {
+    title: 'FAQ - Dogtor',
+    url: `${siteUrl(MARKET_GLOBAL)}/faq`,
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Dogtor',
+    images: ['/DOGTOR_banner.png'],
+  },
+}
+
+export async function generateMetadata() {
+  const h = await headers()
+  return normalizeMarket(h.get('x-app-market')) === MARKET_GLOBAL ? GLOBAL_METADATA : TW_METADATA
+}
+
+const TW_METADATA = {
   title: '常見問題 - Dogtor 逗課 | 國高中題庫學習 App・家長訂閱 FAQ',
   description:
     'Dogtor 逗課常見問題解答：App 是否免費？支援哪些科目？好友對戰怎麼玩？AI 解題怎麼用？以及 Dogtor Pro 家長訂閱方案、授權碼綁定、學習報告等完整 FAQ。',
@@ -28,7 +49,7 @@ export const metadata = {
 export default async function FAQ() {
   const h = await headers()
   const locale = h.get('x-locale') || 'zh-TW'
-  const m = getMessages(locale)
+  const m = getMessages(locale, normalizeMarket(h.get('x-app-market')))
   const faqData = m.faq.items
   const parentSections = m.faq.parentSections || []
 
