@@ -1,13 +1,14 @@
 'use client'
-import { useState } from 'react'
-import { Pencil, Plus, X } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { FolderUp, ImageUp, Pencil, Plus, X } from 'lucide-react'
 import styles from '../admin.module.css'
 import page from './nest.module.css'
 import LayoutEditor, { DEFAULT_LAYOUT } from './LayoutEditor'
 import {
   ASSET_BASE, Field, ImageField, MOTIONS, POSES, PRESETS, RARITIES, RuleEditor, SLOT_KINDS, SOURCES, Select,
-  jsonBody, label, nestApi, priceInput, ruleText,
+  jsonBody, label, nestApi, priceInput, ruleText, uploadAsset,
 } from './shared'
+import { folderOf, guessSlotKind, imageSize, parseUploadName, poseOf } from './fileNames'
 
 const ID_PATTERN = /^[a-z0-9_]{2,40}$/
 
@@ -56,6 +57,77 @@ function validate(form, kind) {
   if (rule?.type === 'achievement' && !rule.id) return '請選成就'
   if (kind === 'item' && form.motion !== 'static' && !form.motion_preset) return '請選動態效果'
   return ''
+}
+
+/** New entries only: pick the file (or a pet's folder) and fill id, names, kind and images from its name. */
+function AutoFill({ market, isSpecies, form, setForm, options }) {
+  const file = useRef(null)
+  const folder = useRef(null)
+  const [busy, setBusy] = useState('')
+  const [error, setError] = useState('')
+
+  function names(parsed) {
+    return { tw: parsed.tw || form.names.tw, en: parsed.en || form.names.en }
+  }
+  async function pickItem(event) {
+    const picked = event.target.files?.[0]
+    event.target.value = ''
+    if (!picked) return
+    const parsed = parseUploadName(picked.name)
+    if (!parsed.id) { setError(`看不出代號：「${picked.name}」，請照「中文名稱_English Name_代號」命名`); return }
+    const slotKind = guessSlotKind(parsed.id, await imageSize(picked), options?.asset_sizes) || form.slot_kind
+    setForm(f => ({ ...f, id: parsed.id, names: names(parsed), slot_kind: slotKind }))
+    setBusy('上傳中…'); setError('')
+    try {
+      const url = await uploadAsset(market, { kind: slotKind, targetId: parsed.id, file: picked })
+      setForm(f => ({ ...f, image_url: url }))
+    } catch (e) { setError(`圖片不符合規格：${e.message}`) }
+    finally { setBusy('') }
+  }
+  async function pickSpecies(event) {
+    const files = [...(event.target.files || [])].filter(f => /\.(gif|webp)$/i.test(f.name))
+    event.target.value = ''
+    if (!files.length) return
+    const parsed = parseUploadName(folderOf(files))
+    const id = parsed.id || form.id
+    if (!id) { setError('看不出代號：資料夾請照「中文名稱_English Name_代號」命名，或先填代號再選圖'); return }
+    const byPose = Object.fromEntries(files.map(f => [poseOf(f.name), f]).filter(([pose]) => pose))
+    setForm(f => ({ ...f, id, names: names(parsed) }))
+    setError('')
+    const failed = []
+    for (const [pose, text] of POSES) {
+      if (!byPose[pose]) continue
+      setBusy(`上傳${text}…`)
+      try {
+        const url = await uploadAsset(market, {
+          kind: pose === 'avatar' ? 'avatar' : 'pet', targetId: id, pose: pose === 'avatar' ? null : pose, file: byPose[pose],
+        })
+        setForm(f => ({ ...f, image_urls: { ...f.image_urls, [pose]: url } }))
+      } catch (e) { failed.push(`${text}：${e.message}`) }
+    }
+    const missing = POSES.filter(([pose]) => !byPose[pose]).map(([, text]) => text)
+    setBusy('')
+    setError([...failed, ...(missing.length ? [`資料夾裡找不到：${missing.join('、')}`] : [])].join('；'))
+  }
+
+  return <div className={page.ruleBox}>
+    <strong>從檔案自動帶入</strong>
+    <span className={page.muted}>{isSpecies
+      ? '選整個寵物資料夾（例如「小熊貓_Red Panda_red_panda」），會依資料夾名稱填中英文名稱與代號，並依檔名把六個動作逐一上傳。'
+      : '選一張圖（例如「奶油圓地毯_Cream Round Rug_rug_round_cream.webp」），會依檔名填中英文名稱與代號，依圖片尺寸判斷種類，並直接上傳。'}</span>
+    <div className={page.inlineFields}>
+      {isSpecies
+        ? <>
+          <button type="button" className={styles.smallButton} disabled={!!busy} onClick={() => folder.current?.click()}><FolderUp size={14} />選寵物資料夾</button>
+          <button type="button" className={styles.smallButton} disabled={!!busy} onClick={() => file.current?.click()}><ImageUp size={14} />或多選六張圖</button>
+        </>
+        : <button type="button" className={styles.smallButton} disabled={!!busy} onClick={() => file.current?.click()}><ImageUp size={14} />選圖檔</button>}
+      {busy && <span>{busy}</span>}
+    </div>
+    {error && <span className={page.error}>{error}</span>}
+    <input ref={file} type="file" accept="image/webp,image/gif" multiple={isSpecies} hidden onChange={isSpecies ? pickSpecies : pickItem} />
+    {isSpecies && <input ref={folder} type="file" webkitdirectory="" directory="" hidden onChange={pickSpecies} />}
+  </div>
 }
 
 function PriceCell({ price }) {
@@ -139,6 +211,7 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
         <h2 id="nest-editor-title">{form.isNew ? (isSpecies ? '新增寵物' : '新增擺件／背景') : `編輯「${form.names.tw || form.id}」`}</h2>
         <p className={styles.hint}>中英文一起設定：儲存時同時寫入 {(options?.catalog_databases || []).join('、') || '所有資料庫'}，中文名稱給台灣、英文名稱給國際版。圖片只要上傳一次。</p>
         <form onSubmit={submit} className={styles.form}>
+          {form.isNew && <AutoFill market={market} isSpecies={isSpecies} form={form} setForm={setForm} options={options} />}
           <div className={styles.formColumns}>
             <Field label="代號（id）" hint="小寫英文、數字、底線；建立後不能改，也是圖片檔名">
               <input className={styles.input} value={form.id} disabled={!form.isNew} onChange={e => set({ id: e.target.value.toLowerCase() })} placeholder={isSpecies ? 'shiba' : 'shelf_books'} />
