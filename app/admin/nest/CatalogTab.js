@@ -22,8 +22,8 @@ const newItem = slotKind => ({
 
 // Rows from the API (decimal, 0/1) as form state.
 const formNames = row => ({ tw: row.names?.tw || '', en: row.names?.en || '' })
-const speciesForm = row => ({ ...row, names: formNames(row), display_scale: Number(row.display_scale), price_bones: row.price_bones ?? '', is_published: !!row.is_published, image_urls: row.image_urls || {} })
-const itemForm = row => ({ ...row, names: formNames(row), price_bones: row.price_bones ?? '', is_published: !!row.is_published })
+const speciesForm = row => ({ ...row, names: formNames(row), source: row.id !== 'doudou' && row.source === 'default' ? 'shop' : row.source, display_scale: Number(row.display_scale), price_bones: row.price_bones ?? '', is_published: !!row.is_published, image_urls: row.image_urls || {} })
+const itemForm = row => ({ ...row, names: formNames(row), source: row.id !== 'bg_bedroom' && row.source === 'default' ? 'shop' : row.source, price_bones: row.price_bones ?? '', is_published: !!row.is_published })
 
 function speciesBody(form) {
   const imageUrls = Object.fromEntries(POSES.map(([pose]) => [pose, form.image_urls[pose] || `${ASSET_BASE}/species/${form.id}/${pose}.webp`]))
@@ -47,6 +47,8 @@ function itemBody(form) {
 function validate(form, kind) {
   if (!ID_PATTERN.test(form.id)) return '代號只能用小寫英文、數字、底線，2–40 字'
   if (!form.names.tw.trim() || !form.names.en.trim()) return '中文和英文名稱都要填'
+  if (kind === 'species' && POSES.some(([pose]) => !form.image_urls[pose])) return '請先上傳五個動作和頭像，共六張圖'
+  if (kind === 'items' && !form.image_url) return '請先上傳圖片'
   if (form.price_bones !== '' && !(Number(form.price_bones) >= 0)) return '價格要是 0 以上的整數，或留空表示非賣品'
   const rule = form.unlock_rule
   if (rule?.type === 'streak' && !(rule.days > 0)) return '請填連續學習天數'
@@ -149,7 +151,7 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
           <div className={styles.formColumns}>
             {!isSpecies && <Field label="種類" hint="決定能放在哪個格位"><Select value={form.slot_kind} options={SLOT_KINDS} disabled={!form.isNew} onChange={slot_kind => set({ slot_kind })} /></Field>}
             <Field label="稀有度" hint="物品欄卡片的框色"><Select value={form.rarity} options={RARITIES} onChange={rarity => set({ rarity })} /></Field>
-            <Field label="取得方式"><Select value={form.source} options={SOURCES} onChange={source => set({ source })} /></Field>
+            <Field label="取得方式" hint="預設只提供逗逗和溫暖臥室；其他選商店，價格留空即可暫不販售。"><Select value={form.source} options={SOURCES.filter(([value]) => value !== 'default' || form.id === (isSpecies ? 'doudou' : 'bg_bedroom'))} onChange={source => set({ source })} /></Field>
           </div>
           <div className={styles.formColumns}>
             <Field label="價格（骨頭）" hint="留空＝非賣品，只能從解鎖條件或獎勵取得">
@@ -187,7 +189,7 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
             <LayoutEditor value={form.layout} imageUrl={form.image_url} onChange={layout => set({ layout })} />
           </Field>}
 
-          <label className={page.checkRow}><input type="checkbox" checked={form.is_published} onChange={e => set({ is_published: e.target.checked })} />上架（App 會看到、也會被發放）</label>
+          <label className={page.checkRow}><input type="checkbox" checked={form.is_published} onChange={e => set({ is_published: e.target.checked })} />上架（App 可看到；是否發放依取得方式）</label>
           {error && <p className={styles.errorMsg} role="alert">{error}</p>}
           <div className={styles.modalActions}>
             <button type="button" className={styles.btnSecondary} disabled={busy} onClick={() => setForm(null)}>取消</button>

@@ -7,12 +7,13 @@ import page from './nest.module.css'
 import CatalogTab from './CatalogTab'
 import MessagesTab from './MessagesTab'
 import SupportTab from './SupportTab'
+import SharedArtTab from './SharedArtTab'
 import { MARKETS, nestApi } from './shared'
 
 // Species and items are one catalog: the tw backend writes every save to all
 // databases (NEST_CATALOG_DATABASES). Messages and support stay per market.
 const CATALOG_MARKET = 'tw'
-const TABS = [['species', '寵物'], ['items', '擺件與背景'], ['messages', '留言短句與貼圖'], ['support', '客服查詢與補發']]
+const TABS = [['species', '寵物'], ['items', '擺件與背景'], ['messages', '留言短句與貼圖'], ['shared', '共用介面圖'], ['support', '客服查詢與補發']]
 
 export default function NestAdminPage() {
   const { user } = useAdmin()
@@ -39,7 +40,7 @@ export default function NestAdminPage() {
 
   useEffect(() => { load(market) }, [market, load])
 
-  const isCatalog = tab === 'species' || tab === 'items'
+  const isCatalog = tab === 'species' || tab === 'items' || tab === 'shared'
   return <div className={page.root}>
     <div className={page.toolbar}>
       {isCatalog ? <span className={page.muted}>中英文共用一份目錄</span> : <div className={styles.langTabs}>{MARKETS.map(([code, text]) =>
@@ -51,6 +52,7 @@ export default function NestAdminPage() {
     <nav className={page.tabs} aria-label="寵物窩管理">{TABS.map(([code, text]) =>
       <button key={code} className={`${page.tab} ${tab === code ? page.tabActive : ''}`} onClick={() => setTab(code)} aria-current={tab === code ? 'page' : undefined}>{text}</button>)}
     </nav>
+    <p className={styles.hint}>首次開啟只發放逗逗和溫暖臥室。其他寵物、背景、家具、玩具先選「商店」，價格留空，不會自動發放。</p>
     {message && <p className={`${styles.inlineMessage} ${message.error ? page.errorMessage : ''}`} role="status">
       {message.text}<button className={page.dismiss} onClick={() => setMessage(null)} aria-label="關閉"><X size={14} /></button>
     </p>}
@@ -60,6 +62,7 @@ export default function NestAdminPage() {
         rows={data[tab]} options={data.options} canEdit={canEdit} onSaved={() => load()} notify={notify} />}
       {tab === 'messages' && <MessagesTab market={market} phrases={data.phrases} stickers={data.stickers}
         canEdit={canEdit} onSaved={() => load()} notify={notify} />}
+      {tab === 'shared' && <SharedArtTab market={CATALOG_MARKET} canEdit={canEdit} notify={notify} />}
       {tab === 'support' && <SupportTab key={market} market={market} species={data.species} items={data.items}
         canEdit={canEdit} notify={notify} />}
     </>}

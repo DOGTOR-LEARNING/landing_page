@@ -4,45 +4,107 @@ import { RotateCcw } from 'lucide-react'
 import styles from '../admin.module.css'
 import page from './nest.module.css'
 
-// Drag the 8 decoration slots and 3 pet spots onto a background (spec §4.2).
-// Coordinates are fractions of the canvas: floor things and pets anchor at
-// their bottom centre, wall things at their centre. Box sizes are the app's
-// drawing boxes on its 1200 × 900 logical canvas (spec §4.4).
-
-const CANVAS = [1200, 900]
-const DRAW_BOX = { left_tall: [260, 520], right_large: [360, 480], rug: [520, 260], wall: [220, 220], toy: [160, 160] }
-const SLOTS = {
-  left_tall: 'left_tall', right_wall_1: 'wall', right_wall_2: 'wall', rug: 'rug',
-  toy_1: 'toy', toy_2: 'toy', toy_3: 'toy', right_large: 'right_large',
-}
-const PET_SCALE = { back_left: 0.9, back_right: 0.9, front: 1 }
+// Match the app's 1200x675 camera, six slots and ground anchors.
+const CANVAS = [1200, 675]
+const DRAW_BOX = { left_tall: [165, 430], right_large: [250, 300], rug: [400, 200], wall: [128, 144], toy: [140, 140] }
+const SLOTS = { left_tall: 'left_tall', right_wall_1: 'wall', rug: 'rug', toy_1: 'toy', toy_2: 'toy', right_large: 'right_large' }
+const PET_SCALE = { back_left: 0.85, back_right: 0.85, front: 1 }
 const PET_BOX = 320
 
-// Same as the seed's bedroom and the app's fallback (wall corner at x = 0.5).
 export const DEFAULT_LAYOUT = {
-  slots: {
-    left_tall: { x: 0.12, y: 0.70, scale: 1 }, right_wall_1: { x: 0.64, y: 0.30, scale: 1 },
-    right_wall_2: { x: 0.80, y: 0.36, scale: 1 }, rug: { x: 0.48, y: 0.76, scale: 1 },
-    toy_1: { x: 0.22, y: 0.88, scale: 1 }, toy_2: { x: 0.66, y: 0.90, scale: 1 },
-    toy_3: { x: 0.76, y: 0.82, scale: 1 }, right_large: { x: 0.84, y: 0.76, scale: 1 },
+  "version": 6,
+  "slots": {
+    "left_tall": {
+      "x": 0.075,
+      "y": 0.7,
+      "scale": 1.0
+    },
+    "right_wall_1": {
+      "x": 0.7116666666666667,
+      "y": 0.2519445776711964,
+      "scale": 1.0,
+      "quad": [
+        [
+          0.6583333333333333,
+          0.14962962962962964
+        ],
+        [
+          0.765,
+          0.1388521183053557
+        ],
+        [
+          0.765,
+          0.36374100719424457
+        ],
+        [
+          0.6583333333333333,
+          0.35555555555555557
+        ]
+      ]
+    },
+    "rug": {
+      "x": 0.5,
+      "y": 0.97,
+      "scale": 1.0
+    },
+    "toy_1": {
+      "x": 0.24,
+      "y": 0.9,
+      "scale": 1.0
+    },
+    "toy_2": {
+      "x": 0.75,
+      "y": 0.91,
+      "scale": 1.0
+    },
+    "right_large": {
+      "x": 0.89,
+      "y": 0.85,
+      "scale": 1.0
+    }
   },
-  pets: { back_left: { x: 0.42, y: 0.68 }, back_right: { x: 0.55, y: 0.68 }, front: { x: 0.48, y: 0.80 } },
+  "pets": {
+    "back_left": {
+      "x": 0.32,
+      "y": 0.76
+    },
+    "back_right": {
+      "x": 0.68,
+      "y": 0.76
+    },
+    "front": {
+      "x": 0.5,
+      "y": 0.9
+    }
+  }
 }
 
 const clamp = v => Math.min(1, Math.max(0, Math.round(v * 1000) / 1000))
 
+function moveSpot(spot, patch) {
+  if (!spot.quad) return { ...spot, ...patch }
+  const xs = spot.quad.map(p => p[0]), ys = spot.quad.map(p => p[1])
+  const dx = Math.max(-Math.min(...xs), Math.min(1 - Math.max(...xs), (patch.x ?? spot.x) - spot.x))
+  const dy = Math.max(-Math.min(...ys), Math.min(1 - Math.max(...ys), (patch.y ?? spot.y) - spot.y))
+  return { ...spot, ...patch, x: spot.x + dx, y: spot.y + dy, quad: spot.quad.map(([x, y]) => [x + dx, y + dy]) }
+}
+
 function box(id, spot, isPet) {
+  if (spot.quad) {
+    const xs = spot.quad.map(p => p[0]), ys = spot.quad.map(p => p[1])
+    return { left: Math.min(...xs), top: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) }
+  }
   const kind = isPet ? 'pet' : SLOTS[id]
   const scale = isPet ? PET_SCALE[id] : spot.scale ?? 1
   const [w, h] = isPet ? [PET_BOX * scale, PET_BOX * scale] : DRAW_BOX[kind].map(v => v * scale)
   const wf = w / CANVAS[0]
   const hf = h / CANVAS[1]
-  const top = kind === 'wall' ? spot.y - hf / 2 : spot.y - hf
+  const top = kind === 'wall' ? spot.y - hf / 2 : spot.y - hf * (isPet ? 0.9 : 0.96)
   return { left: spot.x - wf / 2, top, width: wf, height: hf }
 }
 
 export default function LayoutEditor({ value, onChange, imageUrl, disabled }) {
-  const layout = value || DEFAULT_LAYOUT
+  const layout = value?.version === 6 ? value : DEFAULT_LAYOUT
   const canvas = useRef(null)
   const drag = useRef(null)
   const [selected, setSelected] = useState('rug')
@@ -65,16 +127,16 @@ export default function LayoutEditor({ value, onChange, imageUrl, disabled }) {
     if (!d) return
     const x = clamp((event.clientX - d.rect.left) / d.rect.width - d.dx)
     const y = clamp((event.clientY - d.rect.top) / d.rect.height - d.dy)
-    onChange({ ...layout, [d.group]: { ...layout[d.group], [d.id]: { ...layout[d.group][d.id], x, y } } })
+    onChange({ ...layout, [d.group]: { ...layout[d.group], [d.id]: moveSpot(layout[d.group][d.id], { x, y }) } })
   }
   const end = () => { drag.current = null }
 
   const group = selected in layout.slots ? 'slots' : 'pets'
   const spot = layout[group][selected]
-  const setSpot = patch => onChange({ ...layout, [group]: { ...layout[group], [selected]: { ...spot, ...patch } } })
+  const setSpot = patch => onChange({ ...layout, [group]: { ...layout[group], [selected]: moveSpot(spot, patch) } })
 
   return <div className={page.layoutEditor}>
-    <div ref={canvas} className={page.layoutCanvas} style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : undefined}>
+    <div ref={canvas} className={page.layoutCanvas} style={{ aspectRatio: '16 / 9', ...(imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}) }}>
       {!imageUrl && <span className={page.layoutEmpty}>上傳背景圖後會顯示在這裡</span>}
       <span className={page.layoutCorner} aria-hidden />
       {[['slots', layout.slots], ['pets', layout.pets]].map(([g, spots]) => Object.entries(spots).map(([id, s]) => {
@@ -88,12 +150,12 @@ export default function LayoutEditor({ value, onChange, imageUrl, disabled }) {
       }))}
     </div>
     <div className={page.layoutSide}>
-      <p className={styles.hint}>拖拉方框對到背景上的位置。藍框＝擺件格位，橘框＝寵物位置；左右兩面牆的轉角應在正中間（虛線）。</p>
+      <p className={styles.hint}>這批背景直接沿用預設位置即可。藍框＝六個擺件格位，橘框＝寵物位置；只有換成不同構圖的背景時才需要調整。</p>
       <div className={page.layoutFields}>
         <strong>{selected}</strong>
         <label>x <input className={styles.input} type="number" step="any" min="0" max="1" value={spot.x} disabled={disabled} onChange={e => setSpot({ x: clamp(Number(e.target.value)) })} /></label>
         <label>y <input className={styles.input} type="number" step="any" min="0" max="1" value={spot.y} disabled={disabled} onChange={e => setSpot({ y: clamp(Number(e.target.value)) })} /></label>
-        {group === 'slots' && <label>縮放 <input className={styles.input} type="number" step="any" min="0.5" max="1.5" value={spot.scale ?? 1} disabled={disabled} onChange={e => setSpot({ scale: Number(e.target.value) || 1 })} /></label>}
+        {group === 'slots' && !spot.quad && <label>縮放 <input className={styles.input} type="number" step="any" min="0.5" max="1.5" value={spot.scale ?? 1} disabled={disabled} onChange={e => setSpot({ scale: Number(e.target.value) || 1 })} /></label>}
       </div>
       <button type="button" className={styles.smallButton} disabled={disabled} onClick={() => onChange(structuredClone(DEFAULT_LAYOUT))}><RotateCcw size={14} />恢復預設位置</button>
     </div>
