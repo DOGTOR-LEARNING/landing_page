@@ -12,22 +12,23 @@ import {
 const ID_PATTERN = /^[a-z0-9_]{2,40}$/
 
 const newSpecies = () => ({
-  isNew: true, id: '', name: '', image_urls: {}, display_scale: 1, rarity: 'common', source: 'shop',
+  isNew: true, id: '', names: { tw: '', en: '' }, image_urls: {}, display_scale: 1, rarity: 'common', source: 'shop',
   unlock_rule: null, price_bones: '', is_published: false, sort: 0,
 })
 const newItem = slotKind => ({
-  isNew: true, id: '', name: '', image_url: '', slot_kind: slotKind || 'toy', layout: null, rarity: 'common',
+  isNew: true, id: '', names: { tw: '', en: '' }, image_url: '', slot_kind: slotKind || 'toy', layout: null, rarity: 'common',
   motion: 'static', motion_preset: null, source: 'shop', unlock_rule: null, price_bones: '', is_published: false, sort: 0,
 })
 
 // Rows from the API (decimal, 0/1) as form state.
-const speciesForm = row => ({ ...row, display_scale: Number(row.display_scale), price_bones: row.price_bones ?? '', is_published: !!row.is_published, image_urls: row.image_urls || {} })
-const itemForm = row => ({ ...row, price_bones: row.price_bones ?? '', is_published: !!row.is_published })
+const formNames = row => ({ tw: row.names?.tw || '', en: row.names?.en || '' })
+const speciesForm = row => ({ ...row, names: formNames(row), display_scale: Number(row.display_scale), price_bones: row.price_bones ?? '', is_published: !!row.is_published, image_urls: row.image_urls || {} })
+const itemForm = row => ({ ...row, names: formNames(row), price_bones: row.price_bones ?? '', is_published: !!row.is_published })
 
 function speciesBody(form) {
   const imageUrls = Object.fromEntries(POSES.map(([pose]) => [pose, form.image_urls[pose] || `${ASSET_BASE}/species/${form.id}/${pose}.webp`]))
   return {
-    id: form.id, name: form.name.trim(), image_urls: imageUrls, display_scale: Number(form.display_scale) || 1,
+    id: form.id, names: { tw: form.names.tw.trim(), en: form.names.en.trim() }, image_urls: imageUrls, display_scale: Number(form.display_scale) || 1,
     rarity: form.rarity, source: form.source, unlock_rule: form.unlock_rule, price_bones: priceInput(form.price_bones),
     is_published: form.is_published, sort: Number(form.sort) || 0,
   }
@@ -35,7 +36,7 @@ function speciesBody(form) {
 
 function itemBody(form) {
   return {
-    id: form.id, name: form.name.trim(), image_url: form.image_url || `${ASSET_BASE}/items/${form.id}.webp`,
+    id: form.id, names: { tw: form.names.tw.trim(), en: form.names.en.trim() }, image_url: form.image_url || `${ASSET_BASE}/items/${form.id}.webp`,
     slot_kind: form.slot_kind, layout: form.slot_kind === 'background' ? form.layout || DEFAULT_LAYOUT : null,
     rarity: form.rarity, motion: form.motion, motion_preset: form.motion === 'static' ? null : form.motion_preset,
     source: form.source, unlock_rule: form.unlock_rule, price_bones: priceInput(form.price_bones),
@@ -45,7 +46,7 @@ function itemBody(form) {
 
 function validate(form, kind) {
   if (!ID_PATTERN.test(form.id)) return '代號只能用小寫英文、數字、底線，2–40 字'
-  if (!form.name.trim()) return '請填名稱'
+  if (!form.names.tw.trim() || !form.names.en.trim()) return '中文和英文名稱都要填'
   if (form.price_bones !== '' && !(Number(form.price_bones) >= 0)) return '價格要是 0 以上的整數，或留空表示非賣品'
   const rule = form.unlock_rule
   if (rule?.type === 'streak' && !(rule.days > 0)) return '請填連續學習天數'
@@ -59,6 +60,8 @@ function PriceCell({ price }) {
   return price === null || price === undefined ? <span className={page.muted}>非賣品</span> : <span>{price} 骨頭</span>
 }
 
+const displayName = row => row.names?.tw || row.names?.en || row.name
+
 export default function CatalogTab({ market, kind, rows, options, canEdit, onSaved, notify }) {
   const [form, setForm] = useState(null)
   const [filter, setFilter] = useState('all')
@@ -70,8 +73,8 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
   async function save(body) {
     setBusy(true); setError('')
     try {
-      await nestApi(market, path, jsonBody(form?.isNew ? 'POST' : 'PUT', body))
-      notify(`已儲存「${body.name}」`)
+      const result = await nestApi(market, path, jsonBody(form?.isNew ? 'POST' : 'PUT', body))
+      notify(`已儲存「${body.names.tw}」到 ${(result.databases || []).join('、')}`)
       setForm(null)
       onSaved()
     } catch (e) { setError(e.message) }
@@ -88,7 +91,7 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
     body.is_published = !row.is_published
     try {
       await nestApi(market, path, jsonBody('PUT', body))
-      notify(`${body.is_published ? '已上架' : '已下架'}「${row.name}」`)
+      notify(`${body.is_published ? '已上架' : '已下架'}「${displayName(row)}」`)
       onSaved()
     } catch (e) { notify(e.message, true) }
   }
@@ -114,7 +117,8 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
         ? <tr><td colSpan={10} className={page.muted}>還沒有資料</td></tr>
         : visible.map(row => <tr key={row.id}>
           <td><div className={`${page.thumb} ${page.checker}`}>{(isSpecies ? row.image_urls?.avatar || row.image_urls?.sit : row.image_url) && <img src={isSpecies ? row.image_urls?.avatar || row.image_urls?.sit : row.image_url} alt="" />}</div></td>
-          <td><strong>{row.name}</strong><div className={page.muted}>{row.id}</div></td>
+          <td><strong>{row.names?.tw || '—'}</strong> / {row.names?.en || <span className={page.warn}>缺英文名</span>}<div className={page.muted}>{row.id}</div>
+            {row.missing_in?.length > 0 && <div className={page.warn}>尚未同步到 {row.missing_in.join('、')}，重新儲存一次即可</div>}</td>
           {!isSpecies && <td>{label(SLOT_KINDS, row.slot_kind)}</td>}
           <td>{label(RARITIES, row.rarity)}</td>
           <td>{label(SOURCES, row.source)}</td>
@@ -130,14 +134,17 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
     {form && <div className={styles.modalOverlay}>
       <section className={`${styles.modal} ${page.editor}`} role="dialog" aria-modal="true" aria-labelledby="nest-editor-title">
         <button className={styles.modalClose} disabled={busy} onClick={() => setForm(null)} aria-label="關閉"><X size={20} /></button>
-        <h2 id="nest-editor-title">{form.isNew ? (isSpecies ? '新增寵物' : '新增擺件／背景') : `編輯「${form.name}」`}</h2>
-        <p className={styles.hint}>{market === 'tw' ? '台灣' : 'International'} 市場。名稱只寫這個市場的語言；圖片兩個市場共用。</p>
+        <h2 id="nest-editor-title">{form.isNew ? (isSpecies ? '新增寵物' : '新增擺件／背景') : `編輯「${form.names.tw || form.id}」`}</h2>
+        <p className={styles.hint}>中英文一起設定：儲存時同時寫入 {(options?.catalog_databases || []).join('、') || '所有資料庫'}，中文名稱給台灣、英文名稱給國際版。圖片只要上傳一次。</p>
         <form onSubmit={submit} className={styles.form}>
           <div className={styles.formColumns}>
             <Field label="代號（id）" hint="小寫英文、數字、底線；建立後不能改，也是圖片檔名">
               <input className={styles.input} value={form.id} disabled={!form.isNew} onChange={e => set({ id: e.target.value.toLowerCase() })} placeholder={isSpecies ? 'shiba' : 'shelf_books'} />
             </Field>
-            <Field label="名稱"><input className={styles.input} maxLength={40} value={form.name} onChange={e => set({ name: e.target.value })} /></Field>
+          </div>
+          <div className={styles.formColumns}>
+            <Field label="中文名稱"><input className={styles.input} maxLength={40} value={form.names.tw} onChange={e => set({ names: { ...form.names, tw: e.target.value } })} placeholder="小柴" /></Field>
+            <Field label="英文名稱"><input className={styles.input} maxLength={40} value={form.names.en} onChange={e => set({ names: { ...form.names, en: e.target.value } })} placeholder="Shiba" /></Field>
           </div>
           <div className={styles.formColumns}>
             {!isSpecies && <Field label="種類" hint="決定能放在哪個格位"><Select value={form.slot_kind} options={SLOT_KINDS} disabled={!form.isNew} onChange={slot_kind => set({ slot_kind })} /></Field>}
@@ -162,13 +169,14 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
             <RuleEditor rule={form.unlock_rule} options={options} forSpecies={isSpecies} onChange={unlock_rule => set({ unlock_rule })} />
           </Field>
 
-          <Field label="圖片" hint="規格見 docs/pet-nest-art/README.md；上傳後要按下方「儲存」才會套用">
+          <Field label="圖片" hint="WebP 或 GIF 都可以（GIF 會循環播放）；規格見 docs/pet-nest-art/README.md；上傳後要按下方「儲存」才會套用">
             {isSpecies
               ? <div className={page.imageGrid}>{POSES.map(([pose, text]) =>
                 <ImageField key={pose} market={market} title={text} checker
                   url={form.image_urls[pose]} targetId={ID_PATTERN.test(form.id) ? form.id : ''}
                   kind={pose === 'avatar' ? 'avatar' : 'pet'} pose={pose === 'avatar' ? null : pose}
                   size={options?.asset_sizes?.[pose === 'avatar' ? 'avatar' : 'pet']}
+                  gifSize={options?.gif_sizes?.[pose === 'avatar' ? 'avatar' : 'pet']}
                   onUploaded={url => set({ image_urls: { ...form.image_urls, [pose]: url } })} />)}</div>
               : <ImageField market={market} title={label(SLOT_KINDS, form.slot_kind)} checker={form.slot_kind !== 'background'}
                 url={form.image_url} targetId={ID_PATTERN.test(form.id) ? form.id : ''} kind={form.slot_kind}

@@ -38,7 +38,7 @@ export const jsonBody = (method, body) => ({
   method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
 })
 
-/** Upload one WebP; the backend checks format, transparency, size and weight. */
+/** Upload one WebP or GIF; the backend checks format, transparency, size and weight. */
 export async function uploadAsset(market, { kind, targetId, pose, file }) {
   const form = new FormData()
   form.append('kind', kind)
@@ -59,8 +59,8 @@ export function Select({ value, onChange, options, disabled }) {
   </select>
 }
 
-/** Image preview with an upload button; `size` is [width, height] in pixels. */
-export function ImageField({ market, url, onUploaded, kind, targetId, pose, size, title, disabled, checker }) {
+/** Image preview with an upload button; sizes are [width, height] in pixels. */
+export function ImageField({ market, url, onUploaded, kind, targetId, pose, size, gifSize, title, disabled, checker }) {
   const input = useRef(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -77,14 +77,14 @@ export function ImageField({ market, url, onUploaded, kind, targetId, pose, size
     <div className={`${page.imageBox} ${checker ? page.checker : ''}`}>{url ? <img src={url} alt={title} /> : <span>尚未上傳</span>}</div>
     <div className={page.imageMeta}>
       <strong>{title}</strong>
-      {size && <span>{size[0]}×{size[1]} WebP</span>}
+      {size && <span>{size[0]}×{size[1]} WebP{gifSize && gifSize.join() !== size.join() ? ` · ${gifSize[0]}×${gifSize[1]} GIF` : ' 或 GIF'}</span>}
       <button type="button" className={styles.smallButton} disabled={disabled || busy || !targetId} onClick={() => input.current?.click()}>
         <ImageUp size={14} />{busy ? '上傳中…' : '上傳'}
       </button>
       {!targetId && <span className={page.warn}>先填代號</span>}
       {error && <span className={page.error}>{error}</span>}
     </div>
-    <input ref={input} type="file" accept="image/webp" hidden onChange={pick} />
+    <input ref={input} type="file" accept="image/webp,image/gif" hidden onChange={pick} />
   </div>
 }
 
