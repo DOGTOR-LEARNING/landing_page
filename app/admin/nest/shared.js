@@ -38,7 +38,7 @@ export const jsonBody = (method, body) => ({
   method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
 })
 
-/** Upload one WebP or GIF; the backend checks format, transparency, size and weight. */
+/** Upload one WebP or GIF; the backend checks format, transparency and weight. Size is only a recommendation. */
 export async function uploadAsset(market, { kind, targetId, pose, file }) {
   const form = new FormData()
   form.append('kind', kind)
@@ -77,7 +77,7 @@ export function ImageField({ market, url, onUploaded, kind, targetId, pose, size
     <div className={`${page.imageBox} ${checker ? page.checker : ''}`}>{url ? <img src={url} alt={title} /> : <span>尚未上傳</span>}</div>
     <div className={page.imageMeta}>
       <strong>{title}</strong>
-      {size && <span>{size[0]}×{size[1]} WebP{gifSize && gifSize.join() !== size.join() ? ` · ${gifSize[0]}×${gifSize[1]} GIF` : ' 或 GIF'}</span>}
+      {size && <span>建議 {size[0]}×{size[1]}{gifSize && gifSize.join() !== size.join() ? `（GIF ${gifSize[0]}×${gifSize[1]}）` : ''} · WebP 或 GIF</span>}
       <button type="button" className={styles.smallButton} disabled={disabled || busy || !targetId} onClick={() => input.current?.click()}>
         <ImageUp size={14} />{busy ? '上傳中…' : '上傳'}
       </button>
