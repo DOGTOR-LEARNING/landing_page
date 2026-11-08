@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, BookOpen, PawPrint, Bell, ArrowUpRight, Menu, X, ChevronRight } from 'lucide-react'
+import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, BookOpen, PawPrint, Bell, ArrowUpRight, Menu, X, ChevronRight, Blocks } from 'lucide-react'
 import styles from './admin.module.css'
 
 const AdminContext = createContext(null)
@@ -20,6 +20,7 @@ export const NAV = [
   { href: '/admin/nest', title: '寵物窩', icon: PawPrint, permission: 'nest.manage', desc: '寵物、擺件、背景、留言貼圖的目錄與上下架，以及客服補發' },
   { href: '/admin/team/users', title: '員工管理', icon: Users, permission: 'users.view', divider: true, desc: '讓每位夥伴都有自己的工作入口' },
   { href: '/admin/team/roles', title: '角色與權限', icon: ShieldCheck, permission: 'users.view', desc: '清楚掌握團隊的功能存取範圍' },
+  { href: '/admin/team/modules', title: '功能模組負責人', icon: Blocks, permission: 'admin.access', desc: '我們有哪些功能模組、用了哪些技術、由誰負責' },
   { href: '/admin/ai-team/agents', title: 'AI 角色與用量', icon: Bot, permission: 'agents.view', desc: '調整 AI 角色設定，查看使用次數與費用' },
   { href: '/admin/settings', title: '帳號設定', icon: Settings, permission: 'admin.access', divider: true, desc: '管理你的個人登入密碼' },
 ]
