@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Plus, Save } from 'lucide-react'
+import { Plus, Save, Trash2, X } from 'lucide-react'
 import styles from '../admin.module.css'
 import page from './nest.module.css'
 import { ImageField, jsonBody, nestApi } from './shared'
@@ -18,12 +18,23 @@ function PhraseRow({ market, phrase, canEdit, onSaved, notify }) {
       onSaved()
     } catch (e) { notify(e.message, true) }
   }
+  async function remove() {
+    if (!window.confirm(`確定刪除短句「${phrase.text}」？刪除後無法復原。`)) return
+    try {
+      await nestApi(market, `/phrases/${phrase.id}`, { method: 'DELETE' })
+      notify('已刪除短句')
+      onSaved()
+    } catch (e) { notify(e.message, true) }
+  }
   return <tr>
     <td><input className={styles.input} maxLength={40} value={draft.text} disabled={!canEdit} onChange={e => setDraft({ ...draft, text: e.target.value })} /></td>
     <td className={page.narrow}><input className={styles.input} type="number" value={draft.sort} disabled={!canEdit} onChange={e => setDraft({ ...draft, sort: e.target.value })} /></td>
     <td><button className={`${styles.statusBadge} ${draft.is_published ? '' : styles.statusDisabled} ${page.badgeButton}`} disabled={!canEdit}
       onClick={() => { const next = { ...draft, is_published: !draft.is_published }; setDraft(next); save(next) }}>{draft.is_published ? '上架中' : '未上架'}</button></td>
-    <td>{canEdit && <button className={styles.smallButton} disabled={!dirty || !draft.text.trim()} onClick={() => save()}><Save size={14} />儲存</button>}</td>
+    <td>{canEdit && <div className={page.rowActions}>
+      <button className={styles.smallButton} disabled={!dirty || !draft.text.trim()} onClick={() => save()}><Save size={14} />儲存</button>
+      <button className={`${styles.smallButton} ${page.dangerButton}`} onClick={remove} aria-label="刪除短句"><Trash2 size={14} /></button>
+    </div>}</td>
   </tr>
 }
 
@@ -54,6 +65,14 @@ export default function MessagesTab({ market, phrases, stickers, canEdit, onSave
     } catch (e) { notify(e.message, true) }
   }
 
+  async function removeSticker(sticker) {
+    if (!window.confirm('確定刪除這張貼圖？刪除後無法復原。')) return
+    try {
+      await nestApi(market, `/stickers/${sticker.id}`, { method: 'DELETE' })
+      notify('已刪除貼圖'); onSaved()
+    } catch (e) { notify(e.message, true) }
+  }
+
   return <div className={page.columns}>
     <section className={page.panel}>
       <h2>留言短句</h2>
@@ -71,10 +90,12 @@ export default function MessagesTab({ market, phrases, stickers, canEdit, onSave
       <h2>貼圖</h2>
       <p className={styles.hint}>256×256 透明 WebP、不放文字（兩個市場共用圖片，但各自管理上下架）。點貼圖切換上下架。</p>
       {canEdit && <ImageField market={market} title="上傳新貼圖" kind="sticker" targetId={`sticker_${market}_${stickers.length + 1}_${Date.now() % 100000}`} checker onUploaded={addSticker} />}
-      <div className={page.stickerGrid}>{stickers.map(s =>
-        <button key={s.id} className={`${page.sticker} ${page.checker} ${s.is_published ? '' : page.stickerOff}`} disabled={!canEdit} onClick={() => toggleSticker(s)} title={s.is_published ? '上架中，點一下下架' : '未上架，點一下上架'}>
+      <div className={page.stickerGrid}>{stickers.map(s => <div key={s.id} className={page.stickerCell}>
+        <button className={`${page.sticker} ${page.checker} ${s.is_published ? '' : page.stickerOff}`} disabled={!canEdit} onClick={() => toggleSticker(s)} title={s.is_published ? '上架中，點一下下架' : '未上架，點一下上架'}>
           <img src={s.image_url} alt="" />
-        </button>)}</div>
+        </button>
+        {canEdit && <button className={page.stickerDelete} onClick={() => removeSticker(s)} aria-label="刪除貼圖" title="刪除貼圖"><X size={13} /></button>}
+      </div>)}</div>
     </section>
   </div>
 }

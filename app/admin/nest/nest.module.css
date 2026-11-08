@@ -87,3 +87,12 @@
   .inlineFields { grid-template-columns: 1fr; }
   .editor { padding: 20px; }
 }
+
+/* ---- remove */
+.rowActions { display: flex; flex-wrap: wrap; gap: 6px; }
+.dangerButton { color: #c62828 !important; }
+.dangerButton:hover { background: #fdecec !important; border-color: #f2b8b8 !important; }
+.stickerCell { position: relative; }
+.stickerCell .sticker { width: 100%; }
+.stickerDelete { position: absolute; top: -6px; right: -6px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid #f2b8b8; border-radius: 50%; background: #fff; color: #c62828; cursor: pointer; box-shadow: 0 1px 3px rgba(16,32,49,.15); }
+.stickerDelete:hover { background: #fdecec; }

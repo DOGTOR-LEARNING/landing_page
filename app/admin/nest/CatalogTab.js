@@ -1,6 +1,6 @@
 'use client'
 import { useRef, useState } from 'react'
-import { FolderUp, ImageUp, Pencil, Plus, X } from 'lucide-react'
+import { FolderUp, ImageUp, Pencil, Plus, Trash2, X } from 'lucide-react'
 import styles from '../admin.module.css'
 import page from './nest.module.css'
 import LayoutEditor, { DEFAULT_LAYOUT } from './LayoutEditor'
@@ -170,6 +170,20 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
     } catch (e) { notify(e.message, true) }
   }
 
+  // Doudou and the bedroom are every new nest's starter set; the backend refuses them too.
+  const removable = row => row.id !== 'doudou' && row.id !== 'bg_bedroom'
+  async function remove(row) {
+    const owned = isSpecies ? '已經養這隻寵物的使用者，牠也會一起被刪掉' : '已經擁有的使用者也會失去它（放在房間的會拿掉，背景改回臥室）'
+    if (!window.confirm(`確定移除「${displayName(row)}」？\n\n會同時從台灣版、國際版的正式與測試資料庫刪除，${owned}。\n刪除後無法復原。`)) return
+    try {
+      const result = await nestApi(market, `${path}/${encodeURIComponent(row.id)}`, { method: 'DELETE' })
+      const counts = Object.values(result.pets_removed || result.owners_removed || {})
+      const affected = counts.reduce((a, b) => a + b, 0)
+      notify(`已移除「${displayName(row)}」${affected ? `，一併刪除 ${affected} 筆使用者擁有的資料` : ''}`)
+      onSaved()
+    } catch (e) { notify(e.message, true) }
+  }
+
   const visible = isSpecies ? rows : rows.filter(r => filter === 'all' || r.slot_kind === filter)
   const set = patch => setForm(f => ({ ...f, ...patch }))
 
@@ -200,7 +214,10 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
           <td>{ruleText(row.unlock_rule, options)}</td>
           <td><button className={`${styles.statusBadge} ${row.is_published ? '' : styles.statusDisabled} ${page.badgeButton}`} disabled={!canEdit} onClick={() => togglePublish(row)} title={canEdit ? '點一下切換上下架' : undefined}>{row.is_published ? '上架中' : '未上架'}</button></td>
           <td>{row.sort}</td>
-          {canEdit && <td><button className={styles.smallButton} onClick={() => { setError(''); setForm(isSpecies ? speciesForm(row) : itemForm(row)) }}><Pencil size={14} />編輯</button></td>}
+          {canEdit && <td><div className={page.rowActions}>
+            <button className={styles.smallButton} onClick={() => { setError(''); setForm(isSpecies ? speciesForm(row) : itemForm(row)) }}><Pencil size={14} />編輯</button>
+            {removable(row) && <button className={`${styles.smallButton} ${page.dangerButton}`} onClick={() => remove(row)}><Trash2 size={14} />移除</button>}
+          </div></td>}
         </tr>)}
       </tbody>
     </table></div>
