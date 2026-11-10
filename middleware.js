@@ -63,6 +63,12 @@ export function middleware(request) {
     request: { headers: requestHeaders },
   })
 
+  // Cloudflare 的測試網址（*.workers.dev）內容和正式站相同，本站又沒有 canonical，
+  // 被收錄會變成重複內容，所以一律 noindex。
+  if (requestHost(request.headers).endsWith('.workers.dev')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  }
+
   // Persist locale in cookie when explicitly set via ?lang= param
   if (!globalHost && normalizeLocale(langParam)) {
     response.cookies.set(COOKIE_NAME, locale, {
