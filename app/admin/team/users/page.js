@@ -16,6 +16,8 @@ const PERMISSION_GROUPS = [
   { title: '待辦（檢視／新增修改）', view: 'todos.view', manage: 'todos.manage' },
   { title: 'AI 知識庫（檢視／編輯）', view: 'knowledge.view', manage: 'knowledge.manage' },
   { title: '寵物窩管理（目錄、圖片、客服補發）', view: 'nest.manage' },
+  { title: '自家廣告（獎勵影片、關卡 banner；管理含審核）', view: 'ads.view', manage: 'ads.manage' },
+  { title: '廣告商（只能送審、查看自己的廣告）', view: 'ads.submit' },
   { title: '員工管理', view: 'users.view', manage: 'users.manage' },
 ]
 const ROLE_NAMES = { super_admin: '超級管理員', admin: '管理員', staff: '團隊成員' }
