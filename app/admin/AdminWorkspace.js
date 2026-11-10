@@ -21,13 +21,26 @@ export const NAV = [
   { href: '/admin/house-ads', title: '自家廣告', icon: MonitorPlay, permission: ['ads.view', 'ads.manage', 'ads.submit'], desc: '用自己的影片和 banner 取代部分 AdMob 廣告，可指定地區與年級；廣告商在這裡送審' },
   { href: '/admin/team/users', title: '員工管理', icon: Users, permission: 'users.view', divider: true, desc: '讓每位夥伴都有自己的工作入口' },
   { href: '/admin/team/roles', title: '角色與權限', icon: ShieldCheck, permission: 'users.view', desc: '清楚掌握團隊的功能存取範圍' },
-  { href: '/admin/team/modules', title: '功能模組負責人', icon: Blocks, permission: 'admin.access', desc: '我們有哪些功能模組、用了哪些技術、由誰負責' },
+  { href: '/admin/team/modules', title: '功能模組負責人', icon: Blocks, permission: 'admin.access', internal: true, desc: '我們有哪些功能模組、用了哪些技術、由誰負責' },
   { href: '/admin/ai-team/agents', title: 'AI 角色與用量', icon: Bot, permission: 'agents.view', desc: '調整 AI 角色設定，查看使用次數與費用' },
   { href: '/admin/settings', title: '帳號設定', icon: Settings, permission: 'admin.access', divider: true, desc: '管理你的個人登入密碼' },
 ]
 
-/** An item's `permission` is one code, or a list of which any one is enough. */
-export const permits = (user, permission) => [].concat(permission).some(code => user.permissions.includes(code))
+/**
+ * An account that can only submit house ads: an outside advertiser, not a
+ * colleague. Same rule as backend/app/routers/admin_auth.py::is_advertiser_only.
+ */
+const ADVERTISER_PERMISSIONS = ['admin.access', 'ads.submit']
+export const isAdvertiserOnly = user => user?.role === 'staff' && user.permissions.includes('ads.submit')
+  && user.permissions.every(code => ADVERTISER_PERMISSIONS.includes(code))
+
+/**
+ * Whether the user may open a NAV item. Its `permission` is one code, or a
+ * list of which any one is enough; `internal` pages (team details) are never
+ * shown to advertisers.
+ */
+export const permits = (user, permission, item) => (!item?.internal || !isAdvertiserOnly(user))
+  && [].concat(permission).some(code => user.permissions.includes(code))
 
 const KIND_LABEL = { mention: '提到你', decision: '請你決策', todo_assigned: '指派待辦', test: '測試' }
 
@@ -137,7 +150,7 @@ export default function AdminWorkspace({ children }) {
   if (login) return <div className={styles.workspace}><AdminContext.Provider value={{ user, setUser }}>{children}</AdminContext.Provider></div>
   if (loading || !user) return <div className={styles.workspace}><div className={styles.sessionLoading} role="status">{serviceError || '正在確認登入狀態…'}{serviceError && <button className={styles.btnSecondary} onClick={() => window.location.reload()}>重新連線</button>}</div></div>
   const current = NAV.find(item => item.href === pathname) || NAV[0]
-  const allowed = permits(user, current.permission)
+  const allowed = permits(user, current.permission, current)
 
   // The chat is a full-screen app on phones (no page heading, only the messages scroll).
   const immersive = pathname === '/admin/ai-team'
@@ -149,7 +162,7 @@ export default function AdminWorkspace({ children }) {
         <button className={styles.mobileClose} aria-label="關閉導航" onClick={() => setMobileOpen(false)}><X size={20} /></button>
         <p className={styles.navLabel}>工作空間</p>
         <nav aria-label="後台導航" className={styles.navList}>
-          {NAV.filter(item => permits(user, item.permission)).map(({ href, title, icon: Icon, divider }) => <Link key={href} href={href} className={`${styles.navItem} ${divider ? styles.navDivider : ''} ${pathname === href ? styles.navActive : ''}`} aria-current={pathname === href ? 'page' : undefined}><Icon size={19} /><span>{title}</span>{pathname === href && <ChevronRight size={16} />}</Link>)}
+          {NAV.filter(item => permits(user, item.permission, item)).map(({ href, title, icon: Icon, divider }) => <Link key={href} href={href} className={`${styles.navItem} ${divider ? styles.navDivider : ''} ${pathname === href ? styles.navActive : ''}`} aria-current={pathname === href ? 'page' : undefined}><Icon size={19} /><span>{title}</span>{pathname === href && <ChevronRight size={16} />}</Link>)}
         </nav>
         <div className={styles.sidebarFoot}>
           <Link href="/" className={styles.websiteLink}>前往 Dogtor 官網<ArrowUpRight size={16} /></Link>

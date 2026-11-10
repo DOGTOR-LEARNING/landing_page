@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { KeyRound, UserRound, BellRing } from 'lucide-react'
-import { useAdmin, adminFetch } from '../AdminWorkspace'
+import { useAdmin, adminFetch, isAdvertiserOnly } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 
 const urlKey = base64 => {
@@ -85,6 +85,7 @@ function PushCard() {
 
 function ProfileCard() {
   const { user, setUser } = useAdmin()
+  const locked = isAdvertiserOnly(user)
   const [jobTitle, setJobTitle] = useState(user?.job_title || '')
   const [bio, setBio] = useState(user?.bio || '')
   const [message, setMessage] = useState('')
@@ -98,6 +99,14 @@ function ProfileCard() {
       setUser(data.data); setMessage('個人介紹已更新')
     } catch { setMessage('無法連線，請稍後再試') }
     finally { setBusy(false) }
+  }
+  if (locked) {
+    return <section className={styles.settingsCard} style={{ marginBottom: 20 }}><UserRound size={28} /><h2>廣告商資料</h2>
+      <p className={styles.hint}>這是 Dogtor 審核你的廣告時參考的資料，由 Dogtor 管理員設定。需要修改時請聯絡你的 Dogtor 窗口。</p>
+      <div className={styles.form}>
+        <div className={styles.fieldGroup}><span className={styles.label}>職稱／公司</span><p>{user.job_title || '尚未設定'}</p></div>
+        <div className={styles.fieldGroup}><span className={styles.label}>介紹</span><p style={{ whiteSpace: 'pre-wrap' }}>{user.bio || '尚未設定'}</p></div>
+      </div></section>
   }
   return <section className={styles.settingsCard} style={{ marginBottom: 20 }}><UserRound size={28} /><h2>個人介紹</h2><p className={styles.hint}>會顯示在 AI Team 聊天室你的名字旁邊，也會提供給 AI，讓夥伴和 AI 知道你負責什麼、擅長哪些領域。</p><form className={styles.form} onSubmit={submit}>
     <div className={styles.fieldGroup}><label htmlFor="job-title" className={styles.label}>職稱</label><input id="job-title" className={styles.input} maxLength={80} placeholder="例如：CEO、教學總監、工程師" value={jobTitle} onChange={e => setJobTitle(e.target.value)} /></div>

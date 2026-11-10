@@ -88,7 +88,6 @@ export default function HouseAdsPage() {
   const rows = all.filter(row => filter === 'all' || (filter === 'pending' ? row.review_status === 'pending' : row.placement === filter))
   const coverage = data?.geo_coverage || {}
   const geoUsers = Object.entries(coverage).filter(([county]) => county !== 'unknown').reduce((sum, [, n]) => sum + n, 0)
-  const showActions = viewer.can_submit || viewer.can_manage || viewer.can_force_pause
 
   return <div className={page.root}>
     <div className={page.toolbar}>
@@ -119,36 +118,40 @@ export default function HouseAdsPage() {
     </p>}
 
     {loading && !data ? <p className={page.muted}>載入中…</p> : !data ? <p className={page.muted}>載入失敗，請重新整理。</p> :
-      <div className={styles.tableScroll}><table className={styles.dataTable}>
-        <thead><tr><th>素材</th><th>名稱</th><th>狀態</th><th>流量</th><th>投放對象</th><th>期間（台灣時間）</th><th>成效</th>{showActions && <th />}</tr></thead>
-        <tbody>{rows.length === 0
-          ? <tr><td colSpan={8} className={page.muted}>{filter === 'pending' ? '沒有待審核的申請。' : advertiser ? '還沒有廣告。按「新增廣告申請」開始。' : '還沒有自家廣告。按「新增」建立第一則。'}</td></tr>
-          : rows.map(row => {
-            const editable = mayEdit(row)
-            const canToggle = editable && !row.admin_paused && (viewer.can_manage || row.review_status === 'approved')
-            return <tr key={row.id}>
-              <td><Preview row={row} /></td>
-              <td><strong>{row.name}</strong>
-                <div className={page.muted}>{labelOf(Object.fromEntries(PLACEMENTS), row.placement)}</div>
-                {!advertiser && row.created_by && <div className={page.muted}>申請人：{row.created_by}</div>}
-              </td>
-              <td><Status row={row} /></td>
-              <td>{row.review_status === 'pending' && !row.traffic_percent ? '審核時設定' : `${row.traffic_percent}%`}{row.fill_when_no_admob && row.traffic_percent > 0 && <div className={page.muted}>＋補 AdMob 空缺</div>}</td>
-              <td>{audienceText(row, isTw).map(line => <div key={line} className={page.audience}>{line}</div>)}</td>
-              <td className={page.nowrap}>{row.starts_at || row.ends_at ? <>{showTime(row.starts_at) || '立即'}<br />～ {showTime(row.ends_at) || '不結束'}</> : '不限'}</td>
-              <td className={page.nowrap}>{statsText(row).map(line => <div key={line}>{line}</div>)}</td>
-              {showActions && <td><div className={page.rowActions}>
-                {viewer.can_review && row.review_status === 'pending' && <button className={styles.btnPrimary} onClick={() => setReviewing(row)}><CheckCircle2 size={14} />審核</button>}
-                {editable && <button className={styles.smallButton} onClick={() => setForm(toForm(row))}><Pencil size={14} />編輯</button>}
-                {canToggle && <button className={styles.smallButton} onClick={() => toggle(row)}>{row.is_active ? '停用' : '啟用'}</button>}
-                {viewer.can_force_pause && <button className={`${styles.smallButton} ${row.admin_paused ? '' : page.dangerButton}`} onClick={() => setPausing(row)}>
-                  <Ban size={14} />{row.admin_paused ? '解除暫停' : '強制暫停'}
-                </button>}
-              </div></td>}
-            </tr>
-          })}
-        </tbody>
-      </table></div>}
+      // One card per campaign, its details listed in labelled blocks that wrap
+      // onto new lines: taller on a phone, but never scrolled sideways.
+      rows.length === 0
+        ? <p className={`${page.muted} ${page.emptyCard}`}>{filter === 'pending' ? '沒有待審核的申請。' : advertiser ? '還沒有廣告。按「新增廣告申請」開始。' : '還沒有自家廣告。按「新增」建立第一則。'}</p>
+        : <ul className={page.cardList}>{rows.map(row => {
+          const editable = mayEdit(row)
+          const canToggle = editable && !row.admin_paused && (viewer.can_manage || row.review_status === 'approved')
+          const hasActions = (viewer.can_review && row.review_status === 'pending') || editable || canToggle || viewer.can_force_pause
+          return <li key={row.id} className={page.card}>
+            <div className={page.cardHead}>
+              <Preview row={row} />
+              <div className={page.cardTitle}>
+                <strong>{row.name}</strong>
+                <span className={page.muted}>{labelOf(Object.fromEntries(PLACEMENTS), row.placement)}</span>
+                {!advertiser && row.created_by && <span className={page.muted}>申請人：{row.created_by}</span>}
+                <Status row={row} />
+              </div>
+            </div>
+            <dl className={page.cardFacts}>
+              <div><dt>流量</dt><dd>{row.review_status === 'pending' && !row.traffic_percent ? '審核時設定' : `${row.traffic_percent}%`}{row.fill_when_no_admob && row.traffic_percent > 0 && <span className={page.muted}>＋補 AdMob 空缺</span>}</dd></div>
+              <div><dt>投放對象</dt><dd>{audienceText(row, isTw).map(line => <span key={line}>{line}</span>)}</dd></div>
+              <div><dt>期間（台灣時間）</dt><dd>{row.starts_at || row.ends_at ? <><span>{showTime(row.starts_at) || '立即'}</span><span>～ {showTime(row.ends_at) || '不結束'}</span></> : '不限'}</dd></div>
+              <div><dt>成效</dt><dd>{statsText(row).map(line => <span key={line}>{line}</span>)}</dd></div>
+            </dl>
+            {hasActions && <div className={page.cardActions}>
+              {viewer.can_review && row.review_status === 'pending' && <button className={styles.btnPrimary} onClick={() => setReviewing(row)}><CheckCircle2 size={14} />審核</button>}
+              {editable && <button className={styles.smallButton} onClick={() => setForm(toForm(row))}><Pencil size={14} />編輯</button>}
+              {canToggle && <button className={styles.smallButton} onClick={() => toggle(row)}>{row.is_active ? '停用' : '啟用'}</button>}
+              {viewer.can_force_pause && <button className={`${styles.smallButton} ${row.admin_paused ? '' : page.dangerButton}`} onClick={() => setPausing(row)}>
+                <Ban size={14} />{row.admin_paused ? '解除暫停' : '強制暫停'}
+              </button>}
+            </div>}
+          </li>
+        })}</ul>}
 
     {form && data && <Editor market={market} form={form} setForm={setForm} meta={data} notify={notify}
       onClose={() => setForm(null)} onSaved={() => { setForm(null); load() }} />}

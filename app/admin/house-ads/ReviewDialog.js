@@ -1,17 +1,47 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
+import { adminFetch } from '../AdminWorkspace'
 import styles from '../admin.module.css'
 import page from './house-ads.module.css'
 import { COUNTY_LABELS, Field, GRADE_LABELS, REGION_LABELS, api, clock, jsonBody, listText, showTime } from './shared'
 
+/**
+ * The applicant's account card. Their title and introduction are set by an
+ * admin in 員工管理 (advertisers cannot edit them), e.g. the company and the
+ * agreed limits, so the reviewer can check the ad against them. The card
+ * comes from the central employee list, which is why it also works for the
+ * en market.
+ */
+function Applicant({ ownerId, fallback }) {
+  const [member, setMember] = useState(undefined)
+  useEffect(() => {
+    let active = true
+    adminFetch('/api/admin/team/members', { cache: 'no-store' })
+      .then(response => response.json())
+      .then(data => { if (active) setMember((data.data || []).find(item => item.id === ownerId) || null) })
+      .catch(() => { if (active) setMember(null) })
+    return () => { active = false }
+  }, [ownerId])
+  return <div className={page.applicant}>
+    <span className={page.applicantLabel}>申請人</span>
+    {member === undefined ? <p className={page.muted}>載入申請人資料…</p>
+      : !member ? <p className={page.muted}>{fallback || '找不到申請人資料（帳號可能已停用）'}</p>
+        : <>
+          <strong>{member.display_name}{member.job_title ? `・${member.job_title}` : ''}</strong>
+          <span className={page.muted}>{member.email}</span>
+          <p className={page.applicantBio}>{member.bio || '管理員尚未填寫介紹。可到「員工管理」編輯這個帳號，寫上公司資料與合約範圍。'}</p>
+        </>}
+  </div>
+}
+
 function Creative({ row }) {
   return <div className={page.reviewCreative}>
+    <Applicant ownerId={row.owner_admin_id} fallback={row.created_by} />
     {row.placement === 'hearts'
       ? <><video className={page.videoPreview} src={row.video_url} controls preload="metadata" /><span className={page.muted}>{clock(row.duration_seconds || 0)}</span></>
       : <div className={page.bannerPreview}><img src={row.image_url} alt="banner" /></div>}
     <dl className={page.facts}>
-      <dt>申請人</dt><dd>{row.created_by || '—'}</dd>
       <dt>點擊連結</dt><dd>{row.click_url ? <a href={row.click_url} target="_blank" rel="noreferrer noopener">{row.click_url}</a> : '無'}</dd>
       <dt>年級</dt><dd>{row.target_grades?.length ? listText(row.target_grades, GRADE_LABELS) : '不限'}</dd>
       <dt>會考分區</dt><dd>{row.target_regions?.length ? listText(row.target_regions, REGION_LABELS) : '不限'}</dd>

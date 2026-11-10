@@ -87,3 +87,70 @@
   .smallDialog { padding: 20px; }
   .zoomRow { grid-template-columns: 1fr; }
 }
+
+/* ---- dialogs keep a fixed width on phones
+   The shared .modal scrolls vertically, which also makes it scroll sideways
+   as soon as anything is a pixel too wide. On iOS the date-time inputs size
+   themselves to their formatted value and grid cells default to their content
+   width, so the form could be pushed wider than the screen and the dialog
+   slid left and right. Dialogs here only ever scroll vertically, and nothing
+   inside may grow past their width. */
+.editor, .smallDialog {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  overflow-wrap: anywhere;
+}
+.editor div, .smallDialog div { min-width: 0; }
+.editor input, .editor select, .editor textarea, .editor video, .editor img,
+.smallDialog input, .smallDialog textarea, .smallDialog video, .smallDialog img {
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+.editor input[type='datetime-local'] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+}
+.editor input[type='datetime-local']::-webkit-date-and-time-value { text-align: left; }
+.editor input[type='checkbox'] { flex: none; width: auto; }
+.editor input[type='range'] { width: 100%; }
+
+@media (max-width: 720px) {
+  .editor, .smallDialog { max-height: calc(100dvh - 24px); border-radius: 18px; }
+  .trimRow > button { width: 100%; justify-content: center; }
+  .facts { grid-template-columns: 72px minmax(0, 1fr); }
+}
+
+/* ---- applicant card in the review dialog */
+.applicant { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: #f3f6fb; border: 1px solid #dfe6f0; }
+.applicantLabel { font-size: 12px; font-weight: 700; color: var(--ws-muted, #6b7785); }
+.applicantBio { margin: 6px 0 0; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+
+/* ---- campaign cards (the list never scrolls sideways) */
+.cardList { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.card { background: #fff; border: 1px solid #e3e8ee; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 14px; min-width: 0; overflow-wrap: anywhere; }
+.emptyCard { background: #fff; border: 1px dashed #d5dce4; border-radius: 16px; padding: 24px; text-align: center; }
+.cardHead { display: flex; gap: 14px; align-items: flex-start; min-width: 0; }
+.cardHead > :first-child { flex: none; }
+.cardTitle { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.cardTitle strong { font-size: 16px; }
+.cardTitle .statusStack { margin-top: 4px; max-width: none; }
+.cardFacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 0; }
+.cardFacts > div { background: #f6f8fa; border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.cardFacts dt { font-size: 12px; font-weight: 700; color: var(--ws-muted, #6b7785); margin-bottom: 4px; }
+.cardFacts dd { margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.5; }
+.cardActions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 12px; border-top: 1px solid #eef1f4; }
+
+@media (max-width: 720px) {
+  .card { padding: 14px; }
+  .cardHead .bannerThumb { width: 96px; }
+  .cardHead .videoThumb { width: 56px; }
+  .cardFacts { grid-template-columns: 1fr; }
+  .cardActions > button { flex: 1 1 auto; justify-content: center; }
+}

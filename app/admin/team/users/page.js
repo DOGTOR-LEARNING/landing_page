@@ -55,9 +55,23 @@ export default function UsersPage() {
   async function save(event) {
     event.preventDefault(); setBusy(true); setFormError('')
     try {
+      const original = form.id ? users.find(item => item.id === form.id) : null
+      // The introduction has its own endpoint, which does not sign the
+      // employee out; the account settings below do.
+      if (original && ((form.job_title || '') !== (original.job_title || '') || (form.bio || '') !== (original.bio || ''))) {
+        const profile = await adminFetch(`/api/admin/users/${form.id}/profile`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_title: form.job_title || '', bio: form.bio || '' }),
+        })
+        const profileData = await profile.json()
+        if (!profile.ok || !profileData.success) { setFormError(profileData.message || '介紹儲存失敗'); return }
+      }
+      const accountChanged = !original || form.password || ['display_name', 'role', 'status'].some(key => form[key] !== original[key])
+        || [...form.permissions].sort().join() !== [...original.permissions].sort().join()
+      if (!accountChanged) { setMessage('介紹已更新'); setForm(null); await load(); return }
       const response = await adminFetch(form.id ? `/api/admin/users/${form.id}` : '/api/admin/users', {
         method: form.id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, password: form.password || undefined }),
+        body: JSON.stringify({ email: form.email, display_name: form.display_name, role: form.role, status: form.status, permissions: form.permissions, password: form.password || undefined }),
       })
       const data = await response.json()
       if (!response.ok || !data.success) { setFormError(data.message || '儲存失敗'); return }
@@ -82,6 +96,8 @@ export default function UsersPage() {
       <div className={styles.fieldGroup}><label htmlFor="employee-email" className={styles.label}>Email</label><input id="employee-email" required type="email" autoComplete="off" disabled={!!form.id} className={styles.input} value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} /></div>
       <div className={styles.fieldGroup}><label htmlFor="employee-password" className={styles.label}>{form.id ? '重設密碼（留空則保留）' : '登入密碼'}</label><input id="employee-password" required={!form.id} minLength={8} type="password" autoComplete="new-password" className={styles.input} value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} /><p className={styles.hint}>至少 8 個字元。請私下提供給員工，登入後可自行修改。</p></div>
       <div className={styles.formColumns}><div className={styles.fieldGroup}><label htmlFor="employee-role" className={styles.label}>角色</label><select id="employee-role" className={styles.input} value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}>{Object.entries(ROLE_NAMES).filter(([code]) => code !== 'super_admin' || user?.role === 'super_admin' || form.role === 'super_admin').map(([code, name]) => <option key={code} value={code}>{name}</option>)}</select></div>{form.id && <div className={styles.fieldGroup}><label htmlFor="employee-status" className={styles.label}>帳號狀態</label><select id="employee-status" className={styles.input} value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}><option value="active">啟用</option><option value="disabled">停用</option></select></div>}</div>
+      {form.id && <div className={styles.fieldGroup}><label htmlFor="employee-job-title" className={styles.label}>職稱／公司</label><input id="employee-job-title" maxLength={80} className={styles.input} value={form.job_title || ''} onChange={e => setForm({ ...form, job_title: e.target.value })} placeholder="例如：工程師；廣告商請填公司名稱" /></div>}
+      {form.id && <div className={styles.fieldGroup}><label htmlFor="employee-bio" className={styles.label}>介紹</label><textarea id="employee-bio" rows={4} maxLength={1000} className={styles.textarea} value={form.bio || ''} onChange={e => setForm({ ...form, bio: e.target.value })} placeholder="廣告商：公司簡介、聯絡窗口、合約範圍（例如只能投高雄國三、影片不得出現價格）。審核廣告時會顯示，廣告商只能看不能改。" /><p className={styles.hint}>只改介紹的話不會讓對方登出。{(form.bio || '').length}/1000</p></div>}
       <div className={styles.fieldGroup}><span className={styles.label}>功能權限</span>{form.role === 'super_admin' ? <p className={styles.hint}>超級管理員擁有全部功能權限。</p> : <table className={styles.permissionTable}><thead><tr><th>功能</th><th>檢視</th><th>操作</th></tr></thead><tbody>{PERMISSION_GROUPS.map(group => <tr key={group.view}><td>{group.title}</td>{[group.view, group.manage].map((code, i) => <td key={i}>{code ? <input aria-label={`${group.title}${i ? '操作' : '檢視'}`} type="checkbox" checked={form.permissions.includes(code)} disabled={user.role !== 'super_admin' && !user.permissions.includes(code)} onChange={e => permission(code, e.target.checked)} /> : '—'}</td>)}</tr>)}</tbody></table>}</div>
       {formError && <p role="alert" className={styles.loginError}>{formError}</p>}
       <div className={styles.modalActions}><button type="button" className={styles.btnSecondary} disabled={busy} onClick={() => setForm(null)}>取消</button><button className={styles.btnPrimary} disabled={busy}>{busy ? '儲存中…' : '儲存員工設定'}</button></div>
