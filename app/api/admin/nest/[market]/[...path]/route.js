@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { ADMIN_COOKIE, adminProxy, checkOrigin } from '@/lib/adminProxy'
 import { getAnnouncementBackendBase } from '@/lib/backendConfig'
+import { fetchNoRedirect } from '@/lib/backendFetch'
 
 // The pet nest catalog lives in each market's own database, so requests go to
 // that market's backend (backend/app/routers/admin_nest.py). Every backend
@@ -14,13 +15,12 @@ async function forwardUpload(request, base, path) {
   const token = request.cookies.get(ADMIN_COOKIE)?.value
   if (!token) return NextResponse.json({ success: false, message: '請先登入員工帳號' }, { status: 401 })
   try {
-    const upstream = await fetch(`${base.replace(/\/$/, '')}${path}`, {
+    const upstream = await fetchNoRedirect(`${base.replace(/\/$/, '')}${path}`, {
       method: 'POST',
       headers: { 'Content-Type': request.headers.get('content-type') || '', Authorization: `Bearer ${token}` },
       body: await request.arrayBuffer(),
       cache: 'no-store',
       signal: AbortSignal.timeout(60000),
-      redirect: 'error',
     })
     const data = await upstream.json().catch(() => ({}))
     if (!upstream.ok) {
