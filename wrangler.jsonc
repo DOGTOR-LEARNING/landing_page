@@ -42,6 +42,13 @@
 		"cpu_ms": 60000
 	},
 	"observability": {
-		"enabled": true
+		// 與 Cloudflare 後台的 Logs 設定保持一致
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		},
+		"traces": {
+			"enabled": false
+		}
 	}
 }
