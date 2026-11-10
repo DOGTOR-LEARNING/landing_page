@@ -4,6 +4,9 @@
 	"name": "dogtor-landing-page",
 	"compatibility_date": "2026-11-01",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	// 開啟 dogtor-landing-page.peathuchu.workers.dev 測試網址，以及每個分支的 preview 網址
+	"workers_dev": true,
+	"preview_urls": true,
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS",
