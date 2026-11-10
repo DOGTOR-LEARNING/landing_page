@@ -15,7 +15,7 @@
 - **框架**：Next.js 14 (App Router)
 - **樣式**：CSS Modules + CSS Variables
 - **圖片優化**：Next.js Image Component
-- **部署**：可部署至 Vercel、Netlify 或任何支援 Node.js 的平台
+- **部署**：Cloudflare Workers（OpenNext adapter）
 
 ## 開始使用
 
@@ -107,19 +107,19 @@ landing_page/
 
 ## 部署
 
-### Vercel (推薦)
-
-1. 推送程式碼到 GitHub
-2. 在 Vercel 匯入專案
-3. 自動建置和部署
-
-### 其他平台
+部署在 **Cloudflare Workers**，透過 [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare) 執行 Next.js。push 到 `main` 由 Workers Builds 自動部署，其他分支會產生 preview URL。
 
 ```bash
-npm run build
+npm run preview   # 用本機 Workers runtime 跑 production build（http://localhost:8787），runtime 變數讀 .dev.vars
+npm run deploy    # 手動部署到正式環境
+npm run upload    # 上傳新版本但不切換流量（產生 preview URL）
 ```
 
-將 `.next` 資料夾和 `package.json` 部署到支援 Node.js 的平台。
+- 設定檔：`wrangler.jsonc`（Worker、R2 快取、Images、靜態檔規則）、`open-next.config.ts`
+- `NEXT_PUBLIC_*` 和 `REPORT_BACKEND_URL` 是 build 時寫入的，要設在 Workers Builds 的 **Build variables**；其餘變數設在 Worker 的 **Variables and Secrets**
+- `public/` 的檔案不經過 Next，`next.config.js` 的 `headers()` 對它們無效，靜態檔的標頭要寫在 `public/_headers`
+- 需要依 host 改寫的靜態檔（robots.txt、llms.txt）要列在 `wrangler.jsonc` 的 `run_worker_first`，改了要重新 build
+- wrangler 需要 Node 22.12 以上（見 `.nvmrc`）
 
 ## 聯絡
 

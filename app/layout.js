@@ -4,7 +4,6 @@ import Script from 'next/script'
 import { headers } from 'next/headers'
 import { LocaleProvider } from '@/components/LocaleProvider'
 import PostHogProvider from '@/components/PostHogProvider'
-import { Analytics } from '@vercel/analytics/next'
 import { MARKET_GLOBAL, normalizeMarket } from '@/lib/market'
 import { GLOBAL_METADATA, GLOBAL_JSON_LD } from '@/lib/globalSeo'
 
@@ -374,7 +373,6 @@ export default async function RootLayout({ children }) {
       <body>
         {isAdmin ? <LocaleProvider locale={locale} market={market}>{children}</LocaleProvider> : <>
           <PostHogProvider><LocaleProvider locale={locale} market={market}>{children}</LocaleProvider></PostHogProvider>
-          <Analytics />
         </>}
       </body>
     </html>

@@ -1,0 +1,6 @@
+# Cloudflare Workers 靜態檔案的回應標頭。
+# public/ 的檔案在 Cloudflare 上不經過 Next，next.config.js 的 headers() 對它們無效，
+# 所以靜態檔需要的標頭要寫在這裡（和 next.config.js 保持一致）。
+/admin-sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /admin/

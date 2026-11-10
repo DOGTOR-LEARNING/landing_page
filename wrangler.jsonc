@@ -1,0 +1,44 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "dogtor-landing",
+	"compatibility_date": "2026-11-01",
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS",
+		// 靜態檔預設在 Worker 之前就直接回應，會略過 next.config.js 裡依 host 改寫的規則，
+		// 導致 global.superb-tutor.com 拿到台灣版的 robots.txt / llms.txt。這些路徑要先進 Worker，
+		// 改寫後的目標檔也要列進來，OpenNext 的 asset resolver 才會代為回應（清單在 build 時寫入，改了要重 build）。
+		"run_worker_first": ["/robots.txt", "/llms.txt", "/robots-global.txt", "/llms-global.txt"],
+		// OpenNext 在 run_worker_first 時要求這兩個設定，靜態檔才會只在完全相同的路徑上回應（同 Next 行為）
+		"html_handling": "none",
+		"not_found_handling": "none"
+	},
+	"services": [
+		{
+			// 自我參照，OpenNext 快取需要；service 名稱必須和上面的 name 一致
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "dogtor-landing"
+		}
+	],
+	"r2_buckets": [
+		{
+			// Next 的資料快取（lib/storeRatings.js 的 revalidate: 86400 會寫進這裡）
+			// 第一次部署前先建立：npx wrangler r2 bucket create dogtor-landing-opennext-cache
+			"binding": "NEXT_INC_CACHE_R2_BUCKET",
+			"bucket_name": "dogtor-landing-opennext-cache"
+		}
+	],
+	"images": {
+		// next/image 走 Cloudflare Images 做壓縮與轉檔
+		"binding": "IMAGES"
+	},
+	"limits": {
+		// 付費方案才有效；/admin/house-ads 上傳裁切等較重的請求需要較多 CPU 時間
+		"cpu_ms": 60000
+	},
+	"observability": {
+		"enabled": true
+	}
+}

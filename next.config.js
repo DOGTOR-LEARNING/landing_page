@@ -75,3 +75,9 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+// 讓本機 `next dev` 也能拿到 wrangler.jsonc 裡的 Cloudflare bindings（R2、Images 等）
+// 套件是 ESM-only，CommonJS 設定檔只能用動態 import；只在 dev 時執行
+if (process.env.NODE_ENV === 'development') {
+  import('@opennextjs/cloudflare').then((m) => m.initOpenNextCloudflareForDev())
+}
