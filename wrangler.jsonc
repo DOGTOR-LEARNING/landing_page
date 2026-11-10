@@ -7,6 +7,10 @@
 	// 開啟 dogtor-landing-page.peathuchu.workers.dev 測試網址，以及每個分支的 preview 網址
 	"workers_dev": true,
 	"preview_urls": true,
+	// 一般（非機密）變數要寫在這裡，否則每次部署會被清掉；機密值用 wrangler secret 設定
+	"vars": {
+		"ADMIN_AUTH_BACKEND_URL": "https://superb-backend-1041765261654.asia-east1.run.app"
+	},
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS",
