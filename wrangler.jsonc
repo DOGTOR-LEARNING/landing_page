@@ -1,7 +1,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": ".open-next/worker.js",
-	"name": "dogtor-landing",
+	"name": "dogtor-landing-page",
 	"compatibility_date": "2026-11-01",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"assets": {
@@ -19,7 +19,7 @@
 		{
 			// 自我參照，OpenNext 快取需要；service 名稱必須和上面的 name 一致
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "dogtor-landing"
+			"service": "dogtor-landing-page"
 		}
 	],
 	"r2_buckets": [
