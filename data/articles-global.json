@@ -1,0 +1,169 @@
+{
+  "articles": [
+    {
+      "slug": "ap-biology-exam-format",
+      "title": "AP Biology Exam Format, Explained: Sections, Timing, Unit Weights and FRQ Types",
+      "description": "How the AP Biology exam is structured: 60 multiple-choice questions and 6 free-response questions, how much each unit is worth, the six FRQ types, and what that means for how you study.",
+      "category": "AP Biology",
+      "tags": [
+        "AP Biology",
+        "AP Bio exam format",
+        "AP Biology unit weights",
+        "AP Biology FRQ",
+        "AP exam"
+      ],
+      "publishDate": "2026-11-11",
+      "priority": 0.9,
+      "excerpt": "Two 90-minute sections, eight units with very different weights, and six predictable free-response question types. Here is the whole exam on one page.",
+      "content": {
+        "intro": "The AP Biology exam has **two sections of equal weight**: 60 multiple-choice questions in 90 minutes, then 6 free-response questions in 90 minutes. Each section is **50% of your score**. Knowing exactly how those points are distributed tells you where your study hours pay off most.",
+        "sections": [
+          {
+            "h2": "The two sections at a glance",
+            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 60 | 1 h 30 min | 50% |\n| II: Free response | 6 (2 long, 4 short) | 1 h 30 min | 50% |\n\nThe exam is **hybrid digital**: you answer the multiple-choice questions and read the free-response questions in the College Board's Bluebook app, but you **handwrite** your free-response answers in a paper booklet. A four-function, scientific or graphing calculator is allowed in both sections, and you get an equations and formulas sheet.\n\nThat works out to about **90 seconds per multiple-choice question** and roughly **20 minutes per long free-response question** and 10 per short one."
+          },
+          {
+            "h2": "How much each unit is worth",
+            "body": "The Course and Exam Description gives a weight range for each unit on the multiple-choice section:\n\n| Unit | Topic | Weight |\n|---|---|---|\n| 1 | Chemistry of Life | 8–11% |\n| 2 | Cell Structure and Function | 10–13% |\n| 3 | Cellular Energetics | 12–16% |\n| 4 | Cell Communication and Cell Cycle | 10–15% |\n| 5 | Heredity | 8–11% |\n| 6 | Gene Expression and Regulation | 12–16% |\n| 7 | Natural Selection | 13–20% |\n| 8 | Ecology | 10–15% |\n\nThree units carry the most weight: **Natural Selection (up to 20%)**, **Cellular Energetics** and **Gene Expression and Regulation** (up to 16% each). Together they can be close to half the multiple-choice section. If you are short on time, make sure those three are solid before you polish Units 1 and 5."
+          },
+          {
+            "h2": "The six free-response question types",
+            "body": "The free-response section follows the same pattern every year, so you can practice each type on purpose:\n\n1. **Interpreting and evaluating experimental results** (long): read an experiment, identify variables and controls, and justify conclusions.\n2. **Interpreting and evaluating experimental results with graphing** (long): the same, plus building a correct graph from a data table.\n3. **Scientific investigation** (short): design or critique an experiment.\n4. **Conceptual analysis** (short): explain a biological process and predict what happens when it is disrupted.\n5. **Analyze a model or visual representation** (short): interpret a diagram or model.\n6. **Analyze data** (short): read a graph or table and draw a supported claim.\n\nNotice that only one of the six is mainly about recalling content. The rest test **science practices**: designing experiments, graphing, reading data and arguing from evidence."
+          },
+          {
+            "h2": "Skills the exam rewards",
+            "body": "Every question is tied to one of six science practices: concept explanation, visual representations, questions and methods, representing and describing data, statistical tests and data analysis, and argumentation.\n\nTwo of those catch students out most often:\n\n- **Graphing.** Label both axes with units, choose the right graph type (a line graph for continuous data, a bar graph for categories), and include error bars when the data give a standard error or confidence interval.\n- **Statistics.** Be comfortable with the chi-square test: state the null hypothesis, compute degrees of freedom (number of categories minus one), and compare your value with the critical value on the formula sheet."
+          },
+          {
+            "h2": "What this means for how you study",
+            "body": "- **Weight your time by unit.** Spend the most time on Units 3, 6 and 7.\n- **Practice the FRQ types, not just the content.** The College Board publishes past free-response questions with scoring guidelines on AP Central. Do them under time, then grade yourself strictly against the rubric.\n- **Turn every miss into a pattern.** When you get a question wrong, note *why*: a content gap, a misread graph, or a weak justification. The fix is different for each.\n- **Do short daily sets instead of rare long sessions.** Spacing your practice beats cramming for retention."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How long is the AP Biology exam?",
+          "answer": "Three hours of testing time: 90 minutes for 60 multiple-choice questions and 90 minutes for 6 free-response questions."
+        },
+        {
+          "question": "Can I use a calculator on the AP Biology exam?",
+          "answer": "Yes. A four-function, scientific or graphing calculator is allowed on both sections, and an equations and formulas sheet is provided."
+        },
+        {
+          "question": "Which AP Biology units are the most important?",
+          "answer": "By weight, Unit 7 (Natural Selection, 13–20%), Unit 3 (Cellular Energetics, 12–16%) and Unit 6 (Gene Expression and Regulation, 12–16%)."
+        }
+      ],
+      "cta": "Dogtor turns AP Biology into short daily levels organized by unit, explains every question you miss on the spot, and keeps a mistake book so you can practice your weak spots again. It's free to start."
+    },
+    {
+      "slug": "ap-biology-unit-3-practice-questions",
+      "title": "AP Biology Unit 3 Practice Questions: Cellular Energetics (with Explanations)",
+      "description": "Eight AP Biology Unit 3 practice questions on enzymes, cellular respiration, fermentation and photosynthesis, each with a full explanation of the right answer and the common traps.",
+      "category": "AP Biology",
+      "tags": [
+        "AP Biology practice questions",
+        "AP Bio Unit 3",
+        "cellular energetics",
+        "cellular respiration",
+        "photosynthesis",
+        "enzymes"
+      ],
+      "publishDate": "2026-11-11",
+      "priority": 0.9,
+      "excerpt": "Enzymes, respiration, fermentation and photosynthesis: eight exam-style questions with explanations for every answer, including why the wrong choices are tempting.",
+      "content": {
+        "intro": "Unit 3, **Cellular Energetics**, is worth about **12–16%** of the AP Biology multiple-choice section and shows up in free-response questions about experiments too. These eight questions cover the ideas tested most often: enzyme activity, the electron transport chain, fermentation and photosynthesis.\n\nTry each one before reading the answer. If you miss one, the explanation tells you which idea to review.",
+        "sections": [
+          {
+            "h2": "Enzymes (questions 1–2)",
+            "body": "**1. An enzyme's activity is measured with and without a competitive inhibitor. As substrate concentration is increased to very high levels, what happens to the reaction rate in the presence of the inhibitor?**\n\n- (A) It stays far below the uninhibited rate at every substrate concentration.\n- (B) It approaches the same maximum rate as the uninhibited reaction.\n- (C) It drops to zero because the inhibitor permanently changes the active site.\n- (D) It exceeds the uninhibited rate because the inhibitor stabilizes the enzyme.\n\n**Answer: B.** A competitive inhibitor competes with the substrate for the active site. At very high substrate concentrations, substrate molecules outcompete the inhibitor, so the reaction approaches the same maximum rate. Option C describes irreversible inhibition, not competitive inhibition.\n\n**2. A human enzyme works best at 37 °C. When the temperature is raised to 60 °C, its activity drops sharply and does not recover after cooling. Which explanation is best supported?**\n\n- (A) The high temperature broke the enzyme's peptide bonds, splitting it into amino acids.\n- (B) The high temperature disrupted the bonds that hold the enzyme's tertiary structure, changing the shape of the active site.\n- (C) The substrate molecules moved too fast to be converted into products.\n- (D) The enzyme was used up by the reaction at high temperature.\n\n**Answer: B.** Heat disrupts hydrogen bonds and other interactions that maintain tertiary structure. The protein denatures, the active site changes shape and the substrate no longer fits. Peptide bonds (A) are covalent and much more stable. Enzymes are not consumed by the reactions they catalyze (D)."
+          },
+          {
+            "h2": "Cellular respiration and fermentation (questions 3–5)",
+            "body": "**3. During oxidative phosphorylation, where does ATP synthase make ATP, and which way do protons move through it?**\n\n- (A) In the outer mitochondrial membrane; protons move from the matrix to the cytosol.\n- (B) In the inner mitochondrial membrane; protons move from the intermembrane space into the matrix.\n- (C) In the inner mitochondrial membrane; protons move from the matrix into the intermembrane space.\n- (D) In the matrix; protons move from the cytosol into the matrix.\n\n**Answer: B.** The electron transport chain pumps protons from the matrix into the intermembrane space, building a gradient. ATP synthase, embedded in the inner membrane, lets protons flow back down that gradient into the matrix and uses the energy to make ATP. Option C describes the pumping, not ATP synthesis.\n\n**4. Cyanide blocks the final protein complex of the electron transport chain, so electrons can no longer be passed to oxygen. What is the most likely immediate effect in the mitochondria?**\n\n- (A) The proton gradient across the inner membrane increases.\n- (B) Electron transport stops, the proton gradient is not maintained and ATP production by oxidative phosphorylation falls.\n- (C) Glycolysis stops because it requires oxygen.\n- (D) Oxygen consumption increases to compensate.\n\n**Answer: B.** With the final electron acceptor step blocked, electrons back up and the chain stops pumping protons. Without a gradient, ATP synthase cannot make ATP. Glycolysis (C) does not require oxygen and can continue, which is why cells briefly rely on fermentation.\n\n**5. Some cells ferment glucose to lactate when oxygen is scarce. What is the main benefit of fermentation for the cell?**\n\n- (A) It produces more ATP per glucose than aerobic respiration.\n- (B) It regenerates NAD⁺ so glycolysis can keep producing ATP.\n- (C) It removes carbon dioxide from the cell.\n- (D) It produces the oxygen needed for the electron transport chain.\n\n**Answer: B.** Glycolysis reduces NAD⁺ to NADH. Without oxygen, NADH cannot be oxidized by the electron transport chain, so NAD⁺ runs out. Fermentation oxidizes NADH back to NAD⁺, letting glycolysis continue to make its 2 ATP per glucose. Fermentation yields far less ATP than aerobic respiration (A)."
+          },
+          {
+            "h2": "Photosynthesis (questions 6–7)",
+            "body": "**6. In the light-dependent reactions of photosynthesis, where does the oxygen released by the plant come from?**\n\n- (A) Carbon dioxide\n- (B) Glucose\n- (C) Water\n- (D) RuBP\n\n**Answer: C.** Photosystem II splits water to replace the electrons it loses when light excites its chlorophyll. That splitting releases O₂. The oxygen atoms in CO₂ end up in sugars, not in the oxygen gas released.\n\n**7. Which statement correctly describes the Calvin cycle?**\n\n- (A) It occurs in the thylakoid membrane and produces ATP and NADPH.\n- (B) It occurs in the stroma and uses ATP and NADPH to turn fixed CO₂ into G3P.\n- (C) It occurs only in the dark and does not depend on the light reactions.\n- (D) It releases CO₂ as a by-product of breaking down glucose.\n\n**Answer: B.** The Calvin cycle runs in the stroma. Rubisco fixes CO₂ to RuBP, then ATP and NADPH from the light reactions reduce the products to G3P, which the cell uses to build sugars. Although it doesn't use light directly, it depends on the ATP and NADPH the light reactions produce, so it stops soon after light is removed (C)."
+          },
+          {
+            "h2": "Putting it together (question 8)",
+            "body": "**8. A chemical makes the inner mitochondrial membrane leaky to protons. Electron transport and oxygen use continue, but ATP production drops sharply. Where does most of the energy released by electron transport go?**\n\n- (A) It is stored as NADH.\n- (B) It is released as heat.\n- (C) It is used to pump more glucose into the cell.\n- (D) It is stored in a larger proton gradient.\n\n**Answer: B.** This is an uncoupler: electron transport still pumps protons, but they leak back across the membrane without passing through ATP synthase. The gradient can't be maintained (D), and the energy is lost as heat. Brown fat uses a protein that does this on purpose to generate body heat."
+          },
+          {
+            "h2": "What to review if you missed some",
+            "body": "- **Missed 1–2:** review how enzyme shape determines function, and the difference between competitive, noncompetitive and irreversible inhibition.\n- **Missed 3, 4 or 8:** draw the inner mitochondrial membrane and follow electrons and protons step by step. Most mistakes come from mixing up which side the protons are pumped to.\n- **Missed 5:** remember that fermentation exists to recycle NAD⁺, not to make extra ATP.\n- **Missed 6–7:** list the inputs and outputs of the light reactions and the Calvin cycle side by side. Each stage's outputs are the other's inputs."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How much of the AP Biology exam is Unit 3?",
+          "answer": "About 12–16% of the multiple-choice section, according to the College Board's Course and Exam Description. Unit 3 ideas also appear in free-response questions about experiments."
+        },
+        {
+          "question": "What are the most tested topics in AP Biology Unit 3?",
+          "answer": "Enzyme structure and inhibition, how the electron transport chain builds a proton gradient that drives ATP synthase, the role of fermentation, and the inputs and outputs of the light reactions and the Calvin cycle."
+        }
+      ],
+      "cta": "Want more questions like these? Dogtor's AP Biology island has bite-sized Unit 3 levels, an AI tutor that explains any question you're stuck on, and a mistake book that brings back the ones you missed. It's free to start."
+    },
+    {
+      "slug": "how-to-self-study-ap-biology",
+      "title": "How to Self-Study AP Biology: A 16-Week Plan That Fits Around School",
+      "description": "A week-by-week plan to self-study AP Biology in about four months, weighted by how much each unit is worth, with practice-question and free-response routines that build exam skills.",
+      "category": "AP Biology",
+      "tags": [
+        "self-study AP Biology",
+        "AP Biology study plan",
+        "AP Bio review",
+        "how to study for AP Biology",
+        "AP exam"
+      ],
+      "publishDate": "2026-11-11",
+      "priority": 0.8,
+      "excerpt": "Sixteen weeks, about five hours a week. Spend longer on the heavy units, practice free-response questions from week three, and finish with timed practice exams.",
+      "content": {
+        "intro": "You can self-study AP Biology in about **four months at five hours a week** if you study by weight and practice the exam's skills from the start, not just at the end. This plan starts in January and leaves the last four weeks for review and full practice exams before the May exam.",
+        "sections": [
+          {
+            "h2": "Before you start: register for the exam",
+            "body": "If your school doesn't offer AP Biology, you still need a school or test center to order the exam for you. **Exam ordering usually closes in the fall**, around mid-November, and later orders may carry an extra fee. Contact your school's AP coordinator, or search the College Board's AP course and exam finder for a test center that accepts outside students, as early as you can.\n\nYou'll also want:\n\n- The free **AP Biology Course and Exam Description** from AP Central, so you know exactly what's in scope.\n- **Past free-response questions with scoring guidelines**, also free on AP Central.\n- One review book or video series you like. Don't collect five."
+          },
+          {
+            "h2": "The 16-week plan",
+            "body": "| Weeks | Focus | Why |\n|---|---|---|\n| 1 | Unit 1: Chemistry of Life | Lighter unit (8–11%); builds vocabulary you'll need |\n| 2 | Unit 2: Cell Structure and Function | 10–13% |\n| 3–4 | Unit 3: Cellular Energetics | 12–16%; respiration and photosynthesis take time |\n| 5 | Unit 4: Cell Communication and Cell Cycle | 10–15% |\n| 6 | Unit 5: Heredity | 8–11%; practice chi-square here |\n| 7–8 | Unit 6: Gene Expression and Regulation | 12–16% |\n| 9–10 | Unit 7: Natural Selection | 13–20%, the heaviest unit |\n| 11–12 | Unit 8: Ecology | 10–15% |\n| 13–14 | Weak-unit review | Driven by your mistake log |\n| 15–16 | Full timed practice exams | Build stamina and pacing |\n\nIf you start later, compress the lighter units (1, 2 and 5) first and protect the time for Units 3, 6 and 7."
+          },
+          {
+            "h2": "A weekly routine (about five hours)",
+            "body": "- **Two learning sessions (60 minutes each):** read or watch the material for that week's unit and make a one-page summary from memory afterwards.\n- **Four short practice sessions (20 minutes each):** multiple-choice questions on the current unit *plus* a few from earlier units. Mixing in old units is what keeps them from fading.\n- **One free-response session (60 minutes):** from week 3, do one past free-response question under time, then grade it against the official scoring guideline.\n- **Mistake review (20 minutes):** go through everything you got wrong that week and write down *why* — a gap in content, a misread graph or a weak justification."
+          },
+          {
+            "h2": "Practicing free response the right way",
+            "body": "The free-response section is half your score and follows six predictable question types. Most of the points come from **specific moves**: identifying the independent and dependent variables, naming a control, stating a prediction with a reason, and justifying a claim with data.\n\nWhen you grade yourself, be strict: if the scoring guideline asks for a justification and you only gave a claim, you did not earn that point. After a few weeks you'll notice which moves you keep forgetting, and that list is your free-response checklist for test day."
+          },
+          {
+            "h2": "The last month",
+            "body": "- Take **one full timed practice exam per week** in weeks 15 and 16, in one sitting, with a calculator and the formula sheet.\n- After each one, sort your mistakes by unit and by skill, and spend the following days only on the top two categories.\n- In the final week, do short mixed sets daily and stop learning new material two days before the exam."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "Can you self-study AP Biology?",
+          "answer": "Yes. Many students self-study AP Biology. You need to arrange for a school or test center to order the exam for you, usually by mid-November, and plan around four months of steady study."
+        },
+        {
+          "question": "How many hours does it take to self-study AP Biology?",
+          "answer": "Around 80 hours is a realistic target for most students: about five hours a week for 16 weeks. Students with a strong biology background may need less."
+        },
+        {
+          "question": "What is the hardest unit in AP Biology?",
+          "answer": "It varies by student, but Units 3 (Cellular Energetics) and 6 (Gene Expression and Regulation) are often cited as the hardest, and Unit 7 (Natural Selection) carries the most weight."
+        }
+      ],
+      "cta": "Dogtor fits the short daily practice sessions in this plan: AP Biology levels organized by unit, mixed review that brings back older units, an AI tutor for anything you're stuck on, and a mistake book for your weekly review. It's free to start."
+    }
+  ]
+}

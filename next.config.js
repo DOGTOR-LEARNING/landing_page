@@ -47,6 +47,9 @@ const nextConfig = {
       { source: '/robots.txt', has: globalHost, destination: '/robots-global.txt' },
       { source: '/llms.txt', has: globalHost, destination: '/llms-global.txt' },
       { source: '/sitemap.xml', has: globalHost, destination: '/global-sitemap.xml' },
+      // English guide library; /guide on the Taiwan host stays the Chinese one.
+      { source: '/guide', has: globalHost, destination: '/en-guide' },
+      { source: '/guide/:slug', has: globalHost, destination: '/en-guide/:slug' },
     ]
     const afterFiles = [
       // Shareable parent report pages are rendered by the backend. Proxying

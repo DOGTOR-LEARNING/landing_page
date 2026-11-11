@@ -30,7 +30,13 @@ Dogtor is not affiliated with the College Board (AP, SAT) or ETS (GRE).
 - App Store: https://apps.apple.com/us/app/dogtor-daily-ap-sat-prep/id6805425251
 - Google Play: https://play.google.com/store/apps/details?id=com.dogtor.global
 - FAQ: https://global.superb-tutor.com/faq
+- Study guides: https://global.superb-tutor.com/guide
 - Contact: dogtor@superb-tutor.com
 
 ## Company
 Developed and operated by SuperB Software Technology Co., Ltd. (Taipei, Taiwan).
+
+## Study guides
+- AP Biology Exam Format, Explained: https://global.superb-tutor.com/guide/ap-biology-exam-format
+- AP Biology Unit 3 Practice Questions (Cellular Energetics): https://global.superb-tutor.com/guide/ap-biology-unit-3-practice-questions
+- How to Self-Study AP Biology (16-week plan): https://global.superb-tutor.com/guide/how-to-self-study-ap-biology

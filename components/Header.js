@@ -55,8 +55,8 @@ export default function Header() {
     }
   }, [openDropdown])
 
-  // Reviews, news and guides are about the Taiwan app; the international
-  // site does not serve them (lib/market.js).
+  // Reviews and news are about the Taiwan app; the international site does
+  // not serve them (lib/market.js). /guide is the English library there.
   const aboutLinks = [
     { href: '/about', label: m.header.aboutTeam, key: 'about' },
     ...(isGlobal ? [] : [
@@ -66,7 +66,7 @@ export default function Header() {
   ]
 
   const helpLinks = [
-    ...(isGlobal ? [] : [{ href: '/guide', label: m.header.guide, key: 'guide' }]),
+    { href: '/guide', label: m.header.guide, key: 'guide' },
     { href: '/faq', label: m.header.faq, key: 'faq' },
     { href: '/support', label: m.header.support, key: 'support' },
   ]
