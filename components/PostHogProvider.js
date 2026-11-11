@@ -5,12 +5,24 @@ import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { PostHogProvider as PHProvider } from 'posthog-js/react'
 import { detectInAppBrowser } from '@/lib/analytics'
+import { isGlobalHost } from '@/lib/appHosts'
 
-const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY || 'phc_knXIVReoLEjO8tNZv7HhKW4WatiktXTwOXkTV8dYbqI'
-// 預設走 next.config.js 的 /ingest 反向代理（同源，不容易被 in-app 瀏覽器擋）。
+// Each market has its own PostHog project, matching the app (config/<flavor>.json).
+// One deployment serves both hosts, so the key is picked from the hostname at runtime.
+const POSTHOG_KEY_TW = process.env.NEXT_PUBLIC_POSTHOG_KEY || 'phc_knXIVReoLEjO8tNZv7HhKW4WatiktXTwOXkTV8dYbqI'
+const POSTHOG_KEY_GLOBAL = process.env.NEXT_PUBLIC_POSTHOG_KEY_GLOBAL || 'phc_xSqVLkhSEYHqDsMEagGEWXijNaDkxg6Ao8khbqf54DCW'
+// Defaults to the /ingest reverse proxy in next.config.js (same origin, so in-app browsers block it less often).
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST || '/ingest'
 
-if (typeof window !== 'undefined' && POSTHOG_KEY) {
+function posthogKeyForHost(hostname) {
+  // Local dev (localhost, global.localhost) must not write into the live projects.
+  if (hostname === 'localhost' || hostname.endsWith('.localhost') || hostname === '127.0.0.1') return null
+  return isGlobalHost(hostname) ? POSTHOG_KEY_GLOBAL : POSTHOG_KEY_TW
+}
+
+const POSTHOG_KEY = typeof window !== 'undefined' ? posthogKeyForHost(window.location.hostname.toLowerCase()) : null
+
+if (POSTHOG_KEY) {
   posthog.init(POSTHOG_KEY, {
     api_host: POSTHOG_HOST,
     // PostHog 網頁介面的位置。api_host 走代理後要另外指明，工具列與連結才會正確。
@@ -39,9 +51,11 @@ if (typeof window !== 'undefined' && POSTHOG_KEY) {
 
 export default function PostHogProviderWrapper({ children }) {
   const pathname = usePathname()
-  useEffect(() => { if (pathname.startsWith('/admin')) posthog.stopSessionRecording() }, [pathname])
-  if (!POSTHOG_KEY) return children
+  useEffect(() => { if (POSTHOG_KEY && pathname.startsWith('/admin')) posthog.stopSessionRecording() }, [pathname])
 
+  // Always render the provider: the key is only known in the browser, and
+  // skipping it there but not on the server would change the tree between
+  // server render and hydration. Captures are no-ops while posthog is not initialised.
   return (
     <PHProvider client={posthog}>
       {children}
