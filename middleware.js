@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { isGlobalHost, requestHost } from '@/lib/appHosts'
-import { GLOBAL_PATHS } from '@/lib/market'
+import { isGlobalPath } from '@/lib/market'
 
 const COOKIE_NAME = 'dogtor_locale'
 
@@ -28,9 +28,16 @@ export function middleware(request) {
   const url = request.nextUrl
   const globalHost = isGlobalHost(requestHost(request.headers))
 
+  // app/en-guide is only reachable as /guide on the international host (see
+  // the rewrite in next.config.js); its own path would duplicate those pages.
+  if (url.pathname === '/en-guide' || url.pathname.startsWith('/en-guide/')) {
+    const target = globalHost ? url.pathname.replace(/^\/en-guide/, '/guide') : '/'
+    return NextResponse.redirect(new URL(target, url), 308)
+  }
+
   // The international site only has the pages in GLOBAL_PATHS; the rest of
   // the site describes the Taiwan app.
-  if (globalHost && !GLOBAL_PATHS.includes(url.pathname)) {
+  if (globalHost && !isGlobalPath(url.pathname)) {
     return NextResponse.redirect(new URL('/', url))
   }
   const langParam = url.searchParams.get('lang')
