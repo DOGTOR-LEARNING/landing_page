@@ -14,6 +14,14 @@ const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
 const PADDLE_SANDBOX = process.env.NEXT_PUBLIC_PADDLE_SANDBOX === 'true'
 const PADDLE_PRICE_MONTHLY = process.env.NEXT_PUBLIC_PADDLE_PRICE_MONTHLY
 const PADDLE_PRICE_YEARLY = process.env.NEXT_PUBLIC_PADDLE_PRICE_YEARLY
+// Same plans without the 3-day trial, for parents who already had one: a
+// Paddle price gives its trial to every new subscription, so the backend
+// decides which price this parent gets (GET /paddle/trial_eligibility).
+// Unset means every parent keeps the trial price, as before.
+const PADDLE_PRICE_MONTHLY_NO_TRIAL = process.env.NEXT_PUBLIC_PADDLE_PRICE_MONTHLY_NO_TRIAL
+const PADDLE_PRICE_YEARLY_NO_TRIAL = process.env.NEXT_PUBLIC_PADDLE_PRICE_YEARLY_NO_TRIAL
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
+const TRIAL_CHECK_TIMEOUT_MS = 5000
 // Single shared promo campaign surfaced from LINE (e.g. an expiry-reminder
 // push). The `?discount=` value must match this code before the mapped
 // Paddle discount ID gets pre-applied, so a stray/mistyped query param does
@@ -41,6 +49,9 @@ export default function SubscribeClient({ previewMode = false }) {
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
+  // null until the backend has answered; checkout waits for it so a parent
+  // cannot reach the trial price by tapping before the answer arrives.
+  const [trialEligible, setTrialEligible] = useState(null)
 
   const isCanceled = searchParams.get('canceled') === '1'
 
@@ -114,6 +125,36 @@ export default function SubscribeClient({ previewMode = false }) {
     }
   }, [previewMode])
 
+  useEffect(() => {
+    if (!lineUserId) return
+    const noTrialConfigured = PADDLE_PRICE_MONTHLY_NO_TRIAL && PADDLE_PRICE_YEARLY_NO_TRIAL
+    if (previewMode || !noTrialConfigured || !API_BASE) {
+      setTrialEligible(true)
+      return
+    }
+
+    // Fails open: if the backend is slow or down, keep the trial price.
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), TRIAL_CHECK_TIMEOUT_MS)
+    fetch(
+      `${API_BASE}/paddle/trial_eligibility?parent_identifier=${encodeURIComponent(lineUserId)}`,
+      { signal: controller.signal }
+    )
+      .then((res) => (res.ok ? res.json() : null))
+      .then((body) => {
+        const eligible = body?.data?.trial_eligible !== false
+        setTrialEligible(eligible)
+        trackEvent('subscribe_trial_eligibility', { eligible })
+      })
+      .catch(() => setTrialEligible(true))
+      .finally(() => clearTimeout(timer))
+
+    return () => {
+      clearTimeout(timer)
+      controller.abort()
+    }
+  }, [lineUserId, previewMode])
+
   const initPaddle = useCallback(() => {
     if (window.Paddle) {
       if (PADDLE_SANDBOX) {
@@ -160,14 +201,16 @@ export default function SubscribeClient({ previewMode = false }) {
   }, [])
 
   const handleSubscribe = useCallback(async () => {
-    if (!lineUserId || submitting) return
+    if (!lineUserId || submitting || trialEligible === null) return
 
     setSubmitting(true)
     localStorage.setItem('dogtor_parent_id', lineUserId)
     trackSubscribeClick(plan, !!promoDiscountId)
 
     try {
-      const priceId = plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
+      const priceId = trialEligible
+        ? plan === 'monthly' ? PADDLE_PRICE_MONTHLY : PADDLE_PRICE_YEARLY
+        : plan === 'monthly' ? PADDLE_PRICE_MONTHLY_NO_TRIAL : PADDLE_PRICE_YEARLY_NO_TRIAL
       window.Paddle.Checkout.open({
         items: [{ priceId, quantity: 1 }],
         ...(promoDiscountId ? { discountId: promoDiscountId } : {}),
@@ -175,6 +218,7 @@ export default function SubscribeClient({ previewMode = false }) {
           parent_identifier: lineUserId,
           parent_type: previewMode ? 'preview' : 'line',
           plan_type: plan,
+          trial: trialEligible,
         },
       })
     } catch (err) {
@@ -186,7 +230,7 @@ export default function SubscribeClient({ previewMode = false }) {
       })
     }
     setSubmitting(false)
-  }, [lineUserId, plan, submitting, previewMode, promoDiscountId])
+  }, [lineUserId, plan, submitting, previewMode, promoDiscountId, trialEligible])
 
   if (loading) {
     return (
@@ -315,13 +359,17 @@ export default function SubscribeClient({ previewMode = false }) {
         <button
           className={styles.subscribeBtn}
           onClick={handleSubscribe}
-          disabled={submitting || !paddleReady}
+          disabled={submitting || !paddleReady || trialEligible === null}
         >
-          {submitting ? sub.subscribing : sub.subscribe}
+          {submitting
+            ? sub.subscribing
+            : trialEligible === false ? sub.subscribeNoTrial : sub.subscribe}
         </button>
         {sub.trialNote && (
           <p className={styles.trialNote}>
-            {promoDiscountId ? sub.promoTrialNote : sub.trialNote}
+            {trialEligible === false
+              ? promoDiscountId ? sub.promoNoTrialNote : sub.noTrialNote
+              : promoDiscountId ? sub.promoTrialNote : sub.trialNote}
           </p>
         )}
 
