@@ -8,6 +8,8 @@ import { trackEvent } from '@/lib/analytics'
 import styles from '../subscribe/page.module.css'
 import giftStyles from './gift.module.css'
 
+const BULK_CONTACT_EMAIL = 'dogtor@superb-tutor.com'
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
 const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
 const PADDLE_SANDBOX = process.env.NEXT_PUBLIC_PADDLE_SANDBOX === 'true'
@@ -159,7 +161,13 @@ export default function GiftClient() {
           >
             {submitting ? g.submitting : g.submit}
           </button>
-          <p className={styles.trialNote}>{g.clockNote}</p>
+          <p className={styles.trialNote}>
+            {renew && !donated ? g.recurringClockNote : g.clockNote}
+          </p>
+          <p className={styles.trialNote}>
+            {g.bulkNote}{' '}
+            <a href={`mailto:${BULK_CONTACT_EMAIL}`}>{BULK_CONTACT_EMAIL}</a>
+          </p>
 
           {error && (
             <div className={styles.error} style={{ marginTop: 'var(--space-lg)' }}>
