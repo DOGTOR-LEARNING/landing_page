@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, BookOpen, PawPrint, Bell, ArrowUpRight, Menu, X, ChevronRight, Blocks, MonitorPlay } from 'lucide-react'
+import { LayoutDashboard, Megaphone, Mail, ClipboardList, Users, ShieldCheck, Settings, LogOut, ReceiptText, MessagesSquare, Bot, ListTodo, BookOpen, PawPrint, Bell, ArrowUpRight, Menu, X, ChevronRight, Blocks, MonitorPlay, Gift } from 'lucide-react'
 import styles from './admin.module.css'
 
 const AdminContext = createContext(null)
@@ -19,6 +19,7 @@ export const NAV = [
   { href: '/admin/knowledge', title: 'AI 知識庫', icon: BookOpen, permission: 'knowledge.view', desc: '汪汪題與 LINE 回答產品問題時依據的文件，存檔一分鐘內生效' },
   { href: '/admin/nest', title: '寵物窩', icon: PawPrint, permission: 'nest.manage', desc: '寵物、擺件、背景、留言貼圖的目錄與上下架，以及客服補發' },
   { href: '/admin/house-ads', title: '自家廣告', icon: MonitorPlay, permission: ['ads.view', 'ads.manage', 'ads.submit'], desc: '用自己的影片和 banner 取代部分 AdMob 廣告，可指定地區與年級；廣告商在這裡送審' },
+  { href: '/admin/gifts', title: '捐贈配對', icon: Gift, permission: 'grants.view', desc: '民眾捐出的 Pro 授權碼，配對給需要的學生後自動感謝捐贈人' },
   { href: '/admin/team/users', title: '員工管理', icon: Users, permission: 'users.view', divider: true, desc: '讓每位夥伴都有自己的工作入口' },
   { href: '/admin/team/roles', title: '角色與權限', icon: ShieldCheck, permission: 'users.view', desc: '清楚掌握團隊的功能存取範圍' },
   { href: '/admin/team/modules', title: '功能模組負責人', icon: Blocks, permission: 'admin.access', internal: true, desc: '我們有哪些功能模組、用了哪些技術、由誰負責' },
