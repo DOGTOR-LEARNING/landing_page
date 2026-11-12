@@ -1,46 +1,366 @@
-/* Layout the gift page adds on top of ../subscribe/page.module.css. */
+/* Gift page, in the visual language of /learning-support: dark blue page,
+   warm glow at the top, glass cards, orange gradient for the main action. */
 
-.subtitle {
-  margin: calc(-1 * var(--space-md)) 0 var(--space-xl);
-  color: var(--color-text-secondary, #636e72);
-  line-height: 1.7;
+.main {
+  --section-gap: 2.5rem;
+  position: relative;
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.sectionLabel {
-  margin: 0 0 var(--space-sm);
+@media (min-width: 768px) {
+  .main {
+    --section-gap: 3.5rem;
+  }
+}
+
+/* globals.css pads every section by 5rem; this page spaces them with
+   --section-gap instead. */
+.hero,
+.panel,
+.how,
+.bulk {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.glow {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  width: 900px;
+  max-width: 140vw;
+  height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(245, 155, 3, 0.22) 0%, rgba(245, 155, 3, 0) 65%);
+  pointer-events: none;
+}
+
+/* === Hero === */
+.hero {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto var(--section-gap);
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  margin-bottom: var(--space-md);
+  border: 1px solid rgba(255, 163, 104, 0.5);
+  border-radius: 999px;
+  background: rgba(245, 155, 3, 0.12);
+  color: var(--accent-orange-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.heroTitle {
+  font-size: 2.25rem;
+  line-height: 1.3;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .heroTitle {
+    font-size: 3.25rem;
+  }
+}
+
+.heroSubtitle {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+/* === Purchase panel === */
+.panel {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto var(--section-gap);
+  padding: var(--space-lg) var(--space-md) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 768px) {
+  .panel {
+    padding: var(--space-xl) var(--space-xl) !important;
+  }
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: var(--space-sm);
+}
+
+.stepHeader:not(:first-child) {
+  margin-top: var(--space-lg);
+}
+
+.stepNumber {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gradient-button);
+  color: #fff;
   font-weight: 700;
-  color: var(--color-text, #2d3436);
+  font-size: 0.95rem;
 }
 
-/* Three lengths side by side once there is room. */
-.planGrid3 {
-  composes: planGrid from '../subscribe/page.module.css';
+.stepTitle {
+  font-size: 1.2rem;
+  color: #fff;
 }
 
-@media (min-width: 480px) {
-  .planGrid3 {
+.modeGrid,
+.planGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 560px) {
+  .modeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .planGrid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+.option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  padding: var(--space-md);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  background: rgba(16, 32, 49, 0.35);
+  color: #fff;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.option:hover {
+  border-color: rgba(255, 163, 104, 0.6);
+  transform: translateY(-1px);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--accent-orange-light);
+  outline-offset: 2px;
+}
+
+.optionSelected,
+.optionSelected:hover {
+  border-color: var(--accent-orange);
+  background: linear-gradient(135deg, rgba(245, 155, 3, 0.18) 0%, rgba(230, 114, 43, 0.1) 100%);
+  box-shadow: 0 0 0 3px rgba(245, 155, 3, 0.15);
+}
+
+.check {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  color: #fff;
+}
+
+.modeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 0.25rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 163, 104, 0.16);
+  color: var(--accent-orange-light);
+}
+
+.optionName {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.optionDesc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Phones: one row per length, name on the left and price on the right.
+   Wider: three cards side by side with the price under the name. */
+.planOption {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.planMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+@media (min-width: 560px) {
+  .planOption {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.3rem;
+    padding: var(--space-md);
+    text-align: center;
+  }
+
+  /* Let name, price and monthly price stack as siblings: name, price, then
+     the monthly equivalent. */
+  .planMeta {
+    display: contents;
+  }
+
+  .planMeta .optionDesc {
+    order: 2;
+  }
+}
+
+.planName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.planPrice {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent-orange-light);
+  white-space: nowrap;
+}
+
+.saveTag {
+  position: absolute;
+  top: -0.7rem;
+  right: var(--space-md);
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  background: var(--gradient-button);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (min-width: 560px) {
+  .saveTag {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.inlineNote {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.inlineLink {
+  color: var(--accent-orange-light);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.inlineLink:hover {
+  color: #fff;
+}
+
+/* === Renew switch === */
 .renewRow {
   display: flex;
-  gap: 0.75rem;
   align-items: flex-start;
-  margin: 0 0 var(--space-lg);
+  gap: 0.9rem;
+  margin-top: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  background: rgba(16, 32, 49, 0.35);
   cursor: pointer;
 }
 
-.renewRow input {
-  margin-top: 0.3rem;
-  width: 1.1rem;
-  height: 1.1rem;
+.renewDisabled {
+  cursor: default;
+  opacity: 0.55;
 }
 
-.renewRowDisabled {
-  composes: renewRow;
-  cursor: default;
-  opacity: 0.6;
+.switchInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 44px;
+  height: 26px;
+  margin-top: 0.1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background var(--transition-fast);
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-fast);
+}
+
+.switchInput:checked + .switch {
+  background: var(--accent-orange);
+}
+
+.switchInput:checked + .switch::after {
+  transform: translateX(18px);
+}
+
+.switchInput:focus-visible + .switch {
+  outline: 2px solid var(--accent-orange-light);
+  outline-offset: 2px;
 }
 
 .renewText {
@@ -49,14 +369,152 @@
   gap: 0.15rem;
 }
 
-.renewDesc {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary, #636e72);
+.renewLabel {
+  font-weight: 700;
+  color: #fff;
 }
 
+.renewDesc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* === Submit === */
+.submit {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-lg);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-button);
+  color: #fff;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(230, 114, 43, 0.35);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(230, 114, 43, 0.45);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.note {
+  margin-top: var(--space-sm);
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.error {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid rgba(244, 67, 54, 0.5);
+  border-radius: var(--radius-md);
+  background: rgba(244, 67, 54, 0.15);
+  color: #ffd6d2;
+  text-align: center;
+}
+
+/* === How it works === */
+.how {
+  max-width: 960px;
+  margin: 0 auto var(--section-gap);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: var(--space-xl);
+}
+
+.howList {
+  list-style: none;
+  display: grid;
+  gap: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .howList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.howCard {
+  padding: var(--space-lg);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.howCard .stepNumber {
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--space-sm);
+  font-size: 1.1rem;
+}
+
+.howTitle {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-xs);
+}
+
+.howDesc {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+/* === Group purchases === */
+.bulk {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) !important;
+  border: 1px solid rgba(255, 163, 104, 0.35);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(245, 155, 3, 0.16) 0%, rgba(30, 56, 117, 0.35) 100%);
+}
+
+.bulkIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 163, 104, 0.18);
+  color: var(--accent-orange-light);
+}
+
+.bulkTitle {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.bulkText {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+/* Used by /gift/success. */
 .manageLink {
   display: inline-block;
   margin-top: var(--space-md);
-  color: #0984e3;
+  color: var(--accent-orange-light);
   text-decoration: underline;
 }
