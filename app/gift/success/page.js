@@ -5,6 +5,10 @@ import { useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
 import { trackEvent } from '@/lib/analytics'
 import { GIFT_TOKEN_KEY } from '../GiftClient'
+
+// The in-app "enter auth code" walkthrough /subscribe/success also shows.
+const TUTORIAL_IMAGE_URL =
+  'https://storage.googleapis.com/dogtor_asset/linebot/%E6%8E%88%E6%AC%8A%E7%A2%BC%E7%B6%81%E5%AE%9A%E6%95%99%E5%AD%B8.png'
 import styles from '../../subscribe/page.module.css'
 import giftStyles from '../gift.module.css'
 
@@ -157,6 +161,11 @@ export default function GiftSuccess() {
             <li>{g.step2}</li>
             <li>{g.step3}</li>
           </ol>
+          <img
+            className={styles.tutorialImage}
+            src={TUTORIAL_IMAGE_URL}
+            alt={m.subscribe.bindTutorialAlt}
+          />
         </div>
       </div>
     </main>
