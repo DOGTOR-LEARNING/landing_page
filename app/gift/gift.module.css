@@ -1,0 +1,62 @@
+/* Layout the gift page adds on top of ../subscribe/page.module.css. */
+
+.subtitle {
+  margin: calc(-1 * var(--space-md)) 0 var(--space-xl);
+  color: var(--color-text-secondary, #636e72);
+  line-height: 1.7;
+}
+
+.sectionLabel {
+  margin: 0 0 var(--space-sm);
+  font-weight: 700;
+  color: var(--color-text, #2d3436);
+}
+
+/* Three lengths side by side once there is room. */
+.planGrid3 {
+  composes: planGrid from '../subscribe/page.module.css';
+}
+
+@media (min-width: 480px) {
+  .planGrid3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.renewRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin: 0 0 var(--space-lg);
+  cursor: pointer;
+}
+
+.renewRow input {
+  margin-top: 0.3rem;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.renewRowDisabled {
+  composes: renewRow;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.renewText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.renewDesc {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #636e72);
+}
+
+.manageLink {
+  display: inline-block;
+  margin-top: var(--space-md);
+  color: #0984e3;
+  text-decoration: underline;
+}
