@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Heart, GraduationCap, Smile } from 'lucide-react'
+import { Heart, GraduationCap, Smile, Gift, HeartHandshake } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMarket, useMessages } from '@/components/LocaleProvider'
@@ -239,6 +239,40 @@ export default function Home() {
               <Link href="/parent-pro" className="btn btn-primary" onClick={() => trackCTAClick('parent_pro', 'home_section')}>
                 {m.parentPro.homeSectionButton}
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Gift / Donate Section */}
+        <section className={styles.giftSection} id="gift">
+          <div className="container">
+            <div className={styles.giftCard}>
+              <div className={styles.giftContent}>
+                <span className={styles.giftBadge}>
+                  <Gift size={16} strokeWidth={2.4} aria-hidden="true" />
+                  {m.gift.homeBadge}
+                </span>
+                <h2 className={styles.giftTitle}>{m.gift.homeTitle}</h2>
+                <p className={styles.giftDesc}>{m.gift.homeDesc}</p>
+              </div>
+              <div className={styles.giftActions}>
+                <Link
+                  href="/gift"
+                  className="btn btn-primary"
+                  onClick={() => trackCTAClick('gift', 'home_section')}
+                >
+                  <Gift size={18} strokeWidth={2.4} aria-hidden="true" />
+                  {m.gift.homeGiftButton}
+                </Link>
+                <Link
+                  href="/gift?mode=donate"
+                  className={styles.giftSecondary}
+                  onClick={() => trackCTAClick('gift_donate', 'home_section')}
+                >
+                  <HeartHandshake size={18} strokeWidth={2.4} aria-hidden="true" />
+                  {m.gift.homeDonateButton}
+                </Link>
+              </div>
             </div>
           </div>
         </section>

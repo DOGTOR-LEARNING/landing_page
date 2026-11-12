@@ -309,3 +309,19 @@
   line-height: 1.7;
   margin-bottom: var(--space-lg);
 }
+
+.donateLine {
+  margin-top: var(--space-lg);
+  font-size: 0.95rem;
+}
+
+.donateLink {
+  color: var(--accent-orange-light);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.donateLink:hover {
+  color: #fff;
+}

@@ -915,3 +915,96 @@
   justify-content: center;
   gap: var(--space-sm);
 }
+
+/* Gift / Donate Section */
+.giftSection {
+  padding: 2rem 0 3rem;
+}
+
+.giftCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+  border: 1px solid rgba(255, 163, 104, 0.35);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(245, 155, 3, 0.16) 0%, rgba(30, 56, 117, 0.35) 100%);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .giftCard {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-xl) var(--space-2xl);
+    text-align: left;
+  }
+}
+
+.giftContent {
+  max-width: 540px;
+}
+
+.giftBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  margin-bottom: var(--space-sm);
+  border: 1px solid rgba(255, 163, 104, 0.5);
+  border-radius: 999px;
+  background: rgba(245, 155, 3, 0.12);
+  color: var(--accent-orange-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.giftTitle {
+  font-size: 1.75rem;
+  line-height: 1.35;
+  margin-bottom: var(--space-xs);
+}
+
+@media (min-width: 768px) {
+  .giftTitle {
+    font-size: 2rem;
+  }
+}
+
+.giftDesc {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+}
+
+.giftActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.giftActions :global(.btn),
+.giftSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.giftSecondary {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-lg);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.giftSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
