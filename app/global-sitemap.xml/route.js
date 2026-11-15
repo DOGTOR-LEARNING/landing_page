@@ -10,11 +10,10 @@ const PRIORITY = { '/': 1, '/guide': 0.8, '/faq': 0.8, '/about': 0.7, '/technolo
 
 export function GET() {
   const base = siteUrl(MARKET_GLOBAL)
-  const lastmod = new Date().toISOString()
   const pageUrls = GLOBAL_PATHS.filter((path) => path !== '/invite')
     .map((path) => {
       const priority = PRIORITY[path] ?? 0.3
-      return `  <url><loc>${base}${path === '/' ? '/' : path}</loc><lastmod>${lastmod}</lastmod><priority>${priority}</priority></url>`
+      return `  <url><loc>${base}${path}</loc><priority>${priority}</priority></url>`
     })
   const articleUrls = getAllGlobalArticles().map(
     (a) => `  <url><loc>${base}/guide/${a.slug}</loc><lastmod>${a.updateDate || a.publishDate}</lastmod><priority>${a.priority ?? 0.6}</priority></url>`

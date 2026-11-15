@@ -1,7 +1,7 @@
 # Dogtor (international) robots.txt — served as /robots.txt on
 # global.superb-tutor.com (see next.config.js). The Taiwan site's is robots.txt.
 User-agent: *
-Content-Signal: search=yes,ai-train=yes
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /admin
 Disallow: /api/admin

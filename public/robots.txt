@@ -7,9 +7,9 @@ User-agent: Google-adstxt
 Disallow:
 
 # 預設：所有爬蟲皆可抓取（已涵蓋下方未列出的任何 AI 代理）
-# Content-Signal：允許搜尋與 AI 訓練
+# Content-Signal：允許搜尋、即時 AI 回答與 AI 訓練
 User-agent: *
-Content-Signal: search=yes,ai-train=yes
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /admin
 Disallow: /api/admin

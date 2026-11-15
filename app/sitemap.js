@@ -1,12 +1,13 @@
-import { getAllArticles } from '@/lib/articles'
+import { getAllArticles, getArticleUrl } from '@/lib/articles'
+import { MARKET_TW, siteUrl } from '@/lib/market'
 
 export default function sitemap() {
-  const baseUrl = 'https://dogtor.superb-tutor.com'
+  const baseUrl = siteUrl(MARKET_TW)
 
   const articles = getAllArticles()
   const guideUrls = articles.map((article) => ({
-    url: `${baseUrl}/guide/${article.slug}`,
-    lastModified: new Date(article.publishDate),
+    url: getArticleUrl(article.slug),
+    lastModified: article.updateDate || article.publishDate,
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
@@ -14,80 +15,67 @@ export default function sitemap() {
   return [
     {
       url: `${baseUrl}/`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/guide`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/parent-pro`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/learning-support`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/gift`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     ...guideUrls,
     {
       url: `${baseUrl}/faq`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/technology`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/reviews`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/news`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/support`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
