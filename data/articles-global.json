@@ -892,6 +892,140 @@
         }
       ],
       "cta": "Dogtor's GRE Vocabulary island turns word practice into short daily levels and quiz battles with friends, with a mistake book that brings back the words you miss. It's free to start."
+    },
+    {
+      "slug": "how-to-prepare-for-the-sat",
+      "title": "How to Prepare for the SAT: A Plan by Grade, by Time Left and by Score Goal",
+      "description": "When to start SAT prep and what to do in 9th, 10th and 11th grade, how to plan with 6, 3 or 1 month left, different strategies for 1400+, 1200 and sub-1000 scores, how to study each section and the most common mistakes.",
+      "category": "SAT",
+      "tags": [
+        "how to prepare for the SAT",
+        "SAT prep plan",
+        "when to start SAT prep",
+        "SAT study schedule",
+        "digital SAT",
+        "SAT tips",
+        "PSAT"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.95,
+      "excerpt": "The gap isn't made in the last month — it's made by how you use the years and months before. Here's what to do in each grade, with any amount of time left, at any score level.",
+      "content": {
+        "intro": "\"When should I start studying for the SAT?\" There's no single right answer, but there is a right **order**. Freshman year builds the skills the test measures, sophomore and junior years turn them into test-taking skills, and the final months are about choosing what to fix. This guide lays out what to do in each grade, how to plan backward from your test date and how strategy changes depending on the score you're aiming for.",
+        "sections": [
+          {
+            "h2": "What to do in each grade",
+            "body": "| Grade | Goal | What to do | What can wait |\n|---|---|---|---|\n| 9th | **Build the base** | Read widely, take algebra seriously, build a daily homework habit | SAT practice tests |\n| 10th | **Get familiar** | Take the PSAT 10 or PSAT/NMSQT if your school offers it; review the results by question type | Expensive prep courses |\n| 11th | **Prepare and test** | Take the PSAT/NMSQT in the fall, a Bluebook practice test, then a focused prep plan before your first SAT | Cramming every topic at once |\n| 12th | **Retake if needed** | One more targeted round of prep, often for a fall test date | Starting from scratch |\n\nMost students take their first SAT in the spring of junior year and, if needed, retake it in the summer or fall of senior year. Starting serious prep **two to three months before your first test date** is plenty when the foundation is there."
+          },
+          {
+            "h2": "Plan backward from your test date",
+            "body": "| Time left | Goal | Focus |\n|---|---|---|\n| 6 months | **Fix foundations** | Diagnose with a Bluebook test, relearn weak math topics and grammar rules, build a daily practice habit |\n| 3 months | **Raise the score** | Drill your weakest question types, one timed module a few times a week, a practice test every 3–4 weeks |\n| 1 month | **Lock it in** | Timed full tests, mistake review, test-day logistics |\n\nSix months is about building; three months is the main score-raising window; the final month is about consistency, not new material. For a day-by-day version of the last stretch, see the [SAT One-Month Study Plan](/guide/sat-one-month-study-plan)."
+          },
+          {
+            "h2": "Different score goals need different strategies",
+            "body": "**Aiming for 1400+: protect your accuracy.**\n- At this level, a few careless mistakes cost you the most. Sort every miss into \"didn't know\" and \"slipped\", and build a check habit for the slips.\n- Make Module 1 count. Both sections adapt by module, so a strong first module unlocks the harder second module and the highest scores.\n- Practice the hardest question types (Rhetorical Synthesis, Inferences, nonlinear functions) under time.\n\n**Stuck around 1100–1300: master the most common question types.**\n- This is the range where students gain the most points fastest.\n- Learn the grammar rules for Boundaries and Form, Structure and Sense, and nail linear equations, percentages and ratios in Math.\n- Keep a mistake log and redo every miss a week later.\n\n**Below 1000: collect the points within reach.**\n- Don't try to fix everything. Pick the two or three question types you're closest to getting right.\n- Use the Desmos calculator built into Bluebook for graphing and checking answers.\n- Do a short set every day; seeing progress keeps you going."
+          },
+          {
+            "h2": "How to study each section",
+            "body": "| Section | What it tests | How to practice |\n|---|---|---|\n| Reading and Writing (54 questions, 64 min) | Vocabulary in context, reading for evidence, grammar, transitions | Drill by question type; learn grammar rules explicitly; predict an answer before reading the choices |\n| Math (44 questions, 70 min) | Algebra, advanced math, problem-solving and data analysis, geometry and trigonometry | Practice by topic; learn the Desmos shortcuts; write out the setup for word problems |\n\nThe common thread: **know the question types first, then choose the practice method**. For a full list of Reading and Writing question types and strategies, see [Digital SAT Reading and Writing question types](/guide/sat-reading-and-writing-question-types)."
+          },
+          {
+            "h2": "Why hard work sometimes doesn't move your score",
+            "body": "1. **All input, no output.** Watching videos and rereading notes feels productive, but only practice questions show you what you can actually do.\n2. **Reviewing answers instead of mistakes.** Checking the right answer isn't enough; write down *why* you missed it.\n3. **Avoiding practice tests.** The sooner you see your gaps, the more time you have to close them.\n4. **Switching resources every week.** Stick with one plan for at least three weeks before judging it.\n5. **Ignoring pacing.** Many students know the content but run out of time; practice timed modules.\n6. **Adding new material in the final weeks.** Late in your prep, reviewing your mistakes beats starting a new book."
+          },
+          {
+            "h2": "Make the plan easy to stick with",
+            "body": "Any plan only works if you show up most days. Dogtor's SAT Reading and Writing island is built for that: short practice levels with a cute corgi study buddy, streaks that make a daily habit easy, quiz battles with friends taking the same test date, and a mistake book that brings back every question you got wrong. Pair it with official Bluebook practice tests and you've covered both the daily habit and the real test format. For more tools, see [Best AP and SAT Prep Apps](/guide/best-ap-and-sat-prep-apps)."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "When should I start studying for the SAT?",
+          "answer": "Build reading and algebra skills in 9th and 10th grade, then start focused SAT prep two to three months before your first test date, usually in junior year."
+        },
+        {
+          "question": "Is 3 months enough to prepare for the SAT?",
+          "answer": "Yes, for most students. Three months of regular practice organized by question type, with a practice test every few weeks and mistake review, is enough to raise a score meaningfully."
+        },
+        {
+          "question": "How many hours a day should I study for the SAT?",
+          "answer": "About 30–60 minutes on most days is a solid pace, plus a longer timed session or practice test on weekends. Consistency matters more than total hours."
+        },
+        {
+          "question": "Should I take the PSAT?",
+          "answer": "If your school offers it, yes. The PSAT is good practice with the same question types, and in junior year the PSAT/NMSQT is also the qualifying test for the National Merit Scholarship Program."
+        },
+        {
+          "question": "How many times should I take the SAT?",
+          "answer": "Many students take it twice, once in junior year and once in the summer or fall of senior year. Check how your target colleges treat multiple scores, since policies such as superscoring vary."
+        }
+      ],
+      "cta": "Dogtor makes daily SAT practice something you'll actually do: bite-sized Reading and Writing levels, an explanation for every miss, a mistake book and quiz battles with friends. It's free to start."
+    },
+    {
+      "slug": "how-to-prepare-for-ap-exams",
+      "title": "How to Prepare for AP Exams: A Full-Year Plan, Strategies by Score Goal and Subject Tips",
+      "description": "How to prepare for AP exams from September to May: what to do each part of the school year, how to plan backward from exam day, strategies for aiming at a 5, a 4 or a passing 3, subject tips for AP Biology, Psychology, Environmental Science and U.S. Government, and the mistakes to avoid.",
+      "category": "Study Tips",
+      "tags": [
+        "how to prepare for AP exams",
+        "AP exam study plan",
+        "how to get a 5 on AP",
+        "AP review",
+        "AP exam tips",
+        "AP Biology",
+        "AP Psychology",
+        "APES",
+        "AP Gov"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.95,
+      "excerpt": "AP scores are decided long before May. Here's what to do from the first week of class to exam day, how to adjust for the score you want, and what each subject rewards.",
+      "content": {
+        "intro": "AP exams are given in May, but the students who do best don't start in April. They keep up during the year, start review early enough to fix weak units and practice the exam format before test day. This guide covers what to do in each part of the school year, how to plan backward from your exam date, how strategy changes depending on whether you're aiming for a 5 or a solid 3, and what each subject rewards.",
+        "sections": [
+          {
+            "h2": "What to do across the school year",
+            "body": "| When | Goal | What to do |\n|---|---|---|\n| September–November | **Keep up** | Understand each unit as it's taught, fix test mistakes right away, make sure you're registered for the exam (schools usually order exams by mid-November) |\n| December–February | **Connect units** | Start a mistake log, do the AP Classroom progress checks, try a few released free-response questions |\n| March–April | **Start review** | Find your weak units, revisit early units you've forgotten, practice timed sections |\n| May | **Perform** | Full practice exams, mistake review, rest |\n\nThe biggest trap is treating early units as \"done\". By May you've forgotten much of what you learned in September, so short mixed reviews throughout the year save a lot of time later."
+          },
+          {
+            "h2": "Plan backward from exam day",
+            "body": "| Time left | Goal | Focus |\n|---|---|---|\n| 3 months | **Fill the gaps** | Weakness check with a released exam; relearn weak, high-weight units |\n| 6 weeks | **Practice the format** | Timed multiple-choice sections, free-response questions graded against the official scoring guidelines |\n| 2 weeks | **Lock it in** | Mistake review, one full practice exam, adjust your sleep to the exam time |\n\nFor a detailed final-month schedule, see the [AP Exam 30-Day Study Plan](/guide/ap-exam-30-day-study-plan)."
+          },
+          {
+            "h2": "Strategy depends on your score goal",
+            "body": "AP exams are scored 1 to 5. Many colleges award credit or placement for a 3 or higher, while selective colleges often look for a 4 or 5; check each college's AP credit policy.\n\n**Aiming for a 5: precision on the free response.**\n- Free-response points come from specific wording. Grade your answers strictly against the scoring guidelines, and learn what each task verb (identify, describe, explain, justify) requires.\n- Don't neglect your strong units; small slips across many questions add up.\n\n**Aiming for a 4: master the heavy units.**\n- Use the unit weights in the Course and Exam Description. Make sure the highest-weight units are solid before polishing the rest.\n- Do one free-response question per week from February on.\n\n**Aiming for a solid 3: collect the reachable points.**\n- Focus on multiple-choice accuracy in the big units and on the parts of free-response questions that ask you to identify or describe; they're the most accessible points.\n- Short daily practice beats occasional long sessions."
+          },
+          {
+            "h2": "Subject tips",
+            "body": "| Subject | What it rewards | Guide |\n|---|---|---|\n| AP Biology | Experimental design, graphing and data analysis, not just content recall | [AP Biology exam format](/guide/ap-biology-exam-format) |\n| AP Psychology | Applying concepts to scenarios and using research as evidence in the AAQ and EBQ | [AP Psychology exam format](/guide/ap-psychology-exam-format) |\n| AP Environmental Science | Cause-and-effect chains, solutions and simple calculations with units | [APES exam format](/guide/ap-environmental-science-exam-format) |\n| AP U.S. Government | Applying required cases and foundational documents to new situations | [Required Supreme Court cases](/guide/ap-us-government-required-supreme-court-cases) |\n\nIf you're self-studying, see [How to Self-Study AP Biology](/guide/how-to-self-study-ap-biology) for a week-by-week model you can adapt to other subjects."
+          },
+          {
+            "h2": "Common mistakes",
+            "body": "1. **Starting review in late April.** There isn't enough time to fix weak units and practice the format.\n2. **Rereading instead of practicing.** Recognizing your notes isn't the same as answering a question about them.\n3. **Skipping free-response practice.** Many students only practice multiple choice, then lose points to wording on the free response.\n4. **Grading yourself generously.** Use the official scoring guidelines and be strict.\n5. **Ignoring unit weights.** A weak unit worth 20% deserves far more time than one worth 6%.\n6. **Cramming several exams the night before.** If you're taking multiple AP exams, plan your review around the earliest dates."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "When should I start studying for AP exams?",
+          "answer": "Keep up with each unit during the year, then start dedicated review about two to three months before your exam, in February or March for May exams."
+        },
+        {
+          "question": "What score do you need on an AP exam to get college credit?",
+          "answer": "It depends on the college and the subject. Many colleges grant credit or placement for a 3 or higher, and some require a 4 or 5. Check each college's AP credit policy."
+        },
+        {
+          "question": "How do I get a 5 on an AP exam?",
+          "answer": "Master the highest-weight units, practice the free-response questions and grade them strictly against the official scoring guidelines, take timed practice exams and review every mistake."
+        },
+        {
+          "question": "Can you self-study for an AP exam?",
+          "answer": "Yes. You'll need a school or authorized test center to order the exam for you, usually by mid-November, and a plan built around the Course and Exam Description and released exam questions."
+        }
+      ],
+      "cta": "Dogtor makes AP review something you look forward to: short practice levels with a cute corgi study buddy, instant explanations, a mistake book for your final review and quiz battles with classmates. It's free to start."
     }
   ]
 }
