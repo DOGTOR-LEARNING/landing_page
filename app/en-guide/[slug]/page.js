@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -13,11 +13,19 @@ import {
   GLOBAL_GUIDE_URL,
 } from '@/lib/globalArticles'
 import { MARKET_GLOBAL, siteUrl } from '@/lib/market'
+import { closestSlug } from '@/lib/slugMatch'
 import styles from '../../guide/[slug]/page.module.css'
 
 // Served as global.superb-tutor.com/guide/<slug> (rewrite in next.config.js).
 
 const BASE_URL = siteUrl(MARKET_GLOBAL)
+
+// A mistyped slug (common when other sites or AI assistants cite a guide)
+// gets a 308 to the closest real article; see lib/slugMatch.js.
+function redirectIfTypo(slug) {
+  const target = closestSlug(slug, getAllGlobalArticles().map((a) => a.slug))
+  if (target) permanentRedirect(`/guide/${target}`)
+}
 
 export async function generateStaticParams() {
   return getAllGlobalArticles().map((a) => ({ slug: a.slug }))
@@ -26,7 +34,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const article = getGlobalArticleBySlug(slug)
-  if (!article) return { title: 'Article not found - Dogtor' }
+  if (!article) {
+    redirectIfTypo(slug)
+    return { title: 'Article not found - Dogtor' }
+  }
 
   const url = getGlobalArticleUrl(article.slug)
   return {
@@ -59,7 +70,10 @@ export async function generateMetadata({ params }) {
 export default async function GlobalGuideArticlePage({ params }) {
   const { slug } = await params
   const article = getGlobalArticleBySlug(slug)
-  if (!article) notFound()
+  if (!article) {
+    redirectIfTypo(slug)
+    notFound()
+  }
 
   const url = getGlobalArticleUrl(article.slug)
   const related = getRelatedGlobalArticles(article.slug, 3)

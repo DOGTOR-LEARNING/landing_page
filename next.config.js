@@ -30,7 +30,22 @@ const nextConfig = {
     ] }]
   },
   async redirects() {
+    // 合併掉的學習指南文章（2026-11），舊網址導到吸收它內容的那一篇。
+    const mergedGuides = {
+      'xue-ce-dao-shu-yi-ge-yue-ke-yi-zuo-shen-me': 'xue-ce-dao-shu-yi-ge-yue-du-shu-ji-hua',
+      'guo-san-hui-kao-dao-shu-30-tian-shu-xue-c-ji-fen': 'hui-kao-kao-qian-yi-ge-yue-shu-xue-fang-qi-huan-you-jiu-ma',
+      'mo-ni-kao-cheng-ji-yi-zhi-mei-jin-bu': 'mo-ni-kao-hou-zen-me-fen-xi-ruo-dian',
+      'xue-ce-dao-shu-yi-ge-yue-ya-li-shi-mian': 'kao-shi-jiao-lv-zen-me-ke-fu',
+      'gong-che-shang-guo-zhong-ying-wen-dan-zi-app': 'mei-wang-lu-ye-neng-xue-xi-li-xian-shua-ti-app',
+    }
     return [
+      ...Object.entries(mergedGuides).map(([from, to]) => ({
+        source: `/guide/${from}`,
+        destination: `/guide/${to}`,
+        permanent: true,
+      })),
+      // /apk 下載頁已移除，但仍在搜尋結果裡；導到首頁（有商店下載按鈕）。
+      { source: '/apk', destination: '/', permanent: true },
       {
         source: '/:path((?!ingest/).+)/',
         destination: '/:path',

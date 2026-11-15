@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -11,9 +11,16 @@ import {
   getArticleUrl,
 } from '@/lib/articles'
 import MarkdownContent from '@/components/MarkdownContent'
+import { closestSlug } from '@/lib/slugMatch'
 import styles from './page.module.css'
 
 const BASE_URL = 'https://dogtor.superb-tutor.com'
+
+// 找不到文章時，若網址只是拼錯（見 lib/slugMatch.js），308 轉到正確的文章。
+function redirectIfTypo(slug) {
+  const target = closestSlug(slug, getAllArticles().map((a) => a.slug))
+  if (target) permanentRedirect(`/guide/${target}`)
+}
 
 export async function generateStaticParams() {
   const articles = getAllArticles()
@@ -23,7 +30,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params
   const article = getArticleBySlug(slug)
-  if (!article) return { title: '文章不存在' }
+  if (!article) {
+    redirectIfTypo(slug)
+    return { title: '文章不存在' }
+  }
 
   return {
     title: `${article.title} - Dogtor 逗課 學習指南`,
@@ -66,7 +76,10 @@ export async function generateMetadata({ params }) {
 export default async function GuideArticlePage({ params }) {
   const { slug } = await params
   const article = getArticleBySlug(slug)
-  if (!article) notFound()
+  if (!article) {
+    redirectIfTypo(slug)
+    notFound()
+  }
 
   const related = getRelatedArticles(article.slug, 3)
 
