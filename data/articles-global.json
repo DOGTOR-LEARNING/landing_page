@@ -164,6 +164,734 @@
         }
       ],
       "cta": "Dogtor fits the short daily practice sessions in this plan: AP Biology levels organized by unit, mixed review that brings back older units, an AI tutor for anything you're stuck on, and a mistake book for your weekly review. It's free to start."
+    },
+    {
+      "slug": "ap-psychology-exam-format",
+      "title": "AP Psychology Exam Format, Explained: Units, Timing and the Two FRQ Types (AAQ and EBQ)",
+      "description": "How the redesigned AP Psychology exam works: 75 multiple-choice questions, two free-response questions (the Article Analysis Question and the Evidence-Based Question), five equally weighted units and how to study for each part.",
+      "category": "AP Psychology",
+      "tags": [
+        "AP Psychology",
+        "AP Psych exam format",
+        "AP Psychology AAQ",
+        "AP Psychology EBQ",
+        "AP Psychology units",
+        "AP exam"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Five units of equal weight, 75 multiple-choice questions and two very predictable free-response tasks. Here is the whole redesigned exam on one page.",
+      "content": {
+        "intro": "AP Psychology was redesigned for the 2024–25 school year. The course now has **five units of roughly equal weight**, and the free-response section has **two fixed question types**: the Article Analysis Question (AAQ) and the Evidence-Based Question (EBQ). Both reward the same skill: using psychological research as evidence, not just defining terms.",
+        "sections": [
+          {
+            "h2": "The two sections at a glance",
+            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 75 | 1 h 30 min | about 67% |\n| II: Free response | 2 (AAQ + EBQ) | 1 h 10 min | about 33% |\n\nThat is about **72 seconds per multiple-choice question**. Many multiple-choice questions come in sets built around a short scenario, a data table or a description of a study, so reading carefully matters as much as recall.\n\nThe College Board updates exam logistics (such as which parts are taken in the Bluebook app) from year to year, so check the current AP Psychology exam page on AP Central before test day."
+          },
+          {
+            "h2": "The five units",
+            "body": "| Unit | Topic | Weight |\n|---|---|---|\n| 1 | Biological Bases of Behavior | 15–25% |\n| 2 | Cognition | 15–25% |\n| 3 | Development and Learning | 15–25% |\n| 4 | Social Psychology and Personality | 15–25% |\n| 5 | Mental and Physical Health | 15–25% |\n\nBecause every unit has the same range, **there is no unit you can safely skip**. Research methods are no longer a separate unit; they are woven into every unit and tested directly in the free-response section."
+          },
+          {
+            "h2": "FRQ 1: the Article Analysis Question (AAQ)",
+            "body": "You get a summary of **one research study** and answer a set of short parts, usually worth **7 points** in total. Expect to:\n\n- Identify the **research method** (experiment, correlational study, case study, and so on).\n- Name the **independent and dependent variables**, or the variables being correlated, and give an **operational definition**.\n- Describe the **sample** and whether the results can be **generalized** to a wider population.\n- Interpret a **statistic** reported in the study (a mean, a correlation coefficient, a p-value).\n- State an **ethical guideline** the researchers followed.\n- Explain whether the findings **support a hypothesis**, using data from the article.\n\nThe AAQ is the most coachable part of the exam: the parts come from a short list, so practicing the research-methods vocabulary pays off directly."
+          },
+          {
+            "h2": "FRQ 2: the Evidence-Based Question (EBQ)",
+            "body": "You get **three short source summaries** about one topic and must build an argument, also worth about **7 points**. Typically you:\n\n1. **Propose a claim** that answers the prompt.\n2. **Support it with evidence from two of the sources**, citing them specifically.\n3. **Explain how each piece of evidence supports your claim** using a relevant psychological concept.\n\nThe most common way to lose points is to quote a source without explaining *why* it supports the claim. Every piece of evidence needs a \"because\" sentence that links it to a named psychological concept."
+          },
+          {
+            "h2": "How to study for the redesigned exam",
+            "body": "- **Learn concepts with examples, not definitions alone.** Multiple-choice questions describe a scenario and ask which concept it shows. For each term, know one concrete example.\n- **Master research methods early.** They appear in every unit and in both FRQs: variables, operational definitions, random sampling versus random assignment, correlation versus causation, and ethics.\n- **Write one AAQ and one EBQ a week** from the released samples on AP Central, then grade yourself against the scoring guidelines.\n- **Mix units in your practice.** Because all five units carry similar weight, short mixed review sessions protect you from forgetting the units you studied first."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How long is the AP Psychology exam?",
+          "answer": "About 2 hours 40 minutes of testing time: 90 minutes for 75 multiple-choice questions and 70 minutes for two free-response questions."
+        },
+        {
+          "question": "What are the AAQ and EBQ on AP Psychology?",
+          "answer": "The Article Analysis Question asks you to analyze one research study (method, variables, sample, statistics, ethics). The Evidence-Based Question asks you to make a claim and support it with evidence from sources, explained with psychological concepts."
+        },
+        {
+          "question": "Which AP Psychology unit is weighted the most?",
+          "answer": "None. Since the 2024–25 redesign, all five units are weighted 15–25% of the multiple-choice section."
+        }
+      ],
+      "cta": "Dogtor's AP Psychology island has short daily practice levels, an AI tutor that explains any concept you're stuck on, and a mistake book for the ones you miss. It's free to start."
+    },
+    {
+      "slug": "ap-environmental-science-exam-format",
+      "title": "AP Environmental Science (APES) Exam Format: Unit Weights, FRQ Types and the Math You Need",
+      "description": "How the AP Environmental Science exam is structured: 80 multiple-choice questions and 3 free-response questions, the weight of each of the nine units, and the calculation skills APES expects.",
+      "category": "AP Environmental Science",
+      "tags": [
+        "AP Environmental Science",
+        "APES exam format",
+        "APES unit weights",
+        "APES FRQ",
+        "APES math",
+        "AP exam"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Eighty multiple-choice questions, three free-response questions and nine units — with Global Change worth the most. Plus the handful of calculations that show up every year.",
+      "content": {
+        "intro": "The AP Environmental Science exam has **80 multiple-choice questions** worth 60% of your score and **3 free-response questions** worth 40%. It covers nine units, but they are not equal: **Unit 9, Global Change, carries the most weight**, and one free-response question always involves calculations.",
+        "sections": [
+          {
+            "h2": "The two sections at a glance",
+            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 80 | 1 h 30 min | 60% |\n| II: Free response | 3 | 1 h 10 min | 40% |\n\nThat is roughly **67 seconds per multiple-choice question** and about **23 minutes per free-response question**. Multiple-choice questions often come in sets that share a graph, table, map or short text, so practice reading data quickly."
+          },
+          {
+            "h2": "How much each unit is worth",
+            "body": "| Unit | Topic | Weight |\n|---|---|---|\n| 1 | The Living World: Ecosystems | 6–8% |\n| 2 | The Living World: Biodiversity | 6–8% |\n| 3 | Populations | 10–15% |\n| 4 | Earth Systems and Resources | 10–15% |\n| 5 | Land and Water Use | 10–15% |\n| 6 | Energy Resources and Consumption | 10–15% |\n| 7 | Atmospheric Pollution | 7–10% |\n| 8 | Aquatic and Terrestrial Pollution | 7–10% |\n| 9 | Global Change | 15–20% |\n\nUnit 9 (climate change, ozone depletion, ocean acidification, invasive species) is the single biggest unit. Units 3 to 6 together are also a large share of the exam, so do not leave them until the end."
+          },
+          {
+            "h2": "The three free-response question types",
+            "body": "1. **Design an investigation.** You read a scenario or study, identify a research question, the independent and dependent variables and a control, and explain the results.\n2. **Analyze an environmental problem and propose a solution.** You describe an environmental issue, explain its causes and effects, and propose and justify a solution.\n3. **Analyze an environmental problem and propose a solution doing calculations.** The same task, plus calculations. You must **show your work and include units** to earn full credit.\n\nIn every type, \"describe\" and \"explain\" are different tasks. \"Describe\" asks for what happens; \"explain\" asks *why* or *how*. Answering a describe-level sentence to an explain prompt is a common way to lose points."
+          },
+          {
+            "h2": "The math APES actually uses",
+            "body": "The calculations are simple, but they punish careless setup. The same handful appear again and again:\n\n- **Percent change:** (new − old) ÷ old × 100.\n- **Rule of 70:** doubling time ≈ 70 ÷ growth rate (in percent).\n- **Unit conversions and dimensional analysis:** for example kWh per day to kWh per year, or gallons to liters.\n- **Scientific notation:** multiplying and dividing very large numbers such as energy use or population.\n- **Energy and efficiency:** output energy ÷ input energy, and the 10% rule for energy passed between trophic levels.\n- **Half-life:** how much of a substance remains after a number of half-lives.\n\nWrite every step with units. Graders give credit for a correct setup even when the final arithmetic slips."
+          },
+          {
+            "h2": "How to study for APES",
+            "body": "- **Spend extra time on Unit 9** and on the middle units (3–6), which make up most of the exam.\n- **Learn each environmental problem as a chain:** cause → effect on the environment → effect on humans → solution. Free-response questions follow exactly that chain.\n- **Do one calculation problem a day** so the setup becomes automatic.\n- **Practice with released FRQs** from AP Central and grade yourself against the scoring guidelines, paying attention to which verbs (identify, describe, explain, justify) earn which points."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How long is the AP Environmental Science exam?",
+          "answer": "2 hours 40 minutes of testing time: 90 minutes for 80 multiple-choice questions and 70 minutes for 3 free-response questions."
+        },
+        {
+          "question": "Which APES unit is the most important?",
+          "answer": "Unit 9, Global Change, is weighted 15–20% of the multiple-choice section, more than any other unit."
+        },
+        {
+          "question": "Is there math on the APES exam?",
+          "answer": "Yes. One free-response question always requires calculations, and some multiple-choice questions do too. The math is percent change, unit conversions, scientific notation, the rule of 70 and similar basics. Check AP Central for the current calculator policy."
+        }
+      ],
+      "cta": "Dogtor's AP Environmental Science island turns review into short daily levels, and its AI tutor walks you through any problem step by step. It's free to start."
+    },
+    {
+      "slug": "ap-us-government-required-supreme-court-cases",
+      "title": "All 15 Required Supreme Court Cases for AP U.S. Government, Explained in Plain English",
+      "description": "A one-page guide to the 15 required Supreme Court cases in AP U.S. Government and Politics: what each case decided, the constitutional clause behind it, and how the cases show up in the SCOTUS comparison FRQ.",
+      "category": "AP U.S. Government",
+      "tags": [
+        "AP Gov Supreme Court cases",
+        "AP U.S. Government required cases",
+        "AP Gov SCOTUS FRQ",
+        "landmark Supreme Court cases",
+        "AP Gov"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Fifteen cases, one table each for what was decided and why it matters — plus how to use them in the SCOTUS comparison free-response question.",
+      "content": {
+        "intro": "AP U.S. Government and Politics requires you to know **15 Supreme Court cases** (and 9 foundational documents). They appear in multiple-choice questions and in one of the four free-response questions, the **SCOTUS comparison**, where you compare a required case to a case you have never seen. For each case, know three things: **the facts in one sentence, the decision, and the constitutional clause** it turned on.",
+        "sections": [
+          {
+            "h2": "Federalism and the powers of government",
+            "body": "| Case | Year | What the Court decided | Clause or principle |\n|---|---|---|---|\n| **Marbury v. Madison** | 1803 | Established **judicial review**: courts can strike down laws that conflict with the Constitution. | Article III |\n| **McCulloch v. Maryland** | 1819 | Congress could create a national bank, and a state could not tax it. | Necessary and Proper Clause; Supremacy Clause |\n| **United States v. Lopez** | 1995 | Struck down a federal ban on guns near schools because it went **beyond the Commerce Clause**. | Commerce Clause; limits on federal power |\n\nMcCulloch expanded federal power; Lopez is the classic example of the Court limiting it. Expect questions that pair the two."
+          },
+          {
+            "h2": "First Amendment: religion",
+            "body": "| Case | Year | What the Court decided | Clause |\n|---|---|---|---|\n| **Engel v. Vitale** | 1962 | Official, school-sponsored prayer in public schools violates the Constitution, even if voluntary. | Establishment Clause |\n| **Wisconsin v. Yoder** | 1972 | Amish parents could not be forced to send children to school past eighth grade. | Free Exercise Clause |\n\nA quick way to keep them apart: Engel stops the government from **establishing** religion; Yoder protects an individual's **free exercise** of it."
+          },
+          {
+            "h2": "First Amendment: speech and press",
+            "body": "| Case | Year | What the Court decided | Principle |\n|---|---|---|---|\n| **Tinker v. Des Moines** | 1969 | Students could wear black armbands to protest the Vietnam War; symbolic speech at school is protected unless it substantially disrupts learning. | Symbolic speech |\n| **Schenck v. United States** | 1919 | Upheld a conviction for distributing anti-draft leaflets in wartime; speech creating a **\"clear and present danger\"** can be limited. | Limits on speech |\n| **New York Times Co. v. United States** | 1971 | The government could not block publication of the Pentagon Papers; **prior restraint** carries a heavy presumption against it. | Freedom of the press |\n| **Citizens United v. FEC** | 2010 | Limits on independent political spending by corporations and unions violate free speech. | Political speech; campaign finance |"
+          },
+          {
+            "h2": "Rights of the accused, privacy and incorporation",
+            "body": "| Case | Year | What the Court decided | Clause |\n|---|---|---|---|\n| **Gideon v. Wainwright** | 1963 | States must provide a lawyer to defendants in felony cases who cannot afford one. | Sixth Amendment, incorporated through the Fourteenth |\n| **Roe v. Wade** | 1973 | Recognized a right to privacy covering a woman's decision to have an abortion. | Due Process Clause (Fourteenth Amendment) |\n| **McDonald v. Chicago** | 2010 | The Second Amendment right to keep and bear arms applies to the states. | Selective incorporation |\n\nNote: Roe v. Wade was **overturned in 2022** by Dobbs v. Jackson Women's Health Organization. Check the current Course and Exam Description on AP Central for how the College Board treats Roe and Dobbs this year."
+          },
+          {
+            "h2": "Civil rights, representation and elections",
+            "body": "| Case | Year | What the Court decided | Clause |\n|---|---|---|---|\n| **Brown v. Board of Education** | 1954 | Racially segregated public schools are unconstitutional; \"separate but equal\" has no place in public education. | Equal Protection Clause |\n| **Baker v. Carr** | 1962 | Courts can hear challenges to how legislative districts are drawn, which led to **\"one person, one vote.\"** | Equal Protection Clause |\n| **Shaw v. Reno** | 1993 | Districts drawn based mainly on race must meet strict scrutiny (racial gerrymandering). | Equal Protection Clause |"
+          },
+          {
+            "h2": "How to use the cases in the SCOTUS comparison FRQ",
+            "body": "The SCOTUS comparison question describes a case you have not studied and asks you to:\n\n1. **Identify a similarity or difference** between it and a required case.\n2. **Explain how the facts or reasoning** of the required case relate to the new one.\n3. **Describe an action** that people or institutions could take in response to the decision (for example, passing a law, filing new lawsuits or proposing an amendment).\n\nThe skill is matching the **constitutional clause**. If the new case involves a student protest, reach for Tinker; school prayer, Engel; districting, Baker or Shaw; a federal law based on commerce, Lopez. That is why the clause column in the tables above matters more than the dates."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How many Supreme Court cases do you need to know for AP Gov?",
+          "answer": "Fifteen required cases, listed in the College Board's Course and Exam Description, along with nine foundational documents."
+        },
+        {
+          "question": "Do I need to memorize the years of AP Gov court cases?",
+          "answer": "Years help with context, but the exam rewards knowing what each case decided and which constitutional clause it involved, so you can compare it with an unfamiliar case."
+        },
+        {
+          "question": "What is the SCOTUS comparison FRQ?",
+          "answer": "One of the four AP U.S. Government free-response questions. It describes a non-required Supreme Court case and asks you to compare it with one of the 15 required cases."
+        }
+      ],
+      "cta": "Dogtor's AP U.S. Government island turns review into quick daily levels, and you can battle a friend to see who knows the material faster. It's free to start."
+    },
+    {
+      "slug": "sat-reading-and-writing-question-types",
+      "title": "Digital SAT Reading and Writing: Every Question Type and How to Approach It",
+      "description": "A guide to the digital SAT Reading and Writing section: its two adaptive modules, the four content domains, each question type from Words in Context to Rhetorical Synthesis, and a strategy for each.",
+      "category": "SAT",
+      "tags": [
+        "SAT Reading and Writing",
+        "digital SAT",
+        "SAT question types",
+        "SAT reading tips",
+        "SAT grammar",
+        "SAT prep"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Fifty-four short questions in two adaptive modules, four domains and about ten recurring question types. Learn the types and the section becomes predictable.",
+      "content": {
+        "intro": "The digital SAT's Reading and Writing section has **54 questions in two modules of 27**, with **32 minutes per module**. Every question has its own short passage, so instead of long reading passages you face a fast series of small tasks. The good news: those tasks come from a short list of **recurring question types**, and each has a reliable approach.",
+        "sections": [
+          {
+            "h2": "How the section works",
+            "body": "| Part | Questions | Time |\n|---|---|---|\n| Module 1 | 27 | 32 min |\n| Module 2 | 27 | 32 min |\n| **Total** | **54** | **64 min** |\n\nThe section is **adaptive by module**: how well you do in Module 1 decides whether Module 2 is easier or harder. A strong Module 1 is the route to a top score, so accuracy early on matters. That works out to about **71 seconds per question**, and questions are grouped by type, roughly in the order of the domains below."
+          },
+          {
+            "h2": "Domain 1: Craft and Structure (about 28%)",
+            "body": "- **Words in Context:** choose the word that best fits a blank, or the meaning of a word as used in the text. *Approach:* predict your own word from the clues in the passage before you look at the choices.\n- **Text Structure and Purpose:** identify the main purpose of a text or the function of one sentence. *Approach:* ask \"why did the author write this?\" and match the verb in the answer (argues, describes, challenges) to what the text actually does.\n- **Cross-Text Connections:** two short texts; how would the author of Text 2 respond to Text 1? *Approach:* summarize each author's position in a few words first, then compare."
+          },
+          {
+            "h2": "Domain 2: Information and Ideas (about 26%)",
+            "body": "- **Central Ideas and Details:** what the text mainly says, or what it states about a detail. *Approach:* the right answer is usually a paraphrase; reject choices that are true in real life but not stated.\n- **Command of Evidence (textual):** which quotation or finding would best support or weaken a claim. *Approach:* restate the claim precisely, then test each choice against it.\n- **Command of Evidence (quantitative):** use data from a table or graph to complete a statement. *Approach:* check that the answer matches both the data **and** the claim in the passage; many wrong answers are accurate about the graph but irrelevant to the claim.\n- **Inferences:** choose the most logical completion of a text. *Approach:* the answer must follow directly from the passage, not from outside knowledge."
+          },
+          {
+            "h2": "Domain 3: Standard English Conventions (about 26%)",
+            "body": "- **Boundaries:** punctuation between clauses and phrases — periods, semicolons, colons, commas and dashes. *Approach:* decide whether each side is an independent clause; a comma alone cannot join two independent clauses.\n- **Form, Structure and Sense:** subject–verb agreement, verb tense, pronoun agreement, possessives and modifiers. *Approach:* find the true subject by crossing out phrases between it and the verb.\n\nThis domain has the most learnable rules on the whole test. A few weeks of focused practice usually moves this score more than any other."
+          },
+          {
+            "h2": "Domain 4: Expression of Ideas (about 20%)",
+            "body": "- **Transitions:** choose the word or phrase that links two sentences logically (however, therefore, for example, similarly). *Approach:* decide the relationship first — contrast, cause and effect, example or continuation — then pick the transition.\n- **Rhetorical Synthesis:** a student's bulleted notes and a goal (\"emphasize a difference\", \"introduce the study to a new audience\"). *Approach:* ignore which answer sounds best; pick the only one that **accomplishes the stated goal** using the notes."
+          },
+          {
+            "h2": "A study plan that works",
+            "body": "- **Take a full practice test in the Bluebook app** to learn your weakest question types.\n- **Drill one question type at a time**, then mix them. Short daily sets of 10–15 questions beat one long weekend session.\n- **Log every miss by type and reason**: vocabulary, misread claim, grammar rule, or time pressure. Your log tells you what to practice next.\n- **Learn the grammar rules explicitly.** Boundaries and agreement questions are the fastest points to gain."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How many questions are in SAT Reading and Writing?",
+          "answer": "54 questions in two adaptive modules of 27, with 32 minutes per module (64 minutes total)."
+        },
+        {
+          "question": "Is the SAT Reading and Writing section adaptive?",
+          "answer": "Yes. It adapts by module: your performance in Module 1 determines whether you get an easier or harder Module 2."
+        },
+        {
+          "question": "What is the fastest way to improve my SAT Reading and Writing score?",
+          "answer": "For most students, the Standard English Conventions questions (punctuation and grammar) and Transitions questions, because they follow learnable rules."
+        }
+      ],
+      "cta": "Dogtor's SAT Reading and Writing island gives you short daily practice levels, explains every miss on the spot, and keeps a mistake book so the same grammar trap doesn't get you twice. It's free to start."
+    },
+    {
+      "slug": "how-to-study-gre-vocabulary",
+      "title": "How to Study GRE Vocabulary: A Method That Sticks (Not Just a Word List)",
+      "description": "How much vocabulary the GRE Verbal section really tests, how Text Completion and Sentence Equivalence use vocabulary, and a spaced-practice method for learning GRE words so you remember them on test day.",
+      "category": "GRE",
+      "tags": [
+        "GRE vocabulary",
+        "GRE words",
+        "GRE Verbal",
+        "Text Completion",
+        "Sentence Equivalence",
+        "GRE prep"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.8,
+      "excerpt": "A few hundred high-frequency words, learned in context and reviewed on a schedule, beat a 3,000-word list you cram once.",
+      "content": {
+        "intro": "Vocabulary matters on the GRE, but **memorizing a giant word list is the least efficient way to learn it**. Two of the three Verbal question types — Text Completion and Sentence Equivalence — depend heavily on word knowledge, and the words that show up are a fairly stable set of high-frequency academic words. Learn those in context, review them on a schedule, and practice them inside real question formats.",
+        "sections": [
+          {
+            "h2": "Where vocabulary shows up on the GRE",
+            "body": "| Question type | What it asks | How much vocabulary matters |\n|---|---|---|\n| **Text Completion** | Fill one to three blanks in a short passage | High |\n| **Sentence Equivalence** | Pick the **two** words that each complete a sentence with the same meaning | Very high |\n| **Reading Comprehension** | Answer questions about passages | Moderate (dense academic prose) |\n\nSince 2023 the GRE General Test is shorter, with two Verbal sections. The Verbal question types themselves did not change, so vocabulary still drives a large share of the Verbal score."
+          },
+          {
+            "h2": "Step 1: Pick the right words",
+            "body": "Start with a list of roughly **300–500 high-frequency GRE words** rather than several thousand. Good GRE words share a profile: academic, often about attitude or argument, and easy to confuse with each other.\n\nGroup them by meaning instead of alphabetically. For example:\n\n- **Praise:** laud, extol, commend, acclaim\n- **Criticize:** censure, disparage, deride, castigate\n- **Hard to pin down:** equivocal, ambiguous, enigmatic, inscrutable\n- **Stubborn:** obdurate, intransigent, recalcitrant, obstinate\n\nGroups mirror how Sentence Equivalence works: the two right answers are near-synonyms, so knowing a word's group is often enough."
+          },
+          {
+            "h2": "Step 2: Learn each word in context",
+            "body": "For each new word, write down:\n\n1. A **short definition in your own words**.\n2. **One sentence** that uses it the way the GRE would (academic, about an argument or a person's attitude).\n3. **Its tone**: positive, negative or neutral.\n\nTone alone answers many questions. In a Text Completion, if the passage signals that a critic disliked a book, you can eliminate every positive word even before you know all the definitions."
+          },
+          {
+            "h2": "Step 3: Review on a spaced schedule",
+            "body": "You forget most new words within days unless you see them again. Review each word **one day, three days, a week and two weeks** after you first learn it. Words you miss go back to the start of the cycle.\n\nKeep sessions short: **15–20 minutes a day** of mixed review is far more effective than two hours on a Sunday. Ten new words a day for six weeks covers about 400 words with plenty of review time."
+          },
+          {
+            "h2": "Step 4: Practice inside real question formats",
+            "body": "Recognizing a word on a flashcard is not the same as using it under time pressure. Once a week, do timed sets of Text Completion and Sentence Equivalence questions:\n\n- **Read the sentence and predict your own word** before looking at the choices.\n- Look for **signal words**: *although*, *however* and *despite* flip the meaning; *because*, *thus* and *indeed* continue it.\n- In Sentence Equivalence, **find the pair first**. Two choices that mean the same thing and fit the sentence are almost always the answer.\n\nAdd every word you miss to your review list. Your mistakes are your best word list."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How many vocabulary words do I need for the GRE?",
+          "answer": "Most students do well by mastering 300–500 high-frequency words and learning to use context and tone, rather than memorizing thousands of words."
+        },
+        {
+          "question": "Which GRE questions test vocabulary?",
+          "answer": "Text Completion and Sentence Equivalence depend most on vocabulary. Reading Comprehension also uses dense academic language."
+        },
+        {
+          "question": "How long does it take to learn GRE vocabulary?",
+          "answer": "With about 15–20 minutes a day of new words plus spaced review, around six weeks is enough to learn roughly 400 words well."
+        }
+      ],
+      "cta": "Dogtor's GRE Vocabulary island does the spaced review for you: short daily levels with words in context, a mistake book that brings back the words you miss, and an AI tutor that explains any sentence. It's free to start."
+    },
+    {
+      "slug": "best-ap-and-sat-prep-apps",
+      "title": "Best AP and SAT Prep Apps and Resources: An Honest Comparison",
+      "description": "A comparison of popular AP and SAT prep resources — AP Classroom, Bluebook, Khan Academy, Fiveable, UWorld, Quizlet and Dogtor — with what each is best for, what it costs and how to combine them.",
+      "category": "Study Tips",
+      "tags": [
+        "best AP prep apps",
+        "best SAT prep apps",
+        "AP study resources",
+        "SAT study apps",
+        "Khan Academy SAT",
+        "Fiveable",
+        "UWorld",
+        "Quizlet",
+        "Dogtor"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "No single app does everything. Here is what the official tools, video platforms, question banks and practice apps are each best at — and a simple way to combine them.",
+      "content": {
+        "intro": "There is no single best AP or SAT prep app; each tool is good at one job. The strongest plans combine **official materials** (for the real format), **one source of explanations** (for learning) and **one habit tool** (for practicing a little every day). Here is how the most popular options compare.",
+        "sections": [
+          {
+            "h2": "Quick comparison",
+            "body": "| Resource | Best for | Price |\n|---|---|---|\n| **AP Classroom** (College Board) | Official AP videos (AP Daily) and progress checks | Free through your AP class |\n| **Bluebook** (College Board) | Official full-length digital SAT practice tests | Free |\n| **Khan Academy** | Free lessons and the official SAT practice partnership | Free |\n| **Fiveable** | AP study guides and review content by unit | Free tier plus paid plans |\n| **UWorld** | Large AP and SAT question banks with detailed explanations | Paid |\n| **Quizlet** | Flashcards for vocabulary and definitions | Free tier plus paid plan |\n| **Dogtor** | Short daily practice levels, AI tutor, quiz battles with friends | Free, optional Pro subscription |\n\nPrices and features change, so check each provider's site for current details."
+          },
+          {
+            "h2": "Official tools: start here",
+            "body": "**AP Classroom** and **Bluebook** come from the College Board, the organization that writes the exams. Nothing else matches their format exactly.\n\n- Use **AP Classroom's progress checks** at the end of each unit to see if you are on track.\n- Take **at least two full Bluebook practice tests** before the SAT: one early to find weaknesses and one in the final two weeks under real timing.\n\nTheir limitation is volume and pacing: there are only so many official questions, and they are not designed for a daily habit."
+          },
+          {
+            "h2": "Learning platforms: Khan Academy and Fiveable",
+            "body": "When you don't understand a topic, you need an explanation before you need more questions.\n\n- **Khan Academy** has free, thorough lessons in many AP subjects and is a long-running official SAT practice partner.\n- **Fiveable** focuses on AP, with unit-by-unit study guides and review content, which is useful for catching up on a unit you missed in class.\n\nUse them when you are learning or relearning a concept; they are less suited to quick daily review."
+          },
+          {
+            "h2": "Question banks: UWorld",
+            "body": "**UWorld** is known for large banks of exam-style questions with detailed answer explanations. It suits students who want a high volume of timed practice in the final months and are willing to pay for it."
+          },
+          {
+            "h2": "Habit and memory tools: Quizlet and Dogtor",
+            "body": "Most score gains come from **consistent short practice** rather than occasional marathon sessions.\n\n- **Quizlet** is excellent for memorizing terms, definitions and vocabulary with flashcards you or others create.\n- **Dogtor** turns AP and SAT prep into short daily practice levels on subject \"islands\" (currently AP Biology, AP Psychology, AP Environmental Science, AP U.S. Government, SAT Reading and Writing and GRE Vocabulary). Every miss is explained immediately and saved to a mistake book, an AI tutor answers questions you type or photograph, and you can turn your own notes into a quiz or battle friends in real time. It is free, with an optional Pro subscription.\n\nThe difference: flashcards drill recall of a single fact, while practice levels drill applying a concept in an exam-style question."
+          },
+          {
+            "h2": "A simple way to combine them",
+            "body": "1. **Every day (10–15 minutes):** a habit tool for mixed practice and review of past mistakes.\n2. **Every week:** one unit of lessons from Khan Academy, Fiveable or your class, plus a set of released free-response questions for AP.\n3. **Every unit:** the matching AP Classroom progress check.\n4. **Final month:** full timed practice tests in Bluebook (SAT) or released AP exams, then review every miss."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "What is the best free SAT prep?",
+          "answer": "The College Board's Bluebook app for official full-length practice tests, plus Khan Academy's free official SAT practice. Free apps such as Dogtor help with short daily practice."
+        },
+        {
+          "question": "What is the best app to study for AP exams?",
+          "answer": "It depends on the job: AP Classroom for official progress checks, Khan Academy or Fiveable for lessons, UWorld for large paid question banks, and Quizlet or Dogtor for daily practice and review."
+        },
+        {
+          "question": "Is Dogtor free?",
+          "answer": "Yes. Dogtor is free to download and use on iOS and Android. An optional Dogtor Pro subscription adds unlimited hearts, more AI tutor questions a day, more custom levels and no ads."
+        }
+      ],
+      "cta": "Want a daily practice habit that actually sticks? Dogtor gives you short AP and SAT levels, instant explanations, a mistake book and quiz battles with friends. It's free to start."
+    },
+    {
+      "slug": "best-study-apps-for-high-school-students",
+      "title": "7 Best Study Apps for High School Students in 2026",
+      "description": "The best study apps for high school students in 2026, one for each job: Quizlet for memorizing, Dogtor for fun practice with friends, Forest for focus, Anki for spaced repetition, Notion for notes, Khan Academy for lessons and Google Calendar for planning.",
+      "category": "Study Tips",
+      "tags": [
+        "best study apps",
+        "study apps for high school students",
+        "best apps for studying",
+        "Quizlet",
+        "Dogtor",
+        "Forest app",
+        "Anki",
+        "Notion",
+        "Khan Academy"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.95,
+      "excerpt": "Memorize, practice, focus, review, take notes, learn and plan: seven free or cheap apps, one for each job, and how they fit together.",
+      "content": {
+        "intro": "Studying better is rarely about studying **longer**. It's about using the right tool for each part of the job. Here are seven study apps high school students actually use, grouped by what they're best at: memorizing, practicing, focusing, reviewing, note-taking, learning new material and planning. You don't need all seven; pick the ones that fix your biggest problem.",
+        "sections": [
+          {
+            "h2": "1. Quizlet: the go-to flashcard app",
+            "body": "**Best for:** vocabulary, definitions, dates and anything you need to memorize fast.\n\nQuizlet is the most widely used flashcard app among students. You can make your own sets or search millions of sets other students have shared, then study them with flashcards, a Learn mode, practice tests and matching games.\n\n- Huge library of shared sets for almost every class\n- Several study modes so memorizing doesn't get boring\n- Free to use, with a paid Quizlet Plus plan for extra features\n\n**Tip:** shared sets can contain mistakes. For tested material, check them against your textbook or make your own."
+          },
+          {
+            "h2": "2. Dogtor: practice questions that feel like a game, with friends",
+            "body": "**Best for:** students who know they should practice more questions but find it hard to start.\n\nMost study apps help you organize, time or memorize. The part that actually moves your score is **doing practice questions and fixing the ones you miss**, and that is usually the part students avoid. Dogtor is built to make that part feel good:\n\n- **A cute, calm study buddy.** Dogtor the study-whiz corgi keeps you company, so opening the app feels like a break, not a chore.\n- **Practice that feels like a game.** Bite-sized levels on subject islands, streaks and achievements. Ten minutes a day adds up.\n- **Study with your friends.** Add friends, battle them in real-time quizzes and climb the monthly leaderboard together.\n- **Every miss explained.** Wrong answers get an instant explanation and go into a mistake book you can practice again.\n- **An AI tutor on call.** Type or photograph any question, or turn your own notes and handouts into a quiz.\n\nSubjects today: AP Biology, AP Psychology, AP Environmental Science, AP U.S. Government, SAT Reading and Writing and GRE Vocabulary. Free on iOS and Android, with an optional Pro subscription.\n\nIf you're preparing for an AP exam or the SAT, see the [AP and SAT prep app comparison](/guide/best-ap-and-sat-prep-apps) for how Dogtor fits next to the official tools."
+          },
+          {
+            "h2": "3. Forest: stay off your phone",
+            "body": "**Best for:** students who pick up their phone \"for a second\" and lose twenty minutes.\n\nForest turns focus into a small game: start a timer and a tree grows; leave the app to check social media and the tree dies. Over time you grow a forest that shows how much focused time you've put in. You can also plant together with friends, so everyone's tree depends on nobody picking up their phone.\n\nForest is free on Android and a small one-time purchase on iPhone (check your app store for the current price)."
+          },
+          {
+            "h2": "4. Anki: spaced repetition for the long haul",
+            "body": "**Best for:** large amounts of material you need to remember for months, such as AP Biology terms or GRE vocabulary.\n\nAnki is a flashcard app built around **spaced repetition**: it shows you each card right before you're likely to forget it. It takes some setup and looks plain, but for long-term memory it's hard to beat.\n\nAnki is free on desktop, Android and the web; the official iPhone app is a one-time purchase."
+          },
+          {
+            "h2": "5. Notion: one place for notes and plans",
+            "body": "**Best for:** organized students who want notes, to-do lists and study plans in one place.\n\nNotion lets you build pages for each class with notes, checklists, tables and links. Many students use free templates for class dashboards and exam trackers. It's free for personal use.\n\n**Tip:** don't spend more time designing your Notion than studying in it. A simple page per class is enough."
+          },
+          {
+            "h2": "6. Khan Academy: free lessons when you're lost",
+            "body": "**Best for:** relearning a topic you didn't understand in class.\n\nKhan Academy is a free nonprofit with video lessons and practice exercises across math, science, history, economics and more, including many AP subjects. It is also the College Board's long-standing partner for free official SAT practice."
+          },
+          {
+            "h2": "7. Google Calendar: make a plan you'll actually follow",
+            "body": "**Best for:** turning \"I'll study this weekend\" into specific blocks of time.\n\nPut tests, deadlines and short study blocks on your calendar like appointments. A 25-minute block labeled \"AP Bio Unit 3 practice\" is much easier to start than a vague intention to \"study bio\". It's free and already on most phones."
+          },
+          {
+            "h2": "Summary: one app for each job",
+            "body": "| Job | App | Price |\n|---|---|---|\n| Memorize terms | Quizlet | Free, paid plan available |\n| **Practice questions and review mistakes, with friends** | **Dogtor** | **Free, optional Pro** |\n| Stay focused | Forest | Free on Android, paid on iPhone |\n| Long-term memory | Anki | Free, paid iPhone app |\n| Notes and plans | Notion | Free for personal use |\n| Learn a new topic | Khan Academy | Free |\n| Schedule study time | Google Calendar | Free |\n\nIf you only install two, make it one **focus** tool and one **practice** tool. Memorizing and planning matter, but practice questions and reviewing your mistakes are what turn studying into points. For a full setup with a weekly routine, see [The Study App Stack for AP and SAT Season](/guide/study-app-stack-for-ap-and-sat)."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "What is the best study app for high school students?",
+          "answer": "It depends on the job: Quizlet for memorizing, Dogtor for practice questions you can do with friends, Forest for focus, Anki for long-term spaced repetition, Notion for notes, Khan Academy for lessons and Google Calendar for planning."
+        },
+        {
+          "question": "Are there free study apps that actually help?",
+          "answer": "Yes. Quizlet, Dogtor, Notion, Khan Academy and Google Calendar all have free versions, and Anki and Forest are free on Android."
+        },
+        {
+          "question": "Is there a study app where you can study with friends?",
+          "answer": "Yes. Dogtor lets you battle friends in real-time quizzes and compete on leaderboards, and Forest lets you plant trees together while you all stay off your phones."
+        }
+      ],
+      "cta": "Want practice to feel less like homework? Dogtor turns AP and SAT prep into cute, bite-sized levels you can play with friends, with every miss explained on the spot. It's free to start."
+    },
+    {
+      "slug": "study-app-stack-for-ap-and-sat",
+      "title": "The Study App Stack for AP and SAT Season: Focus × Notes × Practice",
+      "description": "A complete study app setup for AP exams and the SAT: what each tool does (focus, planning, memorizing, notes, practice, official tests), how they fit together, and a weekly routine you can copy.",
+      "category": "Study Tips",
+      "tags": [
+        "study app stack",
+        "AP study apps",
+        "SAT study apps",
+        "study routine",
+        "Forest",
+        "Quizlet",
+        "Notion",
+        "Dogtor",
+        "Bluebook"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Six jobs, one tool each, and a weekly routine that ties them together. Install it once and stop wondering which app to open.",
+      "content": {
+        "intro": "Every exam season the \"must-have apps\" lists get longer, and you end up with ten apps that do the same thing. A better approach: list the **six jobs** your studying actually needs done, pick **one tool per job**, and connect them with a simple routine. Here's a stack that works for AP exams and the SAT.",
+        "sections": [
+          {
+            "h2": "The six jobs your studying needs",
+            "body": "1. **Focus:** sitting down and not touching your phone.\n2. **Planning:** knowing what to study today and when.\n3. **Memorizing:** terms, definitions, vocabulary, formulas.\n4. **Notes:** keeping class notes and key ideas in one place.\n5. **Practice and mistake review:** doing exam-style questions and fixing what you get wrong.\n6. **Official tests:** checking yourself against the real format."
+          },
+          {
+            "h2": "The stack at a glance",
+            "body": "| Job | Tool | What it does for you |\n|---|---|---|\n| Focus | Forest | Grows a tree while you stay off your phone |\n| Planning | Google Calendar | Turns study goals into time blocks |\n| Memorizing | Quizlet or Anki | Flashcards; Anki adds spaced repetition |\n| Notes | Notion or Google Docs | One page per class, easy to search |\n| **Practice and mistake review** | **Dogtor** | **Bite-sized practice levels, instant explanations, mistake book, battles with friends** |\n| Official tests | AP Classroom and Bluebook | Real AP progress checks and full SAT practice tests |"
+          },
+          {
+            "h2": "Why practice gets its own app",
+            "body": "Planning, flashcards and notes all *prepare* you to study. The step that turns into points is **answering exam-style questions and learning from the ones you miss**. It's also the step most students skip, because a stack of practice questions is boring and getting things wrong feels bad.\n\nThat's the job Dogtor is built for. Practice comes in short levels with a cute corgi study buddy, streaks and achievements, so starting feels easy. You can battle friends in real-time quizzes, which turns review into something you actually look forward to. Every wrong answer is explained on the spot and saved to a mistake book, and an AI tutor answers anything you type or photograph."
+          },
+          {
+            "h2": "A weekly routine you can copy",
+            "body": "- **On the bus or between classes (10 min):** a Dogtor level on what you covered in class that day.\n- **Homework time:** start a 25-minute Forest timer, finish the day's work first.\n- **Evening (15 min):** run through the day's Quizlet or Anki cards, then redo the questions in your Dogtor mistake book.\n- **Weekend:** update your Notion page for each class, do one longer practice set or free-response question, and challenge a friend to a Dogtor battle on the week's topics.\n- **End of each unit:** take the AP Classroom progress check.\n- **Last month before the exam:** full timed practice tests in Bluebook (SAT) or released AP exams, then review every miss."
+          },
+          {
+            "h2": "Keep the stack small",
+            "body": "More apps means more switching and more excuses. If six feels like too many, start with three: **Forest** to focus, **Dogtor** to practice and review mistakes, and the **official tests** to check your progress. Add the others only when you feel the gap.\n\nFor more detail on each app, see [7 Best Study Apps for High School Students](/guide/best-study-apps-for-high-school-students)."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "What apps do I need to study for AP exams?",
+          "answer": "A focus app (such as Forest), a practice app (such as Dogtor), a flashcard app (Quizlet or Anki) and the College Board's AP Classroom for official progress checks cover most needs."
+        },
+        {
+          "question": "What apps should I use for SAT prep?",
+          "answer": "Use the College Board's Bluebook app for official full-length practice tests, Khan Academy for free lessons, and a daily practice app such as Dogtor for SAT Reading and Writing questions."
+        },
+        {
+          "question": "How many study apps should I use?",
+          "answer": "As few as possible. One tool per job is enough, and many students do well with just three: a focus app, a practice app and the official practice tests."
+        }
+      ],
+      "cta": "Dogtor fills the practice slot in your stack: bite-sized AP and SAT levels, instant explanations, a mistake book and quiz battles with friends, all with a cute corgi study buddy. It's free to start."
+    },
+    {
+      "slug": "best-apps-to-study-with-friends",
+      "title": "Best Apps to Study With Friends in 2026 (and How to Make Group Study Actually Work)",
+      "description": "The best apps and tools for studying with friends: quiz battles in Dogtor, planting trees together in Forest, shared flashcards in Quizlet, virtual study rooms on Discord and shared notes in Google Docs, plus tips to keep group study productive.",
+      "category": "Study Tips",
+      "tags": [
+        "study with friends",
+        "study apps with friends",
+        "group study apps",
+        "study together app",
+        "quiz battle app",
+        "Dogtor",
+        "Forest",
+        "Discord study server"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Studying alone is hard to stick with. These apps let you quiz, focus and review with friends — without the group session turning into a hangout.",
+      "content": {
+        "intro": "Studying alone is the hardest way to stay consistent. Friends make it easier to start, harder to quit and a lot more fun, as long as the session doesn't turn into a hangout. These apps are built for studying **together**, whether you're in the same room or texting from different houses.",
+        "sections": [
+          {
+            "h2": "1. Dogtor: quiz battles with your friends",
+            "body": "**Best for:** turning review into a friendly competition.\n\nIn Dogtor you add friends and **battle them in real-time quizzes** on AP, SAT or GRE topics: same questions, who's faster and more accurate. There's also ranked matchmaking and a monthly leaderboard, so a group of friends can keep a running rivalry all semester.\n\nThe rest of the app is designed to make practice feel light: a cute corgi study buddy, bite-sized levels and streaks. When you get something wrong in a battle, you see an explanation right away and the question goes into your mistake book, so losing a round still makes you better.\n\nFree on iOS and Android."
+          },
+          {
+            "h2": "2. Forest: plant together, stay off your phones together",
+            "body": "**Best for:** in-person study sessions where everyone keeps checking their phone.\n\nForest grows a tree while you focus and kills it if you leave the app. With the plant-together feature, friends join the same session, and if **anyone** leaves, everyone's tree dies. It's a surprisingly effective bit of peer pressure."
+          },
+          {
+            "h2": "3. Quizlet: share flashcard sets",
+            "body": "**Best for:** splitting the work of making study materials.\n\nDivide a unit between friends, have each person make a Quizlet set for their part, and share them. Everyone ends up with the whole unit for a fraction of the effort. Just check each other's sets for mistakes before the test."
+          },
+          {
+            "h2": "4. Discord: a virtual study room",
+            "body": "**Best for:** studying \"together\" from different houses.\n\nMany students run a small Discord server with a voice channel for silent study (cameras optional), a channel for questions and a channel for sharing resources. Large public study servers also exist if your friends aren't around. Keep the rule simple: voice channel means studying, chat is for breaks."
+          },
+          {
+            "h2": "5. Google Docs: a shared study guide",
+            "body": "**Best for:** building one study guide for a test.\n\nCreate one shared document per test, split the topics and fill it in together. Comments are handy for asking \"is this right?\" without interrupting anyone."
+          },
+          {
+            "h2": "How to keep group study productive",
+            "body": "- **Set a goal before you start**, such as \"finish Unit 4 practice\" or \"everyone explains one topic\".\n- **Study first, hang out after.** Use a timer: 25 minutes on, 5 minutes off, and save the long break for the end.\n- **Teach each other.** Explaining a concept to a friend is one of the best ways to find out whether you really understand it.\n- **Compete on practice, not on hours.** A 10-minute quiz battle tells you more than a contest over who studied longest.\n\n| App | What you do together |\n|---|---|\n| **Dogtor** | **Real-time quiz battles and leaderboards** |\n| Forest | Stay focused, phones down |\n| Quizlet | Share flashcard sets |\n| Discord | Virtual study room |\n| Google Docs | Build a study guide |"
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "What is a good app to study with friends?",
+          "answer": "Dogtor lets you battle friends in real-time quizzes on AP, SAT and GRE topics. Forest keeps a group off their phones, Quizlet lets you share flashcard sets, and Discord works as a virtual study room."
+        },
+        {
+          "question": "Is studying with friends effective?",
+          "answer": "It can be, if the session has a clear goal and a timer. Quizzing and explaining topics to each other are especially effective."
+        },
+        {
+          "question": "Is there a quiz battle app for AP and SAT?",
+          "answer": "Yes. Dogtor has real-time quiz battles with friends and ranked matchmaking for AP Biology, AP Psychology, AP Environmental Science, AP U.S. Government, SAT Reading and Writing and GRE Vocabulary."
+        }
+      ],
+      "cta": "Got a friend who thinks they know AP Bio better than you? Settle it in a Dogtor quiz battle. Cute corgi, bite-sized levels, instant explanations — and it's free to start."
+    },
+    {
+      "slug": "ap-exam-30-day-study-plan",
+      "title": "AP Exam 30-Day Study Plan: A Week-by-Week Countdown for Any AP Subject",
+      "description": "A 30-day AP exam study plan you can apply to any subject: find your weak units, fix them in weeks one and two, practice free-response and timed sections in week three, and review your mistakes in the final week.",
+      "category": "Study Tips",
+      "tags": [
+        "AP exam study plan",
+        "30 day AP study plan",
+        "how to study for AP exams",
+        "AP exam one month",
+        "AP review schedule",
+        "AP exam"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "One month is enough to move an AP score if you spend it on your weakest units, not on rereading everything. Here's the plan, week by week.",
+      "content": {
+        "intro": "AP exams are given over two weeks in May, and the final month before your exam is when scores can still move the most. It's also when it's easiest to panic and reread everything. The fix is a plan: **find your weakest units, spend most of your time there, practice the exam format, then review your mistakes**. This 30-day plan works for any AP subject.",
+        "sections": [
+          {
+            "h2": "Before day 1: find your weak units",
+            "body": "Spend one session on a **weakness check**. Take a released practice exam or your AP Classroom progress checks, and list the units and question types where you lose the most points. Then compare that list with the unit weights in your course's Course and Exam Description.\n\nThe rule for the month: **spend your time where weak meets heavy.** A weak unit worth 20% of the exam deserves far more time than a weak unit worth 6%. (Subject guides: [AP Biology](/guide/ap-biology-exam-format), [AP Psychology](/guide/ap-psychology-exam-format), [AP Environmental Science](/guide/ap-environmental-science-exam-format).)"
+          },
+          {
+            "h2": "Weeks 1–2: fix your weak units",
+            "body": "Each day, pick **one or two weak units**. For each one:\n\n1. **20 minutes:** review the key concepts (class notes, a Khan Academy or AP Daily video).\n2. **40 minutes:** practice questions on just that unit.\n3. **10 minutes:** check every miss and write down *why* you missed it.\n\nUse a **70 / 20 / 10 split**: 70% of your time on weak units, 20% keeping strong units fresh, 10% as buffer. The goal of these two weeks isn't to cover everything. It's to cut down the number of units where you reliably lose points."
+          },
+          {
+            "h2": "Week 3: practice the format under time",
+            "body": "Switch from learning to performing.\n\n- **Every other day**, do one **timed section**: the full multiple-choice section, or a set of free-response questions.\n- **Grade free-response answers** against the official scoring guidelines on AP Central. Be strict; points come from specific wording.\n- **Add every wrong or unsure question to your mistake list.**\n\nPacing is a skill. Students who know the content often lose points simply by running out of time on the last questions."
+          },
+          {
+            "h2": "Week 4: mistake review and rest",
+            "body": "In the final week, **stop starting new material**. Two jobs:\n\n1. **Work through your mistake list from start to finish.** Every question you got wrong this month should now be one you get right.\n2. **Get your body on exam time.** AP exams start in the morning or early afternoon, so shift your sleep and do your review at that time of day.\n\nThe day before the exam, review lightly and go to bed early. A good night's sleep is worth more than two extra hours of cramming."
+          },
+          {
+            "h2": "Making the plan stick",
+            "body": "The plan only works if you keep showing up for 30 days. Three things help:\n\n- **Keep your practice in one place.** Switching between PDFs, notebooks and websites wastes energy. In Dogtor, practice, explanations and your mistake book live in one app, so the weak-unit drill and the final-week review take one tap.\n- **Make it social.** Battle a friend on the units you're both reviewing; a little competition makes week three much less of a grind.\n- **Track it visibly.** Print the plan, stick it on your desk and check off each day."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "Is one month enough to study for an AP exam?",
+          "answer": "One month is enough to raise your score meaningfully if you've taken the course, as long as you focus on your weakest high-weight units, practice timed sections and review your mistakes."
+        },
+        {
+          "question": "How many hours a day should I study for an AP exam?",
+          "answer": "For one exam, about an hour a day for 30 days is a solid plan. If you're taking several exams, rotate subjects and prioritize the earliest exam dates."
+        },
+        {
+          "question": "What should I do the week before an AP exam?",
+          "answer": "Stop learning new material, review every question you got wrong during your prep, and adjust your sleep so you're alert at the exam's start time."
+        }
+      ],
+      "cta": "Dogtor keeps your 30-day plan in one place: short practice levels by unit, instant explanations, a mistake book for week four and battles with friends to keep you going. It's free to start."
+    },
+    {
+      "slug": "sat-one-month-study-plan",
+      "title": "SAT One-Month Study Plan: 4 Weeks to a Higher Score on the Digital SAT",
+      "description": "A four-week study plan for the digital SAT: take a Bluebook practice test, fix your weakest question types in Reading and Writing and Math, practice adaptive modules under time and review your mistakes before test day.",
+      "category": "SAT",
+      "tags": [
+        "SAT study plan",
+        "SAT one month study plan",
+        "how to study for the SAT",
+        "digital SAT",
+        "SAT prep",
+        "Bluebook practice test"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.9,
+      "excerpt": "Four weeks, about an hour a day: diagnose with Bluebook, drill your weakest question types, practice full modules under time and finish with mistake review.",
+      "content": {
+        "intro": "A month is enough time to raise your digital SAT score if you **study by question type** instead of rereading everything. The digital SAT is short and predictable: two sections, each with two adaptive modules, and a fixed set of question types. Here's a four-week plan at about **an hour a day**.",
+        "sections": [
+          {
+            "h2": "The test in one table",
+            "body": "| Section | Modules | Questions | Time |\n|---|---|---|---|\n| Reading and Writing | 2 | 54 | 64 min |\n| Math | 2 | 44 | 70 min |\n\nBoth sections are **adaptive by module**: your first module decides whether the second is easier or harder, so accuracy early on matters. The Math section has a built-in Desmos graphing calculator, and you can also bring an approved calculator. Scores range from 400 to 1600."
+          },
+          {
+            "h2": "Day 1: take a full practice test in Bluebook",
+            "body": "Download the College Board's **Bluebook** app and take a full-length practice test under real timing. Then list your misses by **question type** (for example Transitions, Boundaries, Inferences, linear equations, percentages). Your three or four weakest types become your focus for the next two weeks.\n\nFor a breakdown of every Reading and Writing question type, see [Digital SAT Reading and Writing question types](/guide/sat-reading-and-writing-question-types)."
+          },
+          {
+            "h2": "Weeks 1–2: drill your weakest question types",
+            "body": "Each day, about an hour:\n\n- **30 minutes:** one weak question type. Learn the rule or method, then do 10–15 questions of just that type.\n- **20 minutes:** mixed practice across both sections to keep everything else fresh.\n- **10 minutes:** review every miss and write the reason: rule I didn't know, misread the question, careless math or time pressure.\n\nThe fastest gains are usually in **Standard English Conventions** (punctuation and grammar), **Transitions** and **Math basics** such as linear equations and percentages, because they follow learnable rules."
+          },
+          {
+            "h2": "Week 3: practice full modules under time",
+            "body": "- Take a **second full Bluebook practice test** at the start of the week and compare your question-type results with day 1.\n- On the other days, do **one timed module** a day, alternating Reading and Writing and Math.\n- Practice **pacing**: in Reading and Writing that's a little over a minute per question; flag hard questions, move on and come back."
+          },
+          {
+            "h2": "Week 4: mistake review and test-day prep",
+            "body": "- **Redo every question you missed** this month until you get each one right and can explain why.\n- Take **one last practice test** early in the week, not the day before.\n- **Get test-day logistics ready:** update Bluebook, charge your device, check your admission ticket and the test center's rules.\n- **Sleep.** The night before, review lightly and go to bed on time."
+          },
+          {
+            "h2": "Keep going for all four weeks",
+            "body": "An hour a day is easy to plan and hard to keep up. Short daily sessions beat weekend marathons, and having a friend preparing at the same time helps a lot.\n\nDogtor's SAT Reading and Writing island fits the daily drill: bite-sized levels, instant explanations for every miss, a mistake book for week four and quiz battles you can play with a friend who's taking the same test date."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "Can you study for the SAT in one month?",
+          "answer": "Yes. A focused month of about an hour a day, organized by your weakest question types and finished with timed practice and mistake review, can raise your score meaningfully."
+        },
+        {
+          "question": "How many SAT practice tests should I take in a month?",
+          "answer": "Three is a good number: one at the start to diagnose, one in week three to check progress and one early in the final week."
+        },
+        {
+          "question": "What is the best free SAT practice?",
+          "answer": "The College Board's Bluebook app for official full-length practice tests, plus Khan Academy's free official practice. Apps such as Dogtor help with short daily practice."
+        }
+      ],
+      "cta": "Dogtor makes the daily part of your SAT plan easy: bite-sized Reading and Writing levels, an explanation for every miss and quiz battles with friends. It's free to start."
+    },
+    {
+      "slug": "best-gre-vocabulary-apps",
+      "title": "Best GRE Vocabulary Apps in 2026: Flashcards, Spaced Repetition and Practice in Context",
+      "description": "A comparison of GRE vocabulary apps — Magoosh GRE Vocabulary Flashcards, Anki, Quizlet, Vocabulary.com and Dogtor — with what each does best and how to combine them for Text Completion and Sentence Equivalence.",
+      "category": "GRE",
+      "tags": [
+        "GRE vocabulary app",
+        "best GRE vocab app",
+        "GRE flashcards",
+        "Magoosh GRE vocabulary",
+        "Anki GRE",
+        "Quizlet GRE",
+        "Vocabulary.com",
+        "Dogtor"
+      ],
+      "publishDate": "2026-11-16",
+      "priority": 0.85,
+      "excerpt": "Flashcards get words into your head; practice in context gets them onto the test. Here's what each GRE vocab app does best and how to combine them.",
+      "content": {
+        "intro": "GRE vocabulary apps fall into two groups: **flashcard apps** that help you memorize definitions, and **practice apps** that make you use words in GRE-style sentences. You need both. Memorizing without context fails on Text Completion; context without memorizing is slow. Here's how the popular options compare.",
+        "sections": [
+          {
+            "h2": "Quick comparison",
+            "body": "| App | Type | Best for | Price |\n|---|---|---|---|\n| Magoosh GRE Vocabulary Flashcards | Ready-made flashcards | A curated starter word list | Free |\n| Anki | Spaced-repetition flashcards | Long-term memory, custom decks | Free; paid iPhone app |\n| Quizlet | Flashcards | Shared GRE word sets, quick review | Free, paid plan available |\n| Vocabulary.com | Adaptive vocabulary practice | Words in example sentences | Free, paid plan available |\n| **Dogtor** | **Practice levels and quiz battles** | **Daily practice, with friends** | **Free, optional Pro** |\n\nFeatures and prices change, so check each app's store page."
+          },
+          {
+            "h2": "Flashcard apps: Magoosh, Anki and Quizlet",
+            "body": "- **Magoosh GRE Vocabulary Flashcards** gives you a curated GRE word list grouped by difficulty, so you don't have to build your own. A good place to start.\n- **Anki** shows each card right before you'd forget it. It takes setup, but for learning hundreds of words over two months it's the most efficient flashcard tool.\n- **Quizlet** has many shared GRE sets and quick games. Check shared sets for mistakes and stick to one list instead of mixing several."
+          },
+          {
+            "h2": "Context apps: Vocabulary.com",
+            "body": "**Vocabulary.com** teaches words through example sentences and adapts to what you already know. It's useful for seeing how a word is actually used, though it isn't limited to GRE words."
+          },
+          {
+            "h2": "Dogtor: practice GRE words every day, with friends",
+            "body": "Dogtor's **GRE Vocabulary island** is built for the daily-practice half of the job: answering questions on the words every day, without it feeling like a chore.\n\n- **Bite-sized levels** you can clear in a few minutes, with a cute corgi study buddy and daily streaks.\n- **A mistake book** that brings back the words you miss, so your review targets your weak spots.\n- **Quiz battles** with a friend who's also taking the GRE: a two-minute battle is a lot more fun than another round of flashcards.\n- **An AI tutor** that explains any sentence or word you're unsure about."
+          },
+          {
+            "h2": "How to combine them",
+            "body": "1. **Pick one word list** (Magoosh's list or a single Anki deck) and learn about 10 new words a day.\n2. **Review on a spaced schedule** in Anki or Quizlet.\n3. **Practice daily** in Dogtor or Vocabulary.com, so you use the words instead of only recognizing them.\n4. **Once a week, do timed Text Completion and Sentence Equivalence sets**, and add every word you miss back into your review.\n\nFor the full method, see [How to Study GRE Vocabulary](/guide/how-to-study-gre-vocabulary)."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "What is the best app for GRE vocabulary?",
+          "answer": "Use a flashcard app for memorizing (Magoosh GRE Vocabulary Flashcards, Anki or Quizlet) together with a practice app that uses words in context, such as Dogtor or Vocabulary.com."
+        },
+        {
+          "question": "Is Anki good for GRE vocabulary?",
+          "answer": "Yes. Anki's spaced repetition is very efficient for remembering hundreds of words over several weeks, though it takes some setup."
+        },
+        {
+          "question": "Are there free GRE vocabulary apps?",
+          "answer": "Yes. Magoosh GRE Vocabulary Flashcards and Dogtor are free, Anki is free on desktop and Android, and Quizlet and Vocabulary.com have free tiers."
+        }
+      ],
+      "cta": "Dogtor's GRE Vocabulary island turns word practice into short daily levels and quiz battles with friends, with a mistake book that brings back the words you miss. It's free to start."
     }
   ]
 }
