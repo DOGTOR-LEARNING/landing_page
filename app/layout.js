@@ -103,6 +103,10 @@ const TW_JSON_LD = [
     sameAs: [
       'https://apps.apple.com/tw/app/dogtor-%E9%80%97%E8%AA%B2/id6751773627',
       'https://play.google.com/store/apps/details?id=com.dogtor.superbFlutterApp',
+      // 同一個 Dogtor 品牌的英文國際版（AP / SAT / GRE），見 lib/globalSeo.js
+      'https://global.superb-tutor.com',
+      'https://apps.apple.com/us/app/dogtor-daily-ap-sat-prep/id6805425251',
+      'https://play.google.com/store/apps/details?id=com.dogtor.global',
     ],
     foundingDate: '2024',
     founder: {

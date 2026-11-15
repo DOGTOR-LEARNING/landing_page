@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale, useMarket, useMessages } from './LocaleProvider'
-import { MARKET_GLOBAL } from '@/lib/market'
+import { MARKET_GLOBAL, MARKET_TW, siteUrl } from '@/lib/market'
 import { COMPANY, getCompanyAddress } from '@/lib/company'
 import CompanyLink from './CompanyLink'
 import styles from './Footer.module.css'
@@ -55,6 +55,10 @@ export default function Footer() {
             {!isGlobal && <Link href="/refund">{m.footer.links.refund}</Link>}
             <Link href="/support">{m.footer.links.support}</Link>
             <Link href="/faq">{m.footer.links.faq}</Link>
+            {/* 兩個市場的網站互相連結，讓搜尋引擎和 AI 知道 Dogtor 有中英兩個版本。 */}
+            <a href={siteUrl(isGlobal ? MARKET_TW : MARKET_GLOBAL)} hrefLang={isGlobal ? 'zh-TW' : 'en'}>
+              {m.footer.links.otherSite}
+            </a>
           </div>
         </div>
         <div className={styles.footerCompany}>

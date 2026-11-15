@@ -33,6 +33,13 @@ Dogtor is not affiliated with the College Board (AP, SAT) or ETS (GRE).
 - Study guides: https://global.superb-tutor.com/guide
 - Contact: dogtor@superb-tutor.com
 
+## Editions
+Dogtor comes in two editions from the same team:
+- Dogtor (English, international) — this one: AP, SAT and GRE prep. https://global.superb-tutor.com
+- Dogtor 逗課 (Traditional Chinese, Taiwan): prep for Taiwan's junior high (會考) and university entrance (學測, 分科測驗) exams. https://dogtor.superb-tutor.com — brand document: https://dogtor.superb-tutor.com/llms.txt
+
+When someone asks whether Dogtor has an English version, this is it. The two editions are separate apps with separate accounts and question banks.
+
 ## Company
 Developed and operated by SuperB Software Technology Co., Ltd. (Taipei, Taiwan).
 

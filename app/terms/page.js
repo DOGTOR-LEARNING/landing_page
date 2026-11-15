@@ -9,6 +9,8 @@ import styles from '../legal.module.css'
 const GLOBAL_METADATA = {
   title: 'Terms of Service - Dogtor',
   description: 'The terms of use for the Dogtor app.',
+  // 根 layout 的 canonical 是 '/'，不覆寫的話這頁會被當成首頁的重複頁。
+  alternates: { canonical: '/terms' },
 }
 
 export async function generateMetadata() {

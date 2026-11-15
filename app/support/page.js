@@ -19,6 +19,8 @@ import styles from './page.module.css'
 const GLOBAL_METADATA = {
   title: 'Support Center - Dogtor',
   description: 'Need help with Dogtor? Contact the team, report a bug, ask about Dogtor Pro or request account deletion.',
+  // 根 layout 的 canonical 是 '/'，不覆寫的話這頁會被當成首頁的重複頁。
+  alternates: { canonical: '/support' },
 }
 
 export async function generateMetadata() {

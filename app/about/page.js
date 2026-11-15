@@ -19,6 +19,8 @@ const GLOBAL_METADATA = {
   title: 'About Us - Dogtor | AI study app for AP, SAT & GRE prep',
   description:
     'Dogtor is an AI study app for AP, SAT and GRE prep, built by National Taiwan University students and experienced exam-prep teachers and advised by NTU professors.',
+  // 根 layout 的 canonical 是 '/'，不覆寫的話這頁會被當成首頁的重複頁。
+  alternates: { canonical: '/about' },
 }
 
 export async function generateMetadata() {

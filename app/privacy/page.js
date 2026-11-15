@@ -9,6 +9,8 @@ import styles from '../legal.module.css'
 const GLOBAL_METADATA = {
   title: 'Privacy Policy - Dogtor',
   description: 'How the Dogtor app collects, uses and protects your personal data.',
+  // 根 layout 的 canonical 是 '/'，不覆寫的話這頁會被當成首頁的重複頁。
+  alternates: { canonical: '/privacy' },
 }
 
 export async function generateMetadata() {
