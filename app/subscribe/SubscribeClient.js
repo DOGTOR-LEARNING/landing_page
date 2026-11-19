@@ -3,10 +3,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Script from 'next/script'
-import { useMessages } from '@/components/LocaleProvider'
+import { useLocale, useMessages } from '@/components/LocaleProvider'
 import AnimatedIcon from '@/components/AnimatedIcons'
 import Header from '@/components/Header'
 import { trackSubscribeClick, trackEvent } from '@/lib/analytics'
+import { findPromo, promoView as getPromoView } from '@/lib/promoCodes'
 import styles from './page.module.css'
 
 const LIFF_ID = process.env.NEXT_PUBLIC_LIFF_ID
@@ -22,12 +23,7 @@ const PADDLE_PRICE_MONTHLY_NO_TRIAL = process.env.NEXT_PUBLIC_PADDLE_PRICE_MONTH
 const PADDLE_PRICE_YEARLY_NO_TRIAL = process.env.NEXT_PUBLIC_PADDLE_PRICE_YEARLY_NO_TRIAL
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
 const TRIAL_CHECK_TIMEOUT_MS = 5000
-// Single shared promo campaign surfaced from LINE (e.g. an expiry-reminder
-// push). The `?discount=` value must match this code before the mapped
-// Paddle discount ID gets pre-applied, so a stray/mistyped query param does
-// nothing rather than silently discounting checkout.
-const PADDLE_PROMO_DISCOUNT_CODE = process.env.NEXT_PUBLIC_PADDLE_PROMO_DISCOUNT_CODE
-const PADDLE_PROMO_DISCOUNT_ID = process.env.NEXT_PUBLIC_PADDLE_PROMO_DISCOUNT_ID
+// `?discount=` codes and their Paddle discount IDs live in lib/promoCodes.js.
 
 // Identifier attached to checkouts opened from the LINE-less preview flow.
 // Used by the payment provider to review the purchase flow end-to-end.
@@ -39,6 +35,7 @@ const PLANS = ['monthly', 'yearly']
 export default function SubscribeClient({ previewMode = false }) {
   const searchParams = useSearchParams()
   const m = useMessages()
+  const locale = useLocale()
   const sub = m.subscribe
   const pp = m.parentPro
 
@@ -65,12 +62,9 @@ export default function SubscribeClient({ previewMode = false }) {
       if (saved) setDiscountParam(saved)
     } catch {}
   }, [discountParam])
-  const promoDiscountId =
-    discountParam &&
-    PADDLE_PROMO_DISCOUNT_CODE &&
-    discountParam.toUpperCase() === PADDLE_PROMO_DISCOUNT_CODE.toUpperCase()
-      ? PADDLE_PROMO_DISCOUNT_ID
-      : undefined
+  const promo = findPromo(discountParam)
+  const promoDiscountId = promo?.discountId
+  const promoView = getPromoView(promo, locale)
 
   useEffect(() => {
     // Preview flow: skip LINE sign-in entirely so the checkout is reachable
@@ -310,7 +304,11 @@ export default function SubscribeClient({ previewMode = false }) {
         {/* 標價跟 parent-pro 同步：原價劃掉、顯示特價；帶有效優惠碼時再打 9 折。
             優惠碼要在結帳前就看得到，否則家長要到 Paddle 視窗裡才發現有折扣。 */}
         <p className={styles.promoNotice}>
-          {promoDiscountId ? sub.promoNotice : pp.promoNotice}
+          {promoView
+            ? promoView.event
+              ? sub.promoEventNotice(promoView)
+              : sub.promoNotice(promoView)
+            : pp.promoNotice}
         </p>
 
         <div className={styles.planGrid} role="radiogroup" aria-label={sub.choosePlan}>
@@ -318,8 +316,8 @@ export default function SubscribeClient({ previewMode = false }) {
             const isMonthly = key === 'monthly'
             const selected = plan === key
             const badge = isMonthly
-              ? (promoDiscountId ? sub.promoBadge : pp.promoBadge)
-              : (promoDiscountId ? sub.promoYearlySave : pp.yearlySave)
+              ? (promoView ? sub.promoBadge(promoView) : pp.promoBadge)
+              : (promoView ? sub.promoBadge(promoView) : pp.yearlySave)
             return (
               <button
                 key={key}
@@ -342,12 +340,12 @@ export default function SubscribeClient({ previewMode = false }) {
                 </span>
                 <span className={styles.planPrice}>
                   {promoDiscountId
-                    ? (isMonthly ? sub.promoMonthlyPrice : sub.promoYearlyPrice)
+                    ? (isMonthly ? sub.promoMonthlyPrice(promoView) : sub.promoYearlyPrice(promoView))
                     : (isMonthly ? sub.monthlyPrice : sub.yearlyPrice)}
                 </span>
                 <span className={styles.planDaily}>
                   {promoDiscountId
-                    ? (isMonthly ? sub.promoMonthlyDailyPrice : sub.promoYearlyDailyPrice)
+                    ? (isMonthly ? sub.promoMonthlyRenewal : sub.promoYearlyRenewal)
                     : (isMonthly ? pp.monthlyDailyPrice : pp.yearlyDailyPrice)}
                 </span>
               </button>
@@ -368,8 +366,8 @@ export default function SubscribeClient({ previewMode = false }) {
         {sub.trialNote && (
           <p className={styles.trialNote}>
             {trialEligible === false
-              ? promoDiscountId ? sub.promoNoTrialNote : sub.noTrialNote
-              : promoDiscountId ? sub.promoTrialNote : sub.trialNote}
+              ? promoView ? sub.promoNoTrialNote(promoView) : sub.noTrialNote
+              : promoView ? sub.promoTrialNote(promoView) : sub.trialNote}
           </p>
         )}
 

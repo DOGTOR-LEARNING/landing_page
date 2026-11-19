@@ -1068,3 +1068,36 @@
     width: auto;
   }
 }
+
+/* Event / promo-link banner at the top of the hero (?discount=CODE). */
+.promoBanner {
+  max-width: 560px;
+  margin: 0 auto var(--space-lg);
+  padding: 1rem 1.25rem;
+  background: rgba(245, 155, 3, 0.12);
+  border: 1px solid rgba(245, 155, 3, 0.45);
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.promoBannerTitle {
+  margin: 0;
+  color: var(--accent-orange-light);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.promoBannerCode {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.promoBannerHint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
