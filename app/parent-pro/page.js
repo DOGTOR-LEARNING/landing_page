@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { useMessages } from '@/components/LocaleProvider'
+import { useLocale, useMessages } from '@/components/LocaleProvider'
+import { findPromo, promoView as getPromoView, subscribeHref } from '@/lib/promoCodes'
 import AnimatedIcon from '@/components/AnimatedIcons'
 import { trackCTAClick, trackPricingPlanClick } from '@/lib/analytics'
 import ParentProStickyCta from '@/components/ParentProStickyCta'
@@ -19,6 +20,14 @@ export default function ParentPro() {
   const m = useMessages()
   const pp = m.parentPro
   const sub = m.subscribe
+  const locale = useLocale()
+  // A booth QR code or promo link opens this page with ?discount=CODE. Read
+  // after mount so the static page renders the same on server and client.
+  const [promo, setPromo] = useState(null)
+  useEffect(() => {
+    setPromo(findPromo(new URLSearchParams(window.location.search).get('discount')))
+  }, [])
+  const pv = getPromoView(promo, locale)
   const dailyReportsRef = useRef(null)
   const stageRef = useRef(null)
   const cardsRef = useRef([])
@@ -102,6 +111,15 @@ export default function ParentPro() {
         <div className="container">
           {/* Hero */}
           <section className={styles.hero}>
+            {pv && (
+              <div className={styles.promoBanner}>
+                <p className={styles.promoBannerTitle}>
+                  {pv.event ? sub.promoEventNotice(pv) : sub.promoNotice(pv)}
+                </p>
+                <p className={styles.promoBannerCode}>{sub.promoCodeLine(pv)}</p>
+                <p className={styles.promoBannerHint}>{sub.promoLineHint}</p>
+              </div>
+            )}
             <div className={styles.heroBadge}>{pp.heroBadge}</div>
 
             <div className={styles.heroTitleRow}>
@@ -141,7 +159,7 @@ export default function ParentPro() {
 
             <div id="hero-cta" className={styles.heroCtas}>
               <Link
-                href="/subscribe?plan=monthly"
+                href={subscribeHref('monthly', promo)}
                 className={styles.heroCtaPrimary}
                 onClick={() => trackPricingPlanClick('monthly')}
               >
@@ -158,12 +176,14 @@ export default function ParentPro() {
               className={styles.heroLineCta}
             />
 
+            {!pv && (
             <p className={styles.heroPriceHint}>
               {pp.heroSaleTag && (
                 <a href="#pricing" className={styles.heroSaleTag}>{pp.heroSaleTag}</a>
               )}
               {pp.heroPriceHint}
             </p>
+            )}
           </section>
         </div>
 
@@ -324,7 +344,11 @@ export default function ParentPro() {
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>{pp.pricingTitle}</h2>
               <p className={styles.sectionSubtitle}>{pp.pricingSubtitle}</p>
-              {pp.promoNotice && (
+              {pv ? (
+                <p className={styles.promoNotice}>
+                  {pv.event ? sub.promoEventNotice(pv) : sub.promoNotice(pv)}
+                </p>
+              ) : pp.promoNotice && (
                 <p className={styles.promoNotice}>{pp.promoNotice}</p>
               )}
             </div>
@@ -340,15 +364,17 @@ export default function ParentPro() {
 
             <div className={styles.pricingGrid}>
               <div className={styles.pricingCard}>
-                {pp.promoBadge && <div className={styles.promoBadge}>{pp.promoBadge}</div>}
+                {(pv || pp.promoBadge) && (
+                  <div className={styles.promoBadge}>{pv ? sub.promoBadge(pv) : pp.promoBadge}</div>
+                )}
                 <h3 className={styles.planName}>{pp.monthlyPlan}</h3>
                 {pp.monthlyOriginalPrice && (
                   <p className={styles.planOriginalPrice}>{pp.monthlyOriginalPrice}</p>
                 )}
-                <p className={styles.planPrice}>{pp.monthlyPrice}</p>
-                <p className={styles.planDailyPrice}>{pp.monthlyDailyPrice}</p>
+                <p className={styles.planPrice}>{pv ? sub.promoMonthlyPrice(pv) : pp.monthlyPrice}</p>
+                <p className={styles.planDailyPrice}>{pv ? sub.promoMonthlyRenewal : pp.monthlyDailyPrice}</p>
                 <div style={{ flexGrow: 1 }} />
-                <Link href="/subscribe?plan=monthly" className={styles.subscribeBtn} onClick={() => trackPricingPlanClick('monthly')}>
+                <Link href={subscribeHref('monthly', promo)} className={styles.subscribeBtn} onClick={() => trackPricingPlanClick('monthly')}>
                   {pp.subscribeButton}
                 </Link>
               </div>
@@ -359,15 +385,17 @@ export default function ParentPro() {
                 {pp.yearlyOriginalPrice && (
                   <p className={styles.planOriginalPrice}>{pp.yearlyOriginalPrice}</p>
                 )}
-                <p className={styles.planPrice}>{pp.yearlyPrice}</p>
-                <p className={styles.planDailyPrice}>{pp.yearlyDailyPrice}</p>
+                <p className={styles.planPrice}>{pv ? sub.promoYearlyPrice(pv) : pp.yearlyPrice}</p>
+                <p className={styles.planDailyPrice}>{pv ? sub.promoYearlyRenewal : pp.yearlyDailyPrice}</p>
                 <div style={{ flexGrow: 1 }} />
-                <Link href="/subscribe?plan=yearly" className={styles.subscribeBtn} onClick={() => trackPricingPlanClick('yearly')}>
+                <Link href={subscribeHref('yearly', promo)} className={styles.subscribeBtn} onClick={() => trackPricingPlanClick('yearly')}>
                   {pp.subscribeButton}
                 </Link>
               </div>
             </div>
-            {pp.trialNote && <p className={styles.trialNote}>{pp.trialNote}</p>}
+            {pv ? (
+              <p className={styles.trialNote}>{sub.promoTrialNote(pv)}</p>
+            ) : pp.trialNote && <p className={styles.trialNote}>{pp.trialNote}</p>}
             <p className={styles.manageLink}>
               {pp.alreadySubscribed}{' '}
               <Link href="/subscribe/manage">{pp.manageLink}</Link>
@@ -379,6 +407,7 @@ export default function ParentPro() {
         label={pp.stickyCtaLabel}
         hint={pp.stickyCtaHint}
         buttonText={pp.stickyCtaButton}
+        href={subscribeHref('monthly', promo)}
       />
       <Footer />
     </>

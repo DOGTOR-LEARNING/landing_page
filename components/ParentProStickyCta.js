@@ -9,7 +9,12 @@ import styles from './ParentProStickyCta.module.css'
  * 手機版底部常駐 CTA。parent-pro 很長，捲過 hero 之後就沒有隨手可點的按鈕，
  * 這條 bar 補上那段空窗；捲到定價區時自動收起，避免同一畫面出現兩個主要 CTA。
  */
-export default function ParentProStickyCta({ label, hint, buttonText }) {
+export default function ParentProStickyCta({
+  label,
+  hint,
+  buttonText,
+  href = '/subscribe?plan=monthly',
+}) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -61,7 +66,7 @@ export default function ParentProStickyCta({ label, hint, buttonText }) {
         {hint && <span className={styles.hint}>{hint}</span>}
       </div>
       <Link
-        href="/subscribe?plan=monthly"
+        href={href}
         className={styles.button}
         tabIndex={visible ? undefined : -1}
         onClick={() => trackPricingPlanClick('monthly_sticky')}
