@@ -117,6 +117,11 @@ export default function ParentPro() {
                   {pv.event ? sub.promoEventNotice(pv) : sub.promoNotice(pv)}
                 </p>
                 <p className={styles.promoBannerCode}>{sub.promoCodeLine(pv)}</p>
+                <LineCtaButton
+                  label={sub.promoLineButton}
+                  location="parent_pro_promo_banner_line"
+                  className={styles.promoBannerLineCta}
+                />
                 <p className={styles.promoBannerHint}>{sub.promoLineHint}</p>
               </div>
             )}
