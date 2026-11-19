@@ -1101,3 +1101,7 @@
   line-height: 1.6;
   opacity: 0.8;
 }
+
+.promoBannerLineCta {
+  margin-top: 0.75rem;
+}
