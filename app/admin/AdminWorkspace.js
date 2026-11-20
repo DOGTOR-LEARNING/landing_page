@@ -155,6 +155,7 @@ export default function AdminWorkspace({ children }) {
 
   // The chat is a full-screen app on phones (no page heading, only the messages scroll).
   const immersive = pathname === '/admin/ai-team'
+  const knowledge = pathname === '/admin/knowledge'
   return <AdminContext.Provider value={{ user, setUser }}>
     <div className={`${styles.workspace} ${immersive ? styles.immersive : ''}`}>
       {mobileOpen && <button className={styles.mobileScrim} onClick={() => setMobileOpen(false)} aria-label="關閉導航" />}
@@ -172,8 +173,8 @@ export default function AdminWorkspace({ children }) {
       </aside>
       <div className={styles.workArea}>
         <header className={styles.topbar}><div><button className={styles.mobileMenu} onClick={() => setMobileOpen(true)} aria-label="開啟導航"><Menu size={21} /></button><span>團隊工作台</span><ChevronRight size={14} /><strong>{current.title}</strong></div><div className={styles.topbarRight}><span className={styles.internalBadge}><span />內部管理系統</span><NotificationBell /></div></header>
-        <main className={styles.workMain} id="admin-content">
-          <div className={styles.pageHeading}><div><p className={styles.eyebrow}>DOGTOR / WORKSPACE</p><h1>{current.title}</h1><p>{current.desc}</p></div><span className={styles.dateLabel}>{new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'long', day: 'numeric', weekday: 'long' }).format(new Date())}</span></div>
+        <main className={`${styles.workMain} ${knowledge ? styles.knowledgeMain : ''}`} id="admin-content">
+          {(!knowledge || !allowed) && <div className={styles.pageHeading}><div><p className={styles.eyebrow}>DOGTOR / WORKSPACE</p><h1>{current.title}</h1><p>{current.desc}</p></div><span className={styles.dateLabel}>{new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'long', day: 'numeric', weekday: 'long' }).format(new Date())}</span></div>}
           {serviceError && <p role="alert" className={styles.loginError}>{serviceError}</p>}
           {allowed ? children : <div className={styles.emptyState}><ShieldCheck size={32} /><h2>此功能尚未開放給你的帳號</h2><p>請聯絡管理員調整存取權限。</p><Link href="/admin">回工作總覽</Link></div>}
           <p className={styles.workspaceFooter}>Dogtor 逗課 · 讓學習更有趣，也讓工作更輕鬆。</p>

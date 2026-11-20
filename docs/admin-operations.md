@@ -164,11 +164,11 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 - 排錯：錯誤訊息會顯示在對話框與看板上的 Notion 狀態（紅點）。最常見是資料庫沒有加入 integration（404）或貼到「連結的資料庫檢視」。
 
 
-## AI 知識庫（2026-10-30）
+## AI 知識庫
 
-- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件。用區塊編輯，不用寫 Markdown：每個區塊是一個大標或中標，底下可以加小點、編號、段落，小點和編號還能加子項目；後端會轉成 Markdown 存檔。「預覽」顯示 AI 讀到的樣子。
+- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件。左欄依照標題列出區段，中間可直接編輯段落與清單，右欄的「AI 試問」讀目前草稿並提供引用。查無依據的試問會在本次工作階段列為待補充問題，可從試問面板加到草稿。
 - 汪汪題與 LINE 官方帳號回答產品問題（功能、價格、規則）時只根據這份文件。儲存後一分鐘內生效，不用重新部署。
 - 文件存在 `gs://dogtor_asset/product_info/<staging|production>/<tw|en>.md`，由後端 `GET/PUT /admin/product-info/{market}` 讀寫（一律走預設的 tw 後端，兩個市場共用 bucket）。staging 後台改的不會影響正式環境。
 - 兩個人同時編輯時，後存的會被擋下（409），按「載入最新版本」重新載入再改。
 - 還沒從後台存過時，顯示的是程式碼裡 `backend/app/prompts/product_info/<market>.md` 的初始版本。
-- 後端需要：各 Cloud Run 服務帳號對 `dogtor_asset` 有讀取權限，tw 後端另需寫入權限；建議 `gsutil versioning set on gs://dogtor_asset` 保留歷史版本。
+- 後端需要：各 Cloud Run 服務帳號對 `dogtor_asset` 有讀取權限，tw 後端另需寫入權限；「版本紀錄」顯示 Cloud Storage 目前保留的版本，tw 後端需要列出物件的權限，保留舊版本需啟用 Object Versioning。
