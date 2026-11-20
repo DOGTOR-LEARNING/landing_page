@@ -27,7 +27,8 @@ const MARKETS = {
       codeLabel: '朋友的邀請碼',
       copy: '複製',
       copied: '已複製',
-      codeHint: '下載後在 App 的新手引導輸入這組邀請碼，你和朋友都能獲得一支體力恢復劑！',
+      codeHint: '還沒有 App：下載後在新手引導輸入這組邀請碼，你和朋友都能獲得一支體力恢復劑！',
+      existingUserHint: '已經有 App：到 App 的「好友」頁搜尋這組邀請碼，就能加朋友為好友。',
       noCodeHint: (
         <>
           下載後在 App 的新手引導輸入朋友訊息裡的<strong>邀請碼</strong>，你和朋友都能獲得一支體力恢復劑！
@@ -51,7 +52,8 @@ const MARKETS = {
       codeLabel: "Your friend's invite code",
       copy: 'Copy',
       copied: 'Copied',
-      codeHint: 'Enter this code during onboarding in the app, and you and your friend each get an energy refill!',
+      codeHint: "New to the app? Enter this code during onboarding, and you and your friend each get an energy refill!",
+      existingUserHint: 'Already have the app? Search this code on the Friends page to add your friend.',
       noCodeHint: (
         <>
           Enter the <strong>invite code</strong> from your friend&apos;s message during onboarding in the app, and you
@@ -182,6 +184,10 @@ function InviteCodeCard({ code, copy }) {
         </button>
       </div>
       <p className={styles.codeHint}>{copy.codeHint}</p>
+      {/* Links opened inside LINE / Instagram rarely hand off to the app, so
+          a friend who already has it needs a way that does not depend on
+          the link: Friends search accepts invite codes. */}
+      <p className={styles.codeHint}>{copy.existingUserHint}</p>
     </div>
   )
 }
