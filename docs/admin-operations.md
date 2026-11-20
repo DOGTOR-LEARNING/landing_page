@@ -166,7 +166,8 @@ venv/bin/python -m pytest tests/test_admin_auth.py tests/test_backend_compatibil
 
 ## AI 知識庫
 
-- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件。左欄依照標題列出區段，中間可直接編輯段落與清單，右欄的「AI 試問」讀目前草稿並提供引用。查無依據的試問會在本次工作階段列為待補充問題，可從試問面板加到草稿。
+- `/admin/knowledge`，權限 `knowledge.view`／`knowledge.manage`（員工管理可勾選；超級管理員預設有）。切換「台灣（繁中）／International（英文）」編輯兩份文件。左欄依照標題列出區段，中間可直接編輯段落與清單。大標題用於主題，小標題放該主題下的規則、限制或操作步驟。資格與例外請和對應的規則放在同一主題。
+- 右欄的「AI 試問」用汪汪題與 LINE 的章節檢索讀目前草稿，會顯示讀取的章節或是否查了全文，並可從引用跳到原段落。查無依據的試問會在本次工作階段列為待補充問題，可從試問面板加到草稿。
 - 汪汪題與 LINE 官方帳號回答產品問題（功能、價格、規則）時只根據這份文件。儲存後一分鐘內生效，不用重新部署。
 - 文件存在 `gs://dogtor_asset/product_info/<staging|production>/<tw|en>.md`，由後端 `GET/PUT /admin/product-info/{market}` 讀寫（一律走預設的 tw 後端，兩個市場共用 bucket）。staging 後台改的不會影響正式環境。
 - 兩個人同時編輯時，後存的會被擋下（409），按「載入最新版本」重新載入再改。

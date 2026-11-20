@@ -207,6 +207,11 @@
 .turn { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 14px; }
 .previewHint, .question, .answer { margin: 0; font-size: .9rem; }
 .previewHint { color: #635576; line-height: 1.58; }
+.readSections { color: #635576; font-size: .83rem; }
+.readSections summary { cursor: pointer; }
+.readSections ul { margin: 5px 0 0; padding-left: 18px; }
+.readSections button { border: 0; background: transparent; color: var(--kb-violet); text-align: left; }
+.readSections button:hover { text-decoration: underline; }
 .question, .answer { padding: 9px 12px; border-radius: 14px; color: var(--kb-ink); line-height: 1.52; white-space: pre-wrap; overflow-wrap: anywhere; }
 .question { align-self: flex-end; background: #a8e6a8; max-width: 95%; }
 .answer { background: #fff; max-width: 100%; }

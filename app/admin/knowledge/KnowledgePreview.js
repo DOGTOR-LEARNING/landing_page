@@ -39,7 +39,9 @@ export default function KnowledgePreview({ request, sections, editable, onSelect
       const citations = result.citations.map(citation => ({
         ...citation, target: snapshot[citation.section]?.id, title: snapshot[citation.section]?.title || '文件總覽',
       }))
-      setTurns(current => [...current.slice(0, -1), { question: text, ...result, citations }])
+      const readSections = result.retrieval?.sections.map(index => snapshot[index])
+        .filter(section => section?.title && section.level > 1)
+      setTurns(current => [...current.slice(0, -1), { question: text, ...result, citations, readSections }])
       onResult(text, result.needs_follow_up)
     } catch (error) {
       if (!signal.signal.aborted) {
@@ -60,6 +62,17 @@ export default function KnowledgePreview({ request, sections, editable, onSelect
         {turn.error && <p className={styles.answer} role="alert">{turn.error}</p>}
         {turn.answer && <p className={styles.answer}>{turn.answer}</p>}
         {turn.needs_follow_up && <p className={`${styles.answer} ${styles.noEvidence}`}>查無足夠依據 · 需人工確認</p>}
+        {turn.retrieval?.mode === 'full' && <p className={styles.previewHint}>
+          {turn.retrieval.retried ? '已補查全文' : '已讀取全文'}
+        </p>}
+        {turn.retrieval?.mode === 'sections' && turn.readSections?.length > 0 &&
+          <details className={styles.readSections}>
+            <summary>讀取的章節（{turn.readSections.length}）</summary>
+            <ul>{turn.readSections.map(section => <li key={section.id}>
+              <button type="button" onClick={() => onSelect(section.id)}
+                disabled={!sections.some(item => item.id === section.id)}>{section.title}</button>
+            </li>)}</ul>
+          </details>}
         {turn.citations?.map(({ target, title, quote }, citationIndex) =>
           <button key={citationIndex} type="button" className={styles.citation}
             onClick={() => onSelect(target)} disabled={!sections.some(section => section.id === target)}>
