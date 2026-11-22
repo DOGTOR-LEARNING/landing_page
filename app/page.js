@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Heart, GraduationCap, Smile, Gift, HeartHandshake } from 'lucide-react'
+import { Heart, GraduationCap, Smile, Gift } from 'lucide-react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { useMarket, useMessages } from '@/components/LocaleProvider'
@@ -243,7 +243,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Gift / Donate Section */}
+        {/* Gift Section */}
         <section className={styles.giftSection} id="gift">
           <div className="container">
             <div className={styles.giftCard}>
@@ -263,14 +263,6 @@ export default function Home() {
                 >
                   <Gift size={18} strokeWidth={2.4} aria-hidden="true" />
                   {m.gift.homeGiftButton}
-                </Link>
-                <Link
-                  href="/gift?mode=donate"
-                  className={styles.giftSecondary}
-                  onClick={() => trackCTAClick('gift_donate', 'home_section')}
-                >
-                  <HeartHandshake size={18} strokeWidth={2.4} aria-hidden="true" />
-                  {m.gift.homeDonateButton}
                 </Link>
               </div>
             </div>

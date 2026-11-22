@@ -986,8 +986,7 @@
   flex-shrink: 0;
 }
 
-.giftActions :global(.btn),
-.giftSecondary {
+.giftActions :global(.btn) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -995,16 +994,3 @@
   white-space: nowrap;
 }
 
-.giftSecondary {
-  padding: 0.75rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius-lg);
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background var(--transition-fast);
-}
-
-.giftSecondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-}

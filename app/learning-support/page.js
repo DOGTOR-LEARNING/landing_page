@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { headers } from 'next/headers'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -111,11 +110,6 @@ export default async function LearningSupport() {
               location="learning_support_bottom"
               className={styles.applyButton}
             />
-            <p className={styles.donateLine}>
-              <Link href="/gift?mode=donate" className={styles.donateLink}>
-                {getMessages(locale).gift.learningSupportCta} →
-              </Link>
-            </p>
           </section>
         </div>
       </main>

@@ -128,17 +128,12 @@
   color: #fff;
 }
 
-.modeGrid,
 .planGrid {
   display: grid;
   gap: 0.75rem;
 }
 
 @media (min-width: 560px) {
-  .modeGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .planGrid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -179,31 +174,7 @@
   box-shadow: 0 0 0 3px rgba(245, 155, 3, 0.15);
 }
 
-.check {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--accent-orange);
-  color: #fff;
-}
 
-.modeIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 0.25rem;
-  border-radius: var(--radius-md);
-  background: rgba(255, 163, 104, 0.16);
-  color: var(--accent-orange-light);
-}
 
 .optionName {
   font-size: 1.1rem;
@@ -286,10 +257,6 @@
   }
 }
 
-.inlineNote {
-  margin-top: 0.75rem;
-  font-size: 0.95rem;
-}
 
 .inlineLink {
   color: var(--accent-orange-light);
@@ -314,10 +281,6 @@
   cursor: pointer;
 }
 
-.renewDisabled {
-  cursor: default;
-  opacity: 0.55;
-}
 
 .switchInput {
   position: absolute;
