@@ -1,10 +1,8 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import Link from 'next/link'
 import Script from 'next/script'
-import { useSearchParams } from 'next/navigation'
-import { Gift, HeartHandshake, Mail, Check } from 'lucide-react'
+import { Mail } from 'lucide-react'
 import { useMessages } from '@/components/LocaleProvider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -25,11 +23,9 @@ const DURATIONS = [30, 90, 365]
 // Monthly equivalent shown under each length; only the year is cheaper.
 const PER_MONTH = { 30: 300, 90: 300, 365: 250 }
 
-const MODES = [
-  { key: 'gift', icon: Gift },
-  { key: 'donate', icon: HeartHandshake },
-]
-
+// Gift only: there is no donate option, because Paddle's Acceptable Use
+// Policy does not allow donations (the backend refuses them too).
+//
 // Unlike /subscribe, no LIFF login: the buyer is not the report recipient and
 // may have no LINE account. The backend hands out the Paddle price for the
 // chosen options and checks it again when the payment comes in, so the price
@@ -37,19 +33,13 @@ const MODES = [
 export default function GiftClient() {
   const m = useMessages()
   const g = m.gift
-  const searchParams = useSearchParams()
-
-  const [mode, setMode] = useState(
-    searchParams.get('mode') === 'donate' ? 'donate' : 'gift'
-  )
   const [duration, setDuration] = useState(90)
   const [renew, setRenew] = useState(false)
   const [paddleReady, setPaddleReady] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
-  const donated = mode === 'donate'
-  const steps = donated ? g.donateSteps : g.giftSteps
+  const steps = g.giftSteps
 
   const initPaddle = useCallback(() => {
     if (!window.Paddle) return
@@ -74,7 +64,7 @@ export default function GiftClient() {
     if (submitting || !paddleReady) return
     setSubmitting(true)
     setError(null)
-    trackEvent('gift_submit', { mode, duration_days: duration, renew: renew && !donated })
+    trackEvent('gift_submit', { duration_days: duration, renew })
 
     try {
       const res = await fetch(`${API_BASE}/gift/checkout-intent`, {
@@ -82,8 +72,7 @@ export default function GiftClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           duration_days: duration,
-          is_donated: donated,
-          is_recurring: renew && !donated,
+          is_recurring: renew,
         }),
       })
       const data = await res.json().catch(() => null)
@@ -103,12 +92,7 @@ export default function GiftClient() {
     } finally {
       setSubmitting(false)
     }
-  }, [submitting, paddleReady, mode, duration, renew, donated, g])
-
-  const modeText = {
-    gift: [g.modeGift, g.modeGiftDesc],
-    donate: [g.modeDonate, g.modeDonateDesc],
-  }
+  }, [submitting, paddleReady, duration, renew, g])
 
   return (
     <>
@@ -130,44 +114,6 @@ export default function GiftClient() {
           <section className={styles.panel}>
             <div className={styles.stepHeader}>
               <span className={styles.stepNumber}>1</span>
-              <h2 className={styles.stepTitle}>{g.stepMode}</h2>
-            </div>
-            <div className={styles.modeGrid} role="radiogroup" aria-label={g.stepMode}>
-              {MODES.map(({ key, icon: Icon }) => {
-                const selected = mode === key
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    className={`${styles.option} ${selected ? styles.optionSelected : ''}`}
-                    onClick={() => setMode(key)}
-                  >
-                    <span className={styles.modeIcon}>
-                      <Icon size={26} strokeWidth={2.2} aria-hidden="true" />
-                    </span>
-                    <span className={styles.optionName}>{modeText[key][0]}</span>
-                    <span className={styles.optionDesc}>{modeText[key][1]}</span>
-                    {selected && (
-                      <span className={styles.check} aria-hidden="true">
-                        <Check size={16} strokeWidth={3} />
-                      </span>
-                    )}
-                  </button>
-                )
-              })}
-            </div>
-            {donated && (
-              <p className={styles.inlineNote}>
-                <Link href="/learning-support" className={styles.inlineLink}>
-                  {g.donateLinkText} →
-                </Link>
-              </p>
-            )}
-
-            <div className={styles.stepHeader}>
-              <span className={styles.stepNumber}>2</span>
               <h2 className={styles.stepTitle}>{g.stepDuration}</h2>
             </div>
             <div className={styles.planGrid} role="radiogroup" aria-label={g.stepDuration}>
@@ -193,19 +139,18 @@ export default function GiftClient() {
               })}
             </div>
 
-            <label className={`${styles.renewRow} ${donated ? styles.renewDisabled : ''}`}>
+            <label className={styles.renewRow}>
               <input
                 type="checkbox"
                 className={styles.switchInput}
-                checked={renew && !donated}
-                disabled={donated}
+                checked={renew}
                 onChange={(e) => setRenew(e.target.checked)}
               />
               <span className={styles.switch} aria-hidden="true" />
               <span className={styles.renewText}>
                 <span className={styles.renewLabel}>{g.renewLabel}</span>
                 <span className={styles.renewDesc}>
-                  {donated ? g.renewDonateNote : g.renewDesc}
+                  {g.renewDesc}
                 </span>
               </span>
             </label>
@@ -219,7 +164,7 @@ export default function GiftClient() {
               {submitting ? g.submitting : `${g.submit} · ${g.plans[duration].price}`}
             </button>
             <p className={styles.note}>
-              {donated ? g.donateClockNote : renew ? g.recurringClockNote : g.clockNote}
+              {renew ? g.recurringClockNote : g.clockNote}
             </p>
 
             {error && (
