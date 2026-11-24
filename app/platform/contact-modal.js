@@ -8,7 +8,7 @@ export const PLATFORM_CONTACT = {
   email: 'hello@superb-tutor.com',
   phone: { display: '0963-779-263', href: '+886963779263' },
   line: { label: '加好友直接聊', url: 'https://line.me/ti/p/XdShbGSKSI' },
-  instagram: null, // 例：{ label: '@superb.software', url: 'https://www.instagram.com/superb.software' }
+  instagram: { label: '@dogtor_learning', url: 'https://www.instagram.com/dogtor_learning/' },
   site: 'https://official.superb-tutor.com/zh-TW',
   privacy: 'https://official.superb-tutor.com/zh-TW/privacy',
   company: '超棒軟體科技有限公司',
@@ -47,13 +47,18 @@ export function contactModal(target) {
 .cm-wrap{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(10,22,26,.55);backdrop-filter:blur(3px)}
 .cm-wrap.open{display:flex}
 .cm-dlg [hidden]{display:none!important}
-.cm-dlg{width:min(1000px,100%);max-height:calc(100vh - 48px);overflow:hidden;background:var(--card);color:var(--ink);border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.25);display:grid;grid-template-columns:1.55fr 1fr;position:relative}
+.cm-dlg{width:min(1000px,100%);height:min(max(520px,58vh),calc(100vh - 48px));overflow:hidden;background:var(--card);color:var(--ink);border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.25);display:grid;grid-template-columns:1.55fr 1fr;position:relative}
 .cm-x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:20px;line-height:1;cursor:pointer;z-index:2}
 .cm-x:hover{background:rgba(255,255,255,.3)}
 .cm-x:focus-visible,.cm-dlg button:focus-visible,.cm-dlg a:focus-visible,.cm-dlg label:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
-.cm-l{padding:28px 32px;overflow-y:auto;max-height:calc(100vh - 48px);box-sizing:border-box}
+.cm-l{display:flex;flex-direction:column;min-height:0;height:100%;box-sizing:border-box}
+#cm-body{display:flex;flex-direction:column;min-height:0;flex:1}
+.cm-scroll{flex:1;min-height:0;overflow-y:auto;padding:26px 30px 16px}
+.cm-foot{flex:none;border-top:1px solid var(--rule);background:var(--card);padding:12px 30px 14px;display:flex;flex-direction:column;gap:8px}
+.cm-foot-r{display:flex;align-items:center;gap:16px}
+.cm-foot-r .cm-fld{flex:1}
 .cm-l h2{font-family:var(--display);font-size:26px;margin:0}
-.cm-sub{color:var(--muted);font-size:15px;margin:4px 0 16px}
+.cm-sub{color:var(--muted);font-size:15px;margin:4px 0 0}
 .cm-f{display:flex;flex-direction:column;gap:16px}
 .cm-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cm-fld{display:flex;flex-direction:column;gap:6px;border:0;padding:0;margin:0;min-width:0}
@@ -98,23 +103,26 @@ export function contactModal(target) {
 .cm-btn[disabled]{opacity:.6;cursor:wait}
 .cm-fail{background:#fbe7e7;color:#8c2a2a;border-radius:10px;padding:10px 14px;font-size:14px}
 .cm-fail a{color:inherit;font-weight:700}
-.cm-done{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:24px 0}
+.cm-done{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;padding:30px;height:100%;box-sizing:border-box}
 .cm-done h3{font-size:22px;margin:0}
 .cm-done p{color:var(--muted);margin:0;font-size:15px}
-.cm-r{background:#2769a9;color:#fff;padding:34px 30px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;max-height:calc(100vh - 48px);box-sizing:border-box}
+.cm-r{background:#2769a9;color:#fff;padding:26px 26px 22px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;box-sizing:border-box}
 .cm-r h3{font-size:20px;margin:0}
-.cm-r>p{font-size:15px;line-height:1.7;color:rgba(255,255,255,.9);margin:0}
-.cm-chs{display:flex;flex-direction:column;gap:8px;margin-top:4px}
-.cm-ch{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:10px 12px;color:#fff;text-decoration:none}
+.cm-r>p{font-size:14px;line-height:1.65;color:rgba(255,255,255,.9);margin:0}
+.cm-chs{display:flex;flex-direction:column;gap:7px}
+.cm-ch{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:8px 12px;color:#fff;text-decoration:none}
 .cm-ch:hover{background:rgba(255,255,255,.2)}
-.cm-ic{width:36px;height:36px;border-radius:10px;background:#fff;color:#2769a9;display:grid;place-items:center;flex:none}
+.cm-ic{width:32px;height:32px;border-radius:10px;background:#fff;color:#2769a9;display:grid;place-items:center;flex:none}
 .cm-ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .cm-line .cm-ic{background:#06c755;color:#fff}
+.cm-ig .cm-ic{background:linear-gradient(45deg,#f9a03f,#d62976 55%,#962fbf);color:#fff}
 .cm-ct{display:flex;flex-direction:column;flex:1;min-width:0;line-height:1.35}
 .cm-ct b{font-size:14px}.cm-ct span{font-size:13px;color:rgba(255,255,255,.85);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cm-go{font-size:20px;opacity:.7}
-.cm-co{margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.22);font-size:13px;color:rgba(255,255,255,.85);display:flex;flex-direction:column;gap:2px}
-.cm-co a{color:#fff;font-weight:700}
+.cm-co{margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;text-decoration:none}
+.cm-co img{height:38px;width:auto;display:block}
+.cm-co span{font-size:12.5px;font-weight:700;white-space:nowrap;opacity:.9}
+.cm-co:hover span{opacity:1;text-decoration:underline}
 body.cm-lock{overflow:hidden}
 </style>`
 
@@ -126,10 +134,10 @@ body.cm-lock{overflow:hidden}
 <div class="cm-dlg" role="dialog" aria-modal="true" aria-labelledby="cm-title">
 <button type="button" class="cm-x" id="cm-x" aria-label="關閉">×</button>
 <div class="cm-l">
-<div id="cm-body">
-<h2 id="cm-title">跟我們聊聊</h2>
-<p class="cm-sub">勾一勾、留個聯絡方式就好，我們會主動跟你聯繫。</p>
-<form class="cm-f" id="cm-form" novalidate>
+<form id="cm-body" novalidate>
+<div class="cm-scroll"><div class="cm-f" id="cm-form-fields">
+<div><h2 id="cm-title">跟我們聊聊</h2>
+<p class="cm-sub">勾一勾、留個聯絡方式就好，我們會主動跟你聯繫。</p></div>
 <fieldset class="cm-fld" data-f="inquiryType"><legend class="cm-lg">你想了解的是<span class="cm-req">必填</span></legend>
 <div class="cm-kind"><label><input type="radio" name="inquiryType" value="platform" checked><span><b>這個補習班平台</b><small>勾選有興趣的模組就好</small></span></label><label><input type="radio" name="inquiryType" value="other"><span><b>其他合作</b><small>客製系統、技術合作或任何想法</small></span></label></div>
 <div class="cm-err" id="cm-inquiryType-err"></div></fieldset>
@@ -143,18 +151,18 @@ body.cm-lock{overflow:hidden}
 <div class="cm-err" id="cm-contact-err"></div></fieldset>
 <div class="cm-fld" data-f="message"><label for="cm-msg">想說的話<span class="cm-opt">選填</span></label><textarea id="cm-msg" name="message" maxlength="3000" placeholder="例如：我們有兩間分校，最想先解決點名和請假。"></textarea><div class="cm-err" id="cm-message-err"></div></div>
 <div class="cm-hp" aria-hidden="true"><label for="cm-website">請勿填寫此欄位</label><input id="cm-website" name="website" tabindex="-1" autocomplete="off"></div>
-<div class="cm-fld" data-f="consent"><label class="cm-cs"><input type="checkbox" id="cm-consent" name="consent"><span>我同意超棒軟體依<a href="${esc(c.privacy)}" target="_blank" rel="noopener noreferrer">隱私權政策</a>使用以上資料與我聯繫。<span class="cm-req">必填</span></span></label><div class="cm-err" id="cm-consent-err"></div></div>
-<div class="cm-fail" id="cm-fail" role="alert" hidden></div>
-<button type="submit" class="cm-btn" id="cm-submit">送出</button>
+</div></div>
+<div class="cm-foot"><div class="cm-foot-r"><div class="cm-fld" data-f="consent"><label class="cm-cs"><input type="checkbox" id="cm-consent" name="consent"><span>我同意超棒軟體依<a href="${esc(c.privacy)}" target="_blank" rel="noopener noreferrer">隱私權政策</a>使用以上資料與我聯繫。<span class="cm-req">必填</span></span></label><div class="cm-err" id="cm-consent-err"></div></div>
+<button type="submit" class="cm-btn" id="cm-submit">送出</button></div>
+<div class="cm-fail" id="cm-fail" role="alert" hidden></div></div>
 </form>
-</div>
 <div class="cm-done" id="cm-done" hidden tabindex="-1"><h3>收到了，謝謝你！</h3><p>我們會儘快用你留下的方式聯絡你。</p><button type="button" class="cm-btn" id="cm-again">再送一則</button></div>
 </div>
 <aside class="cm-r">
 <h3>也可以直接找我們</h3>
-<p>任何時間都可以。不只是這個平台，補習班或教育上任何想做的事，都歡迎跟我們說。</p>
+<p>任何時間都可以。不只是這個平台，任何想做的事都歡迎跟我們說。</p>
 <div class="cm-chs">${channels}</div>
-<div class="cm-co"><b>${esc(c.company)}</b><span>SuperB Software Technology Co., Ltd.</span><a href="${esc(c.site)}" target="_blank" rel="noopener noreferrer">前往超棒軟體官網 ›</a></div>
+<a class="cm-co" href="${esc(c.site)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(c.company)}官網"><img src="/superb-lockup-white.svg" alt="超棒軟體 SuperB Software" width="145" height="38"><span>前往官網 ›</span></a>
 </aside>
 </div>
 </div>`
@@ -162,7 +170,7 @@ body.cm-lock{overflow:hidden}
   const script = `<script>
 (function(){
   var wrap=document.getElementById('cm-wrap');if(!wrap)return;
-  var form=document.getElementById('cm-form'),F=form.elements,body=document.getElementById('cm-body'),done=document.getElementById('cm-done');
+  var form=document.getElementById('cm-body'),F=form.elements,body=form,done=document.getElementById('cm-done');
   var fail=document.getElementById('cm-fail'),submit=document.getElementById('cm-submit'),mods=document.getElementById('cm-mods');
   var TARGET=${JSON.stringify(target || '').replace(/</g, '\\u003c')},EMAIL=${JSON.stringify(c.email)};
   var ERR={nameRequired:'請告訴我們怎麼稱呼你。',nameTooLong:'稱呼請在 80 字以內。',organizationTooLong:'單位名稱請在 120 字以內。',typeRequired:'請選擇你想了解的內容。',contactRequired:'請至少留一種聯絡方式：LINE、電話、Instagram 或 Email。',emailInvalid:'Email 格式似乎不正確，請確認後再試一次。',contactTooLong:'聯絡方式太長了，請確認後再試一次。',messageTooLong:'想說的話請在 3000 字以內。',consentRequired:'請勾選同意，我們才能用你留下的資料聯絡你。'};
