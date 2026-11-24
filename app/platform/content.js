@@ -1150,6 +1150,24 @@ tr.hl-ab td{background:#fdf3f3}
 .fm-arr i::after{content:"";position:absolute;top:1px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent}
 .fm-arr.r i::after{right:-2px;border-left:10px solid var(--pc)}
 .fm-arr.l i::after{left:-2px;border-right:10px solid var(--pc)}
+
+/* ---- 班級管理 ---- */
+.cls{display:grid;grid-template-columns:168px 1fr;gap:10px;flex:1}
+.cls-list{background:#fff;border:1px solid #e1e8e6;border-radius:8px;overflow:hidden;align-self:start}
+.cls-i{padding:7px 10px;border-bottom:1px solid #eef2f1;display:grid;grid-template-columns:1fr auto;gap:0 6px;font-size:12px}
+.cls-i span{grid-column:1;font-size:10.5px;color:#6b7b80}
+.cls-i em{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;font-size:11px;color:#58686d;font-variant-numeric:tabular-nums}
+.cls-i.on{background:#e4eef8;border-left:3px solid #2769a9}
+.cls-i.new b::after{content:"新班";margin-left:5px;font-size:9.5px;background:#ddf1f2;color:#0e7c86;border-radius:4px;padding:0 4px}
+.cls-d{background:#fff;border:1px solid #e1e8e6;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:8px;position:relative;min-width:0}
+.exp-menu{position:absolute;right:10px;top:40px;z-index:2;background:#fff;border:1px solid #cfd8d5;border-radius:8px;box-shadow:0 8px 20px rgba(20,40,40,.14);padding:4px;display:flex;flex-direction:column;font-size:11.5px;min-width:190px}
+.exp-menu span{padding:4px 8px;border-radius:4px}
+.exp-menu span:first-child{background:#e4eef8;color:#2769a9;font-weight:700}
+.cls-info{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.cls-info div{background:#f7f9f8;border-radius:6px;padding:5px 8px;display:flex;flex-direction:column;line-height:1.35}
+.cls-info span{font-size:10.5px;color:#6b7b80}.cls-info b{font-size:12px}
+.roster td,.roster th{white-space:nowrap}
+.roster td:first-child{color:#8fa29e;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -1162,7 +1180,7 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="layout" id="layout">
   <aside class="sidebar" id="sidebar" aria-label="網站導覽">
     <div class="sb-head"><b>超棒軟體</b><span>補習班 LINE 平台</span></div>
-    <nav class="sb-nav"><a class="nv" href="#home">首頁</a><a class="nv" href="#why">導入後的六個改變</a><a class="nv" href="#overview">AI 貫穿每一步</a><a class="nv" href="#modules">模組總覽</a><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#ai">一、AI 客服</a><button class="ng-t" aria-expanded="true" aria-controls="ai-list" aria-label="展開或收合AI 客服">▾</button></div><div class="ng-l" id="ai-list"><a class="nv sub" href="#ai-service">AI 家長客服</a><a class="nv sub" href="#offers">課程與方案管理</a><a class="nv sub" href="#inbox">真人接手收件匣</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#source">二、招生來源追溯</a><button class="ng-t" aria-expanded="true" aria-controls="source-list" aria-label="展開或收合招生來源追溯">▾</button></div><div class="ng-l" id="source-list"><a class="nv sub" href="#friends">好友來源名單</a><a class="nv sub" href="#links">來源連結與 QR Code</a><a class="nv sub" href="#roi">來源成效報表</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#crm">三、招生 CRM</a><button class="ng-t" aria-expanded="true" aria-controls="crm-list" aria-label="展開或收合招生 CRM">▾</button></div><div class="ng-l" id="crm-list"><a class="nv sub" href="#followup">招生總覽與跟進清單</a><a class="nv sub" href="#pipeline">名單看板與名單卡片</a><a class="nv sub" href="#trial">試聽預約與試聽回饋</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#family">四、學生與家長服務</a><button class="ng-t" aria-expanded="true" aria-controls="family-list" aria-label="展開或收合學生與家長服務">▾</button></div><div class="ng-l" id="family-list"><a class="nv sub" href="#students">學生檔案與家長綁定</a><a class="nv sub" href="#grades">作業成績與家長查詢</a><a class="nv sub" href="#reports">AI 月學習報告</a><a class="nv sub" href="#notices">公告與聯絡簿</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#daily">五、出缺勤與日常行政</a><button class="ng-t" aria-expanded="true" aria-controls="daily-list" aria-label="展開或收合出缺勤與日常行政">▾</button></div><div class="ng-l" id="daily-list"><a class="nv sub" href="#attendance">到班點名與通知</a><a class="nv sub" href="#leave">LINE 請假</a><a class="nv sub" href="#makeup">補課安排</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#manage">六、續班與經營管理</a><button class="ng-t" aria-expanded="true" aria-controls="manage-list" aria-label="展開或收合續班與經營管理">▾</button></div><div class="ng-l" id="manage-list"><a class="nv sub" href="#renewal">續班與繳費提醒</a><a class="nv sub" href="#retention">流失預警</a><a class="nv sub" href="#branches">多分校管理</a></div></div><a class="nv" href="#security">資料安全與個資</a><a class="nv" href="#onboarding">導入流程</a><a class="nv" href="#pricing">方案與費用</a><a class="nv" href="#faq">常見問題</a><a class="nv cta" href="#contact">預約展示</a></nav>
+    <nav class="sb-nav"><a class="nv" href="#home">首頁</a><a class="nv" href="#why">導入後的六個改變</a><a class="nv" href="#overview">AI 貫穿每一步</a><a class="nv" href="#modules">模組總覽</a><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#ai">一、AI 客服</a><button class="ng-t" aria-expanded="true" aria-controls="ai-list" aria-label="展開或收合AI 客服">▾</button></div><div class="ng-l" id="ai-list"><a class="nv sub" href="#ai-service">AI 家長客服</a><a class="nv sub" href="#offers">課程與方案管理</a><a class="nv sub" href="#inbox">真人接手收件匣</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#source">二、招生來源追溯</a><button class="ng-t" aria-expanded="true" aria-controls="source-list" aria-label="展開或收合招生來源追溯">▾</button></div><div class="ng-l" id="source-list"><a class="nv sub" href="#friends">好友來源名單</a><a class="nv sub" href="#links">來源連結與 QR Code</a><a class="nv sub" href="#roi">來源成效報表</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#crm">三、招生 CRM</a><button class="ng-t" aria-expanded="true" aria-controls="crm-list" aria-label="展開或收合招生 CRM">▾</button></div><div class="ng-l" id="crm-list"><a class="nv sub" href="#followup">招生總覽與跟進清單</a><a class="nv sub" href="#pipeline">名單看板與名單卡片</a><a class="nv sub" href="#trial">試聽預約與試聽回饋</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#family">四、學生與家長服務</a><button class="ng-t" aria-expanded="true" aria-controls="family-list" aria-label="展開或收合學生與家長服務">▾</button></div><div class="ng-l" id="family-list"><a class="nv sub" href="#students">學生檔案與家長綁定</a><a class="nv sub" href="#grades">作業成績與家長查詢</a><a class="nv sub" href="#reports">AI 月學習報告</a><a class="nv sub" href="#notices">公告與聯絡簿</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#daily">五、出缺勤與日常行政</a><button class="ng-t" aria-expanded="true" aria-controls="daily-list" aria-label="展開或收合出缺勤與日常行政">▾</button></div><div class="ng-l" id="daily-list"><a class="nv sub" href="#classes">班級管理</a><a class="nv sub" href="#attendance">到班點名與通知</a><a class="nv sub" href="#leave">LINE 請假</a><a class="nv sub" href="#makeup">補課安排</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#manage">六、續班與經營管理</a><button class="ng-t" aria-expanded="true" aria-controls="manage-list" aria-label="展開或收合續班與經營管理">▾</button></div><div class="ng-l" id="manage-list"><a class="nv sub" href="#renewal">續班與繳費提醒</a><a class="nv sub" href="#retention">流失預警</a><a class="nv sub" href="#branches">多分校管理</a></div></div><a class="nv" href="#security">資料安全與個資</a><a class="nv" href="#onboarding">導入流程</a><a class="nv" href="#pricing">方案與費用</a><a class="nv" href="#faq">常見問題</a><a class="nv cta" href="#contact">預約展示</a></nav>
   </aside>
   <div class="scrim" id="scrim"></div>
   <main class="content">
@@ -1229,7 +1247,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="mbase">
     <div class="mb-l"><span class="mc-code big">01</span><div><span class="mkind base">基本模組・每家補習班都包含</span><h3>AI 客服</h3><p>家長的問題即時回答，需要人的交給人。</p></div></div>
     <div class="mb-r"><div class="mb-col"><h4>包含功能</h4><ul><li><a href="#ai-service">AI 家長客服</a></li><li><a href="#offers">課程與方案管理</a></li><li><a href="#inbox">真人接手收件匣</a></li></ul></div>
-      <div class="mb-col"><h4>平台基本功能</h4><ul><li>沿用現有 LINE 官方帳號</li><li>後台帳號與角色權限（帳號不限人數）</li><li>資料安全與個資保護</li><li>導入協助與教育訓練</li></ul></div></div>
+      <div class="mb-col"><h4>平台基本功能</h4><ul><li>沿用現有 LINE 官方帳號</li><li>後台帳號與角色權限（帳號不限人數）</li><li><a href="#classes">班級管理與名單匯出</a></li><li>資料安全與個資保護</li><li>導入協助與教育訓練</li></ul></div></div>
   </div>
   <div class="madd-h"><h3>附加模組</h3><p>依補習班的需要逐步加購。標示「需搭配」的模組，要先有對應的模組才能使用。</p></div>
   <div class="madd"><a class="mcard c2" href="#friends"><span class="mc-code">02</span><div><b>招生來源追溯</b><p>誰從哪裡加了 LINE，各來源帶來多少報名</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a><a class="mcard c3" href="#followup"><span class="mc-code">03</span><div><b>招生 CRM</b><p>每位好友在哪個階段、今天該跟進誰</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a><a class="mcard c4" href="#students"><span class="mc-code">04</span><div><b>學生檔案與家長綁定</b><p>學生、家長、學生本人都連上 LINE</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a><a class="mcard c4" href="#grades"><span class="mc-code">05</span><div><b>作業成績與家長查詢</b><p>家長在 LINE 查成績與作業</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c4" href="#reports"><span class="mc-code">06</span><div><b>AI 月學習報告</b><p>每月學習報告，班導確認後送出</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span><span>需搭配 05 作業成績與家長查詢</span></div></div></a><a class="mcard c4" href="#notices"><span class="mc-code">07</span><div><b>公告與聯絡簿</b><p>一句話產生公告，發給對的家長</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c5" href="#attendance"><span class="mc-code">08</span><div><b>到班點名與通知</b><p>掃 QR 點名，家長即時收到通知</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c5" href="#leave"><span class="mc-code">09</span><div><b>LINE 請假</b><p>在 LINE 請假，點名自動同步</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span><span>需搭配 08 到班點名與通知</span></div></div></a><a class="mcard c5" href="#makeup"><span class="mc-code">10</span><div><b>補課安排</b><p>依你的補課制度列出補課選項</p><div class="mc-dep"><span>需搭配 09 LINE 請假</span></div></div></a><a class="mcard c6" href="#renewal"><span class="mc-code">11</span><div><b>續班與繳費提醒</b><p>自動提醒，家長一鍵回覆</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c6" href="#retention"><span class="mc-code">12</span><div><b>流失預警</b><p>提早發現可能不續班的學生</p><div class="mc-dep"><span>需搭配 05 作業成績與家長查詢</span><span>需搭配 08 到班點名與通知</span></div></div></a><a class="mcard c6" href="#branches"><span class="mc-code">13</span><div><b>多分校管理</b><p>總部看全部，分校各自管理</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a></div>
@@ -1254,7 +1272,7 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="msg b">這個問題我幫您轉給行政人員確認，稍後由專人回覆您 🙏</div></div></div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>知識庫・文件分頁：正在編輯子文件，右側直接試問 AI</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/kb/docs/g8-science</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i on">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i on">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>知識庫</b><span class="tag warn">待補充問題 3</span><span class="sp"></span><span class="btn ghost">版本紀錄</span><span class="btn">發布變更</span></div>
 <div class="tabs kbtabs"><i class="on">文件</i><i>課程與方案</i></div>
@@ -1294,7 +1312,7 @@ tr.hl-ab td{background:#fdf3f3}
 </div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>AI 回覆設定：決定 AI 什麼時候回、回覆哪些人</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/settings/ai-reply</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i on">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i on">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>AI 回覆設定</b><span class="sp"></span><span class="aist on">● 現在 22:30・AI 回覆中</span><span class="btn">儲存</span></div>
 <div class="set2">
@@ -1338,7 +1356,7 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="msg b">繳費方式我請招生老師跟您說明，稍後回覆您 🙏</div></div></div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>知識庫・課程與方案分頁：AI 唯一能引用的數字來源，共用同一個 AI 試問</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/kb/offerings</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i on">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i on">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>知識庫</b><span class="tag warn">待補充問題 3</span><span class="sp"></span><span class="btn ghost">變更紀錄</span><span class="btn">＋ 新增方案</span></div>
 <div class="tabs kbtabs"><i>文件</i><i class="on">課程與方案</i></div>
@@ -1373,7 +1391,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>接手對話、AI 已暫停，右側指派負責人與備註</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/inbox/u8f2</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i on">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i on">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>收件匣</b><span class="seg"><i class="on">待處理 4</i><i>處理中 2</i><i>AI 處理中</i><i>已結案</i></span></div>
 <div class="ib">
@@ -1433,7 +1451,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>每位新好友從哪裡來、現在到哪一步</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/crm/friends</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>新加入的 LINE 好友</b><span class="seg"><i class="on">本週 46</i><i>本月</i></span><span class="sp"></span><span class="seg"><i class="on">全部來源</i><i>Meta 廣告</i><i>傳單</i><i>同學介紹</i></span></div>
 <table class="tb"><tr><th>加入時間</th><th>LINE 名稱</th><th>從哪裡來</th><th>分校</th><th>目前階段</th></tr>
@@ -1468,7 +1486,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>來源成效：哪個來源最划算（數字為情境範例）</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/sources</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i on">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i on">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>招生來源成效</b><span class="seg"><i class="on">11 月</i><i>本學期</i></span><span class="seg"><i class="on">全部分校</i><i>板橋</i><i>本部</i></span><span class="sp"></span><span class="btn">＋ 建立來源連結</span></div>
 <div class="sec-lbl">成效</div>
@@ -1490,7 +1508,7 @@ tr.hl-ab td{background:#fdf3f3}
 </div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>主任儀表板</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/dashboard</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i on">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i on">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>營運報表</b><span class="seg"><i class="on">本月</i><i>上月</i><i>本學期</i></span><span class="sp"></span><span class="seg"><i>本部</i><i>板橋</i><i class="on">全部</i></span></div>
 <div class="dsh"><div class="dsh-l">
@@ -1539,7 +1557,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>招生漏斗與今天要跟進的人</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/crm/overview</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>招生總覽</b><span class="seg"><i class="on">本月</i><i>上月</i></span><span class="sp"></span><span class="seg"><i class="on">全部分校</i><i>本部</i><i>板橋</i></span></div>
 <div class="pipe">
@@ -1565,7 +1583,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>名單看板：AI 依意向排序，每張卡片顯示目前階段的重點</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/crm</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>招生名單</b><span class="seg"><i class="on">依意向排序</i><i>依時間</i></span><span class="sp"></span><span class="btn ghost">匯出</span><span class="btn">＋ 新增</span></div>
 <div class="kanban">
@@ -1586,7 +1604,7 @@ tr.hl-ab td{background:#fdf3f3}
 </div></figure><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>名單卡片：AI 填好欄位、累積階段歷程；跟進草稿的數字只來自方案資料</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/crm/lead/l882</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i on">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><span class="back">‹ 招生名單</span><b>陳媽媽</b><span class="heat h3">意向高</span><span class="tag">新問班</span><span class="sp"></span><span class="btn ghost">指派給我</span><span class="btn">轉為已聯絡</span></div>
 <div class="ld">
@@ -1657,7 +1675,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>學生檔案：LINE 綁定與各自的通知設定</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/students/s1024</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i on">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i on">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><span class="back">‹ 學生</span><b>王小明</b><span class="tag">國二</span><span class="tag">建國國中</span><span class="sp"></span><span class="btn ghost">產生家長綁定碼</span><span class="btn ghost">產生學生綁定碼</span><span class="btn">編輯</span></div>
 <div class="tabs"><i class="on">總覽</i><i>出缺勤</i><i>作業成績</i><i>請假</i><i>學習報告</i><i>備註</i></div>
@@ -1703,7 +1721,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>成績登錄，像試算表一樣輸入</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/classes/g8-sci-a/grades</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i on">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i on">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>國二理化 A・成績</b><span class="seg"><i class="on">成績</i><i>作業</i></span><span class="sp"></span><span class="btn ghost">📷 拍照匯入</span><span class="btn ghost">＋ 新增考試</span><span class="btn">儲存</span></div>
 <table class="tb grid"><tr><th>學生</th><th>11/06 小考</th><th>11/13 小考</th><th>11/15 段考（學校）</th><th>11/20 小考</th><th>平均</th></tr>
@@ -1730,7 +1748,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>班導逐份檢視 AI 草稿</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/reports/2026-11/g8-sci-a</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i on">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i on">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>11 月學習報告・國二理化 A</b><span class="tag">已確認 12 / 20</span><span class="sp"></span><span class="btn">送出已確認的 12 份</span></div>
 <div class="rp">
@@ -1756,7 +1774,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>撰寫公告，送出前看到預估則數</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/notices/new</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i on">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i on">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>新增公告</b><span class="sp"></span><span class="btn ghost">存草稿</span><span class="btn">送主任審核</span></div>
 <div class="nt">
@@ -1782,8 +1800,45 @@ tr.hl-ab td{background:#fdf3f3}
     <span class="pl-big">五</span>
     <div class="pl-t"><span class="pl-eb">五、出缺勤與日常行政<em class="add">附加模組</em></span><h2>點名、請假、補課，在 LINE 裡完成</h2><p>學生出示 QR Code、老師用手機一掃就點完名，家長立刻收到通知；請假、晚到、補課都在 LINE 完成，行政只處理真正的例外。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#attendance"><span class="ic-code">模組 08</span><b>到班點名與通知</b><span>老師用手機掃 QR 點名</span></a><a class="inc2" href="#leave"><span class="ic-code">模組 09</span><b>LINE 請假</b><span>家長或學生在 LINE 說一聲就能請假</span></a><a class="inc2" href="#makeup"><span class="ic-code">模組 10</span><b>補課安排</b><span>選擇你的補課制度</span></a></div>
+  <div class="inc-row"><a class="inc2" href="#classes"><span class="ic-code">平台基本功能</span><b>班級管理</b><span>班級的老師、學生名單，可匯出</span></a><a class="inc2" href="#attendance"><span class="ic-code">模組 08</span><b>到班點名與通知</b><span>老師用手機掃 QR 點名</span></a><a class="inc2" href="#leave"><span class="ic-code">模組 09</span><b>LINE 請假</b><span>家長或學生在 LINE 說一聲就能請假</span></a><a class="inc2" href="#makeup"><span class="ic-code">模組 10</span><b>補課安排</b><span>選擇你的補課制度</span></a></div>
   <div class="ba2"><div class="b"><i>以前</i>紙本點名、電話請假、行政翻課表找補課空位</div><div class="arr">→</div><div class="a"><i>用了平台</i>點名即通知，請假自動同步，補課依你的規則列出選項</div></div>
+<div class="subf" id="classes">
+  <div class="sf-top"><h4>班級管理</h4><span class="mkind base">平台基本功能</span></div>
+  <p class="sf-desc">每個班級的老師、教室、上課時段和學生名單集中在一頁；點名、請假、補課都以這份名單為準。</p>
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>一頁看完班級的老師、教室、時段與學生</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>名單匯出 Excel、列印紙本點名表</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生轉班、插班、退班都留下紀錄</span></div></div>
+  <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>班級名單：誰在這個班、誰教、在哪裡上課</figcaption><div class="browser">
+  <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/classes/g8-sci-a</span></div>
+  <div class="app">
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i on">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="main">
+<div class="pg-h"><b>班級</b><span class="seg"><i class="on">本學期 12 班</i><i>已結束</i></span><span class="sp"></span><span class="btn ghost">＋ 新增班級</span></div>
+<div class="cls">
+  <div class="cls-list">
+    <div class="cls-i on"><b>國二理化 A</b><span>週三 19:00・林老師</span><em>20 / 20</em></div>
+    <div class="cls-i"><b>國二數學 B</b><span>週五 19:00・陳老師</span><em>9 / 12</em></div>
+    <div class="cls-i"><b>國二理化 B</b><span>週六 14:00・周老師</span><em>14 / 16</em></div>
+    <div class="cls-i"><b>國三總複習</b><span>週二、四 19:00・林老師</span><em>18 / 20</em></div>
+    <div class="cls-i"><b>國一英文 B</b><span>週五 19:30・王老師</span><em>14 / 16</em></div>
+    <div class="cls-i new"><b>小高一數學</b><span>12/7 開課・陳老師</span><em>6 / 15</em></div>
+  </div>
+  <div class="cls-d">
+    <div class="pg-h"><b>國二理化 A</b><span class="tag ok">上課中</span><span class="tag">本部</span><span class="sp"></span><span class="btn ghost">編輯班級</span><span class="btn ghost">＋ 加入學生</span><span class="btn exp-open">匯出名單 ▾</span></div>
+    <div class="exp-menu"><span>Excel 名單（含家長聯絡方式）</span><span>列印點名表（PDF）</span><span>只匯出學生姓名</span></div>
+    <div class="cls-info"><div><span>授課老師</span><b>林老師</b></div><div><span>助教</span><b>吳助教</b></div><div><span>上課時段</span><b>每週三 19:00–21:00</b></div><div><span>教室</span><b>本部 3 樓 301</b></div><div><span>期間</span><b>9/3 – 11/26・12 週</b></div><div><span>人數</span><b>20 / 20・額滿</b></div></div>
+    <table class="tb roster"><tr><th>座號</th><th>學生</th><th>學校・年級</th><th>主要聯絡人</th><th>電話</th><th>入班</th><th>狀態</th></tr>
+    <tr><td>01</td><td><b>陳小安</b></td><td>建國國中・國二</td><td>陳媽媽</td><td>0912-xxx-301</td><td>9/3</td><td><span class="st ok">在班</span></td></tr>
+    <tr><td>02</td><td><b>李小華</b></td><td>和平國中・國二</td><td>李爸爸</td><td>0921-xxx-118</td><td>9/3</td><td><span class="st ok">在班</span></td></tr>
+    <tr><td>03</td><td><b>林○宇</b></td><td>建國國中・國二</td><td>林媽媽</td><td>0918-xxx-552</td><td>9/3</td><td><span class="st ok">在班</span></td></tr>
+    <tr><td>04</td><td><b>王小明</b></td><td>建國國中・國二</td><td>王小明爸爸</td><td>0937-xxx-640</td><td>9/12</td><td><span class="st ok">在班</span></td></tr>
+    <tr><td>05</td><td><b>黃○恩</b></td><td>大同國中・國二</td><td>黃媽媽</td><td>0955-xxx-027</td><td>10/8</td><td><span class="st warn">插班・第 6 週</span></td></tr>
+    <tr><td>06</td><td><b>張○廷</b></td><td>和平國中・國二</td><td>張爸爸</td><td>0960-xxx-913</td><td>9/3</td><td><span class="st">轉出 → 國二理化 B</span></td></tr>
+    </table>
+    <div class="rule">⋯ 共 20 人。手機號碼依角色權限遮蔽，主任與行政可看完整號碼</div>
+  </div>
+</div></div>
+  </div>
+</div></figure></div>
+</div>
   <div class="subf" id="attendance">
   <div class="sf-top"><h4>到班點名與通知</h4><span class="mcode add">模組 08</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">老師用手機掃 QR 點名，學生到班時家長立刻收到通知；晚到只告訴老師，不讓家長白擔心。</p>
@@ -1791,7 +1846,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>今日點名看板</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/attendance/today</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i on">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i on">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>今日點名</b><span class="tag">11/18（三）</span><span class="seg"><i class="on">國二理化 A・19:00</i><i>國三數學 A</i><i>國一英文 B</i></span><span class="sp"></span><span class="btn ghost">通知規則</span></div>
 <div class="att-sum"><div><b>17</b><span>已到</span></div><div class="lt"><b>1</b><span>晚到中</span></div><div class="ab"><b>1</b><span>未到</span></div><div class="lv"><b>1</b><span>請假</span></div><div class="nt"><b>18</b><span>已通知家長到班</span></div><em>現在 19:16</em></div>
@@ -1826,7 +1881,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>請假列表：確認後直接寫進出缺勤</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/leave</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i on">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i on">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>請假</b><span class="seg"><i class="on">待確認 2</i><i>本週</i><i>全部</i></span><span class="sp"></span><span class="btn ghost">補登請假</span></div>
 <table class="tb"><tr><th>學生</th><th>課程</th><th>請假日期</th><th>原因</th><th>提出者</th><th>狀態</th><th>補課</th></tr>
@@ -1861,7 +1916,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>補課規則：每家補習班選自己的補課方式</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/makeup/policies</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i on">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i on">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>補課安排</b><span class="seg"><i>補課需求 6</i><i class="on">補課規則</i></span><span class="sp"></span><span class="seg"><i class="on">本部</i><i>板橋</i></span></div>
 <div class="mk-g">
@@ -1905,7 +1960,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>續班提醒追蹤</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/reminders/winter-renew</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i on">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i on">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>寒假班續班提醒</b><span class="tag ok">進行中</span><span class="sp"></span><span class="btn ghost">再提醒未回覆</span></div>
 <div class="kpis3"><div><b>48</b><span>已確認</span></div><div><b>9</b><span>考慮中</span></div><div class="bad"><b>23</b><span>未回覆</span></div></div>
@@ -1926,7 +1981,7 @@ tr.hl-ab td{background:#fdf3f3}
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>需要關心的學生</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/risk</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i on">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i on">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>流失預警</b><span class="seg"><i class="on">待處理 6</i><i>處理中 3</i><i>已解決</i></span><span class="sp"></span><span class="btn ghost">調整規則</span></div>
 <div class="rk-l">
@@ -1969,7 +2024,7 @@ tr.hl-ab td{background:#fdf3f3}
 </div></figure><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>人員與角色：一個人可以在不同分校有不同角色</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/settings/members</span></div>
   <div class="app">
-    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i on">設定</div></div>
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i on">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>人員與角色</b><span class="brsw">全部分校 ▾</span><span class="sp"></span><span class="btn ghost">角色權限表</span><span class="btn">＋ 邀請人員</span></div>
 <table class="tb"><tr><th>姓名</th><th>角色與範圍</th><th>可看班級</th><th>雙重驗證</th><th>最後登入</th><th></th></tr>
