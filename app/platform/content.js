@@ -1093,6 +1093,63 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
 .fb-sel{border:1.5px solid #2769a9;border-radius:8px;padding:4px 9px;font-size:11.5px;font-weight:700;color:#16252b}
 .fb-note{background:#f7f9f8;border:1px dashed #dde4e2;border-radius:8px;padding:5px 9px;font-size:10.5px;color:#58686d}
 .fb .bk-btn{background:#2769a9}
+
+/* ---- 到班點名、請假 ---- */
+.att-sum{display:flex;gap:8px;align-items:stretch}
+.att-sum div{background:#fff;border:1px solid #e1e8e6;border-radius:8px;padding:5px 12px;display:flex;flex-direction:column;line-height:1.3}
+.att-sum b{font-size:17px;color:#2769a9;font-variant-numeric:tabular-nums}.att-sum span{font-size:10.5px;color:#6b7b80}
+.att-sum .lt b{color:#9a5b00}.att-sum .ab b{color:#b23b3b}.att-sum .lv b{color:#58686d}.att-sum .nt b{color:#06a148}
+.att-sum em{font-style:normal;margin-left:auto;align-self:center;font-size:11px;color:#6b7b80}
+.attt td{vertical-align:top}
+.attt small{display:block;font-size:10px;color:#8fa29e;line-height:1.3}
+.attt .eta{color:#9a5b00}
+.st{display:inline-block;font-size:10.5px;font-weight:700;border-radius:999px;padding:1px 8px;background:#eef2f1;color:#58686d;white-space:nowrap}
+.st.ok{background:#e4eef8;color:#2769a9}.st.warn{background:#fff2dc;color:#9a5b00}.st.bad{background:#fbe7e7;color:#b23b3b}.st.lv{background:#efe8f8;color:#7a4fb0}
+.nf{font-size:11px;color:#8fa29e}.nf.on{color:#06a148;font-weight:700}
+.acts{white-space:nowrap;text-align:right}.acts .btn{margin-left:4px}
+tr.hl-ab td{background:#fdf3f3}
+.lock-note{margin-top:auto;align-self:center;text-align:center;font-size:10.5px;line-height:1.5;color:#fff;background:rgba(255,255,255,.14);border:1px dashed rgba(255,255,255,.5);border-radius:10px;padding:6px 10px;margin-bottom:10px}
+.lv-set{display:grid;grid-template-columns:1.3fr 1fr;gap:10px;align-items:start}
+.lv-set .rad{margin-top:4px}
+.shot.flowmid{flex:0 0 190px;align-self:center;display:flex;flex-direction:column;gap:14px;margin:0 -6px}
+.fm-box{background:var(--card);border:2px solid var(--pc);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+.fm-box b{color:var(--pc);font-size:14px}.fm-box p{color:var(--ink);line-height:1.6}.fm-box em{font-style:normal;font-size:12px;color:var(--muted)}
+.fm-arr{position:relative;height:30px;display:flex;align-items:flex-end;justify-content:center}
+.fm-arr span{font-size:12px;font-weight:700;color:var(--pc);text-align:center;line-height:1.35;position:absolute;bottom:12px;left:0;right:0}
+.fm-arr.l span{bottom:auto;top:12px}
+.fm-arr.l{align-items:flex-start;height:44px}
+.fm-arr::before{content:"";position:absolute;left:4px;right:10px;height:2px;background:var(--pc)}
+.fm-arr.r::before{bottom:4px}.fm-arr.l::before{top:4px;left:10px;right:4px}
+.fm-arr::after{content:"";position:absolute;width:0;height:0;border:6px solid transparent}
+.fm-arr.r::after{right:0;bottom:-1px;border-left:10px solid var(--pc);border-right:0}
+.fm-arr.l::after{left:0;top:-1px;border-right:10px solid var(--pc);border-left:0}
+
+/* ---- 補課（家長） ---- */
+.mk-miss{display:flex;gap:9px;align-items:center;background:#fdf3f3;border-radius:12px;padding:8px 10px}
+.mk-miss div:nth-child(2){display:flex;flex-direction:column;line-height:1.35}
+.mk-miss b{font-size:12.5px}.mk-miss span{font-size:10.5px;color:#6b7b80}
+.mk-x{width:30px;height:30px;border-radius:9px;background:#b23b3b;color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.mk-quota{display:flex;justify-content:space-between;font-size:10.5px;color:#58686d;padding:0 2px}
+.mk-quota b{color:#2769a9}
+.mk-opt{display:flex;align-items:center;gap:9px;border:1.5px solid #e1e8e6;border-radius:12px;padding:6px 9px}
+.mk-opt.on{border-color:#2769a9;background:#f2f7fc}
+.mk-d{width:40px;flex:none;display:flex;flex-direction:column;align-items:center;line-height:1.2;border-right:1px solid #e1e8e6;padding-right:7px}
+.mk-d span{font-size:9.5px;color:#8fa29e}.mk-d b{font-size:13px}
+.mk-opt.on .mk-d b{color:#2769a9}
+.mk-i{flex:1;display:flex;flex-direction:column;line-height:1.35}
+.mk-i b{font-size:12px}.mk-i span{font-size:10.5px;color:#6b7b80}
+.mk-opt em{font-style:normal;font-size:10.5px;font-weight:700;color:#0e7c86}
+.mk-skip{color:#2769a9;font-weight:700;font-size:11px}
+/* flow arrows: draw with borders so they always render */
+.shot.flowmid{flex:0 0 210px}
+.fm-arr{height:auto;display:flex;flex-direction:column;align-items:center;gap:4px}
+.fm-arr::before,.fm-arr::after{display:none}
+.fm-arr span{position:static}
+.fm-arr i{display:block;width:100%;height:14px;position:relative}
+.fm-arr i::before{content:"";position:absolute;top:6px;left:0;right:0;height:2px;background:var(--pc)}
+.fm-arr i::after{content:"";position:absolute;top:1px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.fm-arr.r i::after{right:-2px;border-left:10px solid var(--pc)}
+.fm-arr.l i::after{left:-2px;border-right:10px solid var(--pc)}
 </style>
 </head>
 <body>
@@ -1729,43 +1786,43 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
   <div class="ba2"><div class="b"><i>以前</i>紙本點名、電話請假、行政翻課表找補課空位</div><div class="arr">→</div><div class="a"><i>用了平台</i>點名即通知，請假自動同步，補課依你的規則列出選項</div></div>
   <div class="subf" id="attendance">
   <div class="sf-top"><h4>到班點名與通知</h4><span class="mcode add">模組 08</span><span class="mkind add">附加模組</span></div>
-  <p class="sf-desc">老師用手機掃 QR 點名，家長即時收到到班通知。</p>
-  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生自己在 LINE 回報晚到，不會被誤報未到</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>該到沒到的學生，自動提醒行政</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長可自選要不要收離班通知</span></div></div>
+  <p class="sf-desc">老師用手機掃 QR 點名，學生到班時家長立刻收到通知；晚到只告訴老師，不讓家長白擔心。</p>
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生回報晚到只通知老師，到班時才通知家長</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>過了應到時間還沒到，一鍵詢問學生或通知家長</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長可自選要不要收離班通知</span></div></div>
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>今日點名看板</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/attendance/today</span></div>
   <div class="app">
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i on">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
-<div class="pg-h"><b>今日點名</b><span class="tag">11/18（三）</span><span class="sp"></span><span class="btn ghost">匯出</span></div>
-<div class="att">
-  <div class="att-r"><b>國二理化 A</b><span>19:00・林老師</span><div class="bar3"><i style="width:85%"></i></div><em>17 / 20 到班</em><span class="tag warn">晚到 1</span><span class="tag bad">未到 1</span></div>
-  <div class="att-r"><b>國三數學 A</b><span>19:00・陳老師</span><div class="bar3"><i style="width:100%"></i></div><em>15 / 15 到班</em></div>
-  <div class="att-r"><b>國一英文 B</b><span>19:30・王老師</span><div class="bar3"><i style="width:0%"></i></div><em>尚未開始</em></div>
-</div>
-<div class="alert"><b>未到班提醒・國二理化 A</b>
-  <div class="al-r"><span>林○宇</span><span>王媽媽 0918-xxx-xxx</span><span class="btn sm ghost">標記已聯絡</span></div>
-  <div class="al-r late"><span>王小明</span><span>學生回報晚到・預計 19:20（公車誤點）</span><span class="tag warn">等待中</span></div>
-</div></div>
+<div class="pg-h"><b>今日點名</b><span class="tag">11/18（三）</span><span class="seg"><i class="on">國二理化 A・19:00</i><i>國三數學 A</i><i>國一英文 B</i></span><span class="sp"></span><span class="btn ghost">通知規則</span></div>
+<div class="att-sum"><div><b>17</b><span>已到</span></div><div class="lt"><b>1</b><span>晚到中</span></div><div class="ab"><b>1</b><span>未到</span></div><div class="lv"><b>1</b><span>請假</span></div><div class="nt"><b>18</b><span>已通知家長到班</span></div><em>現在 19:16</em></div>
+<table class="tb attt"><tr><th>學生</th><th>應到時間</th><th>實到時間</th><th>狀態</th><th>家長通知</th><th></th></tr>
+<tr><td><b>陳小安</b></td><td>19:00</td><td>18:55</td><td><span class="st ok">已到</span></td><td class="nf on">✓ 到班 18:55</td><td></td></tr>
+<tr class="hl-ab"><td><b>林○宇</b></td><td>19:00</td><td class="muted">—</td><td><span class="st bad">未到・超過 16 分鐘</span></td><td class="nf">尚未通知</td><td class="acts"><span class="btn sm ghost">詢問學生</span><span class="btn sm">通知家長</span></td></tr>
+<tr><td><b>王小明</b></td><td>19:00 → <b class="eta">19:20</b><small>學生回報晚到・公車誤點</small></td><td class="muted">—</td><td><span class="st warn">晚到中</span></td><td class="nf">到班時通知<small>晚到回報不通知家長</small></td><td class="acts"><span class="btn sm ghost">詢問學生</span></td></tr>
+<tr><td><b>黃○恩</b></td><td>19:30<small>固定・學校社團</small></td><td class="muted">—</td><td><span class="st">未到應到時間</span></td><td class="nf">到班時通知</td><td></td></tr>
+<tr><td><b>李小華</b></td><td class="muted">—</td><td class="muted">—</td><td><span class="st lv">請假</span></td><td class="nf on">✓ 請假已確認</td><td></td></tr>
+</table>
+<div class="rule">通知規則：<b>到班時</b>通知家長・學生回報晚到<b>只通知老師</b>・超過應到時間 15 分鐘未到 → 提醒行政 <u>編輯規則</u></div></div>
   </div>
-</div></figure><figure class="shot ph"><figcaption><span class="who teacher">老師・手機</span>老師老師用手機點名，不用裝 App</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>老師點名</b><span>⋯</span></div><div class="ph-body liffbg">
-<div class="ap-h">國二理化 A <span>19:00</span></div>
-<div class="scan"><div class="scan-box"></div><span>對準學生的點名 QR</span></div>
-<div class="ap-li"><b>陳小安</b><i class="ok">已到 18:55</i></div>
-<div class="ap-li"><b>王小明</b><i class="lvq">預計晚到 19:20</i></div>
-<div class="ap-li"><b>林○宇</b><i class="no">未到</i></div>
-<div class="ap-li"><b>李小華</b><i class="lvq">請假</i></div></div></div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長收到晚到回報與到班通知</figcaption><div class="phone"><div class="notch"></div><div class="ph-top lock">11:42</div><div class="ph-body lockbg">
-<div class="push"><div class="ps-h"><span class="lg"></span>LINE・示範教育<em>18:41</em></div><b>小明回報會晚到</b><span>預計 19:20 到班，原因：公車誤點</span></div>
-<div class="push"><div class="ps-h"><span class="lg"></span>LINE・示範教育<em>19:18</em></div><b>小明已到班</b><span>國二理化 A・19:18 完成簽到</span></div></div></div></figure><figure class="shot ph"><figcaption><span class="who student">學生本人・手機</span>學生自己傳訊息說會晚到</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
+</div></figure><figure class="shot ph"><figcaption><span class="who student">學生本人・手機</span>學生自己傳訊息說會晚到</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
 <div class="msg p">老師我今天會晚點到，公車一直沒來</div>
 <div class="msg b">收到！大概幾點會到呢？</div>
 <div class="quick"><span>19:10</span><span class="on">19:20</span><span>19:30</span><span>不確定</span></div>
 <div class="msg p">19:20</div>
-<div class="msg b">好，已幫你登記國二理化 A 預計 19:20 到，也告訴林老師了。路上小心！</div>
-<div class="msg sys">已登記晚到・已通知老師與家長</div></div></div></figure></div>
+<div class="msg b">好，已幫你登記國二理化 A 預計 19:20 到，也告訴林老師了。到班掃 QR 後，系統會通知爸爸媽媽。路上小心！</div>
+<div class="msg sys">已登記晚到・已通知老師</div></div></div></figure><figure class="shot ph"><figcaption><span class="who teacher">老師・手機</span>老師掃 QR 點名，晚到的學生一眼看到</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>老師點名</b><span>⋯</span></div><div class="ph-body liffbg">
+<div class="ap-h">國二理化 A <span>19:00</span></div>
+<div class="scan"><div class="scan-box"></div><span>對準學生的點名 QR</span></div>
+<div class="ap-li"><b>陳小安</b><i class="ok">已到 18:55</i></div>
+<div class="ap-li"><b>王小明</b><i class="lvq">晚到・預計 19:20</i></div>
+<div class="ap-li"><b>林○宇</b><i class="no">未到</i></div>
+<div class="ap-li"><b>李小華</b><i class="lvq">請假</i></div></div></div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長只在小明到班時收到通知</figcaption><div class="phone"><div class="notch"></div><div class="ph-top lock">19:18</div><div class="ph-body lockbg">
+<div class="push"><div class="ps-h"><span class="lg"></span>LINE・示範教育<em>19:18</em></div><b>小明已到班</b><span>國二理化 A・19:18 完成簽到</span></div>
+<div class="lock-note">18:41 小明回報會晚到時<br>不會傳給家長，避免白擔心</div></div></div></figure></div>
 </div><div class="subf" id="leave">
   <div class="sf-top"><h4>LINE 請假</h4><span class="mcode add">模組 09</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">家長或學生在 LINE 說一聲就能請假，請假直接同步到點名。</p>
-  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生請假需家長確認，避免孩子自己跳課</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可設定請假截止時間</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>請假後自動轉給補課安排</span></div></div>
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生請假要不要經過家長，後台依補習班習慣設定</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可設定請假截止時間</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>請假後自動轉給補課安排</span></div></div>
   <div class="shots"><figure class="shot web full"><figcaption><span class="who staff">補習班人員・網頁</span>請假列表：確認後直接寫進出缺勤</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/leave</span></div>
   <div class="app">
@@ -1778,13 +1835,22 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
 <tr><td>張○晴 <span class="idt st">學生自己請假</span></td><td>國二數學 B</td><td>11/21（六）</td><td>身體不舒服</td><td>張○晴</td><td><span class="tag warn">等待家長確認</span></td><td class="muted">—</td></tr>
 <tr><td>周○廷</td><td>國一英文 B</td><td>11/20（五）</td><td>家庭因素</td><td>行政補登</td><td><span class="tag warn">超過截止時間</span></td><td class="muted">—</td></tr>
 </table>
-<div class="rule">請假截止：上課前 2 小時・學生請假需家長確認・確認後同步到點名頁 <u>編輯規則</u></div></div>
+<div class="lv-set"><div class="pn"><div class="pn-h">學生自己請假時</div>
+  <div class="rad on"><i></i><div><b>需要家長確認</b><span>家長按「確認請假」才算請假成功</span></div></div>
+  <div class="rad"><i></i><div><b>只通知家長</b><span>直接請假成功，同時傳訊息讓家長知道</span></div></div>
+  <div class="rad"><i></i><div><b>不通知家長</b><span>適合高中以上、讓學生自己負責的補習班</span></div></div></div>
+  <div class="pn"><div class="pn-h">其他規則</div>
+  <div class="kv"><span>請假截止</span><b class="dd">上課前 2 小時 ▾</b></div>
+  <div class="kv"><span>家長請假</span><b>直接成功</b></div>
+  <div class="kv"><span>請假後</span><b>同步點名・轉補課</b></div></div></div></div>
   </div>
 </div></figure><figure class="shot ph"><figcaption><span class="who student">學生本人・手機</span>學生自己請假</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
 <div class="msg p">我禮拜六數學課要請假，身體不舒服</div>
 <div class="msg b">好的，11/21（六）國二數學 B 請假。學生請假需要家長確認，我已經傳給你的家長了，確認後會再告訴你。</div>
 <div class="msg sys">已送出・等待家長確認</div>
-<div class="msg b">你的家長已確認請假，好好休息！</div></div></div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長收到確認請求</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
+<div class="msg b">你的家長已確認請假，好好休息！</div></div></div></figure><figure class="shot flowmid"><div class="fm-arr r"><span>學生送出請假</span><i></i></div>
+<div class="fm-box"><b>依後台設定：需要家長確認</b><p>平台把請假傳給家長，學生這邊顯示「等待家長確認」。</p><em>可改成「只通知家長」或「不通知家長」</em></div>
+<div class="fm-arr l"><i></i><span>家長確認後回覆學生，<br>同步到點名</span></div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長收到確認請求</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
 <div class="flex"><div class="fx-h">請假確認</div><div class="fx-b"><b>晴晴想請假</b><p>11/21（六）國二數學 B<br>原因：身體不舒服</p><span>由學生本人提出</span></div><div class="fx-btn">確認請假</div><div class="fx-btn ghost">不同意</div><div class="fx-btn ghost">聯絡補習班</div></div>
 <div class="msg p">確認請假</div>
 <div class="msg b">已確認，會通知老師。</div></div></div></figure></div>
@@ -1814,15 +1880,16 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
 </div>
 <div class="rule">導入時依示範教育現行制度設定；調整規則不需要改程式，新的請假會套用新規則</div></div>
   </div>
-</div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長看到依規則列出的補課選項</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>補課安排</b><span>⋯</span></div><div class="ph-body liffbg">
-<div class="kid"><b>王小明的補課</b><span>11/18（三）國二理化 A 請假</span></div>
-<div class="lf-sec">選擇補課方式</div>
-<div class="slot on">跟班補課・11/22（六）14:00 板橋 <em>剩 2 位</em></div>
-<div class="slot">跟班補課・11/25（二）19:00 本部 <em>剩 1 位</em></div>
-<div class="slot">補課時段・11/29（六）14:00 本部 <em>剩 5 位</em></div>
-<div class="slot">不需要補課</div>
-<p class="lf-fine">本期已補 0 次，可再補 2 次・請於 12/2 前完成</p>
-<div class="lf-btn">確認補課</div></div></div></figure></div>
+</div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長看到依規則列出的補課選項</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>安排補課</b><span>⋯</span></div><div class="ph-body liffbg bk">
+<div class="mk-miss"><div class="mk-x">缺</div><div><b>11/18（三）國二理化 A</b><span>小明已請假・第 3 單元 浮力</span></div></div>
+<div class="mk-quota"><span>本期還可補 <b>2</b> 次</span><span>請在 <b>12/2</b> 前完成</span></div>
+<div class="bk-lbl">跟其他班補課・同進度</div>
+<div class="mk-opt on"><div class="mk-d"><span>週六</span><b>11/22</b></div><div class="mk-i"><b>14:00 國二理化 B</b><span>板橋分校・周老師</span></div><em>剩 2</em></div>
+<div class="mk-opt"><div class="mk-d"><span>週二</span><b>11/25</b></div><div class="mk-i"><b>19:00 國二理化 C</b><span>本部・林老師</span></div><em>剩 1</em></div>
+<div class="bk-lbl">固定補課時段</div>
+<div class="mk-opt"><div class="mk-d"><span>週六</span><b>11/29</b></div><div class="mk-i"><b>14:00 補課教室</b><span>本部 3 樓・助教帶</span></div><em>剩 5</em></div>
+<div class="bk-btn">確認補課・11/22（六）14:00</div>
+<p class="bk-fine mk-skip">這次不需要補課</p></div></div></figure></div>
 </div>
 </section><section class="pillar c6" id="manage">
   <div class="pl-banner">
