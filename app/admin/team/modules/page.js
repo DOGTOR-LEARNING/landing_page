@@ -4,7 +4,7 @@ import { Mail, Search, X } from 'lucide-react'
 import { adminFetch } from '../../AdminWorkspace'
 import styles from '../../admin.module.css'
 import page from './modules.module.css'
-import { CATEGORIES, MODULES, TEAM, TECH_GROUPS } from '@/lib/moduleOwners'
+const EMPTY_CATALOG = { categories: [], modules: [], team: [], tech_groups: [] }
 
 // Find the employee account behind a TEAM entry: exact email first, then a name token.
 function findAccount(person, accounts) {
@@ -14,11 +14,11 @@ function findAccount(person, accounts) {
     || accounts.find(a => names.some(n => (a.display_name || '').toLowerCase().includes(n)))
 }
 
-function matches(module, query, tech, owner) {
+function matches(module, query, tech, owner, team) {
   if (tech && !module.stack.includes(tech)) return false
   if (owner && !module.owners.includes(owner)) return false
   if (!query) return true
-  const people = module.owners.map(k => TEAM.find(p => p.key === k)).filter(Boolean).flatMap(p => [p.name, p.fullName])
+  const people = module.owners.map(k => team.find(p => p.key === k)).filter(Boolean).flatMap(p => [p.name, p.fullName])
   const haystack = [module.name, module.summary, ...people, ...module.stack, ...module.paths].join(' ').toLowerCase()
   return haystack.includes(query.toLowerCase())
 }
@@ -30,14 +30,22 @@ export default function ModuleOwnersPage() {
   const [tech, setTech] = useState('')
   const [owner, setOwner] = useState('')
   const [accounts, setAccounts] = useState([])
+  const [catalog, setCatalog] = useState(null)
+  const [catalogError, setCatalogError] = useState(false)
+  const { categories, modules, team, tech_groups: techLayers } = catalog || EMPTY_CATALOG
 
   useEffect(() => {
+    adminFetch('/api/admin/team/modules', { cache: 'no-store' })
+      .then(r => r.json()).then(d => {
+        if (!d.success) throw new Error('Could not load module catalog')
+        setCatalog(d.data)
+      }).catch(() => setCatalogError(true))
     adminFetch('/api/admin/team/members', { cache: 'no-store' })
       .then(r => r.json()).then(d => { if (d.success) setAccounts(d.data) }).catch(() => {})
   }, [])
 
   // TEAM merged with the live employee account (title, intro, login email).
-  const people = useMemo(() => TEAM.map(person => {
+  const people = useMemo(() => team.map(person => {
     const account = findAccount(person, accounts)
     return {
       ...person,
@@ -45,20 +53,20 @@ export default function ModuleOwnersPage() {
       email: account?.email || person.email,
       jobTitle: account?.job_title || '',
       bio: account?.bio || '',
-      modules: MODULES.filter(m => m.owners.includes(person.key)),
+      modules: modules.filter(m => m.owners.includes(person.key)),
     }
-  }), [accounts])
+  }), [accounts, modules, team])
   const byKey = Object.fromEntries(people.map(p => [p.key, p]))
 
   // Tech -> module count, grouped by layer; anything not listed in TECH_GROUPS goes to 其他.
   const techGroups = useMemo(() => {
     const counts = new Map()
-    MODULES.forEach(m => m.stack.forEach(t => counts.set(t, (counts.get(t) || 0) + 1)))
-    const listed = new Set(TECH_GROUPS.flatMap(g => g.items))
-    const groups = TECH_GROUPS.map(g => ({ label: g.label, items: g.items.filter(t => counts.has(t)).map(t => [t, counts.get(t)]) }))
+    modules.forEach(m => m.stack.forEach(t => counts.set(t, (counts.get(t) || 0) + 1)))
+    const listed = new Set(techLayers.flatMap(g => g.items))
+    const groups = techLayers.map(g => ({ label: g.label, items: g.items.filter(t => counts.has(t)).map(t => [t, counts.get(t)]) }))
     groups.push({ label: '其他', items: [...counts].filter(([t]) => !listed.has(t)) })
     return { total: counts.size, groups: groups.filter(g => g.items.length) }
-  }, [])
+  }, [modules, techLayers])
 
   // A small name card next to the clicked name; closes on outside click, Escape or scroll.
   const [card, setCard] = useState(null)
@@ -90,7 +98,9 @@ export default function ModuleOwnersPage() {
     }
   }, [card])
 
-  const visible = MODULES.filter(m => matches(m, query.trim(), tech, owner))
+  if (!catalog) return <p role="status">{catalogError ? '無法載入團隊分工，請重新整理後再試。' : '正在載入團隊分工…'}</p>
+
+  const visible = modules.filter(m => matches(m, query.trim(), tech, owner, team))
   const filtering = query || tech || owner
 
   return <>
@@ -118,7 +128,7 @@ export default function ModuleOwnersPage() {
     </section>
 
     <section className={`${styles.tableCard} ${page.card}`}>
-      <div className={styles.tableToolbar}><div><h2>模組與負責人</h2><p>{MODULES.length} 個模組。負責人掌管該模組的主要設定與操作，有問題直接找他們。</p></div></div>
+      <div className={styles.tableToolbar}><div><h2>模組與負責人</h2><p>{modules.length} 個模組。負責人掌管該模組的主要設定與操作，有問題直接找他們。</p></div></div>
       <div className={page.filters}>
         <label className={page.search}><Search size={17} /><input value={query} onChange={e => setQuery(e.target.value)} placeholder="搜尋模組、技術、人名或路徑" aria-label="搜尋模組" /></label>
         <select value={owner} onChange={e => setOwner(e.target.value)} aria-label="依負責人篩選" className={page.select}>
@@ -130,7 +140,7 @@ export default function ModuleOwnersPage() {
       {tech && <p className={page.active}>只顯示使用 <strong>{tech}</strong> 的模組</p>}
 
       {!visible.length && <p className={page.empty}>沒有符合條件的模組。</p>}
-      {CATEGORIES.map(category => {
+      {categories.map(category => {
         const items = visible.filter(m => m.category === category.id)
         if (!items.length) return null
         return <div key={category.id} className={page.group}>
@@ -151,7 +161,7 @@ export default function ModuleOwnersPage() {
       })}
       <div className={styles.permissionHelp}>
         <h3>資料怎麼更新</h3>
-        <p>職稱和自我介紹由每個人在「帳號設定」自己填寫。模組、技術棧和負責人寫在官網專案的 <code>lib/moduleOwners.js</code>，改完部署即生效。</p>
+        <p>職稱和自我介紹由每個人在「帳號設定」自己填寫。模組和負責人由後台與 Superb Bot 共用同一份資料。</p>
       </div>
     </section>
 
