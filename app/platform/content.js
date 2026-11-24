@@ -1049,6 +1049,50 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
 .pz-menu span{padding:3px 6px;border-radius:4px;color:#16252b}
 .pz-menu span.on{background:#e4eef8;color:#2769a9;font-weight:700}
 .pz-menu span.go{border-top:1px solid #eef2f1;margin-top:2px;color:#6b46c1;font-weight:700;border-radius:0}
+
+/* ---- 試聽預約與回饋 ---- */
+.trial-shots{gap:36px}
+.ph-grp{display:flex;flex-direction:column;gap:8px}
+.grp-lbl{font-size:13px;font-weight:700;color:var(--pc);border-bottom:2px solid var(--pc);padding-bottom:4px}
+.grp-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.ph-body.bk,.ph-body.fb{gap:7px;padding:10px 12px}
+.bk-course{display:flex;gap:9px;align-items:center;background:#f4f7f6;border-radius:12px;padding:8px 10px}
+.bk-course div:nth-child(2){display:flex;flex-direction:column;flex:1;line-height:1.35}
+.bk-course b{font-size:13.5px}.bk-course span{font-size:10.5px;color:#6b7b80}
+.bk-course em{font-style:normal;font-size:11px;color:#2769a9;font-weight:700}
+.bk-ic{width:34px;height:34px;border-radius:10px;background:#2769a9;color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.bk-lbl{font-size:10.5px;font-weight:700;color:#8fa29e;letter-spacing:.04em;margin-top:2px}
+.bk-seg{display:grid;grid-template-columns:1fr 1fr;background:#eef2f1;border-radius:10px;padding:3px}
+.bk-seg i{font-style:normal;text-align:center;padding:4px 0;border-radius:8px;color:#58686d}
+.bk-seg i.on{background:#fff;color:#2769a9;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.bk-days{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.bk-days div{border:1.5px solid #e1e8e6;border-radius:12px;padding:5px 0;display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.bk-days span{font-size:10px;color:#8fa29e}.bk-days b{font-size:14px}
+.bk-days em{font-style:normal;font-size:10px;color:#0e7c86;font-weight:700}
+.bk-days .on{border-color:#2769a9;background:#2769a9;color:#fff}.bk-days .on span,.bk-days .on em{color:#d6e6f5}
+.bk-days .full{background:#f4f7f6;color:#aab6b3}.bk-days .full em{color:#aab6b3}
+.bk-time{display:flex;justify-content:space-between;align-items:center;background:#e4eef8;color:#2769a9;font-weight:700;border-radius:10px;padding:6px 10px;font-size:12px}
+.bk-time em{font-style:normal;font-weight:400;font-size:10.5px;color:#58686d}
+.bk-kid{display:flex;align-items:baseline;gap:6px;border:1px solid #e1e8e6;border-radius:10px;padding:6px 10px}
+.bk-kid span{flex:1;font-size:11px;color:#6b7b80}.bk-kid em{font-style:normal;font-size:10px;color:#0e7c86;font-weight:700}
+.bk-btn{margin-top:auto;background:#06c755;color:#fff;text-align:center;font-weight:700;border-radius:12px;padding:10px;font-size:12.5px}
+.bk-fine{text-align:center;font-size:10px;color:#8fa29e;margin-top:-3px}
+.fb-kid{display:flex;gap:9px;align-items:center;padding-bottom:7px;border-bottom:1px solid #eef2f1}
+.fb-kid div:nth-child(2){display:flex;flex-direction:column;line-height:1.35}
+.fb-kid b{font-size:13.5px}.fb-kid span{font-size:10.5px;color:#6b7b80}
+.fb-av{width:32px;height:32px;border-radius:50%;background:#f4f0e6;color:#7a6400;display:grid;place-items:center;font-weight:700}
+.fb-row{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.fb-row>span{font-size:11px;font-weight:700;color:#3d4b50;flex:none}
+.fb-row.stack{flex-direction:column;align-items:stretch;gap:4px}
+.fb-opt{display:flex;background:#eef2f1;border-radius:8px;padding:2px}
+.fb-opt i{font-style:normal;font-size:10.5px;padding:2px 7px;border-radius:6px;color:#6b7b80}
+.fb-opt i.on{background:#fff;color:#2769a9;font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.fb-tags{display:flex;gap:5px;flex-wrap:wrap}
+.fb-tags i{font-style:normal;font-size:10.5px;border:1px solid #dde4e2;border-radius:999px;padding:1px 9px;color:#6b7b80}
+.fb-tags i.on{border-color:#2769a9;background:#e4eef8;color:#2769a9;font-weight:700}
+.fb-sel{border:1.5px solid #2769a9;border-radius:8px;padding:4px 9px;font-size:11.5px;font-weight:700;color:#16252b}
+.fb-note{background:#f7f9f8;border:1px dashed #dde4e2;border-radius:8px;padding:5px 9px;font-size:10.5px;color:#58686d}
+.fb .bk-btn{background:#2769a9}
 </style>
 </head>
 <body>
@@ -1429,7 +1473,7 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
     <span class="pl-big">三</span>
     <div class="pl-t"><span class="pl-eb">三、招生 CRM<em class="add">模組 03・附加模組</em></span><h2>每一個加 LINE 的人，現在在哪個階段、要不要跟進</h2><p>每一位加入 LINE 的人都會進入招生名單：從只加好友、問班、聯絡、試聽到報名，每個人在哪一步一清二楚。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#followup"><b>招生總覽與跟進清單</b><span>一眼看到每個階段有多少人</span></a><a class="inc2" href="#pipeline"><b>名單看板與名單卡片</b><span>家長在 LINE 留下的資料自動建成名單</span></a><a class="inc2" href="#trial"><b>試聽預約與試聽回饋</b><span>家長在 LINE 選試聽時段；老師試聽後用語音說 30 秒</span></a></div>
+  <div class="inc-row"><a class="inc2" href="#followup"><b>招生總覽與跟進清單</b><span>一眼看到每個階段有多少人</span></a><a class="inc2" href="#pipeline"><b>名單看板與名單卡片</b><span>家長在 LINE 留下的資料自動建成名單</span></a><a class="inc2" href="#trial"><b>試聽預約與試聽回饋</b><span>家長在 LINE 選試聽時段；老師試聽後在手機上點選評估</span></a></div>
   <div class="ba2"><div class="b"><i>以前</i>招生人員邊聊邊抄名單，忙起來就忘了跟進，問過的家長就這樣流失</div><div class="arr">→</div><div class="a"><i>用了平台</i>每位好友都在名單上，今天該聯絡誰、為什麼、說什麼都列好了</div></div>
   <div class="subf" id="followup">
   <div class="sf-top"><h4>招生總覽與跟進清單</h4><span class="mkind add">附加模組</span></div>
@@ -1511,26 +1555,36 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
 </div></figure></div>
 </div><div class="subf" id="trial">
   <div class="sf-top"><h4>試聽預約與試聽回饋</h4><span class="mkind add">附加模組</span></div>
-  <p class="sf-desc">家長在 LINE 選試聽時段；老師試聽後用語音說 30 秒，就產生給家長的回饋與報名建議。</p>
-  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>試聽名額自動扣除，不會超收</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>老師用手機語音輸入，不用裝 App</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長收到回饋卡片，可直接按「我要報名」</span></div></div>
-  <div class="shots"><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長在 LINE 裡選試聽時段</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>預約試聽</b><span>⋯</span></div><div class="ph-body liffbg">
-<div class="lf-sec">想試聽的課程</div>
-<div class="lf-sel">國二數學 ▾</div>
-<div class="lf-sec">分校</div>
-<div class="lf-seg"><i>本部</i><i class="on">板橋</i></div>
-<div class="lf-sec">可預約時段</div>
-<div class="slot">11/19（三）19:00 <em>剩 2 位</em></div>
-<div class="slot on">11/21（五）19:00 <em>剩 3 位</em></div>
-<div class="slot dis">11/22（六）10:00 <em>已額滿</em></div>
-<div class="lf-sec">聯絡電話</div>
-<div class="lf-in">0912-345-678（已帶入）</div>
-<div class="lf-btn">確認預約</div></div></div></figure><figure class="shot ph"><figcaption><span class="who teacher">老師・手機</span>老師試聽後用語音輸入 30 秒（不用裝 App）</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>試聽回饋</b><span>⋯</span></div><div class="ph-body liffbg">
-<div class="ap-h">試聽回饋・陳同學 <span>國二數學</span></div>
-<div class="voice"><div class="mic">🎤</div><span>用手機鍵盤的語音輸入說出評估</span><div class="vtxt">基礎觀念還可以，計算慢，應用題會卡，上課很專心會發問，建議 B 班</div></div>
-<div class="pn-h2">AI 整理的評估</div>
-<div class="ap-card">基礎觀念大致清楚，計算速度偏慢、應用題容易卡住。上課專心、會主動發問。<b>建議班級：國二數學 B（基礎加強）</b></div>
-<div class="lf-btn">確認並產生家長回饋</div></div></div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長收到試聽回饋</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
-<div class="flex"><div class="fx-h">試聽回饋</div><div class="fx-b"><b>晴晴的數學試聽</b><p>觀念大致清楚，主要需要加強計算速度與應用題。上課很專心，也會主動發問 👍<br><br>建議：國二數學 B（每週五 19:00，12 人小班）</p><span>周老師・示範板橋</span></div><div class="fx-btn">我要報名</div><div class="fx-btn ghost">想再聊聊</div></div></div></div></figure></div>
+  <p class="sf-desc">家長在 LINE 選試聽時段；老師試聽後在手機上點選評估，就產生給家長的回饋與報名建議。</p>
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>試聽名額自動扣除，不會超收</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>老師用手機點選評估，30 秒完成，不用裝 App</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長收到回饋卡片，可直接按「我要報名」</span></div></div>
+  <div class="shots trial-shots">
+<div class="ph-grp"><div class="grp-lbl">試聽前</div><div class="grp-row">
+<figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長在 LINE 裡預約試聽</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>預約免費試聽</b><span>⋯</span></div><div class="ph-body liffbg bk">
+<div class="bk-course"><div class="bk-ic">數</div><div><b>國二數學 B</b><span>周老師・12 人小班</span></div><em>更換</em></div>
+<div class="bk-lbl">分校</div>
+<div class="bk-seg"><i>本部</i><i class="on">板橋</i></div>
+<div class="bk-lbl">選擇日期</div>
+<div class="bk-days"><div><span>週三</span><b>11/19</b><em>剩 2</em></div><div class="on"><span>週五</span><b>11/21</b><em>剩 3</em></div><div class="full"><span>週六</span><b>11/22</b><em>額滿</em></div></div>
+<div class="bk-time"><span>⏰ 19:00 – 21:00</span><em>板橋分校 2 樓</em></div>
+<div class="bk-lbl">試聽學生</div>
+<div class="bk-kid"><b>晴晴</b><span>國二・建國國中</span><em>已帶入</em></div>
+<div class="bk-btn">確認預約・11/21（五）19:00</div>
+<p class="bk-fine">試聽前一天會在 LINE 提醒您</p></div></div></figure>
+</div></div>
+<div class="ph-grp after"><div class="grp-lbl">試聽後</div><div class="grp-row">
+<figure class="shot ph"><figcaption><span class="who teacher">老師・手機</span>老師點選評估，不用裝 App</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>試聽回饋</b><span>⋯</span></div><div class="ph-body liffbg fb">
+<div class="fb-kid"><div class="fb-av">晴</div><div><b>陳晴晴</b><span>國二數學・11/21 試聽</span></div></div>
+<div class="fb-row"><span>基礎觀念</span><div class="fb-opt"><i>待加強</i><i class="on">清楚</i><i>很好</i></div></div>
+<div class="fb-row"><span>計算速度</span><div class="fb-opt"><i class="on">偏慢</i><i>普通</i><i>快</i></div></div>
+<div class="fb-row"><span>應用題</span><div class="fb-opt"><i class="on">會卡住</i><i>普通</i><i>熟練</i></div></div>
+<div class="fb-row stack"><span>上課表現</span><div class="fb-tags"><i class="on">專心</i><i class="on">會發問</i><i>較安靜</i><i>需提醒</i></div></div>
+<div class="fb-row stack"><span>建議班級</span><div class="fb-sel">國二數學 B（基礎加強）▾</div></div>
+<div class="fb-note">補充一句（選填）：應用題從 B 班的題型練起</div>
+<div class="bk-btn">產生家長回饋</div></div></div></figure>
+<figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長收到試聽回饋</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
+<div class="flex"><div class="fx-h">試聽回饋</div><div class="fx-b"><b>晴晴的數學試聽</b><p>觀念大致清楚，主要需要加強計算速度與應用題。上課很專心，也會主動發問 👍<br><br>建議：國二數學 B（每週五 19:00，12 人小班）</p><span>周老師・示範板橋</span></div><div class="fx-btn">我要報名</div><div class="fx-btn ghost">想再聊聊</div></div></div></div></figure>
+</div></div>
+</div>
 </div>
 </section><section class="pillar c4" id="family">
   <div class="pl-banner">
