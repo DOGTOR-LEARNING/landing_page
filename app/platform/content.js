@@ -1018,6 +1018,37 @@ body{background:var(--paper)}
 .vbars .on i{background:#2769a9}.vbars .on em{color:#2769a9;font-weight:700}
 .hb{grid-template-columns:64px 1fr 24px}
 .ib-i .tag{align-self:start}
+
+/* ---- AI 回覆設定、單一聊天室暫停 ---- */
+.aist{font-size:11px;font-weight:700;color:#6b46c1;background:#f3effc;border-radius:999px;padding:2px 9px}
+.set2{display:grid;grid-template-columns:1.15fr 1fr;gap:10px;align-items:start}
+.rad{display:flex;gap:8px;align-items:flex-start;border:1px solid #e1e8e6;border-radius:6px;padding:6px 8px;font-size:12px}
+.rad>i{flex:none;width:12px;height:12px;border-radius:50%;border:1.5px solid #aab6b3;margin-top:2px}
+.rad div{display:flex;flex-direction:column}.rad span{font-size:11px;color:#6b7b80}
+.rad.on{border-color:#2769a9;background:#f2f7fc}.rad.on>i{border:4px solid #2769a9}
+.wk{display:flex;flex-direction:column;gap:3px;margin-top:4px}
+.wk-h,.wk-r{display:grid;grid-template-columns:32px 1fr;align-items:center;font-size:10.5px;color:#6b7b80}
+.wk-h div{position:relative;height:14px}.wk-h div span{position:absolute;transform:translateX(-50%);white-space:nowrap}.wk-h div span:first-child{transform:none}.wk-h div span:last-child{transform:translateX(-100%)}
+.wk-r div{position:relative;height:12px;background:#d9cdf5;border-radius:3px}
+.wk-r i{position:absolute;top:0;bottom:0;border-radius:3px}
+i.hm{background:#2769a9}i.ai{background:#d9cdf5}
+.wk-lg{display:flex;gap:12px;font-size:10.5px;color:#58686d;margin-top:3px}
+.wk-lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.tgl-r{display:flex;gap:10px;align-items:flex-start;font-size:12px}
+.tgl-r div{display:flex;flex-direction:column;flex:1}.tgl-r span{font-size:11px;color:#6b7b80}
+.tgl{flex:none;width:30px;height:17px;border-radius:999px;background:#cfd8d5;position:relative;margin-top:2px}
+.tgl i{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff}
+.tgl.on{background:#2769a9}.tgl.on i{left:15px}
+.who3{display:flex;flex-direction:column;gap:4px;background:#f7f9f8;border-radius:6px;padding:6px 8px}
+.who3 div{display:flex;justify-content:space-between;align-items:center;font-size:11.5px}
+.who3 b{font-size:11px;color:#58686d}.who3 b.ai{color:#6b46c1}
+.kv.pz{position:relative;flex-wrap:wrap}
+.dd.open{border-color:#2769a9;color:#2769a9}
+.pz-menu{flex-basis:100%;margin-top:4px;background:#fff;border:1px solid #cfd8d5;border-radius:8px;box-shadow:0 6px 16px rgba(20,40,40,.12);padding:4px;display:flex;flex-direction:column;font-size:11.5px}
+.pz-menu .pz-h{font-size:10.5px;color:#6b7b80;padding:2px 6px 4px;border-bottom:1px solid #eef2f1;margin-bottom:2px}
+.pz-menu span{padding:3px 6px;border-radius:4px;color:#16252b}
+.pz-menu span.on{background:#e4eef8;color:#2769a9;font-weight:700}
+.pz-menu span.go{border-top:1px solid #eef2f1;margin-top:2px;color:#6b46c1;font-weight:700;border-radius:0}
 </style>
 </head>
 <body>
@@ -1113,7 +1144,7 @@ body{background:var(--paper)}
   <div class="ba2"><div class="b"><i>以前</i>家長晚上傳訊息，隔天才有人回；新人報價說錯也收不回來</div><div class="arr">→</div><div class="a"><i>用了平台</i>AI 立刻依你的資料回答，數字只說你核准的，需要人的才轉過去</div></div>
   <div class="subf" id="ai-service">
   <div class="sf-top"><h4>AI 家長客服</h4><span class="mkind base">基本模組</span></div>
-  <p class="sf-desc">依你提供的課程資料，24 小時回答上課時間、地點、收費、試聽。</p>
+  <p class="sf-desc">依你提供的課程資料回答上課時間、地點、收費、試聽。AI 什麼時段回覆、回覆哪些人，都由你決定。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>課程資料在後台像寫文件一樣編輯，隨時更新</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>AI 答不出來的問題自動收集，補一次就學會</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>需要判斷的問題不自行回答，直接轉人員</span></div></div>
   <div class="shots"><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長只看到答案，不會看到文件結構</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
 <div class="msg p">板橋有國二理化嗎？多少錢</div>
@@ -1156,6 +1187,41 @@ body{background:var(--paper)}
     <div class="btn sm">補進文件</div>
     <div class="src">↑ 左側正在補寫「半期與插班」</div>
     <div class="ai-in"><span>輸入問題試試看…</span><i>➤</i></div>
+  </div>
+</div></div>
+  </div>
+</div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>AI 回覆設定：決定 AI 什麼時候回、回覆哪些人</figcaption><div class="browser">
+  <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/settings/ai-reply</span></div>
+  <div class="app">
+    <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i on">設定</div></div>
+    <div class="main">
+<div class="pg-h"><b>AI 回覆設定</b><span class="sp"></span><span class="aist on">● 現在 22:30・AI 回覆中</span><span class="btn">儲存</span></div>
+<div class="set2">
+  <div class="pn"><div class="pn-h">回覆時段</div>
+    <div class="rad"><i></i><div><b>全天 24 小時</b><span>所有時間都由 AI 先回覆</span></div></div>
+    <div class="rad on"><i></i><div><b>只在非上班時間</b><span>上班時間由人員回覆，下班後與假日由 AI 接手</span></div></div>
+    <div class="rad"><i></i><div><b>自訂時段</b><span>自己指定 AI 回覆的時段</span></div></div>
+    <div class="wk">
+      <div class="wk-h"><span></span><div><span style="left:0">8:00</span><span style="left:25%">12:00</span><span style="left:50%">16:00</span><span style="left:75%">20:00</span><span style="left:100%">24:00</span></div></div>
+      <div class="wk-r"><span>週一</span><div><i class="hm" style="left:37.5%;width:43.75%"></i></div></div>
+      <div class="wk-r"><span>週二</span><div><i class="hm" style="left:37.5%;width:43.75%"></i></div></div>
+      <div class="wk-r"><span>週三</span><div><i class="hm" style="left:37.5%;width:43.75%"></i></div></div>
+      <div class="wk-r"><span>週四</span><div><i class="hm" style="left:37.5%;width:43.75%"></i></div></div>
+      <div class="wk-r"><span>週五</span><div><i class="hm" style="left:37.5%;width:43.75%"></i></div></div>
+      <div class="wk-r"><span>週六</span><div><i class="hm" style="left:12.5%;width:43.75%"></i></div></div>
+      <div class="wk-r"><span>週日</span><div></div></div>
+      <div class="wk-lg"><span><i class="hm"></i>人員回覆（平日 14–21、週六 10–17）</span><span><i class="ai"></i>AI 回覆</span></div>
+    </div>
+  </div>
+  <div class="pn"><div class="pn-h">回覆對象</div>
+    <div class="tgl-r"><div><b>只回覆陌生訊息</b><span>還不是在學家長或學生的好友（新朋友、問班的家長）由 AI 回覆；在學家長與學生的訊息直接進收件匣，由人員處理</span></div><span class="tgl on"><i></i></span></div>
+    <div class="who3">
+      <div><span class="idt nw">新朋友</span><b class="ai">AI 回覆</b></div>
+      <div><span class="idt pr">在學家長</span><b>→ 收件匣</b></div>
+      <div><span class="idt st">學生</span><b>→ 收件匣</b></div>
+    </div>
+    <div class="pn-h" style="margin-top:8px">AI 不回覆時</div>
+    <div class="tgl-r"><div><b>自動回覆一句「已收到」</b><span>例如：收到您的訊息，老師上班後會盡快回覆您 🙏</span></div><span class="tgl on"><i></i></span></div>
   </div>
 </div></div>
   </div>
@@ -1202,7 +1268,7 @@ body{background:var(--paper)}
 </div><div class="subf" id="inbox">
   <div class="sf-top"><h4>真人接手收件匣</h4><span class="mkind base">基本模組</span></div>
   <p class="sf-desc">AI 轉過來的問題集中在一個收件匣，指派給對的人，一個都不漏。</p>
-  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>人員接手時 AI 自動暫停，結案後恢復</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>右側直接改名稱、指派負責人、加標籤與備註</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>申訴、退費自動通知主任</span></div></div>
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可單獨暫停某個聊天室的 AI：一段時間或永久</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>右側直接改名稱、指派負責人、加標籤與備註</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>申訴、退費自動通知主任</span></div></div>
   <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>接手對話、AI 已暫停，右側指派負責人與備註</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/inbox/u8f2</span></div>
   <div class="app">
@@ -1218,7 +1284,7 @@ body{background:var(--paper)}
     <div class="ib-i"><b>張先生</b><span class="tag">其他</span><small>發票抬頭可以改嗎</small><em>昨天</em></div>
   </div>
   <div class="ib-chat">
-    <div class="banner">AI 已暫停・由 林主任 處理中 <span class="btn sm ghost">結案並恢復 AI</span></div>
+    <div class="banner">AI 已暫停至今天 18:00・由 林主任 處理中 <span class="btn sm ghost">結案並恢復 AI</span></div>
     <div class="cm p">下週三理化課照常上嗎？</div>
     <div class="cm b">照常上課喔！國二理化 A 週三 19:00–21:00，在本部 3 樓。<i>AI</i></div>
     <div class="cm p">他這次段考退步很多分，可以知道是為什麼嗎？</div>
@@ -1232,6 +1298,8 @@ body{background:var(--paper)}
     <div class="kv"><span>顯示名稱</span><b class="ed">王小明爸爸 ✎</b></div>
     <div class="kv"><span>指派給</span><b class="dd">林主任 ▾</b></div>
     <div class="kv"><span>狀態</span><b class="dd">處理中 ▾</b></div>
+    <div class="kv pz"><span>AI 回覆</span><b class="dd open">暫停至今天 18:00 ▾</b>
+      <div class="pz-menu"><div class="pz-h">暫停這個聊天室的 AI</div><span>30 分鐘</span><span>2 小時</span><span class="on">到今天下班（18:00）</span><span>3 天</span><span>永久暫停</span><span class="go">立即恢復 AI</span></div></div>
     <div class="kv"><span>標籤</span><b><span class="tag warn">學習狀況</span> <span class="muted">＋</span></b></div>
     <div class="side-h">備註</div>
     <div class="memo">上期數學 68 分，建議安排小考診斷<i>林主任・11/23</i></div>
