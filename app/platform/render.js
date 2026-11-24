@@ -21,8 +21,8 @@ export function normalizeTarget(raw) {
 }
 
 // 頁面裡的後台示意圖是寬版排版，手機寬度會擠壞。比這個窄就整頁換成
-// 「請用平板或電腦開啟」，iPad 直向（768px 起）可以正常看。
-export const MIN_WIDTH = 768
+// 「請用平板或電腦開啟」。1024px 起才放得下側欄和後台示意，iPad 需橫放。
+export const MIN_WIDTH = 1024
 
 function narrowGate() {
   const max = MIN_WIDTH - 1
@@ -46,8 +46,8 @@ function narrowGateMarkup() {
   return `<div id="narrow-gate" role="dialog" aria-labelledby="ng-title">
 <div class="ng-box">
 <svg class="ng-ic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="12" width="40" height="28" rx="3"/><path d="M18 50h16M26 40v10"/><rect x="42" y="24" width="16" height="28" rx="3" fill="var(--paper)"/></svg>
-<h1 id="ng-title">請用平板或電腦開啟</h1>
-<p>這份介紹有完整的後台畫面示意，手機螢幕太窄看不清楚。請改用平板或電腦開啟。</p>
+<h1 id="ng-title">請用電腦或橫放的平板開啟</h1>
+<p>這份介紹有完整的後台畫面示意，目前的螢幕寬度不夠，畫面會擠在一起。請改用電腦開啟，或把平板橫放。</p>
 <button class="ng-copy" type="button" id="ng-copy">複製網址</button>
 <p class="ng-fine" id="ng-msg" aria-live="polite">複製後貼到電腦瀏覽器即可開啟</p>
 </div>

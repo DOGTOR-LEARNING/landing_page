@@ -927,6 +927,25 @@ body{background:var(--paper)}
 .sr b{color:var(--accent)}
 .sa{font-size:13px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:8px;margin-top:auto}
 .sim-f{font-size:13px;color:var(--muted)}
+
+/* 大區塊：整塊色底＋實色開頭橫幅，一眼看出進入下一個大區塊 */
+:root{--on-pc:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--on-pc:#0f1719}}
+:root[data-theme="dark"]{--on-pc:#0f1719}
+.pillar{margin:48px 0 0;padding:0 28px 40px;border-radius:24px;border:0;background:color-mix(in srgb,var(--ps) 55%,var(--paper));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pc) 35%,transparent)}
+.pillar+.pillar{margin-top:56px}
+.pillar>.pl-banner{margin:0 -28px;border-radius:24px 24px 0 0;background:var(--pc);color:var(--on-pc);padding:28px 32px}
+.pillar .pl-big{color:var(--on-pc);opacity:1;font-size:72px;min-width:1.1em;text-align:center}
+.pillar .pl-eb{color:var(--on-pc);opacity:.9}
+.pillar .pl-t h2{color:var(--on-pc)}
+.pillar .pl-t p{color:var(--on-pc);opacity:.88}
+.pillar .pl-eb em.base,.pillar .pl-eb em.add{background:var(--on-pc);color:var(--pc);border:0}
+.pillar .subf{margin-top:28px;background:var(--card);border-radius:18px;padding:24px 24px 20px}
+.pillar .tile,.pillar .gets,.pillar .pc,.pillar .inc2,.pillar .ba2 .b{background:var(--card)}
+.pillar .subf .tile,.pillar .subf .ba2 .b,.pillar .subf .inc2{background:var(--paper)}
+.lg2 i:empty{width:12px;height:12px;border-radius:50%}
+/* 網頁後台示意一律獨佔一列，不和另一張網頁並排 */
+.shot.web,.shot.web:has(.browser.mini){flex:1 1 100%}
 </style>
 </head>
 <body>
@@ -996,7 +1015,7 @@ body{background:var(--paper)}
   <div class="prow"><div class="pband" style="grid-column:span 4">招生期</div><div class="pband" style="grid-column:span 3">在學期間</div><div class="pband" style="grid-column:span 1">續班</div></div>
   <div class="frow"><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>1</span>招生曝光</div><div class="fhelps"><a class="hc c2" href="#links"><i>02</i>來源連結與 QR</a><a class="hc c2" href="#friends"><i>02</i>好友來源名單</a></div></div><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>2</span>問班諮詢</div><div class="fhelps"><a class="hc c1" href="#ai-service"><i>01</i>AI 家長客服</a><a class="hc c1" href="#offers"><i>01</i>課程與方案</a><a class="hc c1" href="#inbox"><i>01</i>真人接手</a><a class="hc c3" href="#followup"><i>03</i>跟進清單</a></div></div><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>3</span>試聽</div><div class="fhelps"><a class="hc c3" href="#trial"><i>03</i>試聽預約與回饋</a><a class="hc c3" href="#pipeline"><i>03</i>名單看板</a></div></div><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>4</span>報名</div><div class="fhelps"><a class="hc c4" href="#students"><i>04</i>學生與家長綁定</a><a class="hc c2" href="#roi"><i>02</i>來源成效</a></div></div><div class="fcol"><span class="fper">在學期間</span><div class="fst"><span>5</span>開課</div><div class="fhelps"><a class="hc c4" href="#notices"><i>07</i>公告與聯絡簿</a><a class="hc c6" href="#branches"><i>13</i>多分校管理</a></div></div><div class="fcol"><span class="fper">在學期間</span><div class="fst"><span>6</span>日常上課</div><div class="fhelps"><a class="hc c5" href="#attendance"><i>08</i>到班點名</a><a class="hc c5" href="#leave"><i>09</i>LINE 請假</a><a class="hc c5" href="#makeup"><i>10</i>補課安排</a></div></div><div class="fcol"><span class="fper">在學期間</span><div class="fst"><span>7</span>學習追蹤</div><div class="fhelps"><a class="hc c4" href="#grades"><i>05</i>作業成績查詢</a><a class="hc c4" href="#reports"><i>06</i>AI 月學習報告</a></div></div><div class="fcol"><span class="fper">續班</span><div class="fst"><span>8</span>續班或流失</div><div class="fhelps"><a class="hc c6" href="#renewal"><i>11</i>續班提醒</a><a class="hc c6" href="#retention"><i>12</i>流失預警</a></div></div></div>
 </div></div>
-<div class="legend2"><span>顏色代表六大區塊，數字為模組編號：</span><a class="lg2 c1" href="#ai"><i>1</i>一、AI 客服</a><a class="lg2 c2" href="#source"><i>2</i>二、招生來源追溯</a><a class="lg2 c3" href="#crm"><i>3</i>三、招生 CRM</a><a class="lg2 c4" href="#family"><i>4</i>四、學生與家長服務</a><a class="lg2 c5" href="#daily"><i>5</i>五、出缺勤與日常行政</a><a class="lg2 c6" href="#manage"><i>6</i>六、續班與經營管理</a></div>
+<div class="legend2"><span>顏色代表六大區塊，數字為模組編號。六大區塊：</span><a class="lg2 c1" href="#ai"><i></i>一、AI 客服</a><a class="lg2 c2" href="#source"><i></i>二、招生來源追溯</a><a class="lg2 c3" href="#crm"><i></i>三、招生 CRM</a><a class="lg2 c4" href="#family"><i></i>四、學生與家長服務</a><a class="lg2 c5" href="#daily"><i></i>五、出缺勤與日常行政</a><a class="lg2 c6" href="#manage"><i></i>六、續班與經營管理</a></div>
 </section>
 
 <section class="sec" id="modules">
@@ -1015,7 +1034,7 @@ body{background:var(--paper)}
 
 <section class="pillar c1" id="ai">
   <div class="pl-banner">
-    <span class="pl-big">01</span>
+    <span class="pl-big">一</span>
     <div class="pl-t"><span class="pl-eb">一、AI 客服<em class="base">基本模組</em></span><h2>家長的問題 24 小時即時回答，需要人的交給人</h2><p>家長在你現有的 LINE 官方帳號提問，AI 依你核准的課程與方案資料回答；退費、成績保證、孩子個別狀況這類需要判斷的問題，交給你的人員處理。</p></div>
   </div>
   <div class="inc-row"><a class="inc2" href="#ai-service"><span class="ic-code">模組 01</span><b>AI 家長客服</b><span>依你提供的課程資料</span></a><a class="inc2" href="#offers"><span class="ic-code">模組 01</span><b>課程與方案管理</b><span>學費、優惠、名額、試聽時段集中管理</span></a><a class="inc2" href="#inbox"><span class="ic-code">模組 01</span><b>真人接手收件匣</b><span>AI 轉過來的問題集中在一個收件匣</span></a></div>
@@ -1136,7 +1155,7 @@ body{background:var(--paper)}
 </div>
 </section><section class="pillar c2" id="source">
   <div class="pl-banner">
-    <span class="pl-big">02</span>
+    <span class="pl-big">二</span>
     <div class="pl-t"><span class="pl-eb">二、招生來源追溯<em class="add">附加模組</em></span><h2>誰從哪裡加了 LINE，一目瞭然</h2><p>每個廣告、傳單、家長介紹都有自己的連結與 QR Code。</p></div>
   </div>
   <div class="inc-row"><a class="inc2" href="#friends"><span class="ic-code">模組 02</span><b>好友來源名單</b><span>每一位新加入的 LINE 好友</span></a><a class="inc2" href="#links"><span class="ic-code">模組 02</span><b>來源連結與 QR Code</b><span>每個招生活動產生專屬連結與 QR Code</span></a><a class="inc2" href="#roi"><span class="ic-code">模組 02</span><b>來源成效報表</b><span>各來源、分校、科目的問班、試聽、報名數與每筆報名的取得成本並排比較</span></a></div>
@@ -1211,7 +1230,7 @@ body{background:var(--paper)}
 </div>
 </section><section class="pillar c3" id="crm">
   <div class="pl-banner">
-    <span class="pl-big">03</span>
+    <span class="pl-big">三</span>
     <div class="pl-t"><span class="pl-eb">三、招生 CRM<em class="add">附加模組</em></span><h2>每一個加 LINE 的人，現在在哪個階段、要不要跟進</h2><p>每一位加入 LINE 的人都會進入招生名單：從只加好友、問班、聯絡、試聽到報名，每個人在哪一步一清二楚。</p></div>
   </div>
   <div class="inc-row"><a class="inc2" href="#followup"><span class="ic-code">模組 03</span><b>招生總覽與跟進清單</b><span>一眼看到每個階段有多少人</span></a><a class="inc2" href="#pipeline"><span class="ic-code">模組 03</span><b>名單看板與名單卡片</b><span>家長在 LINE 留下的資料自動建成名單</span></a><a class="inc2" href="#trial"><span class="ic-code">模組 03</span><b>試聽預約與試聽回饋</b><span>家長在 LINE 選試聽時段；老師試聽後用語音說 30 秒</span></a></div>
@@ -1319,7 +1338,7 @@ body{background:var(--paper)}
 </div>
 </section><section class="pillar c4" id="family">
   <div class="pl-banner">
-    <span class="pl-big">04</span>
+    <span class="pl-big">四</span>
     <div class="pl-t"><span class="pl-eb">四、學生與家長服務<em class="add">附加模組</em></span><h2>報名之後，讓家長隨時知道孩子的狀況</h2><p>學生報名後，爸爸、媽媽和學生本人都能在 LINE 連上同一份學生檔案。</p></div>
   </div>
   <div class="inc-row"><a class="inc2" href="#students"><span class="ic-code">模組 04</span><b>學生檔案與家長綁定</b><span>一位學生可綁多位家長與學生本人</span></a><a class="inc2" href="#grades"><span class="ic-code">模組 05</span><b>作業成績與家長查詢</b><span>老師登錄作業與成績</span></a><a class="inc2" href="#reports"><span class="ic-code">模組 06</span><b>AI 月學習報告</b><span>AI 依出缺勤、作業、成績寫好月報草稿</span></a><a class="inc2" href="#notices"><span class="ic-code">模組 07</span><b>公告與聯絡簿</b><span>一句話產生公告</span></a></div>
@@ -1453,7 +1472,7 @@ body{background:var(--paper)}
 </div>
 </section><section class="pillar c5" id="daily">
   <div class="pl-banner">
-    <span class="pl-big">05</span>
+    <span class="pl-big">五</span>
     <div class="pl-t"><span class="pl-eb">五、出缺勤與日常行政<em class="add">附加模組</em></span><h2>點名、請假、補課，在 LINE 裡完成</h2><p>學生出示 QR Code、老師用手機一掃就點完名，家長立刻收到通知；請假、晚到、補課都在 LINE 完成，行政只處理真正的例外。</p></div>
   </div>
   <div class="inc-row"><a class="inc2" href="#attendance"><span class="ic-code">模組 08</span><b>到班點名與通知</b><span>老師用手機掃 QR 點名</span></a><a class="inc2" href="#leave"><span class="ic-code">模組 09</span><b>LINE 請假</b><span>家長或學生在 LINE 說一聲就能請假</span></a><a class="inc2" href="#makeup"><span class="ic-code">模組 10</span><b>補課安排</b><span>選擇你的補課制度</span></a></div>
@@ -1557,7 +1576,7 @@ body{background:var(--paper)}
 </div>
 </section><section class="pillar c6" id="manage">
   <div class="pl-banner">
-    <span class="pl-big">06</span>
+    <span class="pl-big">六</span>
     <div class="pl-t"><span class="pl-eb">六、續班與經營管理<em class="add">附加模組</em></span><h2>留住學生，掌握每一間分校</h2><p>續班提醒自動發送、家長一鍵回覆；有流失徵兆的學生提早提醒班導。</p></div>
   </div>
   <div class="inc-row"><a class="inc2" href="#renewal"><span class="ic-code">模組 11</span><b>續班與繳費提醒</b><span>依名單與日期自動提醒</span></a><a class="inc2" href="#retention"><span class="ic-code">模組 12</span><b>流失預警</b><span>從缺課、作業、成績與家長詢問中</span></a><a class="inc2" href="#branches"><span class="ic-code">模組 13</span><b>多分校管理</b><span>集團、分校、班級三層管理</span></a></div>
