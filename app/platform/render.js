@@ -1,4 +1,5 @@
 import { PLATFORM_HTML } from './content'
+import { contactModal } from './contact-modal'
 
 const DEMO_NAME = '示範教育'
 // 與 components/PostHogProvider.js 同一個台灣 PostHog 專案，走 /ingest 反向代理。
@@ -93,7 +94,10 @@ export function platformResponse(target) {
     html = html.split('<span class="av">示</span>').join(`<span class="av">${escapeHtml(Array.from(target)[0])}</span>`)
     html = html.replace(/<title>([^<]*)<\/title>/, `<title>$1｜${safe}</title>`)
   }
-  html = html.replace('</head>', `${narrowGate()}\n${trackingScript(target)}\n</head>`)
+  const modal = contactModal(target)
+  html = html.replace('</head>', `${narrowGate()}\n${modal.css}\n${trackingScript(target)}\n</head>`)
+  // 用函式當替換值，避免內容裡的 $ 被當成替換樣式。
+  html = html.replace(/<\/body>(?![\s\S]*<\/body>)/, () => `${modal.markup}\n${modal.script}\n</body>`)
   html = html.replace('<body>', `<body>\n${narrowGateMarkup()}`)
   return new Response(html, {
     headers: {

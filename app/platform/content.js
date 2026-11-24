@@ -1168,19 +1168,30 @@ tr.hl-ab td{background:#fdf3f3}
 .cls-info span{font-size:10.5px;color:#6b7b80}.cls-info b{font-size:12px}
 .roster td,.roster th{white-space:nowrap}
 .roster td:first-child{color:#8fa29e;font-variant-numeric:tabular-nums}
+
+/* ---- 頂部 logo、聯絡區 ---- */
+.tb-logo{display:flex;align-items:center;flex:none}
+.tb-logo img{height:34px;width:auto;display:block}
+.tb-div{width:1px;height:24px;background:var(--rule)}
+.tb-brand{color:var(--muted);font-weight:600}
+:root[data-theme="dark"] .tb-logo img{filter:brightness(0) invert(1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tb-logo img{filter:brightness(0) invert(1)}}
+.ct-band{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ct-band span{color:var(--muted);font-size:15px}
+.ct-band .btn-p,.tb-cta,.nv.cta,.cta-band .btn-p,.h-btns .btn-p{cursor:pointer}
 </style>
 </head>
 <body>
 <div class="topbar">
   <button class="tb-btn" id="navToggle" aria-label="收合或展開導覽列" aria-controls="sidebar" aria-expanded="true">☰</button>
-  <span class="tb-brand">補習班 LINE 招生與教務平台</span>
+  <a class="tb-logo" href="https://official.superb-tutor.com/zh-TW" target="_blank" rel="noopener" aria-label="超棒軟體 SuperB Software 官網"><img src="/superb-lockup.svg" alt="超棒軟體 SuperB Software" width="152" height="40"></a><span class="tb-div"></span><span class="tb-brand">補習班 LINE 招生與教務平台</span>
   <span class="tb-sp"></span>
-  <a class="tb-cta" href="#contact">預約展示</a>
+  <a class="tb-cta" href="#contact" data-contact="topbar">聯絡我們</a>
 </div>
 <div class="layout" id="layout">
   <aside class="sidebar" id="sidebar" aria-label="網站導覽">
     <div class="sb-head"><b>超棒軟體</b><span>補習班 LINE 平台</span></div>
-    <nav class="sb-nav"><a class="nv" href="#home">首頁</a><a class="nv" href="#why">導入後的六個改變</a><a class="nv" href="#overview">AI 貫穿每一步</a><a class="nv" href="#modules">模組總覽</a><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#ai">一、AI 客服</a><button class="ng-t" aria-expanded="true" aria-controls="ai-list" aria-label="展開或收合AI 客服">▾</button></div><div class="ng-l" id="ai-list"><a class="nv sub" href="#ai-service">AI 家長客服</a><a class="nv sub" href="#offers">課程與方案管理</a><a class="nv sub" href="#inbox">真人接手收件匣</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#source">二、招生來源追溯</a><button class="ng-t" aria-expanded="true" aria-controls="source-list" aria-label="展開或收合招生來源追溯">▾</button></div><div class="ng-l" id="source-list"><a class="nv sub" href="#friends">好友來源名單</a><a class="nv sub" href="#links">來源連結與 QR Code</a><a class="nv sub" href="#roi">來源成效報表</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#crm">三、招生 CRM</a><button class="ng-t" aria-expanded="true" aria-controls="crm-list" aria-label="展開或收合招生 CRM">▾</button></div><div class="ng-l" id="crm-list"><a class="nv sub" href="#followup">招生總覽與跟進清單</a><a class="nv sub" href="#pipeline">名單看板與名單卡片</a><a class="nv sub" href="#trial">試聽預約與試聽回饋</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#family">四、學生與家長服務</a><button class="ng-t" aria-expanded="true" aria-controls="family-list" aria-label="展開或收合學生與家長服務">▾</button></div><div class="ng-l" id="family-list"><a class="nv sub" href="#students">學生檔案與家長綁定</a><a class="nv sub" href="#grades">作業成績與家長查詢</a><a class="nv sub" href="#reports">AI 月學習報告</a><a class="nv sub" href="#notices">公告與聯絡簿</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#daily">五、出缺勤與日常行政</a><button class="ng-t" aria-expanded="true" aria-controls="daily-list" aria-label="展開或收合出缺勤與日常行政">▾</button></div><div class="ng-l" id="daily-list"><a class="nv sub" href="#classes">班級管理</a><a class="nv sub" href="#attendance">到班點名與通知</a><a class="nv sub" href="#leave">LINE 請假</a><a class="nv sub" href="#makeup">補課安排</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#manage">六、續班與經營管理</a><button class="ng-t" aria-expanded="true" aria-controls="manage-list" aria-label="展開或收合續班與經營管理">▾</button></div><div class="ng-l" id="manage-list"><a class="nv sub" href="#renewal">續班與繳費提醒</a><a class="nv sub" href="#retention">流失預警</a><a class="nv sub" href="#branches">多分校管理</a></div></div><a class="nv" href="#security">資料安全與個資</a><a class="nv" href="#onboarding">導入流程</a><a class="nv" href="#pricing">方案與費用</a><a class="nv" href="#faq">常見問題</a><a class="nv cta" href="#contact">預約展示</a></nav>
+    <nav class="sb-nav"><a class="nv" href="#home">首頁</a><a class="nv" href="#why">導入後的六個改變</a><a class="nv" href="#overview">AI 貫穿每一步</a><a class="nv" href="#modules">模組總覽</a><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#ai">一、AI 客服</a><button class="ng-t" aria-expanded="true" aria-controls="ai-list" aria-label="展開或收合AI 客服">▾</button></div><div class="ng-l" id="ai-list"><a class="nv sub" href="#ai-service">AI 家長客服</a><a class="nv sub" href="#offers">課程與方案管理</a><a class="nv sub" href="#inbox">真人接手收件匣</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#source">二、招生來源追溯</a><button class="ng-t" aria-expanded="true" aria-controls="source-list" aria-label="展開或收合招生來源追溯">▾</button></div><div class="ng-l" id="source-list"><a class="nv sub" href="#friends">好友來源名單</a><a class="nv sub" href="#links">來源連結與 QR Code</a><a class="nv sub" href="#roi">來源成效報表</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#crm">三、招生 CRM</a><button class="ng-t" aria-expanded="true" aria-controls="crm-list" aria-label="展開或收合招生 CRM">▾</button></div><div class="ng-l" id="crm-list"><a class="nv sub" href="#followup">招生總覽與跟進清單</a><a class="nv sub" href="#pipeline">名單看板與名單卡片</a><a class="nv sub" href="#trial">試聽預約與試聽回饋</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#family">四、學生與家長服務</a><button class="ng-t" aria-expanded="true" aria-controls="family-list" aria-label="展開或收合學生與家長服務">▾</button></div><div class="ng-l" id="family-list"><a class="nv sub" href="#students">學生檔案與家長綁定</a><a class="nv sub" href="#grades">作業成績與家長查詢</a><a class="nv sub" href="#reports">AI 月學習報告</a><a class="nv sub" href="#notices">公告與聯絡簿</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#daily">五、出缺勤與日常行政</a><button class="ng-t" aria-expanded="true" aria-controls="daily-list" aria-label="展開或收合出缺勤與日常行政">▾</button></div><div class="ng-l" id="daily-list"><a class="nv sub" href="#classes">班級管理</a><a class="nv sub" href="#attendance">到班點名與通知</a><a class="nv sub" href="#leave">LINE 請假</a><a class="nv sub" href="#makeup">補課安排</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#manage">六、續班與經營管理</a><button class="ng-t" aria-expanded="true" aria-controls="manage-list" aria-label="展開或收合續班與經營管理">▾</button></div><div class="ng-l" id="manage-list"><a class="nv sub" href="#renewal">續班與繳費提醒</a><a class="nv sub" href="#retention">流失預警</a><a class="nv sub" href="#branches">多分校管理</a></div></div><a class="nv" href="#security">資料安全與個資</a><a class="nv" href="#onboarding">導入流程</a><a class="nv" href="#pricing">方案與費用</a><a class="nv" href="#faq">常見問題</a><a class="nv cta" href="#contact" data-contact="sidebar">聯絡我們</a></nav>
   </aside>
   <div class="scrim" id="scrim"></div>
   <main class="content">
@@ -1191,7 +1202,7 @@ tr.hl-ab td{background:#fdf3f3}
     <h1>繁雜行政交給 AI，<br>你的團隊回到教學與招生</h1>
     <p class="lead2">回覆問班、整理名單、提醒跟進、寫試聽回饋、發公告、通知到班、寫月報、追續班。從招生到續班的每一步，AI 都先替你做好，人員只需要確認與處理真正需要人的事。</p>
     <div class="h-pts"><span>✓ 沿用現有 LINE 官方帳號</span><span>✓ 家長、老師都不用裝 App</span><span>✓ 資料存放在台灣</span></div>
-    <div class="h-btns"><a class="btn-p" href="#contact">預約展示</a><a class="btn-s" href="#overview">看 AI 如何貫穿每一步</a></div>
+    <div class="h-btns"><a class="btn-p" href="#contact" data-contact="hero">聯絡我們</a><a class="btn-s" href="#overview">看 AI 如何貫穿每一步</a></div>
   </div>
   <div class="h-vis"><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長只看到答案，不會看到文件結構</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
 <div class="msg p">板橋有國二理化嗎？多少錢</div>
@@ -2077,7 +2088,7 @@ tr.hl-ab td{background:#fdf3f3}
     <div class="pcard main"><h3>平台月費</h3><span class="pt">基本模組＋開通的附加模組，依分校數計算</span><ul><li>後台帳號不限人數</li><li>AI 使用費已包含</li><li>功能持續更新，不另外收費</li></ul></div>
     <div class="pcard"><h3>LINE 訊息費用</h3><span class="pt">直接支付給 LINE</span><ul><li>回覆家長提問的訊息不計費</li><li>到班通知、提醒等主動訊息依 LINE 方案計算</li><li>平台清楚列出用量與預估費用</li></ul></div>
   </div>
-  <div class="cta-band"><p>想知道你的補習班適合哪些模組、大約多少費用？預約展示，我們依你的分校數與需求提供報價。</p><a class="btn-p" href="#contact">預約展示</a></div>
+  <div class="cta-band"><p>想知道你的補習班適合哪些模組、大約多少費用？跟我們說說你的需求，我們依分校數與需求提供報價。</p><a class="btn-p" href="#contact" data-contact="pricing">聯絡我們</a></div>
 </section>
 
 <section class="sec" id="faq">
@@ -2086,11 +2097,9 @@ tr.hl-ab td{background:#fdf3f3}
 </section>
 
 <section class="sec contact" id="contact">
-  <div class="sec-h"><span class="eyebrow">預約展示</span><h2>30 分鐘，看看平台能為你的補習班做什麼</h2>
-  <p class="sec-p">我們會用你的補習班情境示範：家長在 LINE 問班、名單自動建立、主任看招生成效。</p></div>
-  <div class="ct">
-    <div class="ct-c"><b>超棒軟體科技有限公司</b><span>聯絡人：丁崇耘</span><span>電話：0937-338097</span><span>Email：dino.ting1020@gmail.com</span><span>地址：臺北市中正區金山北路 1 號 5 樓之 6</span></div>
-  </div>
+  <div class="sec-h"><span class="eyebrow">聯絡我們</span><h2>有任何想法，隨時跟我們說</h2>
+  <p class="sec-p">想了解哪些模組適合你、費用怎麼算，或是補習班裡任何其他想做的事，都可以跟我們聊，不限於這個平台。</p></div>
+  <div class="ct-band"><a class="btn-p" href="#contact" data-contact="contact-section">聯絡我們</a><span>任何時間都可以留言，我們會儘快回覆</span></div>
   <p class="fine">頁面中的補習班名稱、人名、成績與數字均為示意。</p>
 </section>
 
