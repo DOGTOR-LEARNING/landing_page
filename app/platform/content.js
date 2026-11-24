@@ -946,6 +946,54 @@ body{background:var(--paper)}
 .lg2 i:empty{width:12px;height:12px;border-radius:50%}
 /* 網頁後台示意一律獨佔一列，不和另一張網頁並排 */
 .shot.web,.shot.web:has(.browser.mini){flex:1 1 100%}
+
+/* ---- 模組 01／02 示意調整 ---- */
+.kbtabs{margin-top:-2px}
+.kbtabs i{font-size:12.5px;padding:6px 14px}
+.kb2,.dsh{display:grid;grid-template-columns:1fr 190px;gap:10px;flex:1;align-items:start}
+.kb2-l,.dsh-l{display:flex;flex-direction:column;gap:10px;min-width:0}
+.kb2 .kb-ai,.dsh .kb-ai{align-self:stretch}
+.saved{font-size:11px;color:#8fa29e}
+.ed-tb{display:flex;align-items:center;gap:2px;border:1px solid #e1e8e6;border-radius:6px;padding:3px 4px;background:#f7f9f8;font-size:11.5px;flex-wrap:wrap}
+.ed-tb i{font-style:normal;padding:2px 7px;border-radius:4px;color:#3d4b50}
+.ed-tb i em{font-style:italic}
+.ed-tb i.sep{width:1px;height:14px;background:#dde4e2;padding:0;margin:0 3px}
+.ed-tb i.hl{color:#2769a9;font-weight:700}
+.ed-who{margin-left:auto;display:flex;align-items:center;gap:4px;font-size:10.5px;color:#0e7c86;font-weight:700}
+.ed-av{width:16px;height:16px;border-radius:50%;background:#0e7c86;color:#fff;display:grid;place-items:center;font-size:9.5px}
+.doc.editing{outline:2px solid #2769a9;outline-offset:4px;border-radius:2px;border-top:0;padding-top:2px}
+.doc .h.new{color:#0e7c86}
+.doc .typing{background:#fffbe8;border-radius:3px;padding:1px 3px;margin:0 -3px}
+.caret{display:inline-block;width:1.5px;height:1.05em;background:#16252b;vertical-align:-2px;margin-left:1px;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}}
+.ib{grid-template-columns:165px 1fr 180px}
+.ib-side .ed{border-bottom:1px dashed #8fa29e}
+.ib-side .dd{border:1px solid #dde4e2;border-radius:4px;padding:0 5px;font-weight:700}
+.memo{background:#fffbe8;border:1px solid #f0e3a8;border-radius:6px;padding:5px 7px;font-size:11.5px;color:#5c4a00;display:flex;flex-direction:column}
+.memo i{font-style:normal;font-size:10px;color:#9a8a4a;margin-top:2px}
+.memo.add{background:#fff;border-style:dashed;border-color:#dde4e2;color:#2769a9}
+.lockd{margin-top:6px;border:1px dashed #cfd8d5;border-radius:6px;padding:5px 7px;display:flex;flex-direction:column;gap:4px}
+.lk-h{display:flex;justify-content:space-between;align-items:center;gap:4px;font-weight:700;color:#58686d;font-size:11px}
+.lk-h em{font-style:normal;font-size:9.5px;background:#eef2f1;color:#3d4b50;border-radius:999px;padding:0 6px;white-space:nowrap}
+.lk-b{opacity:.38;display:flex;flex-direction:column;gap:3px;pointer-events:none}
+.src-anno{align-self:center;background:#fff2dc;color:#9a5b00;border:1px dashed #d98b00;font-size:10.5px;font-weight:700;border-radius:999px;padding:1px 10px}
+.msg.b.wel{outline:2px dashed #d98b00;outline-offset:2px}
+.quick.qs{justify-content:flex-start}
+.shot.wm{flex:1 1 300px;min-width:260px;max-width:440px}
+.wm-card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.wm-r{border:1px solid var(--rule);border-radius:10px;padding:8px 12px;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.wm-r p{color:var(--ink)}
+.wm-r em{font-style:normal;font-size:12px;color:var(--muted)}
+.wm-s{font-size:12px;font-weight:700;color:var(--muted)}
+.wm-r.on{border:2px dashed var(--p3);background:var(--p3-soft)}
+.wm-r.on .wm-s{color:var(--p3)}
+.sec-lbl{font-weight:700;font-size:12.5px;color:#16252b;display:flex;gap:6px;align-items:baseline}
+.sec-lbl .muted{font-weight:400;font-size:11.5px}
+.sec-div{border-top:2px solid #dde4e2;margin:6px 0 0}
+.src-list{display:flex;flex-direction:column;gap:6px}
+.kb2 .tb{font-size:11.5px}.kb2 .tb th,.kb2 .tb td{white-space:nowrap;padding:6px 6px}
+.lk-ic{width:54px;height:54px;flex:none;border-radius:8px;background:#eef2f1;display:grid;place-items:center;font-size:22px}
 </style>
 </head>
 <body>
@@ -1047,12 +1095,13 @@ body{background:var(--paper)}
 <div class="msg p">板橋有國二理化嗎？多少錢</div>
 <div class="msg b">有的！板橋分校每週六 14:00–16:00 上課，每期 12 週 NT$9,600，含講義。想先試聽一堂嗎？</div>
 <div class="msg p">可以只上半期嗎</div>
-<div class="msg b">這個問題我幫您轉給行政人員確認，稍後由專人回覆您 🙏</div></div></div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>編輯母文件與子文件，右側直接試問 AI</figcaption><div class="browser">
-  <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/kb/courses/g8-science</span></div>
+<div class="msg b">這個問題我幫您轉給行政人員確認，稍後由專人回覆您 🙏</div></div></div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>知識庫・文件分頁：正在編輯子文件，右側直接試問 AI</figcaption><div class="browser">
+  <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/kb/docs/g8-science</span></div>
   <div class="app">
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i on">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
-<div class="pg-h"><b>知識庫</b><span class="tag warn">待補充問題 3</span><span class="sp"></span><span class="btn ghost">版本紀錄</span><span class="btn">發布</span></div>
+<div class="pg-h"><b>知識庫</b><span class="tag warn">待補充問題 3</span><span class="sp"></span><span class="btn ghost">版本紀錄</span><span class="btn">發布變更</span></div>
+<div class="tabs kbtabs"><i class="on">文件</i><i>課程與方案</i></div>
 <div class="kb">
   <div class="kb-tree">
     <div class="t-m">補習班資訊</div><div class="t-c">本部地址與交通</div><div class="t-c">板橋分校</div>
@@ -1063,22 +1112,25 @@ body{background:var(--paper)}
   </div>
   <div class="kb-ed">
     <div class="crumb">課程總覽 › <b>國二理化</b></div>
-    <div class="meta-row"><span class="fld">適用分校：<b>本部、板橋</b></span><span class="fld">生效：<b>長期</b></span><span class="tag ok">已發布</span></div>
-    <div class="doc">
+    <div class="meta-row"><span class="fld">適用分校：<b>本部、板橋</b></span><span class="fld">生效：<b>長期</b></span><span class="tag warn">編輯中・未發布</span><span class="saved">已自動儲存・剛剛</span></div>
+    <div class="ed-tb"><i><b>B</b></i><i><em>I</em></i><i>H</i><i>• 清單</i><i>🔗 連結</i><i class="sep"></i><i class="hl">＋ 引用課程與方案</i><span class="ed-who"><span class="ed-av">林</span>林主任 編輯中</span></div>
+    <div class="doc editing">
       <p class="h">上課時間</p><p>每週三 19:00–21:00（本部 3 樓）、每週六 14:00–16:00（板橋）</p>
-      <p class="h">學費、時段與試聽</p><p><span class="ref">引用：課程與方案資料 › 國二理化</span><br><span class="muted">數字不寫在文件裡，由方案資料統一管理</span></p>
+      <p class="h">學費、時段與試聽</p><p><span class="ref">引用：課程與方案 › 國二理化</span><br><span class="muted">數字不寫在文件裡，由課程與方案統一管理</span></p>
       <p class="h">師資</p><p>林老師，教學 12 年</p>
       <p class="h">教學特色</p><p>每單元結束有實驗示範與小考，段考前加開複習</p>
+      <p class="h new">半期與插班</p><p class="typing">目前不開放只上半期，第 4 週前可插班，學費依剩餘週數計算<span class="caret"></span></p>
     </div>
   </div>
   <div class="kb-ai">
     <div class="ai-h">AI 試問</div>
     <div class="q">板橋有國二理化嗎？多少錢</div>
     <div class="a">有，板橋每週六 14:00–16:00 上課，每期 12 週 NT$9,600，含講義。</div>
-    <div class="src">引用：課程與方案資料 › 國二理化（板橋）</div>
+    <div class="src">引用：課程與方案 › 國二理化（板橋）</div>
     <div class="q">可以只上半期嗎</div>
     <div class="a miss">查無依據 → 會轉真人</div>
     <div class="btn sm">補進文件</div>
+    <div class="src">↑ 左側正在補寫「半期與插班」</div>
   </div>
 </div></div>
   </div>
@@ -1091,12 +1143,15 @@ body{background:var(--paper)}
 <div class="msg p">國二數學現在報名有優惠嗎？</div>
 <div class="msg b">有的！11/30 前報名板橋國二數學 B，第一期學費折 NT$500。目前還有 3 個名額。</div>
 <div class="msg p">學費可以分期嗎</div>
-<div class="msg b">繳費方式我請招生老師跟您說明，稍後回覆您 🙏</div></div></div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>方案資料：AI 唯一能引用的數字來源</figcaption><div class="browser">
-  <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/offerings</span></div>
+<div class="msg b">繳費方式我請招生老師跟您說明，稍後回覆您 🙏</div></div></div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>知識庫・課程與方案分頁：AI 唯一能引用的數字來源，共用同一個 AI 試問</figcaption><div class="browser">
+  <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/kb/offerings</span></div>
   <div class="app">
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i on">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
-<div class="pg-h"><b>課程與方案</b><span class="seg"><i class="on">板橋</i><i>本部</i><i>全部</i></span><span class="sp"></span><span class="btn ghost">變更紀錄</span><span class="btn">＋ 新增方案</span></div>
+<div class="pg-h"><b>知識庫</b><span class="tag warn">待補充問題 3</span><span class="sp"></span><span class="btn ghost">變更紀錄</span><span class="btn">＋ 新增方案</span></div>
+<div class="tabs kbtabs"><i>文件</i><i class="on">課程與方案</i></div>
+<div class="kb2"><div class="kb2-l">
+<div class="pg-h"><span class="seg"><i class="on">板橋</i><i>本部</i><i>全部</i></span></div>
 <table class="tb"><tr><th>班級</th><th>時段</th><th>每期</th><th>學費</th><th>繳費方式</th><th>人數</th><th>試聽名額</th><th>優惠</th></tr>
 <tr><td><b>國二數學 B</b></td><td>週五 19:00</td><td>12 週</td><td>NT$9,600</td><td>一次繳清</td><td>9 / 12</td><td>11/19 剩 2</td><td><span class="tag ok">11/30 前折 500</span></td></tr>
 <tr><td><b>國二理化</b></td><td>週六 14:00</td><td>12 週</td><td>NT$9,600</td><td>一次繳清</td><td>14 / 16</td><td>11/22 剩 1</td><td><span class="tag ok">11/30 前折 500</span></td></tr>
@@ -1104,14 +1159,25 @@ body{background:var(--paper)}
 </table>
 <div class="pn"><div class="pn-h">AI 草稿檢查（範例）</div>
 <p class="sumtxt">國二數學 B 每班上限 <span class="srcv">12 人<i>方案資料</i></span>，週五 <span class="srcv">19:00<i>方案資料</i></span>上課，<span class="srcv">11/30 前報名第一期折 NT$500<i>優惠</i></span>。<s class="bad">學費可分兩期繳</s></p>
-<div class="chk warn">「可分兩期」不在國二數學 B 的繳費方式中，已從草稿移除，請人員確認</div></div></div>
+<div class="chk warn">「可分兩期」不在國二數學 B 的繳費方式中，已從草稿移除，請人員確認</div></div>
+</div>
+  <div class="kb-ai">
+    <div class="ai-h">AI 試問</div>
+    <div class="q">國二數學現在報名有優惠嗎？</div>
+    <div class="a">有，11/30 前報名板橋國二數學 B，第一期折 NT$500，目前還有 3 個名額。</div>
+    <div class="src">引用：課程與方案 › 國二數學 B（板橋）</div>
+    <div class="q">學費可以分期嗎</div>
+    <div class="a miss">國二數學 B 只設定一次繳清 → 會轉真人</div>
+    <div class="btn sm">設定繳費方式</div>
+  </div>
+</div></div>
   </div>
 </div></figure></div>
 </div><div class="subf" id="inbox">
   <div class="sf-top"><h4>真人接手收件匣</h4><span class="mcode base">模組 01</span><span class="mkind base">基本模組</span></div>
   <p class="sf-desc">AI 轉過來的問題集中在一個收件匣，指派給對的人，一個都不漏。</p>
-  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>人員接手時 AI 自動暫停，結案後恢復</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>旁邊就看得到家長綁定的孩子與招生歷程</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>申訴、退費自動通知主任</span></div></div>
-  <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>接手對話、AI 已暫停、右側看家長背景</figcaption><div class="browser">
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>人員接手時 AI 自動暫停，結案後恢復</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>右側直接改名稱、指派負責人、加標籤與備註</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>申訴、退費自動通知主任</span></div></div>
+  <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>接手對話、AI 已暫停，右側指派負責人與備註</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/inbox/u8f2</span></div>
   <div class="app">
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i on">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
@@ -1130,21 +1196,21 @@ body{background:var(--paper)}
     <div class="cm p">我兒子這次段考退步很多，上你們的班可以保證進步嗎？</div>
     <div class="cm b">孩子的學習狀況需要老師個別了解，已轉給專人回覆您。<i>AI</i></div>
     <div class="cm s">王爸爸您好，我是林主任，想先了解小明目前的狀況……<i>林主任</i></div>
-    <div class="note">內部備註：上期數學 68 分，建議安排小考診斷</div>
     <div class="composer"><span><i class="ai-tag">AI 草稿</i>王爸爸您好，我們可以先幫小明安排一次診斷小考…</span><span class="btn sm">送出</span></div>
   </div>
   <div class="ib-side">
-    <div class="side-h">家長資訊</div>
-    <div class="kv"><span>綁定學生</span><b>王小明・國二</b></div>
-    <div class="kv"><span>班級</span><b>理化 A、數學 B</b></div>
-    <div class="kv"><span>過往案件</span><b>2 件</b></div>
-    <div class="side-h">招生歷程（來自 CRM）</div>
-    <div class="tl"><b>9/02 問班</b>想加強理化，平日晚上</div>
-    <div class="tl"><b>9/09 試聽後</b>觀念清楚、計算慢，建議 A 班</div>
-    <div class="tl"><b>9/12 報名</b>國二理化 A、數學 B</div>
-    <div class="kv"><span>指派</span><b>林主任</b></div>
-    <div class="side-h">快速回覆</div>
-    <div class="chipbtn">安排診斷小考</div><div class="chipbtn">請主任回電</div>
+    <div class="side-h">聊天室</div>
+    <div class="kv"><span>顯示名稱</span><b class="ed">王爸爸 ✎</b></div>
+    <div class="kv"><span>指派給</span><b class="dd">林主任 ▾</b></div>
+    <div class="kv"><span>狀態</span><b class="dd">處理中 ▾</b></div>
+    <div class="kv"><span>標籤</span><b><span class="tag bad">退費</span> <span class="muted">＋</span></b></div>
+    <div class="side-h">備註</div>
+    <div class="memo">上期數學 68 分，建議安排小考診斷<i>林主任・11/23</i></div>
+    <div class="memo add">＋ 新增備註</div>
+    <div class="lockd"><div class="lk-h"><span>家長資訊</span><em>模組 04 開放</em></div>
+      <div class="lk-b"><div class="kv"><span>綁定學生</span><b>王小明・國二</b></div><div class="kv"><span>班級</span><b>理化 A、數學 B</b></div></div></div>
+    <div class="lockd"><div class="lk-h"><span>招生歷程</span><em>模組 03 開放</em></div>
+      <div class="lk-b"><div class="tl"><b>9/02 問班</b>想加強理化</div><div class="tl"><b>9/12 報名</b>國二理化 A</div></div></div>
   </div>
 </div></div>
   </div>
@@ -1183,13 +1249,19 @@ body{background:var(--paper)}
 </div><div class="subf" id="links">
   <div class="sf-top"><h4>來源連結與 QR Code</h4><span class="mcode add">模組 02</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">每個招生活動產生專屬連結與 QR Code，印在傳單、放進廣告就能開始追蹤。</p>
-  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Meta 廣告、傳單、官網、介紹活動都能建立</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長掃描後看到招生頁面，一鍵加入好友並開始諮詢</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>依分校與科目分開追蹤</span></div></div>
-  <div class="shots"><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長掃傳單 QR 後看到的頁面</figcaption><div class="phone"><div class="notch"></div><div class="ph-top liff"><span>✕</span><b>示範教育</b><span>⋯</span></div><div class="ph-body liffbg">
-<div class="lp-hero"><span>示範教育・本部</span><b>國二理化 冬季班</b></div>
-<p class="lf-p">每單元有實驗示範與小考，段考前加開複習。</p>
-<div class="lp-pt">✓ 免費試聽一堂</div><div class="lp-pt">✓ 小班上課</div><div class="lp-pt">✓ LINE 上直接詢問</div>
-<div class="lf-btn">加入好友並開始諮詢</div>
-<p class="lf-fine">加入後由 AI 小幫手說明課程，需要時由老師接手。</p></div></div></figure></div>
+  <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Meta 廣告、傳單、官網、介紹活動都能建立</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>掃描加入後，歡迎訊息依來源不同，直接接著問下一步</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>依分校與科目分開追蹤</span></div></div>
+  <div class="shots"><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>掃「小高一試聽班」傳單加入後</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
+<div class="msg sys">您已加入示範教育的好友</div>
+<div class="src-anno">來源：傳單・小高一試聽班</div>
+<div class="msg b wel">您好，歡迎加入示範教育 😊 看到您是從<b>小高一試聽班</b>的傳單來的，想要試聽哪一堂小高一的課呢？</div>
+<div class="quick qs"><span>數學</span><span>英文</span><span>物理</span><span>化學</span></div>
+<div class="msg p">數學</div>
+<div class="msg b">小高一數學試聽在 12/7（六）14:00，本部 3 樓，要幫您保留位子嗎？</div></div></div></figure><figure class="shot wm"><figcaption><span class="who staff">補習班人員設定</span>同一個 LINE 帳號，依來源送出不同的歡迎訊息</figcaption><div class="wm-card">
+<div class="wm-r on"><span class="wm-s">傳單・小高一試聽班</span><p>看到您是從小高一試聽班的傳單來的，想要試聽哪一堂小高一的課呢？</p><em>附快速選項：數學／英文／物理／化學</em></div>
+<div class="wm-r"><span class="wm-s">Meta 廣告・國二冬季招生</span><p>國二冬季班 12 月開課，想了解數學還是理化呢？</p></div>
+<div class="wm-r"><span class="wm-s">家長介紹</span><p>謝謝李媽媽介紹！請問孩子目前幾年級呢？</p></div>
+<div class="wm-r"><span class="wm-s">官網・直接搜尋</span><p>一般歡迎訊息，AI 會在對話中順便詢問從哪裡知道我們</p></div>
+</div></figure></div>
 </div><div class="subf" id="roi">
   <div class="sf-top"><h4>來源成效報表</h4><span class="mcode add">模組 02</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">各來源、分校、科目的問班、試聽、報名數與每筆報名的取得成本並排比較。</p>
@@ -1200,13 +1272,21 @@ body{background:var(--paper)}
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i on">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>招生來源成效</b><span class="seg"><i class="on">11 月</i><i>本學期</i></span><span class="seg"><i class="on">全部分校</i><i>板橋</i><i>本部</i></span><span class="sp"></span><span class="btn">＋ 建立來源連結</span></div>
+<div class="sec-lbl">成效</div>
 <table class="tb src-t"><tr><th>來源活動</th><th>分校・科目</th><th>花費</th><th>問班</th><th>試聽</th><th>報名</th><th>報名率</th><th>每筆報名成本</th></tr>
 <tr><td><b>Meta 廣告・國二冬季招生</b></td><td>板橋・數學</td><td>NT$100,000</td><td>180</td><td>35</td><td>12</td><td>6.7%</td><td><b>NT$8,333</b></td></tr>
 <tr><td><b>傳單・國中校門</b></td><td>本部・理化</td><td>NT$12,000</td><td>40</td><td>14</td><td>6</td><td>15.0%</td><td><b class="good">NT$2,000</b></td></tr>
 <tr><td><b>家長介紹</b></td><td>全部</td><td>—</td><td>22</td><td>15</td><td>9</td><td>40.9%</td><td>—</td></tr>
 <tr><td><b>官網</b></td><td>全部</td><td>—</td><td>31</td><td>8</td><td>3</td><td>9.7%</td><td>—</td></tr>
 </table>
-<div class="src-q"><div class="qr sm"></div><div><b>傳單・國中校門（本部・理化）</b><span>go.補教平台.tw/c/flyer-hq-sci</span><span class="muted">印在傳單上，掃描後記錄來源並加入好友</span></div><span class="btn sm ghost">下載 QR</span></div></div>
+<div class="sec-div"></div>
+<div class="sec-lbl">來源連結<span class="muted">（4 個，與上方成效相同）</span></div>
+<div class="src-list">
+<div class="src-q"><div class="lk-ic">🔗</div><div><b>Meta 廣告・國二冬季招生</b><span>go.補教平台.tw/c/meta-bq-math</span><span class="muted">貼在廣告的按鈕連結</span></div><span class="btn sm ghost">複製連結</span></div>
+<div class="src-q"><div class="qr sm"></div><div><b>傳單・國中校門</b><span>go.補教平台.tw/c/flyer-hq-sci</span><span class="muted">印在傳單上，掃描後記錄來源並加入好友</span></div><span class="btn sm ghost">下載 QR</span></div>
+<div class="src-q"><div class="lk-ic">👥</div><div><b>家長介紹</b><span>每位家長一個專屬介紹連結</span><span class="muted">在家長的 LINE 選單裡分享</span></div><span class="btn sm ghost">查看 38 個</span></div>
+<div class="src-q"><div class="lk-ic">🌐</div><div><b>官網</b><span>go.補教平台.tw/c/website</span><span class="muted">放在官網的「加入 LINE」按鈕</span></div><span class="btn sm ghost">複製連結</span></div>
+</div></div>
   </div>
 </div></figure><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>主任儀表板</figcaption><div class="browser">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/dashboard</span></div>
@@ -1214,9 +1294,8 @@ body{background:var(--paper)}
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i on">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>營運報表</b><span class="seg"><i class="on">本月</i><i>上月</i><i>本學期</i></span><span class="sp"></span><span class="seg"><i class="on">本部</i><i>板橋</i><i>全部</i></span></div>
+<div class="dsh"><div class="dsh-l">
 <div class="kpi4"><div><span>AI 自動回覆率</span><b>78%</b><em class="up">↑4%</em></div><div><span>問班 → 報名</span><b>33%</b><em class="up">↑2%</em></div><div><span>到班率</span><b>94%</b><em>—</em></div><div><span>續班率</span><b>81%</b><em class="dn">↓3%</em></div></div>
-<div class="ailine"><span class="ai-tag">AI</span>問報表：<b>這個月板橋問班為什麼變少？</b></div>
-<div class="aians">板橋本月問班 9 筆，比上月少 6 筆。主要差在「國一英文」：上月有傳單活動帶來 5 筆，本月沒有。另外週末時段額滿後，有 3 位家長因時段不合沒有預約試聽。</div>
 <div class="dash2">
   <div class="pn"><div class="pn-h">家長最常問的問題</div>
     <div class="hb"><span>上課時間</span><i style="width:100%"></i><em>38</em></div>
@@ -1224,6 +1303,14 @@ body{background:var(--paper)}
     <div class="hb"><span>試聽</span><i style="width:45%"></i><em>17</em></div>
     <div class="hb"><span>補課</span><i style="width:30%"></i><em>11</em></div></div>
   <div class="pn"><div class="pn-h">LINE 訊息用量</div><div class="q-big">3,720 <small>/ 6,000 則</small></div><div class="meter"><i style="width:62%"></i></div><span class="muted">到班通知 2,410・公告 860・提醒 450<br>預估月底 5,900 則，在方案額度內</span></div>
+</div></div>
+  <div class="kb-ai">
+    <div class="ai-h">AI 問報表</div>
+    <div class="q">這個月板橋問班為什麼變少？</div>
+    <div class="a">板橋本月問班 9 筆，比上月少 6 筆。主要差在「國一英文」：上月有傳單活動帶來 5 筆，本月沒有。另外週末時段額滿後，有 3 位家長因時段不合沒有預約試聽。</div>
+    <div class="src">依據：來源成效、試聽預約</div>
+    <div class="btn sm">加開週末試聽時段</div>
+  </div>
 </div></div>
   </div>
 </div></figure></div>
