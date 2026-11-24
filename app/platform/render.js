@@ -20,6 +20,52 @@ export function normalizeTarget(raw) {
   return name || null
 }
 
+// 頁面裡的後台示意圖是寬版排版，手機寬度會擠壞。比這個窄就整頁換成
+// 「請用平板或電腦開啟」，iPad 直向（768px 起）可以正常看。
+export const MIN_WIDTH = 768
+
+function narrowGate() {
+  const max = MIN_WIDTH - 1
+  return `<style>
+#narrow-gate{display:none}
+@media (max-width:${max}px){
+  body>*:not(#narrow-gate){display:none!important}
+  #narrow-gate{display:flex;min-height:100vh;min-height:100dvh;align-items:center;justify-content:center;padding:24px 20px;box-sizing:border-box;background:var(--paper);color:var(--ink);font-family:var(--body)}
+  .ng-box{max-width:360px;display:flex;flex-direction:column;gap:14px;text-align:center;align-items:center}
+  .ng-ic{width:64px;height:64px;color:var(--accent)}
+  .ng-box h1{font-family:var(--display);font-size:24px;margin:0}
+  .ng-box p{margin:0;color:var(--muted);font-size:15px;line-height:1.7}
+  .ng-copy{font:inherit;font-weight:700;font-size:15px;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:11px 24px;cursor:pointer}
+  .ng-copy:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  .ng-fine{font-size:13px!important}
+}
+</style>`
+}
+
+function narrowGateMarkup() {
+  return `<div id="narrow-gate" role="dialog" aria-labelledby="ng-title">
+<div class="ng-box">
+<svg class="ng-ic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="12" width="40" height="28" rx="3"/><path d="M18 50h16M26 40v10"/><rect x="42" y="24" width="16" height="28" rx="3" fill="var(--paper)"/></svg>
+<h1 id="ng-title">請用平板或電腦開啟</h1>
+<p>這份介紹有完整的後台畫面示意，手機螢幕太窄看不清楚。請改用平板或電腦開啟。</p>
+<button class="ng-copy" type="button" id="ng-copy">複製網址</button>
+<p class="ng-fine" id="ng-msg" aria-live="polite">複製後貼到電腦瀏覽器即可開啟</p>
+</div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('ng-copy'),msg=document.getElementById('ng-msg');
+  btn.addEventListener('click',function(){
+    var url=location.href;
+    function done(){msg.textContent='已複製網址';btn.textContent='已複製';}
+    function fallback(){var t=document.createElement('textarea');t.value=url;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');done();}catch(e){msg.textContent=url;}document.body.removeChild(t);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,fallback);}else{fallback();}
+    if(window.posthog)posthog.capture('web_platform_copy_link');
+  });
+})();
+</script>`
+}
+
 function trackingScript(target) {
   // JSON 進 <script> 前把 < 轉義，避免名稱裡的 </script> 跳出去。
   const props = JSON.stringify({ platform_target: target || '(none)' }).replace(/</g, '\\u003c')
@@ -30,6 +76,8 @@ function trackingScript(target) {
   if(h==='localhost'||h==='127.0.0.1'||/\\.localhost$/.test(h))return;
   var props=${props};
   posthog.init(${JSON.stringify(POSTHOG_KEY)},{api_host:${JSON.stringify(POSTHOG_HOST)},ui_host:'https://us.posthog.com',defaults:'2025-05-24',capture_pageleave:true,persistence:'localStorage+cookie',cross_subdomain_cookie:true,session_recording:{maskAllInputs:true}});
+  var blocked=window.matchMedia&&matchMedia('(max-width:${MIN_WIDTH - 1}px)').matches;
+  props.platform_blocked=!!blocked;
   posthog.register(props);
   posthog.capture('web_platform_view',props);
 })();
@@ -41,9 +89,12 @@ export function platformResponse(target) {
   if (target) {
     const safe = escapeHtml(target)
     html = html.split(DEMO_NAME).join(safe)
+    // LINE 聊天畫面頂端的頭像字也跟著換成名稱第一個字。
+    html = html.split('<span class="av">示</span>').join(`<span class="av">${escapeHtml(Array.from(target)[0])}</span>`)
     html = html.replace(/<title>([^<]*)<\/title>/, `<title>$1｜${safe}</title>`)
   }
-  html = html.replace('</head>', `${trackingScript(target)}\n</head>`)
+  html = html.replace('</head>', `${narrowGate()}\n${trackingScript(target)}\n</head>`)
+  html = html.replace('<body>', `<body>\n${narrowGateMarkup()}`)
   return new Response(html, {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
