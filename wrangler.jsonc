@@ -12,7 +12,7 @@
 		"ADMIN_AUTH_BACKEND_URL": "https://superb-backend-1041765261654.asia-east1.run.app",
 		// /platform 聯絡表單（app/api/platform-contact）的寄件與收件地址；RESEND_API_KEY 是 secret，在後台設定
 		"CONTACT_FROM_EMAIL": "noreply@superb-tutor.com",
-		"CONTACT_TO_EMAIL": "dogtor@superb-tutor.com"
+		"CONTACT_TO_EMAIL": "superb.taipei@gmail.com"
 	},
 	"assets": {
 		"directory": ".open-next/assets",
