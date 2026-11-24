@@ -1,7 +1,7 @@
 // 「聯絡我們」彈窗：左邊是洽詢表單（送到 /api/platform-contact 寄 email），右邊是其他聯絡方式。
 // 頁面上任何帶 data-contact 的按鈕都會打開它。
 // 表單只分兩種：對這個平台有興趣（可勾選模組），或其他合作；重點是留下聯絡方式，訊息選填。
-import { PLATFORM_MODULES } from './modules'
+import { BASE_MODULE, PLATFORM_MODULES } from './modules'
 
 // LINE 與 IG 填了才會顯示按鈕；為 null 時整列不出現。
 export const PLATFORM_CONTACT = {
@@ -39,9 +39,11 @@ export function contactModal(target) {
     channel('mail', `mailto:${c.email}`, 'Email', c.email, false),
   ].join('')
 
-  const modules = PLATFORM_MODULES.map(
-    (m) => `<label class="cm-mod"><input type="checkbox" name="modules" value="${m.code}"><i>${m.code}</i><span>${esc(m.name)}</span></label>`,
-  ).join('')
+  const modules = PLATFORM_MODULES.map((m) => {
+    const base = m.code === BASE_MODULE
+    const dep = base ? '基本模組・一定包含' : m.requires.length ? `需搭配 ${m.requires.join('、')}` : '可單獨使用'
+    return `<label class="cm-mod${base ? ' base' : ''}"><input type="checkbox" name="modules" value="${m.code}" data-req="${m.requires.join(',')}"${base ? ' checked disabled' : ''}><i>${m.code}</i><span><b>${esc(m.name)}</b><small>${dep}</small></span></label>`
+  }).join('')
 
   const css = `<style>
 .cm-wrap{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(10,22,26,.55);backdrop-filter:blur(3px)}
@@ -82,12 +84,23 @@ export function contactModal(target) {
 .cm-mods-h{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;font-weight:700}
 .cm-mods-h button{font:inherit;font-size:12.5px;font-weight:700;color:var(--accent);background:none;border:0;cursor:pointer;padding:0}
 .cm-mod-g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.cm-mod{display:flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:6px 8px;font-size:13px;cursor:pointer;line-height:1.3}
+.cm-mod{display:flex;align-items:flex-start;gap:6px;background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:6px 8px;font-size:13px;cursor:pointer;line-height:1.3;position:relative}
+.cm-mod span{display:flex;flex-direction:column;min-width:0}
+.cm-mod b{font-weight:inherit}
+.cm-mod small{font-size:11px;color:var(--muted);font-weight:400}
+.cm-mod.base{cursor:default;opacity:.85}
+.cm-mod.auto{animation:cmflash 1.2s ease-out}
+@keyframes cmflash{0%{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 40%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){.cm-mod.auto{animation:none}}
+.cm-mods-note{font-size:12.5px;color:var(--accent);font-weight:700;min-height:0}
+.cm-mods-note:empty{display:none}
+.cm-mods-rule{font-size:12px;color:var(--muted)}
 .cm-mod input{position:absolute;opacity:0;width:1px;height:1px}
-.cm-mod i{font-style:normal;font-size:11px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.cm-mod i{font-style:normal;font-size:11px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px}
 .cm-mod:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
 .cm-mod:has(input:checked) i{color:var(--accent)}
-.cm-mod:has(input:checked)::after{content:"✓";margin-left:auto;font-size:12px}
+.cm-mod:has(input:checked)::after{content:"✓";position:absolute;top:6px;right:8px;font-size:12px}
+.cm-mod{padding-right:20px}
 .cm-ways{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .cm-way{position:relative}
 .cm-way span{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;pointer-events:none}
@@ -141,7 +154,7 @@ body.cm-lock{overflow:hidden}
 <fieldset class="cm-fld" data-f="inquiryType"><legend class="cm-lg">你想了解的是<span class="cm-req">必填</span></legend>
 <div class="cm-kind"><label><input type="radio" name="inquiryType" value="platform" checked><span><b>這個補習班平台</b><small>勾選有興趣的模組就好</small></span></label><label><input type="radio" name="inquiryType" value="other"><span><b>其他合作</b><small>客製系統、技術合作或任何想法</small></span></label></div>
 <div class="cm-err" id="cm-inquiryType-err"></div></fieldset>
-<div class="cm-mods" id="cm-mods"><div class="cm-mods-h"><span>有興趣的模組<span class="cm-opt">選填，可複選</span></span><button type="button" id="cm-all">全部都想了解</button></div><div class="cm-mod-g">${modules}</div></div>
+<div class="cm-mods" id="cm-mods"><div class="cm-mods-h"><span>有興趣的模組<span class="cm-opt">選填，可複選</span></span><button type="button" id="cm-all">全部都想了解</button></div><div class="cm-mods-rule">有些模組要搭配前面的模組才能使用，勾選時會自動一起勾上。</div><div class="cm-mod-g">${modules}</div><div class="cm-mods-note" id="cm-mods-note" aria-live="polite"></div></div>
 <div class="cm-row">
 <div class="cm-fld" data-f="name"><label for="cm-name">怎麼稱呼你<span class="cm-req">必填</span></label><input type="text" id="cm-name" name="name" autocomplete="name" placeholder="例如：王主任" maxlength="80"><div class="cm-err" id="cm-name-err"></div></div>
 <div class="cm-fld" data-f="organization"><label for="cm-org">補習班／單位<span class="cm-opt">選填</span></label><input type="text" id="cm-org" name="organization" autocomplete="organization" placeholder="補習班或公司名稱" value="${org}" maxlength="120"><div class="cm-err" id="cm-organization-err"></div></div>
@@ -191,7 +204,19 @@ body.cm-lock{overflow:hidden}
   function kind(){var t=form.querySelector('input[name=inquiryType]:checked');return t?t.value:'';}
   function syncKind(){mods.hidden=kind()!=='platform';}
   form.querySelectorAll('input[name=inquiryType]').forEach(function(r){r.addEventListener('change',syncKind);});
-  document.getElementById('cm-all').addEventListener('click',function(){var boxes=form.querySelectorAll('input[name=modules]'),all=[].every.call(boxes,function(b){return b.checked;});boxes.forEach(function(b){b.checked=!all;});this.textContent=all?'全部都想了解':'清除全部';});
+  var BOX={},note=document.getElementById('cm-mods-note');
+  form.querySelectorAll('input[name=modules]').forEach(function(b){BOX[b.value]=b;});
+  function reqOf(c){var r=BOX[c]&&BOX[c].getAttribute('data-req');return r?r.split(','):[];}
+  function closure(c,acc){acc=acc||[];reqOf(c).forEach(function(d){if(acc.indexOf(d)<0){acc.push(d);closure(d,acc);}});return acc;}
+  function flash(b){var l=b.closest('label');l.classList.remove('auto');void l.offsetWidth;l.classList.add('auto');}
+  function nameOf(c){return c+' '+BOX[c].closest('label').querySelector('b').textContent;}
+  form.querySelectorAll('input[name=modules]').forEach(function(b){b.addEventListener('change',function(){
+    var c=b.value,added=[],removed=[];
+    if(b.checked){closure(c).forEach(function(d){if(BOX[d]&&!BOX[d].checked){BOX[d].checked=true;added.push(d);flash(BOX[d]);}});}
+    else{Object.keys(BOX).forEach(function(k){if(BOX[k].checked&&!BOX[k].disabled&&closure(k).indexOf(c)>=0){BOX[k].checked=false;removed.push(k);flash(BOX[k]);}});}
+    added.sort();removed.sort();note.textContent=added.length?'已一起勾選 '+added.map(nameOf).join('、')+'（'+nameOf(c)+' 需要搭配）':removed.length?'已一起取消 '+removed.map(nameOf).join('、')+'（需要搭配 '+nameOf(c)+'）':'';
+  });});
+  document.getElementById('cm-all').addEventListener('click',function(){var boxes=[].filter.call(form.querySelectorAll('input[name=modules]'),function(b){return !b.disabled;}),all=boxes.every(function(b){return b.checked;});boxes.forEach(function(b){b.checked=!all;});note.textContent='';this.textContent=all?'全部都想了解':'清除全部';});
   function values(){return{inquiryType:kind(),modules:kind()==='platform'?[].map.call(form.querySelectorAll('input[name=modules]:checked'),function(b){return b.value;}):[],name:F.name.value.trim(),organization:F.organization.value.trim(),line:F.line.value.trim(),phone:F.phone.value.trim(),instagram:F.instagram.value.trim(),email:F.email.value.trim(),message:F.message.value.trim(),consent:F.consent.checked};}
   function validate(v){var e={};if(!v.inquiryType)e.inquiryType='typeRequired';if(!v.name)e.name='nameRequired';else if(v.name.length>80)e.name='nameTooLong';if(v.organization.length>120)e.organization='organizationTooLong';
     if(!v.line&&!v.phone&&!v.instagram&&!v.email)e.contact='contactRequired';else if(v.email&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v.email))e.contact='emailInvalid';
@@ -215,7 +240,7 @@ body.cm-lock{overflow:hidden}
       .catch(function(){fail.innerHTML='網路連線似乎中斷了。你填寫的內容都已保留，請確認連線後重新送出，或直接用右邊的 LINE 找我們。';fail.hidden=false;})
       .then(function(){submit.disabled=false;submit.textContent='送出';});
   });
-  document.getElementById('cm-again').addEventListener('click',function(){form.reset();if(TARGET)F.organization.value=TARGET;syncKind();document.getElementById('cm-all').textContent='全部都想了解';submitted=false;show({});startedAt=Date.now();done.hidden=true;body.hidden=false;form.querySelector('input[name=inquiryType]:checked').focus();});
+  document.getElementById('cm-again').addEventListener('click',function(){form.reset();note.textContent='';if(TARGET)F.organization.value=TARGET;syncKind();document.getElementById('cm-all').textContent='全部都想了解';submitted=false;show({});startedAt=Date.now();done.hidden=true;body.hidden=false;form.querySelector('input[name=inquiryType]:checked').focus();});
 })();
 </script>`
 

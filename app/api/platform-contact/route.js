@@ -2,7 +2,7 @@
 // （superb_official_website 的 lib/actions/contact.ts），用 Resend 寄到公司信箱。
 // 需要的環境變數與官網相同：RESEND_API_KEY、CONTACT_TO_EMAIL、CONTACT_FROM_EMAIL。
 // 表單只分「對平台有興趣（可勾模組）」與「其他合作」，至少要留一種聯絡方式，訊息選填。
-import { PLATFORM_MODULES } from '@/app/platform/modules'
+import { PLATFORM_MODULES, withDependencies } from '@/app/platform/modules'
 
 const INQUIRY_LABELS = {
   platform: '補習班平台',
@@ -69,7 +69,8 @@ export async function POST(request) {
     consent: body.consent === true,
     target: str(body.target, 80),
   }
-  if (input.inquiryType !== 'platform') input.modules = []
+  // 依賴關係在伺服器端再套一次：勾了後面的模組，前面需要搭配的一定算進來
+  input.modules = input.inquiryType === 'platform' ? withDependencies(input.modules) : []
 
   const fieldErrors = validate(input)
   if (Object.keys(fieldErrors).length) {
