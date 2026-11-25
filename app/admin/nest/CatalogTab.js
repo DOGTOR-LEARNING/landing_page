@@ -11,6 +11,7 @@ import {
 import { folderOf, guessSlotKind, imageSize, parseUploadName, poseOf } from './fileNames'
 
 const ID_PATTERN = /^[a-z0-9_]{2,40}$/
+const SPECIES_SOURCES = [...SOURCES, ['referral', '邀請好友']]
 
 const newSpecies = () => ({
   isNew: true, id: '', names: { tw: '', en: '' }, image_urls: {}, display_scale: 1, rarity: 'common', source: 'shop',
@@ -142,6 +143,7 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const isSpecies = kind === 'species'
+  const sources = isSpecies ? SPECIES_SOURCES : SOURCES
   const path = isSpecies ? '/species' : '/items'
 
   async function save(body) {
@@ -209,7 +211,7 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
             {row.missing_in?.length > 0 && <div className={page.warn}>尚未同步到 {row.missing_in.join('、')}，重新儲存一次即可</div>}</td>
           {!isSpecies && <td>{label(SLOT_KINDS, row.slot_kind)}</td>}
           <td>{label(RARITIES, row.rarity)}</td>
-          <td>{label(SOURCES, row.source)}</td>
+          <td>{label(sources, row.source)}</td>
           <td><PriceCell price={row.price_bones} /></td>
           <td>{ruleText(row.unlock_rule, options)}</td>
           <td><button className={`${styles.statusBadge} ${row.is_published ? '' : styles.statusDisabled} ${page.badgeButton}`} disabled={!canEdit} onClick={() => togglePublish(row)} title={canEdit ? '點一下切換上下架' : undefined}>{row.is_published ? '上架中' : '未上架'}</button></td>
@@ -241,12 +243,14 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
           <div className={styles.formColumns}>
             {!isSpecies && <Field label="種類" hint="決定能放在哪個格位"><Select value={form.slot_kind} options={SLOT_KINDS} disabled={!form.isNew} onChange={slot_kind => set({ slot_kind })} /></Field>}
             <Field label="稀有度" hint="物品欄卡片的框色"><Select value={form.rarity} options={RARITIES} onChange={rarity => set({ rarity })} /></Field>
-            <Field label="取得方式" hint="預設只提供逗逗和溫暖臥室；其他選商店，價格留空即可暫不販售。"><Select value={form.source} options={SOURCES.filter(([value]) => value !== 'default' || form.id === (isSpecies ? 'doudou' : 'bg_bedroom'))} onChange={source => set({ source })} /></Field>
+            <Field label="取得方式" hint={form.source === 'referral' ? '三位好友用邀請碼註冊並完成新手任務後，開啟寵物窩時自動發放。' : '預設只提供逗逗和溫暖臥室；其他選商店，價格留空即可暫不販售。'}>
+              <Select value={form.source} options={sources.filter(([value]) => value !== 'default' || form.id === (isSpecies ? 'doudou' : 'bg_bedroom'))} onChange={source => set(source === 'referral' ? { source, price_bones: '', unlock_rule: null } : { source })} />
+            </Field>
           </div>
           <div className={styles.formColumns}>
-            <Field label="價格（骨頭）" hint="留空＝非賣品，只能從解鎖條件或獎勵取得">
+            {form.source !== 'referral' && <Field label="價格（骨頭）" hint="留空＝非賣品，只能從解鎖條件或獎勵取得">
               <input className={styles.input} type="number" min={0} value={form.price_bones} onChange={e => set({ price_bones: e.target.value })} placeholder="非賣品" />
-            </Field>
+            </Field>}
             <Field label="排序" hint="數字小的排前面"><input className={styles.input} type="number" value={form.sort} onChange={e => set({ sort: e.target.value })} /></Field>
             {isSpecies && <Field label="顯示大小" hint="0.6–1.4，體型不同的寵物用這個調"><input className={styles.input} type="number" min={0.6} max={1.4} step="any" value={form.display_scale} onChange={e => set({ display_scale: e.target.value })} /></Field>}
           </div>
@@ -257,9 +261,9 @@ export default function CatalogTab({ market, kind, rows, options, canEdit, onSav
           {!isSpecies && form.slot_kind === 'background' && <div className={styles.formColumns}>
             <Field label="背景特效"><Select value={form.motion === 'particle' ? form.motion_preset : ''} options={[['', '無'], ...PRESETS.particle]} onChange={preset => set(preset ? { motion: 'particle', motion_preset: preset } : { motion: 'static', motion_preset: null })} /></Field>
           </div>}
-          <Field label="解鎖條件" hint="有價格的東西不論條件都能在商店買；同一個條件可以綁好幾樣東西">
+          {form.source !== 'referral' && <Field label="解鎖條件" hint="有價格的東西不論條件都能在商店買；同一個條件可以綁好幾樣東西">
             <RuleEditor rule={form.unlock_rule} options={options} forSpecies={isSpecies} onChange={unlock_rule => set({ unlock_rule })} />
-          </Field>
+          </Field>}
 
           <Field label="圖片" hint="WebP 或 GIF 都可以（GIF 會循環播放）；規格見 docs/pet-nest-art/README.md；上傳後要按下方「儲存」才會套用">
             {isSpecies
