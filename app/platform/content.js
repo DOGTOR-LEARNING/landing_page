@@ -1,5 +1,7 @@
 // 不公開的頁面：沒有任何站內連結、不在 sitemap、不寫進 robots.txt（寫了反而會洩漏網址），
 // 只靠 noindex 標頭與 meta 擋搜尋引擎。內容是獨立的整頁 HTML，原樣輸出。
+export const PLATFORM_DESKTOP_MIN_WIDTH = 1024
+
 export const PLATFORM_HTML = String.raw`<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -581,20 +583,18 @@ body{background:var(--paper)}
 .eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em}
 .sec,.grp{padding:56px 0 20px}
 .sec-h{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;max-width:46em}
-.sec-h h2{font-family:var(--display);font-size:clamp(22px,3vw,30px)}
+.sec-h h2{font-family:var(--display)}
 .sec-p{color:var(--muted);font-size:16px}
 .fine{font-size:13px;color:var(--muted);margin-top:14px}
 
 /* hero */
 .hero2{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center;padding:48px 0 32px;border-bottom:1px solid var(--rule)}
-.hero2 h1{font-family:var(--display);font-size:clamp(30px,4.6vw,46px);line-height:1.25;margin:10px 0 14px}
+.hero2 h1{font-family:var(--display)}
 .lead2{font-size:17px;color:var(--muted);max-width:34em}
 .h-pts{display:flex;flex-wrap:wrap;gap:8px 18px;margin:18px 0 22px;font-weight:700;font-size:15px;color:var(--accent)}
 .h-btns{display:flex;gap:12px;flex-wrap:wrap}
 .btn-p{background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:11px 22px;border-radius:999px}
 .btn-s{border:1.5px solid var(--accent);color:var(--accent);text-decoration:none;font-weight:700;padding:10px 20px;border-radius:999px;background:var(--card)}
-.h-vis{display:flex;justify-content:center}
-.h-vis figcaption{display:none}
 @media (max-width:900px){.hero2{grid-template-columns:1fr}}
 
 /* why */
@@ -753,33 +753,12 @@ body{background:var(--paper)}
 .why.w1{background:#fbe7e7;color:#b23b3b}.why.w2{background:#fff2dc;color:#9a5b00}.why.w3{background:#eef2f1;color:#58686d}.why.w4{background:#ece6fb;color:#6b46c1}
 
 /* ===== visual redesign ===== */
-:root{--c1:#2769a9;--c1s:#e4eef8;--c2:#0e7c86;--c2s:#ddf1f2;--c3:#5b4fc9;--c3s:#ebe8fb;--c4:#2e7d4f;--c4s:#e3f2e8;--c5:#b26a00;--c5s:#fdf0dc;--c6:#a8326e;--c6s:#f8e4ee}
+:root{--c1:#2769a9;--c1s:#e4eef8;--c2:#0e7c86;--c2s:#ddf1f2;--c3:#5b4fc9;--c3s:#ebe8fb;--c4:#2e7d4f;--c4s:#e3f2e8;--c5:#9c5b00;--c5s:#fdf0dc;--c6:#a8326e;--c6s:#f8e4ee}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c1:#7fb3e6;--c1s:#1a2c40;--c2:#4cc3cc;--c2s:#143437;--c3:#a79ef0;--c3s:#26223f;--c4:#6fcf97;--c4s:#17301f;--c5:#f0b45a;--c5s:#3a2c14;--c6:#e58ab8;--c6s:#3a1c2b}}
 :root[data-theme="dark"]{--c1:#7fb3e6;--c1s:#1a2c40;--c2:#4cc3cc;--c2s:#143437;--c3:#a79ef0;--c3s:#26223f;--c4:#6fcf97;--c4s:#17301f;--c5:#f0b45a;--c5s:#3a2c14;--c6:#e58ab8;--c6s:#3a1c2b}
 .c1{--pc:var(--c1);--ps:var(--c1s)}.c2{--pc:var(--c2);--ps:var(--c2s)}.c3{--pc:var(--c3);--ps:var(--c3s)}
 .c4{--pc:var(--c4);--ps:var(--c4s)}.c5{--pc:var(--c5);--ps:var(--c5s)}.c6{--pc:var(--c6);--ps:var(--c6s)}
 
-/* flow diagram */
-.flow2-wrap{background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:18px;overflow-x:auto}
-.flow2{min-width:980px;display:flex;flex-direction:column;gap:8px}
-.prow{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
-.pband{text-align:center;font-weight:700;font-size:14px;padding:6px;border-radius:10px;background:var(--paper);color:var(--ink);border:1px solid var(--rule)}
-.frow{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
-.fcol{display:flex;flex-direction:column;gap:8px}
-.fper{display:none}
-.fst{background:var(--accent);color:#fff;font-weight:700;font-size:14px;padding:9px 8px 9px 18px;display:flex;align-items:center;gap:6px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%)}
-.fst span{width:20px;height:20px;border-radius:50%;background:#fff;color:var(--accent);display:grid;place-items:center;font-size:11px;flex:none}
-.fhelps{display:flex;flex-direction:column;gap:6px}
-.hc{display:flex;align-items:center;gap:6px;text-decoration:none;font-size:13px;font-weight:700;color:var(--pc);background:var(--ps);border-radius:8px;padding:7px 8px;border:1.5px solid transparent;line-height:1.35}
-.hc:hover{border-color:var(--pc)}
-.hc i,.lg2 i{font-style:normal;flex:none;width:20px;height:20px;border-radius:6px;background:var(--pc);color:#fff;display:grid;place-items:center;font-size:11px}
-.legend2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 18px;font-size:14px;color:var(--muted)}
-.lg2{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--pc);font-weight:700;font-size:13.5px;background:var(--ps);border-radius:999px;padding:3px 10px 3px 4px}
-@media (max-width:760px){
-  .flow2{min-width:0}.prow{display:none}.frow{grid-template-columns:1fr}
-  .fper{display:block;font-size:12px;font-weight:700;color:var(--muted)}
-  .fhelps{flex-direction:row;flex-wrap:wrap}
-}
 .pc3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media (max-width:1000px){.pc3-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.pc3-grid{grid-template-columns:1fr}}
@@ -799,93 +778,7 @@ body{background:var(--paper)}
 .wcard h3{font-size:19px}
 .wn{width:44px;height:44px;font-size:22px}
 
-/* pillar redesign */
-.pillar{padding:56px 0 24px}
-.pl-banner{display:flex;gap:20px;align-items:center;background:var(--ps);border-radius:20px;padding:24px 28px;position:relative;overflow:hidden}
-.pl-big{font-family:var(--display);font-size:84px;line-height:1;color:var(--pc);opacity:.9;flex:none}
-.pl-eb{font-size:14px;font-weight:700;color:var(--pc);letter-spacing:.04em}
-.pl-t h2{font-family:var(--display);font-size:clamp(22px,3vw,30px);margin:4px 0 6px;color:var(--ink)}
-.pl-t p{font-size:15.5px;color:var(--muted);max-width:44em}
-@media (max-width:640px){.pl-big{font-size:56px}.pl-banner{padding:18px}}
-.inc-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
-.inc2{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--pc);border-radius:12px;padding:12px 14px}
-.inc2:hover{border-color:var(--pc)}
-.inc2 b{font-size:16px}
-.inc2 span{font-size:13.5px;color:var(--muted)}
-.ba2{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin-top:12px}
-.ba2>div{border-radius:12px;padding:12px 16px;font-size:15px;display:flex;flex-direction:column;gap:2px}
-.ba2 i{font-style:normal;font-size:12px;font-weight:700}
-.ba2 .b{background:var(--card);border:1px dashed var(--rule);color:var(--muted)}
-.ba2 .a{background:var(--pc);color:#fff}
-.ba2 .a i{color:rgba(255,255,255,.8)}
-.ba2 .arr{align-self:center;color:var(--pc);font-size:22px;font-weight:700;padding:0;background:none}
-@media (max-width:700px){.ba2{grid-template-columns:1fr}.ba2 .arr{display:none}}
-.subf{margin-top:40px;padding-top:0;border-top:0}
-.sf-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.sf-top h4{font-size:21px;position:relative;padding-left:14px}
-.sf-top h4::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:5px;border-radius:3px;background:var(--pc)}
-.sf-desc{font-size:15.5px;color:var(--muted);margin:4px 0 12px;max-width:46em}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media (max-width:800px){.tiles{grid-template-columns:1fr}}
-.tile{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;font-size:14.5px;line-height:1.55}
-.tile svg{width:20px;height:20px;flex:none;margin-top:1px}
-.tile svg circle{fill:var(--pc)}
-.subf .shots{margin-top:16px}
-.feat .shots figcaption .who{font-size:11px}
-
-/* security tiles */
-.scard{align-items:flex-start}
-.si{width:40px;height:40px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:17px}
-.scard h3{font-size:17px}
-/* onboarding timeline */
-.tline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:8px}
-.tline::before{content:"";position:absolute;left:12%;right:12%;top:22px;height:3px;background:var(--accent-soft)}
-.tl3{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:0 10px;position:relative}
-.tl3>span{width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-size:20px;box-shadow:0 0 0 6px var(--paper)}
-.tl3 h3{font-size:17px;margin-top:4px}
-.tl3 p{font-size:14px;color:var(--muted)}
-@media (max-width:700px){.tline{grid-template-columns:1fr 1fr;row-gap:20px}.tline::before{display:none}}
 .draft .ai-tag{display:inline-block}
-
-/* module codes */
-.mcode{font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;background:var(--pc,var(--accent));color:#fff;font-variant-numeric:tabular-nums}
-.mkind{font-size:12px;font-weight:700;border-radius:999px;padding:1px 9px}
-.mkind.base{background:#16252b;color:#fff}
-.mkind.add{background:var(--paper);color:var(--muted);border:1px solid var(--rule)}
-.pl-eb em{font-style:normal;margin-left:10px;font-size:12px;border-radius:999px;padding:1px 9px;vertical-align:1px}
-.pl-eb em.base{background:#16252b;color:#fff}
-.pl-eb em.add{background:var(--card);color:var(--muted);border:1px solid var(--rule)}
-.ic-code{font-size:11.5px !important;font-weight:700;color:var(--pc) !important}
-.hc i{width:auto;min-width:22px;padding:0 3px}
-/* module overview */
-.mstack{display:flex;flex-direction:column;gap:14px}
-.mbase{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;background:#16252b;color:#fff;border-radius:20px;padding:22px 26px}
-@media (max-width:900px){.mbase{grid-template-columns:1fr}}
-.mb-l{display:flex;gap:16px;align-items:center}
-.mb-l h3{font-family:var(--display);font-size:28px;margin:4px 0}
-.mb-l p{color:#c9d5d2}
-.mc-code{font-family:var(--display);font-size:22px;color:var(--pc,var(--accent));font-variant-numeric:tabular-nums;flex:none;width:48px}
-.mc-code.big{font-size:52px;color:#7fb3e6;width:auto}
-.mbase .mkind.base{background:#2769a9}
-.mb-r{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media (max-width:600px){.mb-r{grid-template-columns:1fr}}
-.mb-col{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 14px}
-.mb-col h4{font-size:13px;color:#9fc3e8;margin-bottom:6px}
-.mb-col ul{margin:0;padding-left:1.1em;font-size:14.5px}
-.mb-col a{color:#fff}
-.madd-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:8px}
-.madd-h h3{font-size:20px}
-.madd-h p{font-size:14.5px;color:var(--muted)}
-.madd{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media (max-width:1000px){.madd{grid-template-columns:1fr 1fr}}
-@media (max-width:600px){.madd{grid-template-columns:1fr}}
-.mcard{display:flex;gap:10px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--pc);border-radius:12px;padding:12px 14px}
-.mcard:hover{box-shadow:0 6px 16px rgba(20,40,40,.08)}
-.mcard b{font-size:16px}
-.mcard p{font-size:13.5px;color:var(--muted);margin:2px 0 6px}
-.mc-dep{display:flex;flex-wrap:wrap;gap:4px}
-.mc-dep span{font-size:11.5px;font-weight:700;background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:0 8px;color:var(--ink)}
-.mc-dep span.free{color:var(--pc);background:var(--ps);border-color:transparent}
 
 /* AI-through-every-step + six values */
 .why6{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -908,45 +801,6 @@ body{background:var(--paper)}
 .ai-band .now span{color:var(--ai)}
 .ai-band .arr{align-self:center;color:var(--ai);font-weight:700}
 @media (max-width:760px){.ai-band{grid-template-columns:1fr}.ai-band .arr{display:none}}
-.claims{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media (max-width:760px){.claims{grid-template-columns:repeat(2,1fr)}}
-.claim{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;font-family:var(--display);font-size:clamp(19px,2.4vw,24px);font-weight:700;display:flex;align-items:center;gap:12px}
-.claim span{font-family:var(--body);font-size:13px;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
-.sim{margin-top:18px;background:var(--card);border:1.5px solid var(--accent);border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;gap:16px}
-.sim-h h3{font-size:clamp(17px,2.2vw,21px);margin-top:4px}
-.sim3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media (max-width:900px){.sim3{grid-template-columns:1fr}}
-.simc{background:var(--paper);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
-.sk{font-size:13px;font-weight:700;color:var(--accent)}
-.sv{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
-.sv s{font-size:20px;color:var(--muted)}
-.sv i{font-style:normal;color:var(--accent);font-weight:700}
-.sv b{font-family:var(--display);font-size:36px;line-height:1.1;color:var(--ink)}
-.sv em{font-style:normal;font-size:14px;color:var(--muted)}
-.sr{font-size:15px}
-.sr b{color:var(--accent)}
-.sa{font-size:13px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:8px;margin-top:auto}
-.sim-f{font-size:13px;color:var(--muted)}
-
-/* 大區塊：整塊色底＋實色開頭橫幅，一眼看出進入下一個大區塊 */
-:root{--on-pc:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--on-pc:#0f1719}}
-:root[data-theme="dark"]{--on-pc:#0f1719}
-.pillar{margin:48px 0 0;padding:0 28px 40px;border-radius:24px;border:0;background:color-mix(in srgb,var(--ps) 55%,var(--paper));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pc) 35%,transparent)}
-.pillar+.pillar{margin-top:56px}
-.pillar>.pl-banner{margin:0 -28px;border-radius:24px 24px 0 0;background:var(--pc);color:var(--on-pc);padding:28px 32px}
-.pillar .pl-big{color:var(--on-pc);opacity:1;font-size:72px;min-width:1.1em;text-align:center}
-.pillar .pl-eb{color:var(--on-pc);opacity:.9}
-.pillar .pl-t h2{color:var(--on-pc)}
-.pillar .pl-t p{color:var(--on-pc);opacity:.88}
-.pillar .pl-eb em.base,.pillar .pl-eb em.add{background:var(--on-pc);color:var(--pc);border:0}
-.pillar .subf{margin-top:28px;background:var(--card);border-radius:18px;padding:24px 24px 20px}
-.pillar .tile,.pillar .gets,.pillar .pc,.pillar .inc2,.pillar .ba2 .b{background:var(--card)}
-.pillar .subf .tile,.pillar .subf .ba2 .b,.pillar .subf .inc2{background:var(--paper)}
-.lg2 i:empty{width:12px;height:12px;border-radius:50%}
-/* 網頁後台示意一律獨佔一列，不和另一張網頁並排 */
-.shot.web,.shot.web:has(.browser.mini){flex:1 1 100%}
-
 /* ---- 模組 01／02 示意調整 ---- */
 .kbtabs{margin-top:-2px}
 .kbtabs i{font-size:12.5px;padding:6px 14px}
@@ -1049,6 +903,49 @@ i.hm{background:#2769a9}i.ai{background:#d9cdf5}
 .pz-menu span{padding:3px 6px;border-radius:4px;color:#16252b}
 .pz-menu span.on{background:#e4eef8;color:#2769a9;font-weight:700}
 .pz-menu span.go{border-top:1px solid #eef2f1;margin-top:2px;color:#6b46c1;font-weight:700;border-radius:0}
+
+/* Keep the inbox mockup at a browser-like height and scroll its panels independently. */
+.inbox-demo{container-type:inline-size;color-scheme:light}
+.inbox-demo .app{
+  grid-template-columns:clamp(78px,11%,108px) minmax(0,1fr);
+  height:clamp(496px,50cqw,540px);
+  min-width:0;
+  min-height:0;
+}
+.inbox-demo .main{min-height:0;padding:10px 12px;gap:8px}
+.inbox-demo .ib{
+  min-height:0;
+  grid-template-columns:clamp(103px,19%,158px) minmax(0,1fr) clamp(138px,22%,172px);
+  grid-template-rows:minmax(0,1fr);
+  gap:8px;
+}
+.inbox-demo .sb,.inbox-demo .ib-list,.inbox-demo .ib-side,.ib-messages{
+  min-height:0;
+  overflow-y:auto;
+  scrollbar-width:thin;
+}
+.inbox-demo .sb{padding:9px 6px;gap:1px}
+.inbox-demo .sb-i{padding:3px 6px}
+.inbox-demo .ib-i{grid-template-columns:minmax(0,1fr) auto;padding:6px 8px}
+.inbox-demo .ib-chat{min-width:0;min-height:0;padding:8px;gap:6px}
+.ib-messages{display:flex;flex:1 1 0;flex-direction:column;gap:6px;padding-inline-end:3px}
+.ib-messages .cm{flex:none;max-width:94%;padding:4px 8px}
+.inbox-demo .banner,.inbox-demo .draftbox,.inbox-demo .composer2{flex:none}
+.inbox-demo .draftbox{margin-top:0;padding:5px 7px}
+.inbox-demo .ib-side{min-width:0;padding:7px;gap:4px}
+.inbox-demo .pz-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;font-size:11px}
+.inbox-demo .pz-menu .pz-h,.inbox-demo .pz-menu .on,.inbox-demo .pz-menu .go{grid-column:1/-1}
+.inbox-demo .pz-menu span{padding:2px 4px}
+.inbox-demo [tabindex]:focus-visible{outline:2px solid #2769a9;outline-offset:-2px}
+@container (width < 760px){
+  .inbox-demo .main{padding:8px;gap:6px}
+  .inbox-demo .ib-i{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;padding:4px 6px}
+  .inbox-demo .ib-i small,.inbox-demo .ib-i em{flex-basis:100%}
+  .inbox-demo .ib-chat{padding:7px;gap:5px}
+  .ib-messages{gap:5px}
+  .ib-messages .cm{font-size:11px;padding-block:3px}
+  .inbox-demo .draftbox{font-size:11px;line-height:1.45}
+}
 
 /* ---- 試聽預約與回饋 ---- */
 .trial-shots{gap:36px}
@@ -1179,6 +1076,336 @@ tr.hl-ab td{background:#fdf3f3}
 .ct-band{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .ct-band span{color:var(--muted);font-size:15px}
 .ct-band .btn-p,.tb-cta,.nv.cta,.cta-band .btn-p,.h-btns .btn-p{cursor:pointer}
+/* Platform presentation */
+:root{
+  --paper:#fbfcfe;--card:#fff;--ink:#172c42;--muted:#52647a;--rule:#dce6ef;
+  --accent:#215e9e;--accent-soft:#eaf3fc;--action:#215e9e;--nav:#f5f8fc;
+  --deep:#142f4a;--on-deep:#f2f8ff;--soft-on-deep:#c8d9eb;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#111c29;--card:#172536;--ink:#edf3fc;--muted:#aebed1;--rule:#304255;
+  --accent:#9ac8f5;--accent-soft:#1d3650;--action:#225f9c;--nav:#142131;
+}}
+:root[data-theme="dark"]{
+  --paper:#111c29;--card:#172536;--ink:#edf3fc;--muted:#aebed1;--rule:#304255;
+  --accent:#9ac8f5;--accent-soft:#1d3650;--action:#225f9c;--nav:#142131;
+}
+html{scroll-padding-top:82px}
+.topbar{height:60px;padding:0 24px;gap:15px;background:var(--card)}
+.tb-btn{background:transparent;border-color:transparent;color:var(--accent);font-size:21px}
+.tb-btn:hover{background:var(--accent-soft)}
+.tb-logo img{height:32px;width:auto}
+.tb-cta,.nv.cta,.nv.cta.active,.btn-p{background:var(--action);color:#fff}
+.tb-cta,.btn-p,.btn-s{border:1px solid transparent;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;min-height:44px;line-height:1.4}
+.tb-cta{min-height:38px;padding:7px 17px}
+.btn-s{border-color:var(--rule);background:var(--card);color:var(--accent);padding:10px 18px}
+.btn-s:hover{background:var(--accent-soft);border-color:var(--accent)}
+.btn-p:hover,.tb-cta:hover,.nv.cta:hover{background:#174c80}
+.layout{grid-template-columns:218px minmax(0,1fr)}
+.sidebar{top:60px;height:calc(100dvh - 60px);background:var(--nav);padding:20px 12px 32px;scrollbar-width:thin}
+.sb-head{padding:0 10px 14px;margin-bottom:10px}
+.sb-head span{font-size:13px}
+.nv{border-radius:5px;padding:6px 9px}
+.nv.sub{padding:4px 6px 4px 12px;font-size:14px}
+.nv:hover,.ng-t:hover{background:var(--accent-soft)}
+.nv.active{box-shadow:inset 2px 0 var(--accent)}
+.ng-a.active{background:var(--ps);color:var(--pc);box-shadow:inset 3px 0 var(--pc)}
+.ng{margin:4px 0 2px}
+.ng-l{margin-left:11px;border-left:1px solid var(--rule)}
+.nv.cta{margin-top:14px}
+.content{max-width:1320px;padding:0 clamp(24px,3.4vw,56px) 60px}
+.sec{padding:44px 0 0}
+.sec+.sec{margin-top:42px;border-top:1px solid var(--rule)}
+.sec-h{gap:7px;margin-bottom:22px;max-width:58em}
+.eyebrow{font-size:14px;letter-spacing:.04em}
+.sec-h h2{font-size:clamp(27px,2.7vw,40px);line-height:1.3}
+.sec-p{max-width:52em}
+.fine{margin-top:18px}
+
+/* Opening spread */
+.hero2{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,3.5vw,55px);padding:44px 0 38px;align-items:center}
+.hero2 h1{font-size:clamp(28px,2.75vw,44px);line-height:1.28;margin:12px 0 16px;letter-spacing:-.025em;text-wrap:balance}
+.hero2 h1 span{white-space:nowrap}
+.lead2{line-height:1.85}
+.h-pts{list-style:none;padding:0;margin:20px 0 24px;gap:5px 18px;font-size:15px}
+.h-pts li{display:flex;align-items:baseline;gap:6px}
+.h-pts li span{color:var(--accent);font-size:13px}
+.h-vis{display:grid;grid-template-columns:minmax(0,1fr) clamp(190px,19vw,258px);align-items:end;min-width:0}
+.scene{margin:0;min-width:0}
+.scene img{display:block;width:100%;height:100%;object-fit:cover}
+.scene figcaption{font-size:12px;line-height:1.55;color:var(--muted);margin-top:7px}
+.hero-scene{grid-area:1/1/2/3;align-self:start;margin-right:36px}
+.hero-scene img{aspect-ratio:1.25;height:auto;min-height:305px;max-height:440px;border-radius:14px;object-position:37% center;background:var(--accent-soft)}
+.h-vis .hero-chat{grid-area:1/2/2/3;align-self:end;z-index:1;min-width:0}
+.hero-chat .phone{width:100%;height:auto;padding:6px;border-radius:23px;box-shadow:0 14px 32px #0d213940}
+.hero-chat .notch{width:40px;height:7px;top:7px}
+.hero-chat .ph-top{font-size:11px;padding:14px 6px 6px;gap:5px;line-height:1.3;overflow-wrap:anywhere}
+.hero-chat .av{width:17px;height:17px;flex:none;font-size:9px}
+.hero-chat .ph-body{min-height:0;gap:5px;padding:7px 6px;border-radius:0 0 17px 17px;font-size:clamp(11px,.9vw,13px)}
+.hero-chat .msg{max-width:91%;padding:4px 6px;line-height:1.45;border-radius:9px}
+.hero-chat .msg.staff{background:#eaf3fc}
+.hero-chat .msg.staff b{display:block;color:#215e9e;font-size:.9em}
+.hero-chat figcaption{font-size:12px;line-height:1.5;justify-content:flex-end;background:var(--paper)}
+.desktop-preview{display:none}
+
+/* 導入後的影響方向 */
+.impact{overflow:hidden;border:1px solid var(--rule);border-radius:14px;background:var(--card)}
+.impact-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 18px;padding:20px clamp(20px,3vw,38px)}
+.impact-head h2{font-size:clamp(25px,2.7vw,38px)}
+.impact-head p{font-size:14px;color:var(--muted)}
+.impact-icons{position:absolute;width:0;height:0;overflow:hidden}
+.impact-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);padding:22px clamp(16px,3vw,38px);background:color-mix(in srgb,var(--trend) 8%,var(--card))}
+.impact-up{--trend:light-dark(#bd3028,#ff877c)}
+.impact-down{--trend:light-dark(#167448,#6fd4a0)}
+.impact-result{display:grid;gap:9px;justify-items:center;margin:0;min-width:0}
+.impact-result figcaption{display:block;text-align:center;color:var(--ink);font-size:clamp(16px,1.5vw,21px);font-weight:700}
+.impact-visual{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:7px;width:min(100%,264px)}
+.impact-visual svg{display:block;width:100%;height:auto}
+.impact-before{color:var(--muted)}
+.impact-after,.impact-arrow{color:var(--trend)}
+.impact-empty-person{color:var(--muted);opacity:.7}
+.impact-arrow{font:700 clamp(24px,3vw,37px)/1 system-ui,sans-serif}
+@media (max-width:640px){.impact-band{grid-template-columns:1fr}}
+
+/* 招生到續班的流程圖 */
+#overview{container-type:inline-size}
+.flow2-wrap{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:12px;overflow-x:auto}
+.flow2-wrap:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.flow2{min-width:700px;display:flex;flex-direction:column;gap:8px}
+.prow,.frow{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.pband{text-align:center;font-weight:700;font-size:14px;padding:5px 6px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.fcol,.fhelps{display:flex;flex-direction:column;gap:6px}
+.fst{min-height:48px;background:var(--action);color:#fff;font-weight:700;font-size:14px;line-height:1.3;padding:6px 11px 6px 15px;display:flex;align-items:center;gap:5px;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 50%,calc(100% - 9px) 100%,0 100%,9px 50%)}
+.fst>span:first-child{width:19px;height:19px;border-radius:50%;background:#fff;color:var(--action);display:grid;place-items:center;font-size:11px;flex:none}
+.hc{display:flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:700;color:var(--pc);background:var(--ps);border-radius:6px;padding:6px;border:1px solid transparent;line-height:1.4}
+.fcol:last-child .fst{padding-inline:11px 9px;gap:4px}
+.fcol:last-child .fst>span:first-child{width:17px;height:17px}
+.fst-label,.hc span{word-break:keep-all}
+.hc:hover{border-color:var(--pc)}
+.hc i{font-style:normal;flex:none;min-width:20px;height:20px;padding-inline:3px;border-radius:4px;background:var(--pc);color:var(--on-pc);display:grid;place-items:center;font-size:11px}
+.legend2{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;margin:14px 0 0;font-size:13px;color:var(--muted)}
+.lg2{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--pc);font-weight:700;padding:3px 4px}
+.lg2:hover{text-decoration:underline;text-underline-offset:3px}
+.lg2 i{width:8px;height:8px;border-radius:50%;background:var(--pc);flex:none}
+.flow-scroll-hint{display:none;font-size:13px;color:var(--muted);margin-top:6px}
+@container (width < 726px){.flow-scroll-hint{display:block}}
+@container (width < 875px){
+  .fst{gap:4px;padding-inline:11px 8px;font-size:13px}
+  .fst>span:first-child{width:16px;height:16px}
+  .fcol:last-child .fst{padding-inline:9px 7px;gap:3px}
+  .fcol:last-child .fst>span:first-child{width:14px;height:14px}
+  .fcol:last-child .fst-label{font-size:12px}
+  .hc{padding-inline:4px;gap:4px}
+  .hc i{min-width:17px;height:18px;padding-inline:2px}
+}
+
+/* 模組總覽 */
+.mstack{display:flex;flex-direction:column;gap:12px}
+.mbase{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:20px;background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:20px 24px}
+.mb-l{display:flex;gap:13px;align-items:flex-start}
+.mb-l h3{font-family:var(--display);font-size:29px;margin:1px 0 4px}
+.mb-l p{color:var(--muted);font-size:15px}
+.mc-code{color:var(--pc,var(--accent));font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;flex:none}
+.mc-code.big{font-size:28px;line-height:1.25}
+.mb-r{display:grid;grid-template-columns:1fr 1.2fr;gap:16px}
+.mb-col h4{font-size:15px;color:var(--accent);margin-bottom:5px}
+.mb-col ul{margin:0;padding-left:1.15em;font-size:14px}
+.mb-col a{color:var(--ink);text-underline-offset:3px}
+.module-catalog{border-block:1px solid var(--rule)}
+.module-catalog summary{font-weight:700;color:var(--accent)}
+.module-catalog>p{color:var(--muted);font-size:14px;margin:0 12px 12px}
+.madd{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;border-bottom:1px solid var(--rule)}
+.mcard{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);border-top:1px solid var(--rule);padding:11px 5px}
+.mcard:hover{background:var(--accent-soft)}
+.mcard b{font-size:16px}.mcard p{font-size:14px;color:var(--muted);margin:1px 0 3px}
+.mc-dep{display:flex;flex-wrap:wrap;gap:0 10px;font-size:13px;color:var(--muted)}
+.mc-dep .free{color:var(--pc)}
+
+/* 六個章節使用流程圖配色，保留寬版介紹與獨立示意區 */
+.pillar{
+  --chapter-inset:clamp(22px,3vw,44px);
+  --chapter-rule:color-mix(in srgb,var(--pc) 24%,var(--rule));
+  margin:clamp(52px,5vw,78px) 0 0;
+  padding:0 var(--chapter-inset) 30px;
+  border:0;
+  border-radius:18px;
+  background:color-mix(in srgb,var(--ps) 38%,var(--paper));
+  box-shadow:inset 0 0 0 1px var(--chapter-rule);
+}
+.chapter-summary,.pl-banner{margin-inline:calc(-1 * var(--chapter-inset))}
+.chapter-summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  min-height:88px;
+  padding:clamp(14px,1.6vw,22px) var(--chapter-inset);
+  border-radius:18px 18px 0 0;
+  background:var(--pc);
+  color:var(--on-pc);
+  cursor:pointer;
+  list-style:none;
+}
+.chapter-summary::-webkit-details-marker{display:none}
+.chapter-summary:hover{background:color-mix(in srgb,var(--pc) 92%,var(--on-pc))}
+.chapter-summary:focus-visible{outline-color:var(--on-pc)}
+.pillar:has(.chapter-detail:not([open])){padding-bottom:0}
+.chapter-detail:not([open])>.chapter-summary{border-radius:18px}
+.pl-eb{display:flex;align-items:center;gap:clamp(14px,1.65vw,24px);font:700 clamp(24px,2.45vw,36px)/1.25 var(--body)}
+.chapter-number{flex:none;padding-right:clamp(14px,1.65vw,24px);border-right:1px solid color-mix(in srgb,var(--on-pc) 42%,transparent);font:700 clamp(38px,3.8vw,56px)/1.05 var(--display)}
+.chapter-label{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px}
+.pl-eb em{font-style:normal;font-size:13px;font-weight:700;color:var(--pc);background:var(--on-pc);padding:4px 8px;border-radius:4px;line-height:1.3}
+.chapter-action{display:flex;align-items:center;gap:10px;flex:none;font-size:14px;font-weight:700}
+.chapter-action::before{content:"展開"}
+.chapter-detail[open]>.chapter-summary .chapter-action::before{content:"收合"}
+.pl-banner{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);
+  gap:20px clamp(22px,3.5vw,48px);
+  align-items:center;
+  padding:clamp(26px,3.6vw,50px) var(--chapter-inset) clamp(22px,3vw,42px);
+  background:color-mix(in srgb,var(--ps) 70%,var(--paper));
+}
+.pl-t h3{font-family:var(--display);font-size:clamp(27px,2.6vw,38px);margin:0 0 13px;line-height:1.35;text-wrap:pretty}
+.pl-t p{font-size:clamp(15px,1.26vw,17px);line-height:1.85;color:var(--muted);max-width:43em}
+.chapter-scene img{aspect-ratio:16/9;height:auto;border-radius:11px;background:var(--ps)}
+.chapter-scene figcaption{margin-top:8px}
+.ba2{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  gap:12px clamp(16px,2vw,28px);
+  align-items:start;
+  margin:26px 0 30px;
+  font-size:16px;
+  line-height:1.7;
+}
+.ba2 .b,.ba2 .a{padding:0;text-wrap:balance}
+.ba2 i{display:block;font-style:normal;font-size:14px;font-weight:700;margin-bottom:4px}
+.ba2 .b{color:var(--muted)}
+.ba2 .a i,.ba2 .arr{color:var(--pc);font-weight:700}
+.ba2 .arr{align-self:center;font-size:24px}
+@media (max-width:800px){.pl-banner{grid-template-columns:1fr}}
+.subf{margin-top:28px;padding-top:22px;border-top:1px solid var(--chapter-rule)}
+.sf-top{display:flex;align-items:center;gap:5px 10px;flex-wrap:wrap}
+.sf-top h4{font-size:23px;border-left:4px solid var(--pc);padding-left:9px}
+.feature-detail{border-top:1px solid var(--chapter-rule)}
+.feature-detail+.feature-detail{margin-top:14px}
+.feature-summary,.module-catalog summary{display:flex;align-items:center;gap:12px;min-height:46px;padding:9px 12px;cursor:pointer;list-style:none}
+.feature-summary::-webkit-details-marker,.module-catalog summary::-webkit-details-marker{display:none}
+.chapter-action::after,.feature-summary::after,.module-catalog summary::after{content:"";flex:none;width:8px;height:8px;border-right:2px solid;border-bottom:2px solid;transform:translateY(-2px) rotate(45deg)}
+.module-catalog summary::after{margin-left:auto}
+.chapter-detail[open] .chapter-action::after,[open]>.feature-summary::after,.module-catalog[open]>summary::after{transform:translateY(2px) rotate(225deg)}
+.feature-summary{min-height:54px;padding:12px 16px;color:var(--pc);font-size:18px;font-weight:700}
+.feature-name{flex:1}
+.feature-code{font-size:13px;font-weight:500;color:var(--muted)}
+.feature-summary:hover,.feature-detail[open]>.feature-summary,.module-catalog summary:hover{background:var(--card)}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.feature-detail>.subf{margin:0;padding:0 16px 22px;border:0;background:var(--card);scroll-margin-top:58px}
+.feature-detail .sf-top{display:none}
+.feature-detail .sf-desc{margin-top:0}
+.feature-detail .shot.web{min-width:0}
+.sf-desc{color:var(--muted);margin:6px 0 10px;max-width:48em}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,205px),1fr));gap:7px 14px;padding:4px 0}
+.tile{display:flex;align-items:flex-start;gap:6px;max-width:100%;font-size:14px;line-height:1.6}
+.tile svg{width:14px;height:14px;flex:none;margin-top:4px}
+.tile svg circle{fill:var(--pc)}.tile svg path{stroke:var(--on-pc)}
+.subf .shots{margin-top:16px}
+.shots{gap:16px 22px}
+.feature-detail .shots{margin-top:20px;gap:20px 24px}
+.shot{max-width:100%}
+.shot.web,.shot.web:has(.browser.mini){flex:1 1 100%}
+.content .shots figcaption{line-height:1.55;color:var(--muted)}
+.mcode,.mkind{font-size:12px;font-weight:700;border-radius:4px;padding:2px 6px;font-variant-numeric:tabular-nums}
+.mcode,.mkind.base{background:var(--ps,var(--card));color:var(--pc,var(--accent))}
+.mkind.add{color:var(--muted);border:1px solid var(--rule)}
+:root{--on-pc:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--on-pc:#111c29}}
+:root[data-theme="dark"]{--on-pc:#111c29}
+
+/* 資安、導入、費用與問答 */
+.sec.info-panel{
+  margin-top:clamp(48px,4.7vw,72px);
+  padding:clamp(24px,3.3vw,44px);
+  border:1px solid color-mix(in srgb,var(--pc) 25%,var(--rule));
+  border-top:4px solid var(--pc);
+  border-radius:16px;
+  background:color-mix(in srgb,var(--ps) 51%,var(--paper));
+}
+.info-head{display:flex;align-items:center;gap:16px;margin-bottom:clamp(22px,2.5vw,36px)}
+.info-icon{width:54px;height:54px;flex:none;display:grid;place-items:center;border-radius:12px;background:var(--ps);color:var(--pc)}
+.info-icon svg{width:29px;height:29px}
+.info-head h2{font-size:clamp(32px,3.2vw,46px);line-height:1.2}
+.info-head .sec-p{margin-top:7px;line-height:1.7}
+.info-panel .fine{margin-top:22px;font-size:14px;line-height:1.7}
+.sec6{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.scard{gap:5px;padding:16px;background:var(--card);border:1px solid var(--rule);border-radius:9px}
+.scard h3{font-size:17px}
+.scard p{font-size:14px;line-height:1.65}
+.si{display:grid;place-items:center;width:30px;height:30px;color:var(--pc);margin-bottom:3px}
+.si svg{width:24px;height:24px}
+.tline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.tl3{display:flex;flex-direction:column;gap:6px;position:relative;min-width:0}
+.tl3:not(:last-child)::before{content:"";position:absolute;left:49px;right:-9px;top:20px;border-top:2px solid color-mix(in srgb,var(--pc) 37%,var(--rule))}
+.tl3>span{position:relative;width:42px;height:42px;border-radius:50%;background:var(--pc);color:var(--on-pc);display:grid;place-items:center;font-size:18px;font-weight:700}
+.tl3 h3{font-size:18px;margin-top:6px}
+.tl3 p{font-size:14px;line-height:1.65;color:var(--muted)}
+.price3{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.price3 .pcard{padding:clamp(15px,1.7vw,24px);border:1px solid var(--rule);border-radius:10px;background:var(--card);gap:8px}
+.price3 .pcard.main{border-color:var(--pc);background:var(--ps)}
+.price3 .pcard.main h3{color:var(--pc)}
+.price3 .pcard h3{font-size:20px}
+.price3 .pt{font-size:14px;color:var(--muted);line-height:1.5}
+.price3 ul{margin:7px 0 0;font-size:14px;line-height:1.65}
+.price3 li+li{margin-top:5px}
+.info-panel .cta-band{margin-top:19px;border:0;border-radius:8px;background:var(--ps);gap:10px 20px;padding:15px 17px;flex-wrap:nowrap}
+.cta-band .btn-p{flex:none}
+.faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:20px;max-width:none}
+.faq-group{min-width:0;padding:15px 17px 5px;border:1px solid var(--rule);border-radius:10px;background:var(--card)}
+.faq-group h3{margin-bottom:10px;font-size:18px;color:var(--pc)}
+.qa{background:none;border:0;border-top:1px solid var(--rule);border-radius:0;padding:0}
+.qa summary{padding:13px 0;font-size:16px;line-height:1.5}
+.qa summary::after{color:var(--pc);flex:none}
+.qa summary:hover{color:var(--pc)}
+.qa p{padding:0 0 14px;font-size:14px;line-height:1.75}
+@media (max-width:800px){
+  .sec6,.tline{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tl3:nth-child(2n)::before{display:none}
+  .price3,.faq{grid-template-columns:1fr}
+}
+.sec.contact{margin-top:62px;padding:30px clamp(24px,3.5vw,42px);border:0;border-radius:14px;background:var(--deep);color:var(--on-deep)}
+.contact .eyebrow{color:#b0d4fb}.contact .sec-p,.contact .fine,.ct-band span{color:var(--soft-on-deep)}
+.contact .btn-p{background:#fff;color:#143759}.contact .btn-p:hover{background:#dceeff}
+
+@media (max-width:1150px){
+  .content{padding-inline:24px}
+  .hero2{gap:25px;padding-top:40px}
+  .hero-scene{margin-right:23px}
+  .hero-scene img{min-height:290px}
+  .hero-chat .phone{box-shadow:0 9px 20px #0d213940}
+}
+@media (width < ${PLATFORM_DESKTOP_MIN_WIDTH}px){
+  .topbar{padding-inline:16px;gap:10px}
+  .tb-cta{min-height:44px;white-space:nowrap}
+  .tb-btn,.tb-brand,.tb-div,.sidebar,.layout.drawer-open .scrim,
+  .content > section:not(#home,#contact),.hero-scene,.hero-overview{display:none}
+  .layout,.layout.collapsed{grid-template-columns:minmax(0,1fr)}
+  .content{max-width:640px;padding:0 clamp(16px,4vw,24px) 32px}
+  .hero2{grid-template-columns:minmax(0,1fr);gap:20px;padding:28px 0 0;border:0}
+  .hero2 h1{font-size:clamp(26px,6.8vw,40px);line-height:1.35;text-wrap:balance;margin:8px 0 12px}
+  .lead2{font-size:16px;line-height:1.65}
+  .h-pts{font-size:14px;margin:12px 0 16px;gap:4px 12px}
+  .h-vis{display:block}
+  .h-vis .hero-chat{max-width:420px;margin:0 auto}
+  .hero-chat .ph-top{font-size:13px;padding:14px 10px 8px}
+  .hero-chat .ph-body{padding:9px;gap:6px;font-size:14px}
+  .hero-chat .msg{padding:5px 8px}
+  .hero-chat figcaption{justify-content:center}
+  .desktop-preview{display:block;margin-top:18px;color:var(--muted);font-size:14px}
+  .desktop-preview button{font:inherit;font-weight:700;color:var(--accent);background:none;border:0;padding:9px 0;cursor:pointer;text-decoration:underline}
+  #desktop-copy-status{overflow-wrap:anywhere}
+  .sec.contact{margin-top:24px;padding:22px 18px}
+}
+@media (prefers-reduced-motion:reduce){.layout,.ng-t{transition:none}}
 </style>
 </head>
 <body>
@@ -1186,71 +1413,181 @@ tr.hl-ab td{background:#fdf3f3}
   <button class="tb-btn" id="navToggle" aria-label="收合或展開導覽列" aria-controls="sidebar" aria-expanded="true">☰</button>
   <a class="tb-logo" href="https://official.superb-tutor.com/zh-TW" target="_blank" rel="noopener" aria-label="超棒軟體 SuperB Software 官網"><img src="/superb-lockup.svg" alt="超棒軟體 SuperB Software" width="152" height="40"></a><span class="tb-div"></span><span class="tb-brand">補習班 LINE 招生與教務平台</span>
   <span class="tb-sp"></span>
-  <a class="tb-cta" href="#contact" data-contact="topbar">聯絡我們</a>
+  <a class="tb-cta" href="#contact" data-contact="topbar">預約了解</a>
 </div>
 <div class="layout" id="layout">
   <aside class="sidebar" id="sidebar" aria-label="網站導覽">
     <div class="sb-head"><b>超棒軟體</b><span>補習班 LINE 平台</span></div>
-    <nav class="sb-nav"><a class="nv" href="#home">首頁</a><a class="nv" href="#why">導入後的六個改變</a><a class="nv" href="#overview">AI 貫穿每一步</a><a class="nv" href="#modules">模組總覽</a><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#ai">一、AI 客服</a><button class="ng-t" aria-expanded="true" aria-controls="ai-list" aria-label="展開或收合AI 客服">▾</button></div><div class="ng-l" id="ai-list"><a class="nv sub" href="#ai-service">AI 家長客服</a><a class="nv sub" href="#offers">課程與方案管理</a><a class="nv sub" href="#inbox">真人接手收件匣</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#source">二、招生來源追溯</a><button class="ng-t" aria-expanded="true" aria-controls="source-list" aria-label="展開或收合招生來源追溯">▾</button></div><div class="ng-l" id="source-list"><a class="nv sub" href="#friends">好友來源名單</a><a class="nv sub" href="#links">來源連結與 QR Code</a><a class="nv sub" href="#roi">來源成效報表</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#crm">三、招生 CRM</a><button class="ng-t" aria-expanded="true" aria-controls="crm-list" aria-label="展開或收合招生 CRM">▾</button></div><div class="ng-l" id="crm-list"><a class="nv sub" href="#followup">招生總覽與跟進清單</a><a class="nv sub" href="#pipeline">名單看板與名單卡片</a><a class="nv sub" href="#trial">試聽預約與試聽回饋</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#family">四、學生與家長服務</a><button class="ng-t" aria-expanded="true" aria-controls="family-list" aria-label="展開或收合學生與家長服務">▾</button></div><div class="ng-l" id="family-list"><a class="nv sub" href="#students">學生檔案與家長綁定</a><a class="nv sub" href="#grades">作業成績與家長查詢</a><a class="nv sub" href="#reports">AI 月學習報告</a><a class="nv sub" href="#notices">公告與聯絡簿</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#daily">五、出缺勤與日常行政</a><button class="ng-t" aria-expanded="true" aria-controls="daily-list" aria-label="展開或收合出缺勤與日常行政">▾</button></div><div class="ng-l" id="daily-list"><a class="nv sub" href="#classes">班級管理</a><a class="nv sub" href="#attendance">到班點名與通知</a><a class="nv sub" href="#leave">LINE 請假</a><a class="nv sub" href="#makeup">補課安排</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a" href="#manage">六、續班與經營管理</a><button class="ng-t" aria-expanded="true" aria-controls="manage-list" aria-label="展開或收合續班與經營管理">▾</button></div><div class="ng-l" id="manage-list"><a class="nv sub" href="#renewal">續班與繳費提醒</a><a class="nv sub" href="#retention">流失預警</a><a class="nv sub" href="#branches">多分校管理</a></div></div><a class="nv" href="#security">資料安全與個資</a><a class="nv" href="#onboarding">導入流程</a><a class="nv" href="#pricing">方案與費用</a><a class="nv" href="#faq">常見問題</a><a class="nv cta" href="#contact" data-contact="sidebar">聯絡我們</a></nav>
+    <nav class="sb-nav"><a class="nv" href="#home">首頁</a><a class="nv" href="#overview">招生到續班的流程</a><a class="nv" href="#why">導入後的六個改變</a><!-- <a class="nv" href="#modules">模組總覽</a> --><div class="ng"><div class="ng-row"><a class="nv ng-a c1" href="#ai">一、AI 客服</a><button class="ng-t" aria-expanded="true" aria-controls="ai-list" aria-label="展開或收合AI 客服">▾</button></div><div class="ng-l" id="ai-list"><a class="nv sub" href="#ai-service">AI 家長客服</a><a class="nv sub" href="#offers">課程與方案管理</a><a class="nv sub" href="#inbox">真人接手收件匣</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a c2" href="#source">二、招生來源追溯</a><button class="ng-t" aria-expanded="true" aria-controls="source-list" aria-label="展開或收合招生來源追溯">▾</button></div><div class="ng-l" id="source-list"><a class="nv sub" href="#friends">好友來源名單</a><a class="nv sub" href="#links">來源連結與 QR Code</a><a class="nv sub" href="#roi">來源成效報表</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a c3" href="#crm">三、招生 CRM</a><button class="ng-t" aria-expanded="true" aria-controls="crm-list" aria-label="展開或收合招生 CRM">▾</button></div><div class="ng-l" id="crm-list"><a class="nv sub" href="#followup">招生總覽與跟進清單</a><a class="nv sub" href="#pipeline">名單看板與名單卡片</a><a class="nv sub" href="#trial">試聽預約與試聽回饋</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a c4" href="#family">四、學生與家長服務</a><button class="ng-t" aria-expanded="true" aria-controls="family-list" aria-label="展開或收合學生與家長服務">▾</button></div><div class="ng-l" id="family-list"><a class="nv sub" href="#students">學生檔案與家長綁定</a><a class="nv sub" href="#grades">作業成績與家長查詢</a><a class="nv sub" href="#reports">AI 月學習報告</a><a class="nv sub" href="#notices">公告與聯絡簿</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a c5" href="#daily">五、出缺勤與日常行政</a><button class="ng-t" aria-expanded="true" aria-controls="daily-list" aria-label="展開或收合出缺勤與日常行政">▾</button></div><div class="ng-l" id="daily-list"><a class="nv sub" href="#classes">班級管理</a><a class="nv sub" href="#attendance">到班點名與通知</a><a class="nv sub" href="#leave">LINE 請假</a><a class="nv sub" href="#makeup">補課安排</a></div></div><div class="ng"><div class="ng-row"><a class="nv ng-a c6" href="#manage">六、續班與經營管理</a><button class="ng-t" aria-expanded="true" aria-controls="manage-list" aria-label="展開或收合續班與經營管理">▾</button></div><div class="ng-l" id="manage-list"><a class="nv sub" href="#renewal">續班與繳費提醒</a><a class="nv sub" href="#retention">流失預警</a><a class="nv sub" href="#branches">多分校管理</a></div></div><a class="nv" href="#security">資料安全與個資</a><a class="nv" href="#onboarding">導入流程</a><a class="nv" href="#pricing">方案與費用</a><a class="nv" href="#faq">常見問題</a><a class="nv cta" href="#contact" data-contact="sidebar">預約了解</a></nav>
   </aside>
   <div class="scrim" id="scrim"></div>
   <main class="content">
 
 <section class="hero2" id="home">
   <div class="h-text">
-    <span class="eyebrow">補習班的 AI 營運平台・全部在 LINE 完成</span>
-    <h1>繁雜行政交給 AI，<br>你的團隊回到教學與招生</h1>
-    <p class="lead2">回覆問班、整理名單、提醒跟進、寫試聽回饋、發公告、通知到班、寫月報、追續班。從招生到續班的每一步，AI 都先替你做好，人員只需要確認與處理真正需要人的事。</p>
-    <div class="h-pts"><span>✓ 沿用現有 LINE 官方帳號</span><span>✓ 家長、老師都不用裝 App</span><span>✓ 資料存放在台灣</span></div>
-    <div class="h-btns"><a class="btn-p" href="#contact" data-contact="hero">聯絡我們</a><a class="btn-s" href="#overview">看 AI 如何貫穿每一步</a></div>
+    <span class="eyebrow">補習班 LINE 招生與教務平台</span>
+    <h1>家長用原本的 LINE <span>問課，</span><span>AI 先回，</span><span>招生人員</span><span>接著跟進</span></h1>
+    <p class="lead2">AI 依你核准的課程資料回答，遇到需要判斷的問題就交給行政。從追蹤試聽，到報名後的點名、請假與續班，都能在後台管理。</p>
+    <ul class="h-pts">
+      <li><span aria-hidden="true">✓</span>沿用現有 LINE 官方帳號</li>
+      <li><span aria-hidden="true">✓</span>家長、老師都不用裝 App</li>
+      <li><span aria-hidden="true">✓</span>資料存放在台灣</li>
+    </ul>
+    <div class="h-btns"><a class="btn-p" href="#contact" data-contact="hero">預約了解</a><a class="btn-s hero-overview" href="#overview">看招生到續班的流程</a></div>
   </div>
-  <div class="h-vis"><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長只看到答案，不會看到文件結構</figcaption><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
-<div class="msg p">板橋有國二理化嗎？多少錢</div>
-<div class="msg b">有的！板橋分校每週六 14:00–16:00 上課，每期 12 週 NT$9,600，含講義。想先試聽一堂嗎？</div>
-<div class="msg p">可以只上半期嗎</div>
-<div class="msg b">這個問題我幫您轉給行政人員確認，稍後由專人回覆您 🙏</div></div></div></figure></div>
+  <div class="h-vis">
+    <figure class="scene hero-scene">
+      <img src="/platform-scenes/reception.webp" alt="明亮的補習班教室裡，老師陪孩子練習並分享解題成果" width="1200" height="900" loading="lazy" decoding="async">
+      <figcaption>補習班教學情境示意</figcaption>
+    </figure>
+    <figure class="shot ph hero-chat" aria-label="家長在 LINE 的問班對話示意"><div class="phone"><div class="notch"></div><div class="ph-top"><span class="av">示</span>示範教育</div><div class="ph-body chatbg">
+<div class="msg p">板橋有國二理化嗎？學費多少？</div>
+<div class="msg b">有的！每週六 14:00–16:00 上課，每期 12 週 NT$9,600，含講義。</div>
+<div class="msg p">可以只上半期嗎？</div>
+<div class="msg b">我幫您轉給招生老師確認。</div>
+<div class="msg b staff"><b>招生老師接手</b>您好！可以先安排這週六試聽，再聊適合孩子的上課方案。</div>
+    </div></div><figcaption>後台跟進示意｜已聯絡，待確認試聽</figcaption></figure>
+  </div>
+</section>
+
+<div class="desktop-preview">
+  <p>想看完整後台操作示意？可以把連結帶到電腦或橫放的平板繼續看。</p>
+  <button id="desktop-copy" type="button">複製網址</button>
+  <p id="desktop-copy-status" role="status"></p>
+</div>
+
+<section class="sec" id="overview">
+  <div class="sec-h"><h2>從招生到續班</h2>
+  <p class="sec-p">點選任一功能，查看對應的操作示意。</p></div>
+  <div class="flow2-wrap" role="region" aria-label="從招生到續班的八個階段" tabindex="0">
+    <div class="flow2">
+      <div class="prow"><div class="pband" style="grid-column:span 4">招生期</div><div class="pband" style="grid-column:span 3">在學期間</div><div class="pband" style="grid-column:span 1">續班</div></div>
+      <div class="frow">
+        <div class="fcol"><div class="fst"><span>1</span><span class="fst-label">招生<wbr>曝光</span></div><div class="fhelps"><a class="hc c2" href="#links"><i>02</i><span>來源連結<wbr>與 QR</span></a><a class="hc c2" href="#friends"><i>02</i><span>好友來源<wbr>名單</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>2</span><span class="fst-label">問班<wbr>諮詢</span></div><div class="fhelps"><a class="hc c1" href="#ai-service"><i>01</i><span>AI <wbr>家長客服</span></a><a class="hc c1" href="#offers"><i>01</i><span>課程與<wbr>方案</span></a><a class="hc c1" href="#inbox"><i>01</i><span>真人<wbr>接手</span></a><a class="hc c3" href="#followup"><i>03</i><span>跟進<wbr>清單</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>3</span>試聽</div><div class="fhelps"><a class="hc c3" href="#trial"><i>03</i><span>試聽預約<wbr>與回饋</span></a><a class="hc c3" href="#pipeline"><i>03</i><span>名單<wbr>看板</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>4</span>報名</div><div class="fhelps"><a class="hc c4" href="#students"><i>04</i><span>學生與<wbr>家長綁定</span></a><a class="hc c2" href="#roi"><i>02</i><span>來源<wbr>成效</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>5</span>開課</div><div class="fhelps"><a class="hc c4" href="#notices"><i>07</i><span>公告與<wbr>聯絡簿</span></a><a class="hc c6" href="#branches"><i>13</i><span>多分校<wbr>管理</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>6</span><span class="fst-label">日常<wbr>上課</span></div><div class="fhelps"><a class="hc c5" href="#attendance"><i>08</i><span>到班<wbr>點名</span></a><a class="hc c5" href="#leave"><i>09</i><span>LINE 請假</span></a><a class="hc c5" href="#makeup"><i>10</i><span>補課<wbr>安排</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>7</span><span class="fst-label">學習<wbr>追蹤</span></div><div class="fhelps"><a class="hc c4" href="#grades"><i>05</i><span>作業成績<wbr>查詢</span></a><a class="hc c4" href="#reports"><i>06</i><span>AI 月<wbr>學習報告</span></a></div></div>
+        <div class="fcol"><div class="fst"><span>8</span><span class="fst-label">續班/<wbr>流失</span></div><div class="fhelps"><a class="hc c6" href="#renewal"><i>11</i><span>續班<wbr>提醒</span></a><a class="hc c6" href="#retention"><i>12</i><span>流失<wbr>預警</span></a></div></div>
+      </div>
+    </div>
+  </div>
+  <p class="flow-scroll-hint">左右滑動查看完整流程</p>
+<div class="legend2"><span>顏色對應六大章，數字是模組編號。</span><a class="lg2 c1" href="#ai"><i></i>一、AI 客服</a><a class="lg2 c2" href="#source"><i></i>二、招生來源追溯</a><a class="lg2 c3" href="#crm"><i></i>三、招生 CRM</a><a class="lg2 c4" href="#family"><i></i>四、學生與家長服務</a><a class="lg2 c5" href="#daily"><i></i>五、出缺勤與日常行政</a><a class="lg2 c6" href="#manage"><i></i>六、續班與經營管理</a></div>
 </section>
 
 <section class="sec" id="why">
-  <div class="sec-h"><span class="eyebrow">導入後的六個改變</span><h2>AI 接手行政，補習班全面升級</h2></div>
-  <div class="claims">
-    <div class="claim"><span>01</span>招生變快</div>
-    <div class="claim"><span>02</span>學生變多</div>
-    <div class="claim"><span>03</span>行政變少</div>
-    <div class="claim"><span>04</span>續班變高</div>
-    <div class="claim"><span>05</span>學生關懷變多</div>
-    <div class="claim"><span>06</span>招生花費轉換變高</div>
-  </div>
-  <div class="sim">
-    <div class="sim-h"><span class="eyebrow">情境試算・公版範例</span><h3>以一間 500 位學生、每人每週上 2 堂課的補習班來算</h3></div>
-    <div class="sim3">
-      <div class="simc"><span class="sk">學生變多</span>
-        <div class="sv"><s>200</s><i>→</i><b>240</b><em>位新生／年</em></div>
-        <p class="sr">一年多 <b>40 位</b>學生</p>
-        <p class="sa">假設每年 800 位家長問班，AI 秒回與自動跟進讓報名率從 25% 提升到 30%。</p></div>
-      <div class="simc"><span class="sk">行政變少，關懷變多</span>
-        <div class="sv"><b>35</b><em>小時／週</em></div>
-        <p class="sr">每位學生每月多約 <b>18 分鐘</b>關懷時間</p>
-        <p class="sa">每週 1,000 堂次：點名與到班通知每堂次省 1 分鐘（約 17 小時）、5% 請假補課每件省 10 分鐘（約 8 小時）、200 則家長詢問每則省 3 分鐘（10 小時）。</p></div>
-      <div class="simc"><span class="sk">花費轉換變高</span>
-        <div class="sv"><s>3,000</s><i>→</i><b>2,500</b><em>元／位</em></div>
-        <p class="sr">每位學生的進班成本降低 <b>17%</b></p>
-        <p class="sa">假設年度招生預算 NT$600,000 不變，新生從 200 位增加到 240 位；看清來源後把預算移到有效管道，還能再降。</p></div>
+  <div class="impact">
+    <div class="impact-head">
+      <h2>導入後的六個改變</h2>
+      <p>影響方向示意</p>
     </div>
-    <p class="sim-f">以上為示意假設，不代表保證成效。導入時我們會先記錄你目前的問班數、報名率與行政工時，之後用你自己的數字比較前後差異。</p>
+    <svg class="impact-icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <symbol id="impact-person" viewBox="0 0 16 20" fill="currentColor">
+        <circle cx="8" cy="5" r="3.5"/><path d="M1 18v-2a7 7 0 0 1 14 0v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1Z"/>
+      </symbol>
+      <symbol id="impact-empty" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="8" cy="5" r="3.15"/><path d="M2 18v-2a6 6 0 0 1 12 0v2Z"/>
+      </symbol>
+      <symbol id="impact-renewed" viewBox="0 0 16 30">
+        <use href="#impact-person" width="16" height="20"/><path d="m4 24 2.6 2.6L12 21.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="impact-heart" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21 3.8 13a5.6 5.6 0 0 1 7.9-8l.3.3.3-.3a5.6 5.6 0 0 1 7.9 8Z"/>
+      </symbol>
+      <symbol id="impact-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9.5"/><path d="M12 6.5v6l3.8 2.2"/>
+      </symbol>
+      <symbol id="impact-sheet" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="2.5" width="16" height="23" rx="2"/><path d="M8 8h8m-8 5h8m-8 5h5"/>
+      </symbol>
+      <symbol id="impact-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+        <circle cx="12" cy="12" r="9.5"/><path d="M12 6.3v11.4m3-9H11a1.65 1.65 0 0 0 0 3.3h2a1.65 1.65 0 0 1 0 3.3H9"/>
+      </symbol>
+    </svg>
+    <div class="impact-band impact-up" role="group" aria-label="上升項目">
+      <figure class="impact-result">
+        <figcaption>新生報名數</figcaption>
+        <div class="impact-visual" role="img" aria-label="人形從一排變成兩排，示意新生報名數上升">
+          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-person" x="2" y="15" width="14" height="18"/><use href="#impact-person" x="19" y="15" width="14" height="18"/><use href="#impact-person" x="36" y="15" width="14" height="18"/><use href="#impact-person" x="53" y="15" width="14" height="18"/><use href="#impact-person" x="70" y="15" width="14" height="18"/>
+          </svg>
+          <span class="impact-arrow" aria-hidden="true">↗</span>
+          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-person" x="2" y="4" width="14" height="18"/><use href="#impact-person" x="19" y="4" width="14" height="18"/><use href="#impact-person" x="36" y="4" width="14" height="18"/><use href="#impact-person" x="53" y="4" width="14" height="18"/><use href="#impact-person" x="70" y="4" width="14" height="18"/>
+            <use href="#impact-person" x="2" y="25" width="14" height="18"/><use href="#impact-person" x="19" y="25" width="14" height="18"/><use href="#impact-person" x="36" y="25" width="14" height="18"/><use href="#impact-person" x="53" y="25" width="14" height="18"/><use href="#impact-person" x="70" y="25" width="14" height="18"/>
+          </svg>
+        </div>
+      </figure>
+      <figure class="impact-result">
+        <figcaption>續班率</figcaption>
+        <div class="impact-visual" role="img" aria-label="同一組學生中，打勾的人變多，示意續班率上升">
+          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-renewed" x="2" y="9" width="14" height="27"/><use href="#impact-renewed" x="19" y="9" width="14" height="27"/><use href="#impact-empty" x="36" y="9" width="14" height="18" class="impact-empty-person"/><use href="#impact-empty" x="53" y="9" width="14" height="18" class="impact-empty-person"/><use href="#impact-empty" x="70" y="9" width="14" height="18" class="impact-empty-person"/>
+          </svg>
+          <span class="impact-arrow" aria-hidden="true">↗</span>
+          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-renewed" x="2" y="9" width="14" height="27"/><use href="#impact-renewed" x="19" y="9" width="14" height="27"/><use href="#impact-renewed" x="36" y="9" width="14" height="27"/><use href="#impact-renewed" x="53" y="9" width="14" height="27"/><use href="#impact-empty" x="70" y="9" width="14" height="18" class="impact-empty-person"/>
+          </svg>
+        </div>
+      </figure>
+      <figure class="impact-result">
+        <figcaption>學生關懷時間</figcaption>
+        <div class="impact-visual" role="img" aria-label="愛心變多，示意可用於關懷學生的時間上升">
+          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-heart" x="18" y="12" width="24" height="24"/><use href="#impact-heart" x="46" y="12" width="24" height="24"/>
+          </svg>
+          <span class="impact-arrow" aria-hidden="true">↗</span>
+          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-heart" x="1" y="14" width="20" height="20"/><use href="#impact-heart" x="23" y="14" width="20" height="20"/><use href="#impact-heart" x="45" y="14" width="20" height="20"/><use href="#impact-heart" x="67" y="14" width="20" height="20"/>
+          </svg>
+        </div>
+      </figure>
+    </div>
+    <div class="impact-band impact-down" role="group" aria-label="下降項目">
+      <figure class="impact-result">
+        <figcaption>問班等候時間</figcaption>
+        <div class="impact-visual" role="img" aria-label="時鐘變少，示意等候問班回覆的時間下降">
+          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-clock" x="2" y="11" width="26" height="26"/><use href="#impact-clock" x="31" y="11" width="26" height="26"/><use href="#impact-clock" x="60" y="11" width="26" height="26"/>
+          </svg>
+          <span class="impact-arrow" aria-hidden="true">↘</span>
+          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-clock" x="31" y="11" width="26" height="26"/>
+          </svg>
+        </div>
+      </figure>
+      <figure class="impact-result">
+        <figcaption>日常行政工時</figcaption>
+        <div class="impact-visual" role="img" aria-label="文書圖示變少，示意行政工時下降">
+          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-sheet" x="5" y="9" width="24" height="30"/><use href="#impact-sheet" x="32" y="9" width="24" height="30"/><use href="#impact-sheet" x="59" y="9" width="24" height="30"/>
+          </svg>
+          <span class="impact-arrow" aria-hidden="true">↘</span>
+          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-sheet" x="32" y="9" width="24" height="30"/>
+          </svg>
+        </div>
+      </figure>
+      <figure class="impact-result">
+        <figcaption>每位新生招生成本</figcaption>
+        <div class="impact-visual" role="img" aria-label="錢幣圖示變少，示意每位新生的招生成本下降">
+          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-coin" x="2" y="11" width="26" height="26"/><use href="#impact-coin" x="31" y="11" width="26" height="26"/><use href="#impact-coin" x="60" y="11" width="26" height="26"/>
+          </svg>
+          <span class="impact-arrow" aria-hidden="true">↘</span>
+          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
+            <use href="#impact-coin" x="31" y="11" width="26" height="26"/>
+          </svg>
+        </div>
+      </figure>
+    </div>
   </div>
 </section>
 
-<section class="sec" id="overview">
-  <div class="sec-h"><span class="eyebrow">AI 貫穿每一步</span><h2>從招生到續班，每一步都有 AI 先做好</h2>
-  <p class="sec-p">不是在某個角落加一個聊天機器人，而是讓 AI 接手整個流程裡的繁雜工作。點任一個功能，直接看介紹。</p></div>
-  <div class="flow2-wrap"><div class="flow2">
-  <div class="prow"><div class="pband" style="grid-column:span 4">招生期</div><div class="pband" style="grid-column:span 3">在學期間</div><div class="pband" style="grid-column:span 1">續班</div></div>
-  <div class="frow"><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>1</span>招生曝光</div><div class="fhelps"><a class="hc c2" href="#links"><i>02</i>來源連結與 QR</a><a class="hc c2" href="#friends"><i>02</i>好友來源名單</a></div></div><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>2</span>問班諮詢</div><div class="fhelps"><a class="hc c1" href="#ai-service"><i>01</i>AI 家長客服</a><a class="hc c1" href="#offers"><i>01</i>課程與方案</a><a class="hc c1" href="#inbox"><i>01</i>真人接手</a><a class="hc c3" href="#followup"><i>03</i>跟進清單</a></div></div><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>3</span>試聽</div><div class="fhelps"><a class="hc c3" href="#trial"><i>03</i>試聽預約與回饋</a><a class="hc c3" href="#pipeline"><i>03</i>名單看板</a></div></div><div class="fcol"><span class="fper">招生期</span><div class="fst"><span>4</span>報名</div><div class="fhelps"><a class="hc c4" href="#students"><i>04</i>學生與家長綁定</a><a class="hc c2" href="#roi"><i>02</i>來源成效</a></div></div><div class="fcol"><span class="fper">在學期間</span><div class="fst"><span>5</span>開課</div><div class="fhelps"><a class="hc c4" href="#notices"><i>07</i>公告與聯絡簿</a><a class="hc c6" href="#branches"><i>13</i>多分校管理</a></div></div><div class="fcol"><span class="fper">在學期間</span><div class="fst"><span>6</span>日常上課</div><div class="fhelps"><a class="hc c5" href="#attendance"><i>08</i>到班點名</a><a class="hc c5" href="#leave"><i>09</i>LINE 請假</a><a class="hc c5" href="#makeup"><i>10</i>補課安排</a></div></div><div class="fcol"><span class="fper">在學期間</span><div class="fst"><span>7</span>學習追蹤</div><div class="fhelps"><a class="hc c4" href="#grades"><i>05</i>作業成績查詢</a><a class="hc c4" href="#reports"><i>06</i>AI 月學習報告</a></div></div><div class="fcol"><span class="fper">續班</span><div class="fst"><span>8</span>續班或流失</div><div class="fhelps"><a class="hc c6" href="#renewal"><i>11</i>續班提醒</a><a class="hc c6" href="#retention"><i>12</i>流失預警</a></div></div></div>
-</div></div>
-<div class="legend2"><span>顏色代表六大區塊，數字為模組編號。六大區塊：</span><a class="lg2 c1" href="#ai"><i></i>一、AI 客服</a><a class="lg2 c2" href="#source"><i></i>二、招生來源追溯</a><a class="lg2 c3" href="#crm"><i></i>三、招生 CRM</a><a class="lg2 c4" href="#family"><i></i>四、學生與家長服務</a><a class="lg2 c5" href="#daily"><i></i>五、出缺勤與日常行政</a><a class="lg2 c6" href="#manage"><i></i>六、續班與經營管理</a></div>
-</section>
-
+<!-- 暫停顯示模組總覽
 <section class="sec" id="modules">
   <div class="sec-h"><span class="eyebrow">模組總覽</span><h2>從基本模組開始，需要什麼再加什麼</h2>
   <p class="sec-p">AI 客服是每家補習班的基本模組；其他 12 個附加模組可依需要逐步加購。</p></div>
@@ -1260,18 +1597,27 @@ tr.hl-ab td{background:#fdf3f3}
     <div class="mb-r"><div class="mb-col"><h4>包含功能</h4><ul><li><a href="#ai-service">AI 家長客服</a></li><li><a href="#offers">課程與方案管理</a></li><li><a href="#inbox">真人接手收件匣</a></li></ul></div>
       <div class="mb-col"><h4>平台基本功能</h4><ul><li>沿用現有 LINE 官方帳號</li><li>後台帳號與角色權限（帳號不限人數）</li><li><a href="#classes">班級管理與名單匯出</a></li><li>資料安全與個資保護</li><li>導入協助與教育訓練</li></ul></div></div>
   </div>
-  <div class="madd-h"><h3>附加模組</h3><p>依補習班的需要逐步加購。標示「需搭配」的模組，要先有對應的模組才能使用。</p></div>
+  <details class="module-catalog" open><summary>12 個附加模組與搭配條件</summary>
+  <p>標示「需搭配」的模組，要先有對應的模組才能使用。</p>
   <div class="madd"><a class="mcard c2" href="#friends"><span class="mc-code">02</span><div><b>招生來源追溯</b><p>誰從哪裡加了 LINE，各來源帶來多少報名</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a><a class="mcard c3" href="#followup"><span class="mc-code">03</span><div><b>招生 CRM</b><p>每位好友在哪個階段、今天該跟進誰</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a><a class="mcard c4" href="#students"><span class="mc-code">04</span><div><b>學生檔案與家長綁定</b><p>學生、家長、學生本人都連上 LINE</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a><a class="mcard c4" href="#grades"><span class="mc-code">05</span><div><b>作業成績與家長查詢</b><p>家長在 LINE 查成績與作業</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c4" href="#reports"><span class="mc-code">06</span><div><b>AI 月學習報告</b><p>每月學習報告，班導確認後送出</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span><span>需搭配 05 作業成績與家長查詢</span></div></div></a><a class="mcard c4" href="#notices"><span class="mc-code">07</span><div><b>公告與聯絡簿</b><p>一句話產生公告，發給對的家長</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c5" href="#attendance"><span class="mc-code">08</span><div><b>到班點名與通知</b><p>掃 QR 點名，家長即時收到通知</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c5" href="#leave"><span class="mc-code">09</span><div><b>LINE 請假</b><p>在 LINE 請假，點名自動同步</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span><span>需搭配 08 到班點名與通知</span></div></div></a><a class="mcard c5" href="#makeup"><span class="mc-code">10</span><div><b>補課安排</b><p>依你的補課制度列出補課選項</p><div class="mc-dep"><span>需搭配 09 LINE 請假</span></div></div></a><a class="mcard c6" href="#renewal"><span class="mc-code">11</span><div><b>續班與繳費提醒</b><p>自動提醒，家長一鍵回覆</p><div class="mc-dep"><span>需搭配 04 學生檔案與家長綁定</span></div></div></a><a class="mcard c6" href="#retention"><span class="mc-code">12</span><div><b>流失預警</b><p>提早發現可能不續班的學生</p><div class="mc-dep"><span>需搭配 05 作業成績與家長查詢</span><span>需搭配 08 到班點名與通知</span></div></div></a><a class="mcard c6" href="#branches"><span class="mc-code">13</span><div><b>多分校管理</b><p>總部看全部，分校各自管理</p><div class="mc-dep"><span class="free">可直接加購</span></div></div></a></div>
+  </details>
 </div>
 </section>
+-->
 
 <section class="pillar c1" id="ai">
+  <details class="chapter-detail" open>
+  <summary class="chapter-summary"><h2 class="pl-eb"><span class="chapter-number">一</span><span class="chapter-label">AI 客服<em class="base">模組 01・基本模組</em></span></h2><span class="chapter-action" aria-hidden="true"></span></summary>
   <div class="pl-banner">
-    <span class="pl-big">一</span>
-    <div class="pl-t"><span class="pl-eb">一、AI 客服<em class="base">模組 01・基本模組</em></span><h2>家長的問題 24 小時即時回答，需要人的交給人</h2><p>家長在你現有的 LINE 官方帳號提問，AI 依你核准的課程與方案資料回答；退費、成績保證、孩子個別狀況這類需要判斷的問題，交給你的人員處理。</p></div>
+    <div class="pl-t"><h3>家長的問題 24 小時即時回答，需要人的交給人</h3><p>家長在你現有的 LINE 官方帳號提問，AI 依你核准的課程與方案資料回答；退費、成績保證、孩子個別狀況這類需要判斷的問題，交給你的人員處理。</p></div>
+    <figure class="scene chapter-scene">
+      <img src="/platform-scenes/ai-desk.webp" alt="補習班櫃檯人員在電腦前查看課程資料，準備回覆家長" width="960" height="540" loading="lazy" decoding="async">
+      <figcaption>櫃檯回覆家長情境示意</figcaption>
+    </figure>
   </div>
-  <div class="inc-row"><a class="inc2" href="#ai-service"><b>AI 家長客服</b><span>依你提供的課程資料</span></a><a class="inc2" href="#offers"><b>課程與方案管理</b><span>學費、優惠、名額、試聽時段集中管理</span></a><a class="inc2" href="#inbox"><b>真人接手收件匣</b><span>AI 轉過來的問題集中在一個收件匣</span></a></div>
-  <div class="ba2"><div class="b"><i>以前</i>家長晚上傳訊息，隔天才有人回；新人報價說錯也收不回來</div><div class="arr">→</div><div class="a"><i>用了平台</i>AI 立刻依你的資料回答，數字只說你核准的，需要人的才轉過去</div></div>
+  <div class="ba2"><div class="b"><i>以前</i>家長晚上傳訊息，隔天才有人回；新人報價說錯也收不回來</div><div class="arr" aria-hidden="true">→</div><div class="a"><i>用了平台</i>AI 立刻依你的資料回答，數字只說你核准的，需要人的才轉過去</div></div>
+  <details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">AI 家長客服</span></summary>
   <div class="subf" id="ai-service">
   <div class="sf-top"><h4>AI 家長客服</h4><span class="mkind base">基本模組</span></div>
   <p class="sf-desc">依你提供的課程資料回答上課時間、地點、收費、試聽。AI 什麼時段回覆、回覆哪些人，都由你決定。</p>
@@ -1356,7 +1702,11 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div><div class="subf" id="offers">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">課程與方案管理</span></summary>
+  <div class="subf" id="offers">
   <div class="sf-top"><h4>課程與方案管理</h4><span class="mkind base">基本模組</span></div>
   <p class="sf-desc">學費、優惠、名額、試聽時段集中管理，AI 只能引用這裡的數字。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>AI 回答與跟進訊息中的數字都標出來源</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>沒設定的項目（例如分期）AI 不回答，交給人員</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>優惠到期自動失效</span></div></div>
@@ -1395,18 +1745,22 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div><div class="subf" id="inbox">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">真人接手收件匣</span></summary>
+  <div class="subf" id="inbox">
   <div class="sf-top"><h4>真人接手收件匣</h4><span class="mkind base">基本模組</span></div>
   <p class="sf-desc">AI 轉過來的問題集中在一個收件匣，指派給對的人，一個都不漏。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可單獨暫停某個聊天室的 AI：一段時間或永久</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>右側直接改名稱、指派負責人、加標籤與備註</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>申訴、退費自動通知主任</span></div></div>
-  <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>接手對話、AI 已暫停，右側指派負責人與備註</figcaption><div class="browser">
+  <div class="shots"><figure class="shot web"><figcaption><span class="who staff">補習班人員・網頁</span>接手對話、AI 已暫停，右側指派負責人與備註</figcaption><div class="browser inbox-demo">
   <div class="bz-top"><i></i><i></i><i></i><span class="url">app.補教平台.tw/inbox/u8f2</span></div>
   <div class="app">
     <div class="sb"><div class="sb-brand">補教平台</div><div class="sb-org">示範教育・本部</div><div class="sb-i on">收件匣</div><div class="sb-i">知識庫</div><div class="sb-i">招生</div><div class="sb-i">學生</div><div class="sb-i">班級</div><div class="sb-i">點名</div><div class="sb-i">請假</div><div class="sb-i">補課</div><div class="sb-i">作業成績</div><div class="sb-i">公告</div><div class="sb-i">學習報告</div><div class="sb-i">提醒</div><div class="sb-i">流失預警</div><div class="sb-i">報表</div><div class="sb-i">設定</div></div>
     <div class="main">
 <div class="pg-h"><b>收件匣</b><span class="seg"><i class="on">待處理 4</i><i>處理中 2</i><i>AI 處理中</i><i>已結案</i></span></div>
 <div class="ib">
-  <div class="ib-list">
+  <div class="ib-list" role="region" aria-label="收件匣對話清單示意" tabindex="0">
     <div class="ib-i on"><b>王小明爸爸 <span class="idt pr">家長</span></b><span class="tag warn">學習狀況</span><small>段考退步很多分，可以知道…</small><em>3 分鐘前</em></div>
     <div class="ib-i"><b>王小明 <span class="idt st">學生</span></b><span class="tag">找老師</span><small>講義忘在教室了可以…</small><em>8 分鐘前</em></div>
     <div class="ib-i"><b>陳媽媽 <span class="idt nw">新朋友</span></b><span class="tag">問班</span><small>可以只上半期嗎</small><em>12 分鐘前</em></div>
@@ -1415,15 +1769,17 @@ tr.hl-ab td{background:#fdf3f3}
   </div>
   <div class="ib-chat">
     <div class="banner">AI 已暫停至今天 18:00・由 林主任 處理中 <span class="btn sm ghost">結案並恢復 AI</span></div>
-    <div class="cm p">下週三理化課照常上嗎？</div>
-    <div class="cm b">照常上課喔！國二理化 A 週三 19:00–21:00，在本部 3 樓。<i>AI</i></div>
-    <div class="cm p">他這次段考退步很多分，可以知道是為什麼嗎？</div>
-    <div class="cm b">孩子的學習狀況需要老師個別了解，我已經轉給主任，稍後回覆您。<i>AI・已轉真人</i></div>
-    <div class="cm s">小明爸爸您好，我是林主任，我先看了小明這學期的小考成績……<i>林主任</i></div>
+    <div class="ib-messages" role="region" aria-label="收件匣對話內容示意" tabindex="0">
+      <div class="cm p">下週三理化課照常上嗎？</div>
+      <div class="cm b">照常上課喔！國二理化 A 週三 19:00–21:00，在本部 3 樓。<i>AI</i></div>
+      <div class="cm p">他這次段考退步很多分，可以知道是為什麼嗎？</div>
+      <div class="cm b">孩子的學習狀況需要老師個別了解，我已經轉給主任，稍後回覆您。<i>AI・已轉真人</i></div>
+      <div class="cm s">小明爸爸您好，我是林主任，我先看了小明這學期的小考成績……<i>林主任</i></div>
+    </div>
     <div class="draftbox"><i class="ai-tag">AI 草稿</i><span>小明爸爸您好，小明這學期理化小考平均 76 分，退步主要在第 3 單元的計算題。我們可以先幫他安排一次診斷小考…</span><em>點一下帶入輸入框</em></div>
     <div class="composer2"><span class="att" title="附件">📎</span><span class="ph">輸入訊息…</span><span class="btn sm">送出</span></div>
   </div>
-  <div class="ib-side">
+  <div class="ib-side" role="region" aria-label="聊天室設定與備註示意" tabindex="0">
     <div class="side-h">聊天室</div>
     <div class="kv"><span>顯示名稱</span><b class="ed">王小明爸爸 ✎</b></div>
     <div class="kv"><span>指派給</span><b class="dd">林主任 ▾</b></div>
@@ -1447,14 +1803,23 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="msg p">他這次段考退步很多分，可以知道是為什麼嗎？</div>
 <div class="msg b">孩子的學習狀況需要老師個別了解，我已經轉給主任，稍後回覆您。</div>
 <div class="msg b">小明爸爸您好，我是林主任，我先看了小明這學期的小考成績……</div></div></div></figure></div>
-</div>
-</section><section class="pillar c2" id="source">
-  <div class="pl-banner">
-    <span class="pl-big">二</span>
-    <div class="pl-t"><span class="pl-eb">二、招生來源追溯<em class="add">模組 02・附加模組</em></span><h2>誰從哪裡加了 LINE，一目瞭然</h2><p>每個廣告、傳單都有自己的連結與 QR Code；同學介紹來的，加入後由人員標記介紹人。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#friends"><b>好友來源名單</b><span>每一位新加入的 LINE 好友</span></a><a class="inc2" href="#links"><b>來源連結與 QR Code</b><span>每個招生活動產生專屬連結與 QR Code</span></a><a class="inc2" href="#roi"><b>來源成效報表</b><span>各來源、分校、科目的問班、試聽、報名數與每筆報名的取得成本並排比較</span></a></div>
-  <div class="ba2"><div class="b"><i>以前</i>只知道這個月花了多少錢、報名了幾個人，不知道是哪一筆預算有效</div><div class="arr">→</div><div class="a"><i>用了平台</i>每位好友都有來源，每個來源都算得出報名數與取得成本</div></div>
+</details>
+
+  </details>
+</section><section class="pillar c2" id="source">
+  <details class="chapter-detail" open>
+  <summary class="chapter-summary"><h2 class="pl-eb"><span class="chapter-number">二</span><span class="chapter-label">招生來源追溯<em class="add">模組 02・附加模組</em></span></h2><span class="chapter-action" aria-hidden="true"></span></summary>
+  <div class="pl-banner">
+    <div class="pl-t"><h3>誰從哪裡加了 LINE，一目瞭然</h3><p>每個廣告、傳單都有自己的連結與 QR Code；同學介紹來的，加入後由人員標記介紹人。</p></div>
+    <figure class="scene chapter-scene">
+      <img src="/platform-scenes/enrollment-source.webp" alt="家長在補習班入口拿起印有 QR Code 的招生傳單，身旁是背書包的學生" width="960" height="540" loading="lazy" decoding="async">
+      <figcaption>招生傳單情境示意</figcaption>
+    </figure>
+  </div>
+  <div class="ba2"><div class="b"><i>以前</i>只知道這個月花了多少錢、報名了幾個人，不知道是哪一筆預算有效</div><div class="arr" aria-hidden="true">→</div><div class="a"><i>用了平台</i>每位好友都有來源，每個來源都算得出報名數與取得成本</div></div>
+  <details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">好友來源名單</span></summary>
   <div class="subf" id="friends">
   <div class="sf-top"><h4>好友來源名單</h4><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">每一位新加入的 LINE 好友，從哪個廣告、傳單或誰介紹來，現在在哪個階段。</p>
@@ -1475,7 +1840,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="rule">點專屬連結或掃 QR 加入時自動記錄來源；直接搜尋加入的，AI 會在對話中順便詢問。同學介紹沒有專屬連結，由人員在名單旁<u>設定介紹人</u></div></div>
   </div>
 </div></figure></div>
-</div><div class="subf" id="links">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">來源連結與 QR Code</span></summary>
+  <div class="subf" id="links">
   <div class="sf-top"><h4>來源連結與 QR Code</h4><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">每個招生活動產生專屬連結與 QR Code，印在傳單、放進廣告就能開始追蹤。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Meta 廣告、傳單、官網都能建立</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>掃描加入後，歡迎訊息依來源不同，直接接著問下一步</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>依分校與科目分開追蹤</span></div></div>
@@ -1490,7 +1859,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="wm-r"><span class="wm-s">Meta 廣告・國二冬季招生</span><p>國二冬季班 12 月開課，想了解數學還是理化呢？</p></div>
 <div class="wm-r"><span class="wm-s">官網・直接搜尋</span><p>一般歡迎訊息，AI 會在對話中順便詢問從哪裡知道我們</p></div>
 </div></figure></div>
-</div><div class="subf" id="roi">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">來源成效報表</span></summary>
+  <div class="subf" id="roi">
   <div class="sf-top"><h4>來源成效報表</h4><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">各來源、分校、科目的問班、試聽、報名數與每筆報名的取得成本並排比較。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>主任每月填入花費，系統算出取得成本</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>知道哪個來源最划算，下一筆預算放對地方</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>每週營運摘要寄到主任信箱</span></div></div>
@@ -1553,14 +1926,23 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div>
-</section><section class="pillar c3" id="crm">
-  <div class="pl-banner">
-    <span class="pl-big">三</span>
-    <div class="pl-t"><span class="pl-eb">三、招生 CRM<em class="add">模組 03・附加模組</em></span><h2>每一個加 LINE 的人，現在在哪個階段、要不要跟進</h2><p>每一位加入 LINE 的人都會進入招生名單：從只加好友、問班、聯絡、試聽到報名，每個人在哪一步一清二楚。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#followup"><b>招生總覽與跟進清單</b><span>一眼看到每個階段有多少人</span></a><a class="inc2" href="#pipeline"><b>名單看板與名單卡片</b><span>家長在 LINE 留下的資料自動建成名單</span></a><a class="inc2" href="#trial"><b>試聽預約與試聽回饋</b><span>家長在 LINE 選試聽時段；老師試聽後在手機上點選評估</span></a></div>
-  <div class="ba2"><div class="b"><i>以前</i>招生人員邊聊邊抄名單，忙起來就忘了跟進，問過的家長就這樣流失</div><div class="arr">→</div><div class="a"><i>用了平台</i>每位好友都在名單上，今天該聯絡誰、為什麼、說什麼都列好了</div></div>
+</details>
+
+  </details>
+</section><section class="pillar c3" id="crm">
+  <details class="chapter-detail" open>
+  <summary class="chapter-summary"><h2 class="pl-eb"><span class="chapter-number">三</span><span class="chapter-label">招生 CRM<em class="add">模組 03・附加模組</em></span></h2><span class="chapter-action" aria-hidden="true"></span></summary>
+  <div class="pl-banner">
+    <div class="pl-t"><h3>每一個加 LINE 的人，現在在哪個階段、要不要跟進</h3><p>每一位加入 LINE 的人都會進入招生名單：從只加好友、問班、聯絡、試聽到報名，每個人在哪一步一清二楚。</p></div>
+    <figure class="scene chapter-scene">
+      <img src="/platform-scenes/admissions.webp" alt="老師在補習班向家長與孩子介紹課程，桌上攤開試讀講義" width="960" height="540" loading="lazy" decoding="async">
+      <figcaption>招生諮詢情境示意</figcaption>
+    </figure>
+  </div>
+  <div class="ba2"><div class="b"><i>以前</i>招生人員邊聊邊抄名單，忙起來就忘了跟進，問過的家長就這樣流失</div><div class="arr" aria-hidden="true">→</div><div class="a"><i>用了平台</i>每位好友都在名單上，今天該聯絡誰、為什麼、說什麼都列好了</div></div>
+  <details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">招生總覽與跟進清單</span></summary>
   <div class="subf" id="followup">
   <div class="sf-top"><h4>招生總覽與跟進清單</h4><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">一眼看到每個階段有多少人，以及今天需要跟進的人與原因。</p>
@@ -1587,7 +1969,11 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div><div class="subf" id="pipeline">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">名單看板與名單卡片</span></summary>
+  <div class="subf" id="pipeline">
   <div class="sf-top"><h4>名單看板與名單卡片</h4><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">家長在 LINE 留下的資料自動建成名單，招生歷程一路累積。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>年級、科目、可上課時段、在意的點自動填好</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>依家長的積極程度排序</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>AI 依家長在意的點擬好跟進訊息，數字只來自方案資料</span></div></div>
@@ -1639,7 +2025,11 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div><div class="subf" id="trial">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">試聽預約與試聽回饋</span></summary>
+  <div class="subf" id="trial">
   <div class="sf-top"><h4>試聽預約與試聽回饋</h4><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">家長在 LINE 選試聽時段；老師試聽後在手機上點選評估，就產生給家長的回饋與報名建議。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>試聽名額自動扣除，不會超收</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>老師用手機點選評估，30 秒完成，不用裝 App</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長收到回饋卡片，可直接按「我要報名」</span></div></div>
@@ -1671,14 +2061,23 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="flex"><div class="fx-h">試聽回饋</div><div class="fx-b"><b>晴晴的數學試聽</b><p>觀念大致清楚，主要需要加強計算速度與應用題。上課很專心，也會主動發問 👍<br><br>建議：國二數學 B（每週五 19:00，12 人小班）</p><span>周老師・示範板橋</span></div><div class="fx-btn">我要報名</div><div class="fx-btn ghost">想再聊聊</div></div></div></div></figure>
 </div></div>
 </div>
-</div>
-</section><section class="pillar c4" id="family">
-  <div class="pl-banner">
-    <span class="pl-big">四</span>
-    <div class="pl-t"><span class="pl-eb">四、學生與家長服務<em class="add">附加模組</em></span><h2>報名之後，讓家長隨時知道孩子的狀況</h2><p>學生報名後，爸爸、媽媽和學生本人都能在 LINE 連上同一份學生檔案。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#students"><span class="ic-code">模組 04</span><b>學生檔案與家長綁定</b><span>一位學生可綁多位家長與學生本人</span></a><a class="inc2" href="#grades"><span class="ic-code">模組 05</span><b>作業成績與家長查詢</b><span>老師登錄作業與成績</span></a><a class="inc2" href="#reports"><span class="ic-code">模組 06</span><b>AI 月學習報告</b><span>AI 依出缺勤、作業、成績寫好月報草稿</span></a><a class="inc2" href="#notices"><span class="ic-code">模組 07</span><b>公告與聯絡簿</b><span>一句話產生公告</span></a></div>
-  <div class="ba2"><div class="b"><i>以前</i>家長打電話問成績，老師翻本子回答；公告一個個群組轉貼</div><div class="arr">→</div><div class="a"><i>用了平台</i>家長自己在 LINE 查，老師專心教學，公告一次發給對的人</div></div>
+</details>
+
+  </details>
+</section><section class="pillar c4" id="family">
+  <details class="chapter-detail" open>
+  <summary class="chapter-summary"><h2 class="pl-eb"><span class="chapter-number">四</span><span class="chapter-label">學生與家長服務<em class="add">附加模組</em></span></h2><span class="chapter-action" aria-hidden="true"></span></summary>
+  <div class="pl-banner">
+    <div class="pl-t"><h3>報名之後，讓家長隨時知道孩子的狀況</h3><p>學生報名後，爸爸、媽媽和學生本人都能在 LINE 連上同一份學生檔案。</p></div>
+    <figure class="scene chapter-scene">
+      <img src="/platform-scenes/parent.webp" alt="家長在補習班等候區看手機，孩子在一旁展示剛完成的練習" width="960" height="540" loading="lazy" decoding="async">
+      <figcaption>家長查看學習資訊情境示意</figcaption>
+    </figure>
+  </div>
+  <div class="ba2"><div class="b"><i>以前</i>家長打電話問成績，老師翻本子回答；公告一個個群組轉貼</div><div class="arr" aria-hidden="true">→</div><div class="a"><i>用了平台</i>家長自己在 LINE 查，老師專心教學，公告一次發給對的人</div></div>
+  <details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">學生檔案與家長綁定</span><span class="feature-code">模組 04</span></summary>
   <div class="subf" id="students">
   <div class="sf-top"><h4>學生檔案與家長綁定</h4><span class="mcode add">模組 04</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">一位學生可綁多位家長與學生本人，各自選擇要收哪些通知。</p>
@@ -1725,7 +2124,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="hw"><span>習作第 4 章</span><i class="ok">已繳</i></div>
 <div class="lf-sec">最近成績</div>
 <div class="hw"><span>11/20 理化小考</span><i class="ok">88</i></div></div></div></figure></div>
-</div><div class="subf" id="grades">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">作業成績與家長查詢</span><span class="feature-code">模組 05</span></summary>
+  <div class="subf" id="grades">
   <div class="sf-top"><h4>作業成績與家長查詢</h4><span class="mcode add">模組 05</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">老師登錄作業與成績，家長在 LINE 隨時查看。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>像試算表一樣登錄，也可以拍成績單匯入</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長問「孩子最近數學怎麼樣」，AI 依資料回答</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可設定學生本人是否看得到成績</span></div></div>
@@ -1752,7 +2155,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="hw"><span>11/13 習作第 4 章</span><i class="ok">已繳</i></div>
 <div class="lf-sec">老師評語</div>
 <p class="lf-p">計算細心度有進步，應用題可以再多練習。—林老師</p></div></div></figure></div>
-</div><div class="subf" id="reports">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">AI 月學習報告</span><span class="feature-code">模組 06</span></summary>
+  <div class="subf" id="reports">
   <div class="sf-top"><h4>AI 月學習報告</h4><span class="mcode add">模組 06</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">AI 依出缺勤、作業、成績寫好月報草稿，班導確認後送出。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>每月自動產生全班草稿</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>班導可修改、補一句話</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>家長看完可直接回覆「想跟老師聊聊」</span></div></div>
@@ -1778,7 +2185,11 @@ tr.hl-ab td{background:#fdf3f3}
 <p class="lf-p">小明本月出席穩定，作業幾乎全數準時繳交。理化小考由 76 分進步到 88 分……</p>
 <p class="lf-p"><b>班導補充：</b>上課發問變多了，很棒！</p>
 <div class="lf-btn ghost">想跟老師聊聊</div></div></div></figure></div>
-</div><div class="subf" id="notices">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">公告與聯絡簿</span><span class="feature-code">模組 07</span></summary>
+  <div class="subf" id="notices">
   <div class="sf-top"><h4>公告與聯絡簿</h4><span class="mcode add">模組 07</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">一句話產生公告，依分校、年級、班級發給對的家長。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>停課、調課、活動、聯絡簿都有現成格式</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>發送前看到預估訊息則數</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>停課公告同步到 AI 客服</span></div></div>
@@ -1805,15 +2216,24 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="flex"><div class="fx-h">停課公告</div><div class="fx-b"><b>颱風停課通知</b><p>因颱風影響，11/18（三）全日課程暫停，補課時間將另行通知。</p><span>示範教育・本部</span></div><div class="fx-btn">查看補課安排</div></div>
 <div class="msg p">那補課什麼時候？</div>
 <div class="msg b">補課時間會在 11/19 公布，屆時會再通知您。</div></div></div></figure></div>
-</div>
-</section><section class="pillar c5" id="daily">
-  <div class="pl-banner">
-    <span class="pl-big">五</span>
-    <div class="pl-t"><span class="pl-eb">五、出缺勤與日常行政<em class="add">附加模組</em></span><h2>點名、請假、補課，在 LINE 裡完成</h2><p>學生出示 QR Code、老師用手機一掃就點完名，家長立刻收到通知；請假、晚到、補課都在 LINE 完成，行政只處理真正的例外。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#classes"><span class="ic-code">平台基本功能</span><b>班級管理</b><span>班級的老師、學生名單，可匯出</span></a><a class="inc2" href="#attendance"><span class="ic-code">模組 08</span><b>到班點名與通知</b><span>老師用手機掃 QR 點名</span></a><a class="inc2" href="#leave"><span class="ic-code">模組 09</span><b>LINE 請假</b><span>家長或學生在 LINE 說一聲就能請假</span></a><a class="inc2" href="#makeup"><span class="ic-code">模組 10</span><b>補課安排</b><span>選擇你的補課制度</span></a></div>
-  <div class="ba2"><div class="b"><i>以前</i>紙本點名、電話請假、行政翻課表找補課空位</div><div class="arr">→</div><div class="a"><i>用了平台</i>點名即通知，請假自動同步，補課依你的規則列出選項</div></div>
-<div class="subf" id="classes">
+</details>
+
+  </details>
+</section><section class="pillar c5" id="daily">
+  <details class="chapter-detail" open>
+  <summary class="chapter-summary"><h2 class="pl-eb"><span class="chapter-number">五</span><span class="chapter-label">出缺勤與日常行政<em class="add">附加模組</em></span></h2><span class="chapter-action" aria-hidden="true"></span></summary>
+  <div class="pl-banner">
+    <div class="pl-t"><h3>點名、請假、補課，在 LINE 裡完成</h3><p>學生出示 QR Code、老師用手機一掃就點完名，家長立刻收到通知；請假、晚到、補課都在 LINE 完成，行政只處理真正的例外。</p></div>
+    <figure class="scene chapter-scene">
+      <img src="/platform-scenes/classroom.webp" alt="學生出示點名卡，老師在教室門口用手機掃碼" width="960" height="540" loading="lazy" decoding="async">
+      <figcaption>到班點名情境示意</figcaption>
+    </figure>
+  </div>
+  <div class="ba2"><div class="b"><i>以前</i>紙本點名、電話請假、行政翻課表找補課空位</div><div class="arr" aria-hidden="true">→</div><div class="a"><i>用了平台</i>點名即通知，請假自動同步，補課依你的規則列出選項</div></div>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">班級管理</span><span class="feature-code">平台基本功能</span></summary>
+  <div class="subf" id="classes">
   <div class="sf-top"><h4>班級管理</h4><span class="mkind base">平台基本功能</span></div>
   <p class="sf-desc">每個班級的老師、教室、上課時段和學生名單集中在一頁；點名、請假、補課都以這份名單為準。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>一頁看完班級的老師、教室、時段與學生</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>名單匯出 Excel、列印紙本點名表</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生轉班、插班、退班都留下紀錄</span></div></div>
@@ -1849,7 +2269,11 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div>
+  </div>
+</details>
+
+  <details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">到班點名與通知</span><span class="feature-code">模組 08</span></summary>
   <div class="subf" id="attendance">
   <div class="sf-top"><h4>到班點名與通知</h4><span class="mcode add">模組 08</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">老師用手機掃 QR 點名，學生到班時家長立刻收到通知；晚到只告訴老師，不讓家長白擔心。</p>
@@ -1885,7 +2309,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="ap-li"><b>李小華</b><i class="lvq">請假</i></div></div></div></figure><figure class="shot ph"><figcaption><span class="who parent">家長・手機</span>家長只在小明到班時收到通知</figcaption><div class="phone"><div class="notch"></div><div class="ph-top lock">19:18</div><div class="ph-body lockbg">
 <div class="push"><div class="ps-h"><span class="lg"></span>LINE・示範教育<em>19:18</em></div><b>小明已到班</b><span>國二理化 A・19:18 完成簽到</span></div>
 <div class="lock-note">18:41 小明回報會晚到時<br>不會傳給家長，避免白擔心</div></div></div></figure></div>
-</div><div class="subf" id="leave">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">LINE 請假</span><span class="feature-code">模組 09</span></summary>
+  <div class="subf" id="leave">
   <div class="sf-top"><h4>LINE 請假</h4><span class="mcode add">模組 09</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">家長或學生在 LINE 說一聲就能請假，請假直接同步到點名。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>學生請假要不要經過家長，後台依補習班習慣設定</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可設定請假截止時間</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>請假後自動轉給補課安排</span></div></div>
@@ -1920,7 +2348,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="flex"><div class="fx-h">請假確認</div><div class="fx-b"><b>晴晴想請假</b><p>11/21（六）國二數學 B<br>原因：身體不舒服</p><span>由學生本人提出</span></div><div class="fx-btn">確認請假</div><div class="fx-btn ghost">不同意</div><div class="fx-btn ghost">聯絡補習班</div></div>
 <div class="msg p">確認請假</div>
 <div class="msg b">已確認，會通知老師。</div></div></div></figure></div>
-</div><div class="subf" id="makeup">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">補課安排</span><span class="feature-code">模組 10</span></summary>
+  <div class="subf" id="makeup">
   <div class="sf-top"><h4>補課安排</h4><span class="mcode add">模組 10</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">選擇你的補課制度，系統依規則列出補課選項，家長自己選。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>跟班補課、固定補課時段、講義自學、老師另約，依科目設定</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>可補次數、期限、名額都能設定</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>補課出席自動計入點名</span></div></div>
@@ -1956,14 +2388,23 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="mk-opt"><div class="mk-d"><span>週六</span><b>11/29</b></div><div class="mk-i"><b>14:00 補課教室</b><span>本部 3 樓・助教帶</span></div><em>剩 5</em></div>
 <div class="bk-btn">確認補課・11/22（六）14:00</div>
 <p class="bk-fine mk-skip">這次不需要補課</p></div></div></figure></div>
-</div>
-</section><section class="pillar c6" id="manage">
-  <div class="pl-banner">
-    <span class="pl-big">六</span>
-    <div class="pl-t"><span class="pl-eb">六、續班與經營管理<em class="add">附加模組</em></span><h2>留住學生，掌握每一間分校</h2><p>續班提醒自動發送、家長一鍵回覆；有流失徵兆的學生提早提醒班導。</p></div>
   </div>
-  <div class="inc-row"><a class="inc2" href="#renewal"><span class="ic-code">模組 11</span><b>續班與繳費提醒</b><span>依名單與日期自動提醒</span></a><a class="inc2" href="#retention"><span class="ic-code">模組 12</span><b>流失預警</b><span>從缺課、作業、成績與家長詢問中</span></a><a class="inc2" href="#branches"><span class="ic-code">模組 13</span><b>多分校管理</b><span>集團、分校、班級三層管理</span></a></div>
-  <div class="ba2"><div class="b"><i>以前</i>學生不來了才發現；各分校資料各自存，總部看不到全貌</div><div class="arr">→</div><div class="a"><i>用了平台</i>提早發現、及時關心；一套系統管所有分校</div></div>
+</details>
+
+  </details>
+</section><section class="pillar c6" id="manage">
+  <details class="chapter-detail" open>
+  <summary class="chapter-summary"><h2 class="pl-eb"><span class="chapter-number">六</span><span class="chapter-label">續班與經營管理<em class="add">附加模組</em></span></h2><span class="chapter-action" aria-hidden="true"></span></summary>
+  <div class="pl-banner">
+    <div class="pl-t"><h3>留住學生，掌握每一間分校</h3><p>續班提醒自動發送、家長一鍵回覆；有流失徵兆的學生提早提醒班導。</p></div>
+    <figure class="scene chapter-scene">
+      <img src="/platform-scenes/school-management.webp" alt="補習班人員一起核對下期班表與學生追蹤事項" width="960" height="540" loading="lazy" decoding="async">
+      <figcaption>續班與班務討論情境示意</figcaption>
+    </figure>
+  </div>
+  <div class="ba2"><div class="b"><i>以前</i>學生不來了才發現；各分校資料各自存，總部看不到全貌</div><div class="arr" aria-hidden="true">→</div><div class="a"><i>用了平台</i>提早發現、及時關心；一套系統管所有分校</div></div>
+  <details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">續班與繳費提醒</span><span class="feature-code">模組 11</span></summary>
   <div class="subf" id="renewal">
   <div class="sf-top"><h4>續班與繳費提醒</h4><span class="mcode add">模組 11</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">依名單與日期自動提醒，家長一鍵回覆，行政看得到誰還沒回。</p>
@@ -1985,7 +2426,11 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="flex"><div class="fx-h">寒假班續班</div><div class="fx-b"><b>小明的國二理化 寒假班</b><p>1/20 開課，請於 12/10 前確認是否續班。</p></div><div class="fx-btn">確認續班</div><div class="fx-btn ghost">想再考慮</div><div class="fx-btn ghost">聯絡行政</div></div>
 <div class="msg p">確認續班</div>
 <div class="msg b">收到！已為小明保留寒假班名額，繳費資訊會再通知您。</div></div></div></figure></div>
-</div><div class="subf" id="retention">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">流失預警</span><span class="feature-code">模組 12</span></summary>
+  <div class="subf" id="retention">
   <div class="sf-top"><h4>流失預警</h4><span class="mcode add">模組 12</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">從缺課、作業、成績與家長詢問中，找出可能不續班的學生。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>列出原因並依風險排序</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>指派班導並附上關心訊息草稿</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>追蹤關心結果</span></div></div>
@@ -2003,7 +2448,11 @@ tr.hl-ab td{background:#fdf3f3}
 </div></div>
   </div>
 </div></figure></div>
-</div><div class="subf" id="branches">
+  </div>
+</details>
+<details class="feature-detail" open>
+  <summary class="feature-summary"><span class="feature-name">多分校管理</span><span class="feature-code">模組 13</span></summary>
+  <div class="subf" id="branches">
   <div class="sf-top"><h4>多分校管理</h4><span class="mcode add">模組 13</span><span class="mkind add">附加模組</span></div>
   <p class="sf-desc">集團、分校、班級三層管理，每個人依角色看到該看的資料。</p>
   <div class="tiles"><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>總部看全部，分校只看自己</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>後台帳號不限人數</span></div><div class="tile"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.5 10.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>問班自動分配到正確的分校</span></div></div>
@@ -2049,26 +2498,33 @@ tr.hl-ab td{background:#fdf3f3}
 <div class="rule">分校主任以上必須啟用雙重驗證・人員離職時停用帳號即可，資料仍保留在分校</div></div>
   </div>
 </div></figure></div>
-</div>
+  </div>
+</details>
+
+  </details>
 </section>
 
-<section class="sec" id="security">
-  <div class="sec-h"><span class="eyebrow">資料安全與個資</span><h2>孩子的資料，我們用最高標準保護</h2>
-  <p class="sec-p">補習班保管的是未成年學生的成績、家庭與聯絡資料。平台從設計開始就把安全放在第一位。</p></div>
+<section class="sec info-panel c1" id="security">
+  <div class="info-head">
+    <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-3 7-10V5l-7-3-7 3v7c0 7 7 10 7 10Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+    <div><h2>資料安全與個資</h2><p class="sec-p">保護補習班管理的學生成績、家庭與聯絡資料。</p></div>
+  </div>
   <div class="sec6">
-    <div class="scard"><span class="si">台</span><h3>資料存放在台灣</h3><p>Google Cloud 台灣區域，全程加密</p></div>
-    <div class="scard"><span class="si">權</span><h3>分校、角色分權</h3><p>每個人只看到該看的資料</p></div>
-    <div class="scard"><span class="si">記</span><h3>查看都有紀錄</h3><p>誰看過、匯出過，隨時可查</p></div>
-    <div class="scard"><span class="si">隱</span><h3>AI 只拿必要資料</h3><p>姓名、電話先換成代號</p></div>
-    <div class="scard"><span class="si">核</span><h3>人員確認才送出</h3><p>跟進、回饋、報告都由人員把關</p></div>
-    <div class="scard"><span class="si">規</span><h3>符合補習班個資規範</h3><p>提供個資維護計畫的文件範本</p></div>
+    <div class="scard"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.7-9A5.7 5.7 0 0 1 17 8a5 5 0 0 1-.3 10H7Z"/><path d="m10 13 1.5 1.5L14 12"/></svg></span><h3>資料存放在台灣</h3><p>Google Cloud 台灣區域，全程加密</p></div>
+    <div class="scard"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="10" r="4"/><path d="m11 13 8 8m-3-3 2-2m-4 0 2-2"/></svg></span><h3>分校、角色分權</h3><p>每個人只看到該看的資料</p></div>
+    <div class="scard"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6m-6 4h6m-6 4h3"/></svg></span><h3>查看都有紀錄</h3><p>誰看過、匯出過，隨時可查</p></div>
+    <div class="scard"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></svg></span><h3>AI 只拿必要資料</h3><p>姓名、電話先換成代號</p></div>
+    <div class="scard"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg></span><h3>人員確認才送出</h3><p>跟進、回饋、報告都由人員把關</p></div>
+    <div class="scard"><span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="12" height="16" rx="2"/><path d="M9 5V3h6v2M9 10h6m-6 4h6"/></svg></span><h3>符合補習班個資規範</h3><p>提供個資維護計畫的文件範本</p></div>
   </div>
   <p class="fine">資料屬於補習班所有，可隨時匯出；合約結束時提供完整匯出並依約定刪除。</p>
 </section>
 
-<section class="sec" id="onboarding">
-  <div class="sec-h"><span class="eyebrow">導入流程</span><h2>從舊系統換過來，資料我們幫你搬</h2>
-  <p class="sec-p">大部分工作由我們完成，你的人員只需要確認。不用重新建檔，也不用擔心資料遺失。</p></div>
+<section class="sec info-panel c2" id="onboarding">
+  <div class="info-head">
+    <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h10a3 3 0 0 1 0 6H7a3 3 0 0 0 0 6h10"/></svg></span>
+    <div><h2>導入流程</h2><p class="sec-p">我們協助搬移舊系統資料，你的人員只需要確認，無須重新建檔。</p></div>
+  </div>
   <div class="tline">
     <div class="tl3"><span>1</span><h3>了解需求</h3><p>確認分校、班級與招生方式</p></div>
     <div class="tl3"><span>2</span><h3>資料轉移與開通</h3><p>從政龍等現有系統搬移學生、家長、班級與成績資料，並接上現有 LINE</p></div>
@@ -2078,44 +2534,71 @@ tr.hl-ab td{background:#fdf3f3}
   <p class="fine">支援從政龍等補教系統、Excel 或紙本照片匯入。轉換期間可新舊系統並行，確認資料無誤後再正式切換。</p>
 </section>
 
-
-
-<section class="sec" id="pricing">
-  <div class="sec-h"><span class="eyebrow">方案與費用</span><h2>費用包含哪些項目</h2>
-  <p class="sec-p">依你的分校數與開通的模組報價。以下說明會產生哪些費用。</p></div>
+<section class="sec info-panel c5" id="pricing">
+  <div class="info-head">
+    <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v18l-3.5-2-3.5 2-3.5-2L5 21V3Z"/><path d="M8 8h8m-8 4h8m-8 4h4"/></svg></span>
+    <div><h2>方案與費用</h2><p class="sec-p">依分校數與開通的模組報價。</p></div>
+  </div>
   <div class="price3">
     <div class="pcard"><h3>導入服務</h3><span class="pt">一次性</span><ul><li>LINE 官方帳號開通與設定</li><li>舊系統資料轉移（政龍等現有系統、Excel）</li><li>課程與方案資料建置</li><li>人員教育訓練</li></ul></div>
     <div class="pcard main"><h3>平台月費</h3><span class="pt">基本模組＋開通的附加模組，依分校數計算</span><ul><li>後台帳號不限人數</li><li>AI 使用費已包含</li><li>功能持續更新，不另外收費</li></ul></div>
     <div class="pcard"><h3>LINE 訊息費用</h3><span class="pt">直接支付給 LINE</span><ul><li>回覆家長提問的訊息不計費</li><li>到班通知、提醒等主動訊息依 LINE 方案計算</li><li>平台清楚列出用量與預估費用</li></ul></div>
   </div>
-  <div class="cta-band"><p>想知道你的補習班適合哪些模組、大約多少費用？跟我們說說你的需求，我們依分校數與需求提供報價。</p><a class="btn-p" href="#contact" data-contact="pricing">聯絡我們</a></div>
+  <div class="cta-band"><p>想知道你的補習班適合哪些模組、大約多少費用？跟我們說說你的需求，我們依分校數與需求提供報價。</p><a class="btn-p" href="#contact" data-contact="pricing">預約了解</a></div>
 </section>
 
-<section class="sec" id="faq">
-  <div class="sec-h"><span class="eyebrow">常見問題</span><h2>老闆們最常問的問題</h2></div>
-  <div class="faq"><details class="qa" open><summary>需要換掉現在的 LINE 官方帳號嗎？</summary><p>不用。平台直接接上你現有的官方帳號，家長不需要重新加好友。如果帳號已經接了其他機器人，我們會協助搬移或一起運作。</p></details><details class="qa" open><summary>家長、學生、老師需要下載 App 嗎？</summary><p>不需要。家長與學生在 LINE 裡完成所有操作；老師用手機打開 LINE 裡的頁面就能點名與回饋；補習班人員使用網頁後台。</p></details><details class="qa" open><summary>AI 答錯怎麼辦？</summary><p>AI 只依你核准的課程資料與方案資料回答，價格、優惠、名額都只能引用你設定的內容。查不到依據、或涉及退費與孩子個別狀況的問題，一律交給人員。跟進訊息、試聽回饋、月報都由人員確認後才送出。</p></details><details class="qa" open><summary>一定要全部功能都買嗎？</summary><p>不用。AI 客服是基本模組，其他都是附加模組，可依需要逐步加入。部分模組需要先有學生檔案，模組總覽裡都有標示。</p></details><details class="qa" open><summary>我們現在用政龍或其他系統，換過來會很麻煩嗎？</summary><p>不會。學生、家長、班級與成績等資料，我們協助從政龍等現有補教系統、Excel 或照片完整轉移，不用重新建檔。轉換期間可以新舊並行，確認無誤再正式切換。</p></details><details class="qa" open><summary>資料放在哪裡？安全嗎？</summary><p>資料存放於 Google Cloud 台灣區域，依角色與分校控管權限，查看與匯出都有紀錄。詳見「資料安全與個資」。</p></details><details class="qa" open><summary>費用怎麼算？AI 要另外付錢嗎？</summary><p>依分校數與開通的模組報價，AI 使用費已包含在月費內。LINE 官方帳號的訊息費用由補習班直接支付給 LINE，平台會清楚列出用量。</p></details><details class="qa" open><summary>導入需要多久？我們要花多少人力？</summary><p>開通、舊系統資料轉移與教育訓練由我們協助完成，你的人員主要負責確認課程與方案資料。實際時程依分校數與資料準備情況而定，我們會在展示時一起規劃。</p></details></div>
+<section class="sec info-panel c3" id="faq">
+  <div class="info-head">
+    <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l1.7-3.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M10 9a2.5 2.5 0 1 1 3.8 2.1c-1 .6-1.3.9-1.3 1.9m0 3h.01"/></svg></span>
+    <div><h2>常見問題</h2></div>
+  </div>
+  <div class="faq">
+    <div class="faq-group">
+      <h3>日常使用與資安</h3>
+      <details class="qa" open><summary>需要換掉現在的 LINE 官方帳號嗎？</summary><p>不用。平台直接接上你現有的官方帳號，家長不需要重新加好友。如果帳號已經接了其他機器人，我們會協助搬移或一起運作。</p></details>
+      <details class="qa" open><summary>家長、學生、老師需要下載 App 嗎？</summary><p>不需要。家長與學生在 LINE 裡完成所有操作；老師用手機打開 LINE 裡的頁面就能點名與回饋；補習班人員使用網頁後台。</p></details>
+      <details class="qa" open><summary>AI 答錯怎麼辦？</summary><p>AI 只依你核准的課程資料與方案資料回答，價格、優惠、名額都只能引用你設定的內容。查不到依據、或涉及退費與孩子個別狀況的問題，一律交給人員。跟進訊息、試聽回饋、月報都由人員確認後才送出。</p></details>
+      <details class="qa" open><summary>資料放在哪裡？安全嗎？</summary><p>資料存放於 Google Cloud 台灣區域，依角色與分校控管權限，查看與匯出都有紀錄。詳見「資料安全與個資」。</p></details>
+    </div>
+    <div class="faq-group">
+      <h3>導入與費用</h3>
+      <details class="qa" open><summary>我們現在用政龍或其他系統，換過來會很麻煩嗎？</summary><p>不會。學生、家長、班級與成績等資料，我們協助從政龍等現有補教系統、Excel 或照片完整轉移，不用重新建檔。轉換期間可以新舊並行，確認無誤再正式切換。</p></details>
+      <details class="qa" open><summary>導入需要多久？我們要花多少人力？</summary><p>開通、舊系統資料轉移與教育訓練由我們協助完成，你的人員主要負責確認課程與方案資料。實際時程依分校數與資料準備情況而定，我們會在展示時一起規劃。</p></details>
+      <details class="qa" open><summary>一定要全部功能都買嗎？</summary><p>不用。AI 客服是基本模組，其他都是附加模組，可依需要逐步加入。部分模組需先建立學生檔案，或搭配其他模組才能使用。</p></details>
+      <details class="qa" open><summary>費用怎麼算？AI 要另外付錢嗎？</summary><p>依分校數與開通的模組報價，AI 使用費已包含在月費內。LINE 官方帳號的訊息費用由補習班直接支付給 LINE，平台會清楚列出用量。</p></details>
+    </div>
+  </div>
 </section>
 
 <section class="sec contact" id="contact">
-  <div class="sec-h"><span class="eyebrow">聯絡我們</span><h2>有任何想法，隨時跟我們說</h2>
-  <p class="sec-p">想了解哪些模組適合你、費用怎麼算，或是補習班裡任何其他想做的事，都可以跟我們聊，不限於這個平台。</p></div>
-  <div class="ct-band"><a class="btn-p" href="#contact" data-contact="contact-section">聯絡我們</a><span>任何時間都可以留言，我們會儘快回覆</span></div>
-  <p class="fine">頁面中的補習班名稱、人名、成績與數字均為示意。</p>
+  <div class="sec-h"><h2>聊聊你的補習班怎麼導入</h2>
+  <p class="sec-p">我們可以約時間了解你目前的招生和教務流程，一起討論適合的做法。</p></div>
+  <div class="ct-band"><a class="btn-p" href="#contact" data-contact="contact-section">預約了解</a></div>
+  <p class="fine">頁面中的情境圖片、補習班名稱、人名、成績與數字均為示意。</p>
 </section>
 
   </main>
 </div>
 <script>
 (function(){
+  var copy=document.getElementById('desktop-copy'),status=document.getElementById('desktop-copy-status');
+  copy.addEventListener('click',async function(){
+    try{
+      await navigator.clipboard.writeText(location.href);
+      status.textContent='已複製網址';
+    }catch(e){
+      status.textContent='請長按網址複製：'+location.href;
+    }
+    if(window.posthog&&posthog.capture)posthog.capture('web_platform_copy_link');
+  });
   var layout=document.getElementById('layout'),btn=document.getElementById('navToggle'),scrim=document.getElementById('scrim');
   var mq=window.matchMedia('(max-width: 900px)');
   function setOpen(open){
     if(mq.matches){layout.classList.toggle('drawer-open',open);}
-    else{layout.classList.toggle('collapsed',!open);try{localStorage.setItem('nav-collapsed',open?'0':'1');}catch(e){}}
+    else{layout.classList.toggle('collapsed',!open);}
     btn.setAttribute('aria-expanded',open?'true':'false');
   }
   function isOpen(){return mq.matches?layout.classList.contains('drawer-open'):!layout.classList.contains('collapsed');}
-  try{if(!mq.matches&&localStorage.getItem('nav-collapsed')==='1'){layout.classList.add('collapsed');btn.setAttribute('aria-expanded','false');}}catch(e){}
   if(mq.matches)btn.setAttribute('aria-expanded','false');
   btn.addEventListener('click',function(){setOpen(!isOpen());});
   scrim.addEventListener('click',function(){setOpen(false);});
@@ -2124,6 +2607,33 @@ tr.hl-ab td{background:#fdf3f3}
     var ex=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',ex?'false':'true');
     document.getElementById(b.getAttribute('aria-controls')).hidden=ex;});});
   var links={};document.querySelectorAll('.sb-nav a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+  function openLinkedSection(hash){
+    var id=hash.slice(1), target=document.getElementById(id);
+    var pillar=target && target.closest('.pillar');
+    if(!pillar) return;
+    var chapter=pillar.querySelector('.chapter-detail');
+    var detail=target.closest('.feature-detail');
+    var wasHidden=!chapter.open || (detail && !detail.open);
+    chapter.open=true;
+    if(detail) detail.open=true;
+    var link=links[id], list=link && link.closest('.ng-l');
+    if(list && list.hidden){
+      list.hidden=false;
+      list.parentElement.querySelector('.ng-t').setAttribute('aria-expanded','true');
+    }
+    if(wasHidden) return target;
+  }
+  // Reveal the chapter and example before fragment navigation, including clicks on the same hash.
+  document.addEventListener('click',function(e){
+    if(e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+    var link=e.target.closest('a[href^="#"]');
+    if(link) openLinkedSection(link.hash);
+  });
+  openLinkedSection(location.hash);
+  window.addEventListener('hashchange',function(){
+    var target=openLinkedSection(location.hash);
+    if(target) target.scrollIntoView();
+  });
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
       var id=e.target.id;Object.keys(links).forEach(function(k){links[k].classList.toggle('active',k===id);});}});},{rootMargin:'-20% 0px -70% 0px'});
