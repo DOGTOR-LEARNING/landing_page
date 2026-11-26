@@ -457,14 +457,18 @@
 
 @media (min-width: 768px) {
   .featuresGrid {
-    grid-template-columns: repeat(3, 1fr);
+    /* minmax(0, …): a card's aspect-ratio would otherwise turn tall text into
+       a wider minimum width and push the third card off screen. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
+/* No overflow: hidden here: with it, aspect-ratio can't grow the card and
+   longer text (English) gets clipped. The image container clips instead. */
 .featureCard {
   position: relative;
+  min-width: 0;
   aspect-ratio: 4 / 3;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -472,8 +476,15 @@
 }
 
 @media (min-width: 768px) {
+  /* A minimum height instead of a square: the row stretches every card to the
+     tallest one, so cards stay equal even when one description runs longer. */
   .featureCard {
-    aspect-ratio: 1;
+    aspect-ratio: auto;
+    min-height: 360px;
+  }
+
+  .featureContent {
+    padding: var(--space-md);
   }
 }
 
@@ -484,6 +495,8 @@
   right: 0;
   bottom: 0;
   z-index: 1;
+  overflow: hidden;
+  border-radius: inherit;
 }
 
 .featureImage {
@@ -501,6 +514,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: inherit;
   background: rgba(16, 32, 49, 0.6);
   z-index: 2;
 }

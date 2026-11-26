@@ -346,7 +346,11 @@ export default async function RootLayout({ children }) {
   const jsonLd = market === MARKET_GLOBAL ? GLOBAL_JSON_LD : TW_JSON_LD
   const isAdmin = h.get('x-admin-workspace') === '1'
   return (
-    <html lang={locale}>
+    // globals.css sets scroll-behavior: smooth for in-page anchors. Since
+    // Next.js 16 the router no longer switches that off while navigating, so a
+    // new page would open at the old page's scroll position and then slowly
+    // glide up (or stay near the bottom). This attribute restores the override.
+    <html lang={locale} data-scroll-behavior="smooth">
       <head>
         {!isAdmin && <>
         {/* Google tag (gtag.js) */}
