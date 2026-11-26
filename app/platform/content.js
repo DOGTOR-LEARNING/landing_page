@@ -1148,24 +1148,50 @@ html{scroll-padding-top:82px}
 .hero-chat figcaption{font-size:12px;line-height:1.5;justify-content:flex-end;background:var(--paper)}
 .desktop-preview{display:none}
 
-/* 導入後的影響方向 */
-.impact{overflow:hidden;border:1px solid var(--rule);border-radius:14px;background:var(--card)}
-.impact-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 18px;padding:20px clamp(20px,3vw,38px)}
-.impact-head h2{font-size:clamp(25px,2.7vw,38px)}
-.impact-head p{font-size:14px;color:var(--muted)}
-.impact-icons{position:absolute;width:0;height:0;overflow:hidden}
-.impact-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,28px);padding:22px clamp(16px,3vw,38px);background:color-mix(in srgb,var(--trend) 8%,var(--card))}
-.impact-up{--trend:light-dark(#bd3028,#ff877c)}
-.impact-down{--trend:light-dark(#167448,#6fd4a0)}
-.impact-result{display:grid;gap:9px;justify-items:center;margin:0;min-width:0}
-.impact-result figcaption{display:block;text-align:center;color:var(--ink);font-size:clamp(16px,1.5vw,21px);font-weight:700}
-.impact-visual{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:7px;width:min(100%,264px)}
-.impact-visual svg{display:block;width:100%;height:auto}
-.impact-before{color:var(--muted)}
-.impact-after,.impact-arrow{color:var(--trend)}
-.impact-empty-person{color:var(--muted);opacity:.7}
-.impact-arrow{font:700 clamp(24px,3vw,37px)/1 system-ui,sans-serif}
-@media (max-width:640px){.impact-band{grid-template-columns:1fr}}
+/* 導入後的六個改變 */
+#why{container-type:inline-size}
+.impact-grid{
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:clamp(12px,1.7cqw,22px);
+}
+.impact-card{
+  grid-column:span 4;min-width:0;overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr;
+  border:1px solid var(--rule);border-radius:14px;background:var(--card);
+}
+.impact-card:nth-child(2),.impact-card:nth-child(3){grid-column:span 3}
+.impact-card.impact-feature{
+  grid-column:span 6;border-color:transparent;
+  background:var(--deep);color:var(--on-deep);
+}
+.impact-media{position:relative;min-width:0}
+.impact-media img{
+  display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
+  background:var(--accent-soft);
+}
+.impact-card:nth-child(-n+3) img{height:clamp(148px,20cqw,244px)}
+.impact-trend{
+  --trend-outline:#d5f2f1;
+  position:absolute;right:clamp(12px,1.75cqw,22px);bottom:clamp(12px,1.75cqw,22px);
+  filter:drop-shadow(0 1px 2px #101f3699);
+  color:#075763;font:900 clamp(44px,6.4cqw,82px)/1 system-ui,sans-serif;
+  -webkit-text-stroke:4px var(--trend-outline);paint-order:stroke fill;
+}
+.impact-down .impact-trend{--trend-outline:#ffe1a2;color:#b56408}
+.impact-copy{padding:clamp(13px,1.8cqw,24px)}
+.impact-copy h3{font-size:clamp(18px,2.1cqw,25px);text-wrap:pretty}
+.impact-copy p{margin-top:5px;color:var(--muted);font-size:clamp(14px,1.5cqw,16px);line-height:1.55;text-wrap:pretty}
+.impact-feature h3{font-family:var(--display);font-size:clamp(24px,3.2cqw,38px)}
+.impact-feature p{color:var(--soft-on-deep)}
+@container (width < 660px){
+  .impact-grid{grid-template-columns:minmax(0,1fr)}
+  .impact-grid .impact-card{grid-column:1}
+  .impact-card:not(.impact-feature){grid-template-columns:minmax(0,2fr) minmax(0,3fr);grid-template-rows:1fr}
+  .impact-card:not(.impact-feature) .impact-copy{align-self:center}
+  .impact-grid .impact-card img{height:100%;aspect-ratio:auto;min-height:100px}
+  .impact-grid .impact-feature img{height:auto;aspect-ratio:16/9;min-height:0}
+  .impact-card:not(.impact-feature) .impact-trend{font-size:43px}
+}
 
 /* 招生到續班的流程圖 */
 #overview{container-type:inline-size}
@@ -1387,7 +1413,7 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
   .topbar{padding-inline:16px;gap:10px}
   .tb-cta{min-height:44px;white-space:nowrap}
   .tb-btn,.tb-brand,.tb-div,.sidebar,.layout.drawer-open .scrim,
-  .content > section:not(#home,#contact),.hero-scene,.hero-overview{display:none}
+  .content > section:not(#home,#why,#contact),.hero-scene,.hero-overview{display:none}
   .layout,.layout.collapsed{grid-template-columns:minmax(0,1fr)}
   .content{max-width:640px;padding:0 clamp(16px,4vw,24px) 32px}
   .hero2{grid-template-columns:minmax(0,1fr);gap:20px;padding:28px 0 0;border:0}
@@ -1400,6 +1426,7 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
   .hero-chat .ph-body{padding:9px;gap:6px;font-size:14px}
   .hero-chat .msg{padding:5px 8px}
   .hero-chat figcaption{justify-content:center}
+  .sec#why{margin-top:30px;padding-top:26px}
   .desktop-preview{display:block;margin-top:18px;color:var(--muted);font-size:14px}
   .desktop-preview button{font:inherit;font-weight:700;color:var(--accent);background:none;border:0;padding:9px 0;cursor:pointer;text-decoration:underline}
   #desktop-copy-status{overflow-wrap:anywhere}
@@ -1450,12 +1477,6 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
   </div>
 </section>
 
-<div class="desktop-preview">
-  <p>想看完整後台操作示意？可以把連結帶到電腦或橫放的平板繼續看。</p>
-  <button id="desktop-copy" type="button">複製網址</button>
-  <p id="desktop-copy-status" role="status"></p>
-</div>
-
 <section class="sec" id="overview">
   <div class="sec-h"><h2>從招生到續班</h2>
   <p class="sec-p">點選任一功能，查看對應的操作示意。</p></div>
@@ -1478,114 +1499,77 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 <div class="legend2"><span>顏色對應六大章，數字是模組編號。</span><a class="lg2 c1" href="#ai"><i></i>一、AI 客服</a><a class="lg2 c2" href="#source"><i></i>二、招生來源追溯</a><a class="lg2 c3" href="#crm"><i></i>三、招生 CRM</a><a class="lg2 c4" href="#family"><i></i>四、學生與家長服務</a><a class="lg2 c5" href="#daily"><i></i>五、出缺勤與日常行政</a><a class="lg2 c6" href="#manage"><i></i>六、續班與經營管理</a></div>
 </section>
 
-<section class="sec" id="why">
-  <div class="impact">
-    <div class="impact-head">
-      <h2>導入後的六個改變</h2>
-      <p>影響方向示意</p>
-    </div>
-    <svg class="impact-icons" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <symbol id="impact-person" viewBox="0 0 16 20" fill="currentColor">
-        <circle cx="8" cy="5" r="3.5"/><path d="M1 18v-2a7 7 0 0 1 14 0v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1Z"/>
-      </symbol>
-      <symbol id="impact-empty" viewBox="0 0 16 20" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="8" cy="5" r="3.15"/><path d="M2 18v-2a6 6 0 0 1 12 0v2Z"/>
-      </symbol>
-      <symbol id="impact-renewed" viewBox="0 0 16 30">
-        <use href="#impact-person" width="16" height="20"/><path d="m4 24 2.6 2.6L12 21.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </symbol>
-      <symbol id="impact-heart" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 21 3.8 13a5.6 5.6 0 0 1 7.9-8l.3.3.3-.3a5.6 5.6 0 0 1 7.9 8Z"/>
-      </symbol>
-      <symbol id="impact-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="9.5"/><path d="M12 6.5v6l3.8 2.2"/>
-      </symbol>
-      <symbol id="impact-sheet" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="2.5" width="16" height="23" rx="2"/><path d="M8 8h8m-8 5h8m-8 5h5"/>
-      </symbol>
-      <symbol id="impact-coin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
-        <circle cx="12" cy="12" r="9.5"/><path d="M12 6.3v11.4m3-9H11a1.65 1.65 0 0 0 0 3.3h2a1.65 1.65 0 0 1 0 3.3H9"/>
-      </symbol>
-    </svg>
-    <div class="impact-band impact-up" role="group" aria-label="上升項目">
-      <figure class="impact-result">
-        <figcaption>新生報名數</figcaption>
-        <div class="impact-visual" role="img" aria-label="人形從一排變成兩排，示意新生報名數上升">
-          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-person" x="2" y="15" width="14" height="18"/><use href="#impact-person" x="19" y="15" width="14" height="18"/><use href="#impact-person" x="36" y="15" width="14" height="18"/><use href="#impact-person" x="53" y="15" width="14" height="18"/><use href="#impact-person" x="70" y="15" width="14" height="18"/>
-          </svg>
-          <span class="impact-arrow" aria-hidden="true">↗</span>
-          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-person" x="2" y="4" width="14" height="18"/><use href="#impact-person" x="19" y="4" width="14" height="18"/><use href="#impact-person" x="36" y="4" width="14" height="18"/><use href="#impact-person" x="53" y="4" width="14" height="18"/><use href="#impact-person" x="70" y="4" width="14" height="18"/>
-            <use href="#impact-person" x="2" y="25" width="14" height="18"/><use href="#impact-person" x="19" y="25" width="14" height="18"/><use href="#impact-person" x="36" y="25" width="14" height="18"/><use href="#impact-person" x="53" y="25" width="14" height="18"/><use href="#impact-person" x="70" y="25" width="14" height="18"/>
-          </svg>
-        </div>
-      </figure>
-      <figure class="impact-result">
-        <figcaption>續班率</figcaption>
-        <div class="impact-visual" role="img" aria-label="同一組學生中，打勾的人變多，示意續班率上升">
-          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-renewed" x="2" y="9" width="14" height="27"/><use href="#impact-renewed" x="19" y="9" width="14" height="27"/><use href="#impact-empty" x="36" y="9" width="14" height="18" class="impact-empty-person"/><use href="#impact-empty" x="53" y="9" width="14" height="18" class="impact-empty-person"/><use href="#impact-empty" x="70" y="9" width="14" height="18" class="impact-empty-person"/>
-          </svg>
-          <span class="impact-arrow" aria-hidden="true">↗</span>
-          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-renewed" x="2" y="9" width="14" height="27"/><use href="#impact-renewed" x="19" y="9" width="14" height="27"/><use href="#impact-renewed" x="36" y="9" width="14" height="27"/><use href="#impact-renewed" x="53" y="9" width="14" height="27"/><use href="#impact-empty" x="70" y="9" width="14" height="18" class="impact-empty-person"/>
-          </svg>
-        </div>
-      </figure>
-      <figure class="impact-result">
-        <figcaption>學生關懷時間</figcaption>
-        <div class="impact-visual" role="img" aria-label="愛心變多，示意可用於關懷學生的時間上升">
-          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-heart" x="18" y="12" width="24" height="24"/><use href="#impact-heart" x="46" y="12" width="24" height="24"/>
-          </svg>
-          <span class="impact-arrow" aria-hidden="true">↗</span>
-          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-heart" x="1" y="14" width="20" height="20"/><use href="#impact-heart" x="23" y="14" width="20" height="20"/><use href="#impact-heart" x="45" y="14" width="20" height="20"/><use href="#impact-heart" x="67" y="14" width="20" height="20"/>
-          </svg>
-        </div>
-      </figure>
-    </div>
-    <div class="impact-band impact-down" role="group" aria-label="下降項目">
-      <figure class="impact-result">
-        <figcaption>問班等候時間</figcaption>
-        <div class="impact-visual" role="img" aria-label="時鐘變少，示意等候問班回覆的時間下降">
-          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-clock" x="2" y="11" width="26" height="26"/><use href="#impact-clock" x="31" y="11" width="26" height="26"/><use href="#impact-clock" x="60" y="11" width="26" height="26"/>
-          </svg>
-          <span class="impact-arrow" aria-hidden="true">↘</span>
-          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-clock" x="31" y="11" width="26" height="26"/>
-          </svg>
-        </div>
-      </figure>
-      <figure class="impact-result">
-        <figcaption>日常行政工時</figcaption>
-        <div class="impact-visual" role="img" aria-label="文書圖示變少，示意行政工時下降">
-          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-sheet" x="5" y="9" width="24" height="30"/><use href="#impact-sheet" x="32" y="9" width="24" height="30"/><use href="#impact-sheet" x="59" y="9" width="24" height="30"/>
-          </svg>
-          <span class="impact-arrow" aria-hidden="true">↘</span>
-          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-sheet" x="32" y="9" width="24" height="30"/>
-          </svg>
-        </div>
-      </figure>
-      <figure class="impact-result">
-        <figcaption>每位新生招生成本</figcaption>
-        <div class="impact-visual" role="img" aria-label="錢幣圖示變少，示意每位新生的招生成本下降">
-          <svg class="impact-before" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-coin" x="2" y="11" width="26" height="26"/><use href="#impact-coin" x="31" y="11" width="26" height="26"/><use href="#impact-coin" x="60" y="11" width="26" height="26"/>
-          </svg>
-          <span class="impact-arrow" aria-hidden="true">↘</span>
-          <svg class="impact-after" viewBox="0 0 88 48" aria-hidden="true" focusable="false">
-            <use href="#impact-coin" x="31" y="11" width="26" height="26"/>
-          </svg>
-        </div>
-      </figure>
-    </div>
+<section class="sec" id="why" aria-labelledby="impact-title">
+  <div class="sec-h"><h2 id="impact-title">導入後的六個改變</h2></div>
+  <div class="impact-grid">
+    <article class="impact-card impact-feature">
+      <div class="impact-media">
+        <img src="/platform-scenes/impact-student-care.webp" alt="老師坐在學生身旁，指著練習本上的題目講解" width="1008" height="567" loading="lazy" decoding="async">
+        <span class="impact-trend" aria-hidden="true">↗</span>
+      </div>
+      <div class="impact-copy">
+        <h3>更多時間關懷學生</h3>
+        <p>把省下的行政時間留給個別指導和學習追蹤。</p>
+      </div>
+    </article>
+    <article class="impact-card">
+      <div class="impact-media">
+        <img src="/platform-scenes/impact-enrollment.webp" alt="兩位背著書包的學生走進試聽教室" width="720" height="405" loading="lazy" decoding="async">
+        <span class="impact-trend" aria-hidden="true">↗</span>
+      </div>
+      <div class="impact-copy">
+        <h3>更多新生報名</h3>
+        <p>從問班、試聽到報名，適時跟進。</p>
+      </div>
+    </article>
+    <article class="impact-card">
+      <div class="impact-media">
+        <img src="/platform-scenes/impact-renewal.webp" alt="家長參考下期班表，填寫學生的續班資料" width="720" height="405" loading="lazy" decoding="async">
+        <span class="impact-trend" aria-hidden="true">↗</span>
+      </div>
+      <div class="impact-copy">
+        <h3>更高的續班率</h3>
+        <p>提早發現流失風險，主動關心學生。</p>
+      </div>
+    </article>
+    <article class="impact-card impact-down">
+      <div class="impact-media">
+        <img src="/platform-scenes/impact-response-time.webp" alt="家長在手機上收到課程詢問的回覆" width="720" height="405" loading="lazy" decoding="async">
+        <span class="impact-trend" aria-hidden="true">↘</span>
+      </div>
+      <div class="impact-copy">
+        <h3>問班等候時間縮短</h3>
+        <p>家長下班後在 LINE 問課程，也能即時收到回覆。</p>
+      </div>
+    </article>
+    <article class="impact-card impact-down">
+      <div class="impact-media">
+        <img src="/platform-scenes/impact-admin-time.webp" alt="櫃檯人員在筆電上核對學生出席紀錄" width="720" height="405" loading="lazy" decoding="async">
+        <span class="impact-trend" aria-hidden="true">↘</span>
+      </div>
+      <div class="impact-copy">
+        <h3>更少日常行政工時</h3>
+        <p>點名、請假、補課集中處理，減少重複登記。</p>
+      </div>
+    </article>
+    <article class="impact-card impact-down">
+      <div class="impact-media">
+        <img src="/platform-scenes/impact-acquisition-cost.webp" alt="桌上的平板顯示不同招生來源的比較圖，旁邊放著招生小卡" width="720" height="405" loading="lazy" decoding="async">
+        <span class="impact-trend" aria-hidden="true">↘</span>
+      </div>
+      <div class="impact-copy">
+        <h3>降低每位新生的招生成本</h3>
+        <p>看清哪個管道帶來報名，把預算放在有效的地方。</p>
+      </div>
+    </article>
   </div>
 </section>
+
+<div class="desktop-preview">
+  <p>想看完整後台操作示意？可以把連結帶到電腦或橫放的平板繼續看。</p>
+  <button id="desktop-copy" type="button">複製網址</button>
+  <p id="desktop-copy-status" role="status"></p>
+</div>
 
 <!-- 暫停顯示模組總覽
 <section class="sec" id="modules">
