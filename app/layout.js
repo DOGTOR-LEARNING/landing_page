@@ -205,7 +205,7 @@ const TW_JSON_LD = [
         '@type': 'MobileApplication',
         name: 'Dogtor 逗課',
         url: 'https://dogtor.superb-tutor.com',
-        applicationCategory: 'EducationApplication',
+        applicationCategory: 'EducationalApplication',
         operatingSystem: 'iOS, Android',
       },
     },
@@ -291,7 +291,7 @@ const TW_JSON_LD = [
     name: 'Dogtor 逗課',
     alternateName: ['逗課', 'Dogtor'],
     operatingSystem: 'iOS, Android',
-    applicationCategory: 'EducationApplication',
+    applicationCategory: 'EducationalApplication',
     applicationSubCategory: '國高中 AI 複習工具（會考學測題庫練習）',
     offers: {
       '@type': 'Offer',

@@ -134,7 +134,7 @@ export default async function GuideArticlePage({ params }) {
           item: {
             '@type': 'SoftwareApplication',
             name: app.name,
-            applicationCategory: app.applicationCategory || 'EducationApplication',
+            applicationCategory: app.applicationCategory || 'EducationalApplication',
             operatingSystem: app.operatingSystem || 'iOS, Android',
             description: app.description,
             ...(app.free

@@ -116,6 +116,33 @@ export default async function GlobalGuideArticlePage({ params }) {
       }
     : null
 
+  // Recommendation and comparison guides list the apps they cover; as an
+  // ItemList of SoftwareApplication, search engines and AI assistants can read
+  // the article as a ranked list of apps.
+  const itemListJsonLd = article.itemList?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: article.title,
+        description: article.description,
+        itemListOrder: 'https://schema.org/ItemListOrderAscending',
+        numberOfItems: article.itemList.length,
+        itemListElement: article.itemList.map((app, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'SoftwareApplication',
+            name: app.name,
+            applicationCategory: app.applicationCategory || 'EducationalApplication',
+            operatingSystem: app.operatingSystem || 'iOS, Android',
+            description: app.description,
+            ...(app.url ? { url: app.url } : {}),
+            ...(app.free ? { offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } } : {}),
+          },
+        })),
+      }
+    : null
+
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -133,6 +160,9 @@ export default async function GlobalGuideArticlePage({ params }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       )}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {itemListJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      )}
       <Header />
       <main className={styles.main}>
         <article className={styles.article}>

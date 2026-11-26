@@ -35,7 +35,7 @@ function ratingJsonLd(ratings) {
     name: 'Dogtor 逗課',
     alternateName: ['逗課', 'Dogtor'],
     operatingSystem: 'iOS, Android',
-    applicationCategory: 'EducationApplication',
+    applicationCategory: 'EducationalApplication',
     url: 'https://dogtor.superb-tutor.com',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'TWD' },
     aggregateRating: {
