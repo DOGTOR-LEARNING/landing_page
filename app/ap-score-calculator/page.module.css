@@ -1,0 +1,163 @@
+.main {
+  padding-top: 120px;
+  padding-bottom: var(--space-2xl);
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--space-lg);
+}
+
+.breadcrumb a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.breadcrumb a:hover {
+  color: var(--accent-orange-light);
+}
+
+.breadcrumbSep {
+  margin: 0 0.5rem;
+  opacity: 0.6;
+}
+
+.breadcrumbCurrent {
+  color: var(--accent-orange-light);
+  font-weight: 500;
+}
+
+.header {
+  max-width: 760px;
+  margin-bottom: var(--space-lg);
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-orange-light);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin-bottom: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.6rem;
+  }
+}
+
+.lead {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.section {
+  max-width: 800px;
+  margin-top: var(--space-xl);
+}
+
+.section h2,
+.ctaBlock h2 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  margin-bottom: var(--space-md);
+}
+
+.text {
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: var(--space-md);
+}
+
+.text a {
+  color: var(--accent-orange-light);
+  text-decoration: underline;
+}
+
+.ctaBlock {
+  max-width: 800px;
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+  background: rgba(245, 155, 3, 0.1);
+  border: 1px solid rgba(245, 155, 3, 0.35);
+}
+
+.ctaBlock p {
+  line-height: 1.75;
+  margin-bottom: var(--space-md);
+}
+
+.faqList {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.faqItem dt {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.faqItem dd {
+  margin: 0;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.linkGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-sm);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.linkCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  height: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.linkCard:hover {
+  border-color: var(--accent-orange-light);
+  transform: translateY(-2px);
+}
+
+.linkCardTitle {
+  font-weight: 700;
+  color: var(--text-white);
+}
+
+.linkCardMeta {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footnote {
+  max-width: 800px;
+  margin-top: var(--space-xl);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+}

@@ -36,7 +36,8 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `${article.title} - Dogtor 逗課 學習指南`,
+    // 後綴盡量短：Google 約只顯示 30 個中文字，文章標題本身才是點擊關鍵
+    title: `${article.title}｜Dogtor 逗課`,
     description: article.description,
     keywords: [
       ...(article.tags || []),

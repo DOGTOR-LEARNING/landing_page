@@ -67,6 +67,8 @@ export default function Header() {
 
   const helpLinks = [
     { href: '/guide', label: m.header.guide, key: 'guide' },
+    // English-only tool; the international site is always English.
+    ...(isGlobal ? [{ href: '/ap-score-calculator', label: 'AP Score Calculators', key: 'ap-score-calculator' }] : []),
     { href: '/faq', label: m.header.faq, key: 'faq' },
     { href: '/support', label: m.header.support, key: 'support' },
   ]

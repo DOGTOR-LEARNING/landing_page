@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { isGlobalHost, requestHost } from '@/lib/appHosts'
-import { isGlobalPath } from '@/lib/market'
+import { MARKET_GLOBAL, isGlobalPath, siteUrl } from '@/lib/market'
 
 const COOKIE_NAME = 'dogtor_locale'
 
@@ -33,6 +33,12 @@ export function middleware(request) {
   if (url.pathname === '/en-guide' || url.pathname.startsWith('/en-guide/')) {
     const target = globalHost ? url.pathname.replace(/^\/en-guide/, '/guide') : '/'
     return NextResponse.redirect(new URL(target, url), 308)
+  }
+
+  // The AP score calculators are for the international site; links to them on
+  // the Taiwan host (shared links, old crawls) go to the real pages there.
+  if (!globalHost && (url.pathname === '/ap-score-calculator' || url.pathname.startsWith('/ap-score-calculator/'))) {
+    return NextResponse.redirect(new URL(url.pathname, siteUrl(MARKET_GLOBAL)), 308)
   }
 
   // The international site only has the pages in GLOBAL_PATHS; the rest of

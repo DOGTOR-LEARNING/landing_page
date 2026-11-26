@@ -107,6 +107,17 @@ const TW_JSON_LD = [
       'https://global.superb-tutor.com',
       'https://apps.apple.com/us/app/dogtor-daily-ap-sat-prep/id6805425251',
       'https://play.google.com/store/apps/details?id=com.dogtor.global',
+      'https://www.instagram.com/dogtor_learning/',
+    ],
+    // 第三方媒體報導：讓搜尋引擎與 AI 把品牌和這些來源連起來（資料同 data/news.js）
+    subjectOf: [
+      {
+        '@type': 'PodcastEpisode',
+        name: '打造給學生的 GPT！他們把陪讀放進手機裡',
+        datePublished: '2026-08-05',
+        url: 'https://open.spotify.com/episode/2GyfKcLo9dhEzu7vQKiiNF',
+        partOfSeries: { '@type': 'PodcastSeries', name: '創業新聲帶', publisher: { '@type': 'Organization', name: '創業小聚 Meet' } },
+      },
     ],
     foundingDate: '2024',
     founder: {
@@ -224,6 +235,19 @@ const TW_JSON_LD = [
     inDefinedTermSet: {
       '@type': 'DefinedTermSet',
       name: '台灣教育科技 App',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTerm',
+    name: '診斷驅動式適性學習',
+    alternateName: 'Diagnosis-Driven Adaptive Learning',
+    description:
+      'Dogtor 逗課的學習理念：不是讓學生做更多題目，而是讓每一道題目都幫助學生找到真正需要補強的知識。分為四階段——Detect 發現異常（從答題紀錄找錯誤模式）、Diagnose 追查根因（分析知識點與先備知識）、Target 精準補強（短時間低負擔練習薄弱觀念）、Verify 驗證掌握（用不同題型確認真的學會）。學生在和朋友對戰答題、累積星星的同時自動完成知識診斷。',
+    url: 'https://dogtor.superb-tutor.com/guide/kao-shi-wei-shen-me-kao-bu-hao-zhao-chu-zhi-shi-mang-qu',
+    inDefinedTermSet: {
+      '@type': 'DefinedTermSet',
+      name: 'Dogtor 逗課 學習方法',
     },
   },
   {

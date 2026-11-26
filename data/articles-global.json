@@ -1,6 +1,155 @@
 {
   "articles": [
     {
+      "slug": "ap-and-sat-study-games",
+      "title": "AP and SAT Study Games: 8 Fun Ways to Practice Alone, With Friends or in Class",
+      "description": "The best study games for AP exams and the SAT: real-time quiz battles, Jeopardy-style review, Kahoot and Blooket, flashcard speed rounds, mistake-replay challenges and more — with which ones work for which subjects.",
+      "category": "Study Tips",
+      "tags": [
+        "AP study games",
+        "SAT practice games",
+        "study games",
+        "review games",
+        "quiz battle app",
+        "Kahoot",
+        "Blooket",
+        "Quizlet",
+        "Dogtor"
+      ],
+      "publishDate": "2026-11-26",
+      "updateDate": "2026-11-26",
+      "priority": 0.9,
+      "excerpt": "Study games aren't just for the last day before break. Used well, they're some of the most effective review you can do. Here are eight that work for AP and SAT prep.",
+      "content": {
+        "intro": "Review games have a reputation as the thing teachers run when nobody wants to do real work. But a good study game is just retrieval practice with a scoreboard — and retrieval practice is one of the most effective ways to remember anything. Below are eight study games for AP exams and the SAT, grouped by whether you're playing alone, with friends or as a class, plus which subjects each one fits best.",
+        "sections": [
+          {
+            "h2": "Quick picks",
+            "body": "| Game | Best for | Play |\n|---|---|---|\n| Real-time quiz battles (Dogtor) | Any AP unit, SAT Reading and Writing, GRE vocab | With friends or ranked |\n| Jeopardy-style board | Unit review before a test | Group or class |\n| Kahoot / Blooket | Fast fact and vocab review | Class |\n| Quizlet Match / Live | Vocabulary and terms | Solo or class |\n| Mistake-replay challenge | Fixing weak spots | Solo |\n| Speed rounds | SAT pacing | Solo or pairs |\n| Teach-back tag | Concepts and FRQs | Pairs or groups |\n| Notes-to-quiz | Your own class material | Solo |"
+          },
+          {
+            "h2": "With friends",
+            "body": "### 1. Real-time quiz battles\nTwo players, same questions, points for accuracy and speed. It's the closest thing to a video game in studying, and it works for almost any subject. **Dogtor** has real-time quiz battles and ranked matchmaking for AP Biology, AP Psychology, AP Environmental Science, AP U.S. Government, SAT Reading and Writing and GRE vocabulary, with an explanation after every miss so losing still teaches you something.\n\n### 2. Jeopardy-style review board\nMake a board with one column per unit and point values by difficulty. Great the weekend before a unit test — and writing the questions is itself good review.\n\n### 3. Teach-back tag\nOne person explains a concept for two minutes; the next has to add one thing or correct one thing. Especially good for AP Psych theories, APES cycles and AP Gov court cases. See also [All 15 Required Supreme Court Cases for AP Gov](/guide/ap-us-government-required-supreme-court-cases)."
+          },
+          {
+            "h2": "In class",
+            "body": "### 4. Kahoot and Blooket\nFast, loud and great for vocabulary and recall. The limit: questions are usually short, so they're better for terms and facts than for the multi-step reasoning on real AP and SAT questions.\n\n### 5. Quizlet Live\nTeams race to match terms and definitions. Excellent for term-heavy units; pair it with exam-style practice afterwards."
+          },
+          {
+            "h2": "Solo",
+            "body": "### 6. Mistake-replay challenge\nEvery question you miss goes on a list. Each session starts by replaying five of them; a question only leaves the list when you get it right on two different days. It's the single most score-moving game on this page. Dogtor keeps this list for you automatically and uses it to pick what you should practice next.\n\n### 7. SAT speed rounds\nSet a timer for the real per-question pace and see how many you can answer accurately. Track your best score. This builds the pacing you'll need on test day — see [Digital SAT Reading and Writing question types](/guide/sat-reading-and-writing-question-types).\n\n### 8. Notes-to-quiz\nTurn your class notes into a quiz and play it until you hit 100%. Write the questions yourself, or upload notes or a PDF to Dogtor and let AI build a practice level from them."
+          },
+          {
+            "h2": "How to make study games count",
+            "body": "- **Mix in real exam formats** at least once a week — games are review, not a replacement for practice tests.\n- **Play your weak units more than your strong ones.**\n- **Keep it short and frequent.** Fifteen minutes a day of games beats a two-hour review party once a month.\n\nFor more ways to make prep enjoyable, read [How to Make Studying for AP Exams and the SAT Fun](/guide/how-to-make-studying-for-ap-and-sat-fun)."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "What are good study games for AP exams?",
+          "answer": "Real-time quiz battles with friends (for example in Dogtor), Jeopardy-style unit reviews, Kahoot or Blooket for vocabulary, Quizlet Live for terms, and a mistake-replay challenge where missed questions stay on your list until you get them right on two different days."
+        },
+        {
+          "question": "Is there a game to practice for the SAT?",
+          "answer": "Yes. Timed SAT speed rounds build pacing, and Dogtor offers SAT Reading and Writing practice as short levels and real-time quiz battles with friends, with explanations after every miss."
+        },
+        {
+          "question": "Are review games effective for studying?",
+          "answer": "Yes, when they make you retrieve answers and give feedback, because retrieval practice strengthens memory. They work best alongside regular practice in the real exam format."
+        }
+      ],
+      "cta": "Turn AP and SAT review into a game you'll actually want to play: real-time quiz battles with friends, bite-sized levels, a cute corgi study buddy and an AI tutor that explains every miss. Dogtor is free on iOS and Android."
+    },
+    {
+      "slug": "how-to-make-studying-for-ap-and-sat-fun",
+      "title": "How to Make Studying for AP Exams and the SAT Fun (9 Ideas That Still Raise Your Score)",
+      "description": "AP and SAT prep doesn't have to be miserable. Nine ways to make studying fun that are backed by how memory works: quiz games, battles with friends, streaks, tiny levels, teaching others and more — plus how to keep the fun from turning into procrastination.",
+      "category": "Study Tips",
+      "tags": [
+        "make studying fun",
+        "fun way to study for AP exams",
+        "fun SAT prep",
+        "gamified studying",
+        "study motivation",
+        "AP exams",
+        "SAT",
+        "Dogtor"
+      ],
+      "publishDate": "2026-11-26",
+      "updateDate": "2026-11-26",
+      "priority": 0.95,
+      "excerpt": "The hardest part of AP and SAT prep isn't the content. It's opening the book. Here's how to make studying something you actually want to do — without trading away results.",
+      "content": {
+        "intro": "Most students don't fail AP exams or plateau on the SAT because the material is impossible. They fall behind because studying feels like a chore, so it gets pushed to tomorrow, then to the weekend, then to the week before the test. The fix isn't more willpower. It's making the work itself more enjoyable. The good news: the things that make studying fun — quizzing, competing, short wins, explaining to friends — are also some of the most effective ways to learn. Here are nine ideas that make prep fun **and** move your score.",
+        "sections": [
+          {
+            "h2": "Why fun study methods work (it's not just about mood)",
+            "body": "Two of the best-supported findings in learning science are the **testing effect** (retrieving an answer strengthens memory far more than rereading it) and **spaced practice** (short sessions spread over days beat one long cram). Games happen to be built on exactly those two things: you answer questions, you get instant feedback, and you come back tomorrow to keep a streak alive. So when studying feels like a game, you're usually not cutting corners — you're doing the high-value kind of practice more often."
+          },
+          {
+            "h2": "1. Turn review into a quiz battle with friends",
+            "body": "Competition is the fastest way to make 20 minutes of review fly by. Pick a unit, quiz each other, keep score. Apps make this effortless: in **Dogtor** you can add friends and battle them in real-time quizzes on AP Biology, AP Psychology, AP Environmental Science, AP U.S. Government, SAT Reading and Writing or GRE vocabulary — same questions, who's faster and more accurate. Losing a round still helps, because every miss comes with an explanation. More options in [Best Apps to Study With Friends](/guide/best-apps-to-study-with-friends)."
+          },
+          {
+            "h2": "2. Shrink sessions into levels you can actually finish",
+            "body": "\"Study AP Bio for two hours\" is intimidating. \"Clear one 10-question level on cell respiration\" is not. Breaking prep into small, finishable chunks gives you a steady stream of small wins, which is what keeps games addictive. Aim for a few short levels a day instead of one marathon on Sunday."
+          },
+          {
+            "h2": "3. Keep a streak",
+            "body": "Streaks work because breaking one feels worse than doing ten minutes of practice. Track it on a calendar, in a habit app, or in a study app that counts it for you. The goal isn't long sessions; it's not missing days. Ten minutes every day beats two hours once a week for retention."
+          },
+          {
+            "h2": "4. Make your mistakes the main event",
+            "body": "Getting questions wrong is where the learning is — if you go back to them. Keep a mistake log (or let an app do it) and start each session by re-trying a few old misses. Treat it like replaying the boss level you lost. When you can get a question right in a different form a few days later, you've actually learned it, not just remembered the answer."
+          },
+          {
+            "h2": "5. Teach it to someone (or something)",
+            "body": "Explaining a concept out loud — to a friend, a younger sibling, or even your dog — exposes exactly where your understanding breaks. Take turns being \"the teacher\" in a study group, five minutes per topic. If you can't explain why an answer is right, that's your next thing to review."
+          },
+          {
+            "h2": "6. Play classroom-style review games at home",
+            "body": "Jeopardy-style boards, Kahoot or Blooket games your teacher shares, and Quizlet's live and match modes all turn content review into a game. They're great for vocabulary and fact-heavy units like AP Psych terms or the required Supreme Court cases in AP Gov. Pair them with real exam-style questions closer to test day."
+          },
+          {
+            "h2": "7. Turn your own notes into a quiz",
+            "body": "Rereading notes is passive and boring. Turning them into questions makes them active. You can write your own flashcards, or snap a photo of your notes or upload a PDF in Dogtor and let AI turn it into a practice level — handy for a class your teacher covers differently, or a subject not in any question bank yet."
+          },
+          {
+            "h2": "8. Get unstuck instantly",
+            "body": "Nothing kills momentum like a question you can't figure out and no one to ask until tomorrow. Use the answer explanation, a textbook, or an AI tutor to understand the step you're missing right away, then do one similar question to make sure it stuck. Keep the loop short: miss → understand → retry."
+          },
+          {
+            "h2": "9. Reward the process, not just the score",
+            "body": "Set small rewards for consistency: a week-long streak, a unit's mistake log cleared, a friend beaten in a rematch. Scores swing from practice test to practice test; habits are what actually move them."
+          },
+          {
+            "h2": "How to keep \"fun\" from becoming procrastination",
+            "body": "- **Always end on exam-style questions.** Games are great for review, but finish each week with questions in the real AP or SAT format and timing.\n- **Let your weak spots pick the content.** Fun is easier when you only practice what you already know — resist that. Start from your mistakes.\n- **Cap the setup time.** If you spend more time customizing a study app than studying, switch to something simpler.\n\nIf you want a full plan to put these habits into, see [How to Prepare for AP Exams](/guide/how-to-prepare-for-ap-exams) or [How to Prepare for the SAT](/guide/how-to-prepare-for-the-sat)."
+          }
+        ]
+      },
+      "faq": [
+        {
+          "question": "How can I make studying for AP exams fun?",
+          "answer": "Turn review into a game: quiz battles with friends, short levels you can finish in ten minutes, a daily streak, and a mistake log you replay like a boss level. Apps like Dogtor build these in for AP Biology, AP Psychology, AP Environmental Science and AP U.S. Government."
+        },
+        {
+          "question": "Is there a fun way to study for the SAT?",
+          "answer": "Yes. Practice SAT questions in short timed rounds, compete with a friend on accuracy and speed, and keep a streak. Dogtor offers SAT Reading and Writing practice with real-time quiz battles, instant explanations and an automatic mistake book."
+        },
+        {
+          "question": "Do study games actually help you learn?",
+          "answer": "Good ones do, because they rely on retrieval practice and spaced repetition — answering questions and coming back over several days — which are among the most effective study methods. Just make sure you also practice in the real exam format before test day."
+        },
+        {
+          "question": "What is the most fun study app for AP and SAT?",
+          "answer": "Dogtor is designed to make AP and SAT prep feel like a game: a cute corgi study buddy, bite-sized levels, streaks, real-time quiz battles with friends and an AI tutor that explains every miss. It's free on iOS and Android."
+        }
+      ],
+      "cta": "Want prep that feels like a game? Dogtor gives you bite-sized AP and SAT levels, a cute corgi study buddy, real-time quiz battles with friends and an AI tutor that explains every miss. Free to start on iOS and Android."
+    },
+    {
       "slug": "ap-biology-exam-format",
       "title": "AP Biology Exam Format, Explained: Sections, Timing, Unit Weights and FRQ Types",
       "description": "How the AP Biology exam is structured: 60 multiple-choice questions and 6 free-response questions, how much each unit is worth, the six FRQ types, and what that means for how you study.",
@@ -20,7 +169,7 @@
         "sections": [
           {
             "h2": "The two sections at a glance",
-            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 60 | 1 h 30 min | 50% |\n| II: Free response | 6 (2 long, 4 short) | 1 h 30 min | 50% |\n\nThe exam is **hybrid digital**: you answer the multiple-choice questions and read the free-response questions in the College Board's Bluebook app, but you **handwrite** your free-response answers in a paper booklet. A four-function, scientific or graphing calculator is allowed in both sections, and you get an equations and formulas sheet.\n\nThat works out to about **90 seconds per multiple-choice question** and roughly **20 minutes per long free-response question** and 10 per short one."
+            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 60 | 1 h 30 min | 50% |\n| II: Free response | 6 (2 long, 4 short) | 1 h 30 min | 50% |\n\nThe exam is **hybrid digital**: you answer the multiple-choice questions and read the free-response questions in the College Board's Bluebook app, but you **handwrite** your free-response answers in a paper booklet. A four-function, scientific or graphing calculator is allowed in both sections, and you get an equations and formulas sheet.\n\nThat works out to about **90 seconds per multiple-choice question** and roughly **20 minutes per long free-response question** and 10 per short one.\n\nAlready took a practice test? Plug your results into the free [AP Biology score calculator](/ap-score-calculator/ap-biology) to estimate your AP score from 1 to 5."
           },
           {
             "h2": "How much each unit is worth",
@@ -54,7 +203,8 @@
           "answer": "By weight, Unit 7 (Natural Selection, 13–20%), Unit 3 (Cellular Energetics, 12–16%) and Unit 6 (Gene Expression and Regulation, 12–16%)."
         }
       ],
-      "cta": "Dogtor turns AP Biology into short daily levels organized by unit, explains every question you miss on the spot, and keeps a mistake book so you can practice your weak spots again. It's free to start."
+      "cta": "Dogtor turns AP Biology into short daily levels organized by unit, explains every question you miss on the spot, and keeps a mistake book so you can practice your weak spots again. It's free to start.",
+      "updateDate": "2026-11-26"
     },
     {
       "slug": "ap-biology-unit-3-practice-questions",
@@ -186,7 +336,7 @@
         "sections": [
           {
             "h2": "The two sections at a glance",
-            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 75 | 1 h 30 min | about 67% |\n| II: Free response | 2 (AAQ + EBQ) | 1 h 10 min | about 33% |\n\nThat is about **72 seconds per multiple-choice question**. Many multiple-choice questions come in sets built around a short scenario, a data table or a description of a study, so reading carefully matters as much as recall.\n\nThe College Board updates exam logistics (such as which parts are taken in the Bluebook app) from year to year, so check the current AP Psychology exam page on AP Central before test day."
+            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 75 | 1 h 30 min | about 67% |\n| II: Free response | 2 (AAQ + EBQ) | 1 h 10 min | about 33% |\n\nThat is about **72 seconds per multiple-choice question**. Many multiple-choice questions come in sets built around a short scenario, a data table or a description of a study, so reading carefully matters as much as recall.\n\nThe College Board updates exam logistics (such as which parts are taken in the Bluebook app) from year to year, so check the current AP Psychology exam page on AP Central before test day.\n\nAlready took a practice test? Plug your results into the free [AP Psychology score calculator](/ap-score-calculator/ap-psychology) to estimate your AP score from 1 to 5."
           },
           {
             "h2": "The five units",
@@ -220,7 +370,8 @@
           "answer": "None. Since the 2024–25 redesign, all five units are weighted 15–25% of the multiple-choice section."
         }
       ],
-      "cta": "Dogtor's AP Psychology island has short daily practice levels, an AI tutor that explains any concept you're stuck on, and a mistake book for the ones you miss. It's free to start."
+      "cta": "Dogtor's AP Psychology island has short daily practice levels, an AI tutor that explains any concept you're stuck on, and a mistake book for the ones you miss. It's free to start.",
+      "updateDate": "2026-11-26"
     },
     {
       "slug": "ap-environmental-science-exam-format",
@@ -243,7 +394,7 @@
         "sections": [
           {
             "h2": "The two sections at a glance",
-            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 80 | 1 h 30 min | 60% |\n| II: Free response | 3 | 1 h 10 min | 40% |\n\nThat is roughly **67 seconds per multiple-choice question** and about **23 minutes per free-response question**. Multiple-choice questions often come in sets that share a graph, table, map or short text, so practice reading data quickly."
+            "body": "| Section | Questions | Time | Share of score |\n|---|---|---|---|\n| I: Multiple choice | 80 | 1 h 30 min | 60% |\n| II: Free response | 3 | 1 h 10 min | 40% |\n\nThat is roughly **67 seconds per multiple-choice question** and about **23 minutes per free-response question**. Multiple-choice questions often come in sets that share a graph, table, map or short text, so practice reading data quickly.\n\nAlready took a practice test? Plug your results into the free [APES score calculator](/ap-score-calculator/apes) to estimate your AP score from 1 to 5."
           },
           {
             "h2": "How much each unit is worth",
@@ -277,7 +428,8 @@
           "answer": "Yes. One free-response question always requires calculations, and some multiple-choice questions do too. The math is percent change, unit conversions, scientific notation, the rule of 70 and similar basics. Check AP Central for the current calculator policy."
         }
       ],
-      "cta": "Dogtor's AP Environmental Science island turns review into short daily levels, and its AI tutor walks you through any problem step by step. It's free to start."
+      "cta": "Dogtor's AP Environmental Science island turns review into short daily levels, and its AI tutor walks you through any problem step by step. It's free to start.",
+      "updateDate": "2026-11-26"
     },
     {
       "slug": "ap-us-government-required-supreme-court-cases",
@@ -299,7 +451,7 @@
         "sections": [
           {
             "h2": "Federalism and the powers of government",
-            "body": "| Case | Year | What the Court decided | Clause or principle |\n|---|---|---|---|\n| **Marbury v. Madison** | 1803 | Established **judicial review**: courts can strike down laws that conflict with the Constitution. | Article III |\n| **McCulloch v. Maryland** | 1819 | Congress could create a national bank, and a state could not tax it. | Necessary and Proper Clause; Supremacy Clause |\n| **United States v. Lopez** | 1995 | Struck down a federal ban on guns near schools because it went **beyond the Commerce Clause**. | Commerce Clause; limits on federal power |\n\nMcCulloch expanded federal power; Lopez is the classic example of the Court limiting it. Expect questions that pair the two."
+            "body": "| Case | Year | What the Court decided | Clause or principle |\n|---|---|---|---|\n| **Marbury v. Madison** | 1803 | Established **judicial review**: courts can strike down laws that conflict with the Constitution. | Article III |\n| **McCulloch v. Maryland** | 1819 | Congress could create a national bank, and a state could not tax it. | Necessary and Proper Clause; Supremacy Clause |\n| **United States v. Lopez** | 1995 | Struck down a federal ban on guns near schools because it went **beyond the Commerce Clause**. | Commerce Clause; limits on federal power |\n\nMcCulloch expanded federal power; Lopez is the classic example of the Court limiting it. Expect questions that pair the two.\n\nAlready took a practice test? Plug your results into the free [AP U.S. Government score calculator](/ap-score-calculator/ap-us-government) to estimate your AP score from 1 to 5."
           },
           {
             "h2": "First Amendment: religion",
@@ -337,7 +489,8 @@
           "answer": "One of the four AP U.S. Government free-response questions. It describes a non-required Supreme Court case and asks you to compare it with one of the 15 required cases."
         }
       ],
-      "cta": "Dogtor's AP U.S. Government island turns review into quick daily levels, and you can battle a friend to see who knows the material faster. It's free to start."
+      "cta": "Dogtor's AP U.S. Government island turns review into quick daily levels, and you can battle a friend to see who knows the material faster. It's free to start.",
+      "updateDate": "2026-11-26"
     },
     {
       "slug": "sat-reading-and-writing-question-types",
@@ -753,7 +906,7 @@
           },
           {
             "h2": "Making the plan stick",
-            "body": "The plan only works if you keep showing up for 30 days. Three things help:\n\n- **Keep your practice in one place.** Switching between PDFs, notebooks and websites wastes energy. In Dogtor, practice, explanations and your mistake book live in one app, so the weak-unit drill and the final-week review take one tap.\n- **Make it social.** Battle a friend on the units you're both reviewing; a little competition makes week three much less of a grind.\n- **Track it visibly.** Print the plan, stick it on your desk and check off each day."
+            "body": "The plan only works if you keep showing up for 30 days. Three things help:\n\n- **Keep your practice in one place.** Switching between PDFs, notebooks and websites wastes energy. In Dogtor, practice, explanations and your mistake book live in one app, so the weak-unit drill and the final-week review take one tap.\n- **Make it social.** Battle a friend on the units you're both reviewing; a little competition makes week three much less of a grind.\n- **Track it visibly.** Print the plan, stick it on your desk and check off each day.\n\nTo see where a practice test puts you, try the free [AP score calculators](/ap-score-calculator) for APES, AP Biology, AP Psychology and AP U.S. Government."
           }
         ]
       },
@@ -771,7 +924,8 @@
           "answer": "Stop learning new material, review every question you got wrong during your prep, and adjust your sleep so you're alert at the exam's start time."
         }
       ],
-      "cta": "Dogtor keeps your 30-day plan in one place: short practice levels by unit, instant explanations, a mistake book for week four and battles with friends to keep you going. It's free to start."
+      "cta": "Dogtor keeps your 30-day plan in one place: short practice levels by unit, instant explanations, a mistake book for week four and battles with friends to keep you going. It's free to start.",
+      "updateDate": "2026-11-26"
     },
     {
       "slug": "sat-one-month-study-plan",
@@ -1003,7 +1157,7 @@
           },
           {
             "h2": "Common mistakes",
-            "body": "1. **Starting review in late April.** There isn't enough time to fix weak units and practice the format.\n2. **Rereading instead of practicing.** Recognizing your notes isn't the same as answering a question about them.\n3. **Skipping free-response practice.** Many students only practice multiple choice, then lose points to wording on the free response.\n4. **Grading yourself generously.** Use the official scoring guidelines and be strict.\n5. **Ignoring unit weights.** A weak unit worth 20% deserves far more time than one worth 6%.\n6. **Cramming several exams the night before.** If you're taking multiple AP exams, plan your review around the earliest dates."
+            "body": "1. **Starting review in late April.** There isn't enough time to fix weak units and practice the format.\n2. **Rereading instead of practicing.** Recognizing your notes isn't the same as answering a question about them.\n3. **Skipping free-response practice.** Many students only practice multiple choice, then lose points to wording on the free response.\n4. **Grading yourself generously.** Use the official scoring guidelines and be strict.\n5. **Ignoring unit weights.** A weak unit worth 20% deserves far more time than one worth 6%.\n6. **Cramming several exams the night before.** If you're taking multiple AP exams, plan your review around the earliest dates.\n\nTo see where a practice test puts you, try the free [AP score calculators](/ap-score-calculator) for APES, AP Biology, AP Psychology and AP U.S. Government."
           }
         ]
       },
@@ -1025,7 +1179,8 @@
           "answer": "Yes. You'll need a school or authorized test center to order the exam for you, usually by mid-November, and a plan built around the Course and Exam Description and released exam questions."
         }
       ],
-      "cta": "Dogtor makes AP review something you look forward to: short practice levels with a cute corgi study buddy, instant explanations, a mistake book for your final review and quiz battles with classmates. It's free to start."
+      "cta": "Dogtor makes AP review something you look forward to: short practice levels with a cute corgi study buddy, instant explanations, a mistake book for your final review and quiz battles with classmates. It's free to start.",
+      "updateDate": "2026-11-26"
     }
   ]
 }

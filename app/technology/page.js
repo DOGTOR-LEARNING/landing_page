@@ -6,7 +6,7 @@ import { getTechnologyMessages } from '@/lib/i18n/technologyMessages'
 import { normalizeMarket, storeLinks } from '@/lib/market'
 import styles from './page.module.css'
 
-const SECTION_ORDER = ['graph', 'pipeline', 'tutor', 'custom', 'mastery', 'parent', 'cloud', 'responsible']
+const SECTION_ORDER = ['method', 'graph', 'pipeline', 'tutor', 'custom', 'mastery', 'parent', 'cloud', 'responsible']
 
 export async function generateMetadata() {
   const h = await headers()
@@ -64,6 +64,25 @@ export default async function Technology() {
           </nav>
 
           <div className={styles.content}>
+            {s.method && (
+              <section id="method" className={styles.section}>
+                <p className={styles.tag}>{s.method.tag}</p>
+                <h2 className={styles.sectionTitle}>{s.method.title}</h2>
+                <p className={styles.text}>{s.method.lead}</p>
+                <ol className={styles.steps}>
+                  {s.method.steps.map((step, i) => (
+                    <li key={step.title} className={styles.step}>
+                      <span className={styles.stepNum} aria-hidden="true">{i + 1}</span>
+                      <div>
+                        <h3 className={styles.stepTitle}>{step.title}</h3>
+                        <p className={styles.stepDesc}>{step.desc}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+
             <section id="graph" className={styles.section}>
               <p className={styles.tag}>{s.graph.tag}</p>
               <h2 className={styles.sectionTitle}>{s.graph.title}</h2>
